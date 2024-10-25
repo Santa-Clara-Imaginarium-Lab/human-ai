@@ -1,0 +1,20 @@
+/* Survey.css */
+
+.survey-button {
+    padding: 0.5em 2em;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: #da7e7e;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    margin-top: 1em;
+    font-family: 'Chakra Petch', sans-serif;
+  }
+
+ .survey-subtitle {
+    font-size: 60px;
+    margin: 0.1em;
+    color: #4c4b4b;
+  }

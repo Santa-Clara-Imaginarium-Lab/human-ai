@@ -1,0 +1,55 @@
+import React, { useState } from 'react';
+import './DemoChat.css'; // Create a corresponding CSS file
+
+function DemoChat() {
+  const [input, setInput] = useState('');
+
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleSend = () => {
+    alert('Message Sent: ' + input); // Dummy action for now
+    setInput(''); // Clear input field after sending
+  };
+
+  const handleExit = () => {
+    window.location.href = 'http://localhost:5173/';
+  };
+
+  return (
+    <div className="demo-chat-container">
+      <button className="chatbot-button">Chatbot Tutorial</button>
+      
+      <div className="chat-section">
+        {/* AI Response */}
+        <div className="chat-bubble ai-response">
+          <div className="avatar">AI</div>
+          <div className="bubble" data-tooltip="This is the AI's response">Chatbot responses here</div>
+        </div>
+
+        {/* User Response */}
+        <div className="chat-bubble user-response">
+          <div className="bubble" data-tooltip="This is your input message">Participant responses here</div>
+          <div className="avatar">You</div>
+        </div>
+      </div>
+
+      {/* Input Area */}
+      <div className="input-area">
+        <input
+          type="text"
+          placeholder="Enter message"
+          value={input}
+          onChange={handleInputChange}
+          className="chat-input"
+        />
+        <button onClick={handleSend} className="send-button" data-tooltip="Send your input">Send</button>
+        <button onClick={handleExit} className="send-button" data-tooltip="Exit Tutorial">Exit</button>
+      </div>
+    </div>
+  );
+}
+
+export default DemoChat;

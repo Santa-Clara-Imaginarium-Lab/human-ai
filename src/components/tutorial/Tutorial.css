@@ -1,0 +1,41 @@
+/* Tutorial.css */
+  
+  .tutorial-button {
+    background-color: #da7e7e;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    font-family: 'Chakra Petch', sans-serif;
+  }
+  
+  .tutorial-subtitle {
+    margin: 20px;
+    margin-bottom: 1em;
+    font-family: 'Chakra Petch', sans-serif;
+    color: #4c4b4b;
+    font-size: 60px;
+  }
+  
+  .tutorial-options {
+    display: flex;
+    gap: 1em;
+  }
+  
+  .yes-button, .no-button {
+    padding: 0.5em 1.5em;
+    background-color: #4c4b4b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-family: 'Chakra Petch', sans-serif;
+  }
+  
+  .yes-button:hover, .no-button:hover {
+    background-color: #da7e7e;
+  }
+  

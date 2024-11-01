@@ -1,0 +1,116 @@
+/* GameTutorial.css */
+  .tutorial-button {
+    background-color: #da7e7e;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    margin-top: 70px;
+    font-size: 1.2em;
+
+  }
+  
+  .game-tutorial-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+  
+  /* Horizontal layout for AI score, triangle grid, and User score */
+.horizontal-layout {
+    display: flex;
+    align-items: center; /* Vertically align the elements */
+    justify-content: space-around; /* Add some space between the elements */
+    width: 100%; /* Make sure it spans the entire width */
+
+  }
+
+  .ai-score, .user-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Chakra Petch', sans-serif;
+  }
+  
+  .score-value {
+    font-size: 2em;
+    color: #4c4b4b;
+  }
+
+  .score-change {
+    font-size: 2em;
+    color: #da7e7e;
+    font-weight: bold;
+  }
+  
+  .decision-boxes {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    color: #4c4b4b;
+  }
+  
+  .ai-decision, .user-decision {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .decision-button {
+    background-color: #4c4b4b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+
+  .decision-button:hover, .proceed-button:hover{
+    background-color: #da7e7e;
+  }
+  
+  .proceed-button {
+    margin-top: 5em;
+    background-color: #4c4b4b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-family: 'Chakra Petch', sans-serif;
+  }
+
+  .triangle-left {
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 100px solid #ccc; /* Use 87px to ensure an equilateral triangle */
+    transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
+    margin-bottom: 7px;
+  }
+
+  .triangle-left:hover {
+    border-top: 100px solid #da7e7e;
+  }
+
+  .triangle-right {
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 100px solid #ccc; /* Use 87px to ensure an equilateral triangle */
+    transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
+    margin-bottom: 7px;
+  }
+
+  .triangle-right:hover {
+    border-bottom: 100px solid #da7e7e;
+  }
+
+  .column-1, .column-2, .column-3, .column-4 {
+    width: 105px;
+  }
+

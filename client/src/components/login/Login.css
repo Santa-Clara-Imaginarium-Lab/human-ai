@@ -1,0 +1,45 @@
+/* Login.css */
+  
+.login {
+    font-size: 80px;
+    margin: 0.1em;
+    color: #4c4b4b;
+ }
+  
+  .userid-input[type="text"] {
+    padding: 0.7em 1em;
+    font-size: 1.2em;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 1em;
+    outline: none;
+    font-family: 'Chakra Petch', sans-serif;
+    width: 250px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .userid-input[type="text"]:focus {
+    border-color: #da7e7e;
+  }
+
+  .login-button {
+    padding: 0.5em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: #da7e7e;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Chakra Petch', sans-serif;
+  }
+  
+  .login-button:hover {
+    background-color: #4c4b4b;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+  }
+  

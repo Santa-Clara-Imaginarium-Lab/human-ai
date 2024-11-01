@@ -1,0 +1,39 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f0f0f0;
+  }
+  
+  .welcome {
+    font-size: 120px;
+    margin: 0.1em;
+    color: #4c4b4b;
+  }
+  
+  .subtitle {
+    font-size: 70px;
+    margin: 0.1em;
+    color: #da7e7e;
+  }
+  
+  .play-button {
+    padding: 0.5em 2em;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: #4c4b4b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    margin-top: 1em;
+    font-family: 'Chakra Petch', sans-serif;
+  }
+  
+  .play-button:hover {
+    background-color: #da7e7e;
+  }
+  

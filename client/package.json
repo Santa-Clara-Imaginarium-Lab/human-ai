@@ -1,5 +1,5 @@
 {
-  "name": "aichatstarter",
+  "name": "client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -17,6 +17,7 @@
     "react": "19.0.0-rc-8b08e99e-20240713",
     "react-dom": "19.0.0-rc-8b08e99e-20240713",
     "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.28.0",
     "react-type-animation": "^3.2.0"
   },
   "devDependencies": {

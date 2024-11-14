@@ -22,7 +22,6 @@ import ChatbotTutorial from './components/chatbotTutorial/ChatbotTutorial'
 import DemoChat from './components/chatbotTutorial/DemoChat'
 import Game from './components/game/Game'
 import Login from './components/login/Login'
-import App from './App' // Your welcome page component
 
 const router = createBrowserRouter([
   {
@@ -57,10 +56,6 @@ const router = createBrowserRouter([
       {
         path: "/welcome",
         element: <Welcome />,
-      },
-      {
-        path: "/prisoners-dilemma",
-        element: <App />,
       },
       {
         path: "/survey",

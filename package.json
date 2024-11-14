@@ -1,0 +1,8 @@
+{
+    "name": "human_ai",
+    "version": "1.0.0",
+    "scripts": {
+        "install-all": "npm install --prefix backend --legacy-peer-deps && npm install --prefix client --legacy-peer-deps",
+        "start-all": "npm run start --prefix backend & npm run dev --prefix client"
+    }
+}

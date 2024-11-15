@@ -14,7 +14,8 @@
       justify-content: center;
   
       .chat{
-        width: 90%;
+        width: 100%;
+        padding: 20px;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -24,9 +25,16 @@
         }
   
         .message{
-          padding: 10px;
+          padding-left: 30px;
+          padding-right: 20px;
+          background-color: white;
+          border-radius: 20px;
+          max-width: 80%;
+          align-self: flex-start;
   
           &.user{
+            padding-left: 20px;
+            padding-right: 20px;
             background-color: #4c4b4b;
             color: white;
             border-radius: 20px;

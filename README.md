@@ -25,7 +25,11 @@ Navigate to the root directory "human_ai_game" and run the following command to 
 npm run install-all
 ```
 
-### Step 2: Run Project
+### Step 2: Add Environment Variables
+
+Add .env files and required environment variables in backend/ and client/ folder. Refer .env-example files
+
+### Step 3: Run Project
 
 Run the following command in the root directory:
 

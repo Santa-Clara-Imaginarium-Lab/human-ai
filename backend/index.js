@@ -5,7 +5,7 @@ import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
 
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 const app = express();
 
 app.use(cors({

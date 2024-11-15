@@ -3,30 +3,30 @@ import { createContext, useState, useContext, useEffect } from 'react';
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-    const [playerId, setPlayerId] = useState(() => {
+    const [userId, setuserId] = useState(() => {
         // Initialize from localStorage if available
-        return localStorage.getItem('playerId') || null;
+        return localStorage.getItem('userId') || null;
     });
 
-    // Update localStorage whenever playerId changes
+    // Update localStorage whenever userId changes
     useEffect(() => {
-        if (playerId) {
-            localStorage.setItem('playerId', playerId);
+        if (userId) {
+            localStorage.setItem('userId', userId);
         } else {
-            localStorage.removeItem('playerId');
+            localStorage.removeItem('userId');
         }
-    }, [playerId]);
+    }, [userId]);
 
     const login = (id) => {
-        setPlayerId(id);
+        setuserId(id);
     };
 
     const logout = () => {
-        setPlayerId(null);
+        setuserId(null);
     };
 
     return (
-        <UserContext.Provider value={{ playerId, login, logout }}>
+        <UserContext.Provider value={{ userId, login, logout }}>
             {children}
         </UserContext.Provider>
     );

@@ -8,8 +8,6 @@ import { UserProvider } from './context/UserContext';
 import DashboardPage from './routes/dashboardPage/DashboardPage.jsx'
 import ChatPage from './routes/chatPage/ChatPage.jsx'
 import RootLayout from './layouts/rootLayout/RootLayout.jsx'
-import SignInPage from './routes/signInPage/SignInPage.jsx'
-import SignUpPage from './routes/signUpPage/SignUpPage.jsx'
 import DashboardLayout from './layouts/dashboardLayout/dashoardLayout'
 
 // Second project imports
@@ -32,14 +30,6 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/sign-in/*",
-        element: <SignInPage />,
-      },
-      {
-        path: "/sign-up/*",
-        element: <SignUpPage />,
-      },
-      {
         element: <DashboardLayout />,
         children: [
           {
@@ -52,7 +42,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // New routes from second project
       {
         path: "/welcome",
         element: <Welcome />,

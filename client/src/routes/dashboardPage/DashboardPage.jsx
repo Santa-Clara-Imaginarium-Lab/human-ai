@@ -1,40 +1,43 @@
 import './dashboardPage.css';
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useUser } from "../../context/UserContext";
 
 const DashboardPage = () => {
 
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+    const { userId } = useUser();
     
     const mutation = useMutation({
         mutationFn: (text) => {
-            const playerId = localStorage.getItem('playerId');
-            console.log("Sending playerId:", playerId);
-            
-            if (!playerId) {
-                throw new Error('PlayerId not found in localStorage');
+            if (!userId) {
+                throw new Error('No userId found');
             }
             
             return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
                 method: "POST",
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ 
                     text,
-                    playerId
+                    userId 
                 }),
-            }).then((res) => res.json());
+            }).then((res) => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.json();
+            });
         },
         onSuccess: (id) => {
-            queryClient.invalidateQueries({ queryKey: ["userChats"] });
+            queryClient.invalidateQueries({ queryKey: ["userChats", userId] });
             navigate(`/dashboard/chats/${id}`);
         },
         onError: (error) => {
             console.error("Mutation error:", error);
-            // Handle error appropriately
+            alert("Failed to create chat. Please try again.");
         }
     });
     

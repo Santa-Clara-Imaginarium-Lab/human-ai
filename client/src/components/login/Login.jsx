@@ -4,14 +4,14 @@ import { useUser } from '../../context/UserContext';
 import './Login.css';
 
 function Login() {
-  const [playerId, setPlayerId] = useState('');
+  const [userId, setuserId] = useState('');
   const navigate = useNavigate();
   const { login } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (playerId.trim()) {
-      login(playerId); // Store playerId in context
+    if (userId.trim()) {
+      login(userId); // Store userId in context
       navigate('/welcome');
     } else {
       alert('Please enter a valid ID');
@@ -26,8 +26,8 @@ function Login() {
           className="userid-input"
           type="text"
           placeholder="Enter your unique ID"
-          value={playerId}
-          onChange={(e) => setPlayerId(e.target.value)}
+          value={userId}
+          onChange={(e) => setuserId(e.target.value)}
         />
         <button className="login-button" type="submit">Login</button>
       </form>

@@ -1,11 +1,8 @@
 import express from "express";
-import ImageKit from "imagekit";
 import cors from "cors";
 import mongoose from "mongoose";
 import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
-import userChats from "./models/userChats.js";
-import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
 
 
 const port = process.env.PORT || 3000;
@@ -27,32 +24,11 @@ const connect = async () => {
   }
 }
 
-const imagekit = new ImageKit({
-  urlEndpoint: process.env.IMAGE_KIT_ENDPOINT,
-  publicKey: process.env.IMAGE_KIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGE_KIT_PRIVATE_KEY
-});
-
-app.get("/api/upload", (req,res) =>{
-  const result = imagekit.getAuthenticationParameters();
-  res.send(result);
-});
-
-//   app.get("/api/test", ClerkExpressRequireAuth(),(req,res) =>{
-//     const userId = req.auth.userId;
-//     console.log(userId);
-//     res.send("Success!");
-//   });
-
-
-
-app.post("/api/chats", ClerkExpressRequireAuth(), async (req,res) =>{
-    const userId = req.auth.userId;
-    const {text, playerId} = req.body
+app.post("/api/chats", async (req,res) =>{
+    const {text, userId} = req.body
     try {
         const newChat = new Chat({
             userId: userId,
-            playerId: playerId,
             history:[{role:"user", parts:[{text}]}],
         });
 
@@ -71,7 +47,7 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req,res) =>{
             });
             await newUserChats.save();
         }else{
-            await UserChats.updateOne({userId:userId},{
+            await UserChats.updateOne({userId: userId},{
                 $push:{
                     chats:{
                         _id: savedChat._id,
@@ -87,67 +63,56 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req,res) =>{
     }
 });
 
-app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
-  const userId = req.auth.userId;
-
-  try {
-    const userChats = await UserChats.find({ userId });
+app.get("/api/userchats", async (req, res) => {
+    const { userId } = req.query;
     
-    // If no chats found for user, return empty array
-    if (!userChats || userChats.length === 0) {
-      return res.status(200).send([]);
+    try {
+        const userChats = await UserChats.find({ userId });
+        if (!userChats || userChats.length === 0) {
+            return res.status(200).send([]);
+        }
+        res.status(200).send(userChats[0].chats);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error fetching userchats!");
     }
-
-    res.status(200).send(userChats[0].chats);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Error fetching userchats!");
-  }
 });
 
-app.get("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
-  const userId = req.auth.userId;
-
-  try {
-    const chat = await Chat.findOne({ _id: req.params.id, userId });
-
-    res.status(200).send(chat);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Error fetching chat!");
-  }
+app.get("/api/chats/:id", async (req, res) => {
+    try {
+        const chat = await Chat.findOne({ _id: req.params.id });
+        res.status(200).send(chat);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error fetching chat!");
+    }
 });
 
-app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
-  const userId = req.auth.userId;
+app.put("/api/chats/:id", async (req, res) => {
+    const { question, answer, img } = req.body;
 
-  const { question, answer, img } = req.body;
+    const newItems = [
+        ...(question ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }] : []),
+        { role: "model", parts: [{ text: answer }] },
+    ];
 
-  const newItems = [
-    ...(question
-      ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }]
-      : []),
-    { role: "model", parts: [{ text: answer }] },
-  ];
-
-  try {
-    const updatedChat = await Chat.updateOne(
-      { _id: req.params.id, userId },
-      {
-        $push: {
-          history: {
-            $each: newItems,
-          },
-        },
-      }
-    );
-    res.status(200).send(updatedChat);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Error adding conversation!");
-  }
+    try {
+        const updatedChat = await Chat.updateOne(
+            { _id: req.params.id },
+            {
+                $push: {
+                    history: {
+                        $each: newItems,
+                    },
+                },
+            }
+        );
+        res.status(200).send(updatedChat);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error adding conversation!");
+    }
 });
-
 
 
 app.use((err, req, res, next) => {
@@ -157,5 +122,5 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () =>{
   connect()
-  console.log("server running on 3000");
+  console.log("Backend server running on 3000");
 });

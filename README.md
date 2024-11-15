@@ -12,6 +12,7 @@ Official Human AI repository
 ## Prerequisites
 
 - **Node.js**: Make sure you have Node.js installed. This project is tested with Node.js v20.10.0
+- **For clean installation**: Delete all node_modules/ folders and package-lock.json from client, backend and root folders
 
 ## Installation
 

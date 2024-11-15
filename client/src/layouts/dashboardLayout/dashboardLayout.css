@@ -1,6 +1,6 @@
 .dashboardLayout {
     display: flex;
-    gap: 50px;
+    gap: 0px;
     height: 100%;
   
     .menu {
@@ -10,7 +10,7 @@
     }
   
     .content {
-      flex: 4;
+      flex: 5;
       background-color: #e4e4e4;
     }
   }

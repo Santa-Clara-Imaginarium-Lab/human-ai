@@ -23,7 +23,7 @@ const NewPrompt = ({data} ) => {
                 <div className='endChat' ref={endRef}></div>
                 <form className='newForm' onSubmit={handleSubmit} ref={formRef}>
                     <input id='file' type='file' multiple={false} hidden />
-                    <input type="text" name='text' placeholder='Ask anything...' />
+                    <input type="text" name='text' placeholder='Ask me anything...' />
                     <button>
                         <img src="/arrow.png" alt="" />
                     </button>
@@ -153,7 +153,7 @@ const NewPrompt = ({data} ) => {
         <div className='endChat' ref={endRef}></div>
             <form className='newForm' onSubmit={handleSubmit} ref={formRef}>
                 <input id='file' type='file' multiple={false} hidden />
-                <input type="text" name='text' placeholder='Ask anything...' />
+                <input type="text" name='text' placeholder='Ask me anything...' />
                 <button>
                     <img src="/arrow.png" alt="" />
                 </button>

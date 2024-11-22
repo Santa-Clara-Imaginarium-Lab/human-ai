@@ -45,3 +45,5 @@ Run the following command in the root directory:
 ```bash
 npm run start-all
 ```
+
+Note: it is best to run the servers in a dedicated terminal, NOT in the VSCode terminal.

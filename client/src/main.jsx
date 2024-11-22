@@ -8,18 +8,18 @@ import { UserProvider } from './context/UserContext';
 import DashboardPage from './routes/dashboardPage/DashboardPage.jsx'
 import ChatPage from './routes/chatPage/ChatPage.jsx'
 import RootLayout from './layouts/rootLayout/RootLayout.jsx'
-import DashboardLayout from './layouts/dashboardLayout/dashoardLayout'
+import DashboardLayout from './layouts/dashboardLayout/dashoardLayout.jsx'
 
 // Second project imports
-import Welcome from './components/welcome/Welcome'
-import Survey from './components/survey/Survey'
-import Question from './components/questions/Question'
-import Tutorial from './components/tutorial/Tutorial'
-import GameTutorial from './components/gametutorial/GameTutorial'
-import ChatbotTutorial from './components/chatbotTutorial/ChatbotTutorial'
-import DemoChat from './components/chatbotTutorial/DemoChat'
-import Game from './components/game/Game'
-import Login from './components/login/Login'
+import Welcome from './components/welcome/Welcome.jsx'
+import Survey from './components/survey/Survey.jsx'
+import Question from './components/questions/Question.jsx'
+import Tutorial from './components/tutorial/Tutorial.jsx'
+import GameTutorial from './components/gametutorial/GameTutorial.jsx'
+import ChatbotTutorial from './components/chatbotTutorial/ChatbotTutorial.jsx'
+import DemoChat from './components/chatbotTutorial/DemoChat.jsx'
+import Game from './components/game/Game.jsx'
+import Login from './components/login/Login.jsx'
 
 const router = createBrowserRouter([
   {

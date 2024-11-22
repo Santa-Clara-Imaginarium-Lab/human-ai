@@ -1,8 +1,14 @@
-# Project Name
+# Human-AI Interaction
 
 ## Overview
 
-Official Human AI repository
+Official Human-AI Interaction repository. This contains all code for the game portion of the Human AI study (interacting with chatbots and playing the Prisoner's Dilemma game with them).
+
+## Contributing to this Repository
+
+Please avoid pusing to `main` unless it is an extremely minor change..
+
+For each of your tasks, create a branch for it. When you are done, make a pull request to `main`. See all the current tasks on our [Github Project](https://github.com/orgs/Santa-Clara-Imaginarium-Lab/projects/1) task board.
 
 ## Folder Structure
 
@@ -20,7 +26,7 @@ To set up the project, follow these steps:
 
 ### Step 1: Install Dependencies
 
-Navigate to the root directory "human_ai_game" and run the following command to install all dependencies:
+Navigate to the root directory "human-ai" (or whatever your local repository name is) and run the following command to install all dependencies:
 
 ```bash
 npm run install-all
@@ -28,7 +34,9 @@ npm run install-all
 
 ### Step 2: Add Environment Variables
 
-Add .env files and required environment variables in backend/ and client/ folder. Refer .env-example files
+Add .env files and required environment variables in backend/ and client/ folder. Create a new .env file in each subdirectory, refer to .env-example files for the format and structure. 
+
+(Do not delete .env-example for Git purposes)
 
 ### Step 3: Run Project
 

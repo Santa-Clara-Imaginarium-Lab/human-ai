@@ -20,17 +20,22 @@ function Login() {
 
   return (
     <div className="container">
-      <h2 className="login">Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          className="userid-input"
-          type="text"
-          placeholder="Enter your unique ID"
-          value={userId}
-          onChange={(e) => setuserId(e.target.value)}
-        />
-        <button className="login-button" type="submit">Login</button>
-      </form>
+      <div className="login-container">
+        <div className="shadow-container"></div>
+        <div className="login-content">
+          <h2 className="login">Login</h2>
+          <form onSubmit={handleSubmit} className="login-form">
+            <input
+              className="userid-input"
+              type="text"
+              placeholder="Enter your unique ID"
+              value={userId}
+              onChange={(e) => setuserId(e.target.value)}
+            />
+            <button className="login-button" type="submit">Login</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

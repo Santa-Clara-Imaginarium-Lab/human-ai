@@ -19,7 +19,7 @@ function Login() {
   };
 
   return (
-    <div className="container">
+    <div className="login-page-container">
       <div className="login-container">
         <div className="shadow-container"></div>
         <div className="login-content">

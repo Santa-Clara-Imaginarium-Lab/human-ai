@@ -58,13 +58,12 @@
  }
   
   .userid-input[type="text"] {
-    padding: 0.7em 1em;
+    padding: 0.4em 1em;
     font-size: 1.2em;
     border-radius: 20px;
     border: 1px solid #ccc;
-    margin-bottom: 1em;
     outline: none;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Jaldi';
     width: 250px;
     transition: border-color 0.3s ease;
   }
@@ -74,14 +73,14 @@
   }
 
   .login-button {
-    padding: 0.5em 1.5em;
-    font-size: 1.2em;
+    padding: 0.3em 1.5em;
+    font-size: 1.5em;
     cursor: pointer;
     background-color: #99d6ea;
     color: white;
     border: none;
     border-radius: 20px;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Jaldi';
   }
   
   .login-button:hover {

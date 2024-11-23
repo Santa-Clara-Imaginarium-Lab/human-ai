@@ -6,9 +6,9 @@ Official Human-AI Interaction repository. This contains all code for the game po
 
 ## Contributing to this Repository
 
-Please avoid pusing to `main` unless it is an extremely minor change..
+Dedicated team members have tasks that are delegated during meetings. See all the current tasks on our [Github Project](https://github.com/orgs/Santa-Clara-Imaginarium-Lab/projects/1) task board. 
 
-For each of your tasks, create a branch for it. When you are done, make a pull request to `main`. See all the current tasks on our [Github Project](https://github.com/orgs/Santa-Clara-Imaginarium-Lab/projects/1) task board.
+For each task, create a branch for it. When you are done, make a pull request to `main`. 
 
 ## Folder Structure
 

@@ -28,7 +28,7 @@ function Login() {
             <input
               className="userid-input"
               type="text"
-              placeholder="Enter your unique ID"
+              placeholder="Enter your participant ID"
               value={userId}
               onChange={(e) => setuserId(e.target.value)}
             />

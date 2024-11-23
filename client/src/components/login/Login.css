@@ -37,59 +37,77 @@
 }
 
 .login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   background-color: white;
   border-radius: 3em;
-  padding: 10em;
+  padding: 5em 10em;
   z-index: 1;
 }
   
 .login {
-    font-size: 80px;
-    margin: 0.3em;
-    color: #26244c;
-    font-family: 'Jaro';
- }
+  font-size: 80px;
+  margin: 0.3em;
+  color: #26244c;
+  font-family: 'Jaro';
+}
 
- .login-form {
+.login-form {
   display: flex;
-  align-items: baseline;
+  justify-content: center;
+  /* align-items: baseline; */
   gap: 1em;
- }
+}
   
-  .userid-input[type="text"] {
-    padding: 0.4em 1em;
-    font-size: 1.2em;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    outline: none;
-    font-family: 'Jaldi';
-    width: 250px;
-    transition: border-color 0.3s ease;
-  }
+.userid-input[type="text"] {
+  padding: 0.4em 1em;
+  font-size: 1.2em;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-family: 'Jaldi';
+  width: 250px;
+  transition: border-color 0.3s ease;
+}
   
-  .userid-input[type="text"]:focus {
-    border-color: #da7e7e;
-  }
+.userid-input[type="text"]:focus {
+  border-color: #da7e7e;
+}
 
-  .login-button {
-    padding: 0.3em 1.5em;
-    font-size: 1.5em;
-    cursor: pointer;
-    background-color: #99d6ea;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-family: 'Jaldi';
-  }
-  
-  .login-button:hover {
-    background-color: #4c4b4b;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 0.9em;
-    margin-top: 0.5em;
-  }
+.login-button {
+  padding: 0.3em 1.5em;
+  font-size: 1.5em;
+  cursor: pointer;
+  background-color: #99d6ea;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Jaldi';
+}
+
+.login-button:hover {
+  background-color: #4c4b4b;
+}
+
+.login-tip {
+  display: inline-block;
+  overflow: hidden;
+  text-align: center;
+  max-width: 25em;
+  word-wrap: break-word;
+  margin-top: 1em;
+}
+
+.login-tip p {
+  font-family: 'Jockey One';
+  color: #26244c;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+}
   

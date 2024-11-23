@@ -34,6 +34,12 @@ function Login() {
             />
             <button className="login-button" type="submit">Login</button>
           </form>
+          <div className="login-tip">
+            <p>
+              <strong>Note: </strong>
+              You should have received your participant ID in an email. Ask the researcher if you have any further questions.
+            </p>
+          </div>
         </div>
       </div>
     </div>

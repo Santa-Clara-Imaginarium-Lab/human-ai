@@ -37,7 +37,10 @@ function Login() {
           <div className="login-tip">
             <p>
               <strong>Note: </strong>
-              You should have received your participant ID in an email. Ask the researcher if you have any further questions.
+              In a future version of this study, a participant ID will be provided via the researcher. For now, enter any text in the box. <br/> <br/> 
+              For any questions or further assistance, please notify the researcher.
+              {/* Another option for UX study: Your participant ID should have been provided via the researcher. For any questions or further assistance, please notify the researcher. */}
+              {/* Use for official study: Your participant ID has been provided via the researcher, and is also available in the study invitation email. For any questions or further assistance, please notify the researcher. */}
             </p>
           </div>
         </div>

@@ -2,8 +2,12 @@ import './dashboardPage.css';
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "../../context/UserContext";
+import { useState } from 'react';
+
 
 const DashboardPage = () => {
+
+    const [debounce,setDebounce] = useState(true);
 
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -48,6 +52,13 @@ const DashboardPage = () => {
         mutation.mutate(text);
     };
 
+    // redirect to a new chat page automatically by inputting a dummy submission
+    if (debounce){
+        mutation.mutate("begin");
+        setDebounce(false);
+    }
+
+    // safety: render bottom form in case redirect above does not work
     return (
         <div className = 'dashboardPage'>
             <div className='formContainer'>

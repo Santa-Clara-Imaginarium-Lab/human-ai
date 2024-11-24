@@ -15,8 +15,32 @@ const NewPrompt = ({data} ) => {
         aiData:{},
     }) 
 
-    // Add check for empty/undefined data
+
+    const chat = model.startChat({
+        history: [
+            {
+              role: "user",
+              parts: [{ text: "You are about to play five rounds of the Prisoner's Dilemma with the current user. During this iteration of the Prisoner's Dilemma scores will be calculated as follows: A choice to Cooperate, while your opponent Cooperates will give you a score of +3 and your opponent a score of +3. A choice to Cooperate, while your opponent Defects will give you a score of +0 and your opponent a score of +5. A choice to Defect, while your opponent Cooperates will give you a score of +5 and your opponent a score of +0. Your task is to discuss your strategies with the player. Do not offer to explain the game's rules, history, or famous strategies with the player."}],
+            },
+            {
+              role: "model",
+              parts: [{ text: "Great to meet you. What would you like to know?" }],
+            },
+          ],
+          generationConfig:{
+
+          },
+        });
+
+/* 
+Original control prompt:You are about to play five rounds of the Prisoner's Dilemma with the current user. During this iteration of the Prisoner's Dilemma scores will be calculated as follows: A choice to Cooperate, while your opponent Cooperates will give you a score of +3 and your opponent a score of +3. A choice to Cooperate, while your opponent Defects will give you a score of +0 and your opponent a score of +5. A choice to Defect, while your opponent Cooperates will give you a score of +5 and your opponent a score of +0. Your task is to discuss your strategies with the player. Do not offer to explain the game's rules, history, or famous strategies with the player. 
+*/
+
+// Add check for empty/undefined data
+    console.log(data);
     if (!data) {
+      console.log("forcing response for empty data");
+      add(data.history[0].parts[0].text, true);
         return (
             <div className="message">
                 Start a new chat by typing a message below.
@@ -32,21 +56,6 @@ const NewPrompt = ({data} ) => {
         );
     }
 
-    const chat = model.startChat({
-        history: [
-            {
-              role: "user",
-              parts: [{ text: "Hello" }],
-            },
-            {
-              role: "model",
-              parts: [{ text: "Great to meet you. What would you like to know?" }],
-            },
-          ],
-          generationConfig:{
-
-          },
-        });
 
     const endRef = useRef(null);
     const formRef = useRef(null);

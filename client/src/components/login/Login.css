@@ -67,13 +67,13 @@
   border-radius: 20px;
   border: 1px solid #ccc;
   outline: none;
-  font-family: 'Jaldi';
+  font-family: 'Jockey One';
   width: 250px;
   transition: border-color 0.3s ease;
 }
   
 .userid-input[type="text"]:focus {
-  border-color: #da7e7e;
+  border-color: #99d6ea;
 }
 
 .login-button {
@@ -84,7 +84,7 @@
   color: white;
   border: none;
   border-radius: 20px;
-  font-family: 'Jaldi';
+  font-family: 'Jockey One';
 }
 
 .login-button:hover {

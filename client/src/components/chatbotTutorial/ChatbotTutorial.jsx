@@ -10,8 +10,7 @@ function ChatbotTutorial() {
     };
 
     return (
-    <div className="container">
-      <button className="top-button">Tutorial</button>
+    <div className="container chatbot-tutorial">
       <h2 className="chatbot-subtitle">Now, Try Having a Conversation with the Chatbot</h2>
       <button className="start-chat-button" onClick={handleClick}>Proceed</button>
     </div>

@@ -6,26 +6,30 @@
     align-items: center;
     height: 100vh;
     text-align: center;
-    background-color: #f0f0f0;
+    background-color: white;
+  }
+
+  .welcome {
+    background-color: var(--background-one);
   }
   
-  .welcome {
+  .welcome-title {
     font-size: 120px;
     margin: 0.1em;
-    color: #4c4b4b;
+    color: var(--accent-three);
   }
   
   .subtitle {
     font-size: 70px;
     margin: 0.1em;
-    color: #da7e7e;
+    color: var(--accent-three);
   }
   
   .play-button {
     padding: 0.5em 2em;
     font-size: 1.2em;
     cursor: pointer;
-    background-color: #4c4b4b;
+    background-color: var(--button-one);
     color: white;
     border: none;
     border-radius: 20px;
@@ -34,6 +38,6 @@
   }
   
   .play-button:hover {
-    background-color: #da7e7e;
+    background-color: var(--accent-five);
   }
   

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -21,68 +21,80 @@ import DemoChat from './components/chatbotTutorial/DemoChat.jsx'
 import Game from './components/game/Game.jsx'
 import Login from './components/login/Login.jsx'
 
-const router = createBrowserRouter([
-  {
-    element: <RootLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Login />,
-      },
-      {
-        element: <DashboardLayout />,
-        children: [
-          {
-            path: "/dashboard",
-            element: <DashboardPage />,
-          },
-          {
-            path: "/dashboard/chats/:id",
-            element: <ChatPage />,
-          },
-        ],
-      },
-      {
-        path: "/welcome",
-        element: <Welcome />,
-      },
-      {
-        path: "/survey",
-        element: <Survey />,
-      },
-      {
-        path: "/question",
-        element: <Question />,
-      },
-      {
-        path: "/tutorial",
-        element: <Tutorial />,
-      },
-      {
-        path: "/game-tutorial",
-        element: <GameTutorial />,
-      },
-      {
-        path: "/chatbot-tutorial",
-        element: <ChatbotTutorial />,
-      },
-      {
-        path: "/demo-chat",
-        element: <DemoChat />,
-      },
-      {
-        path: "/game",
-        element: <Game />,
-      },
+function MainApp() {
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'yellow-blue-theme');
 
-    ],
-  },
-]);
+  useEffect(() => {
+    // Apply the theme to the document
+    document.documentElement.className = theme;
+    localStorage.setItem('theme', theme); // Persist theme in localStorage
+  }, [theme]);
+
+  const router = createBrowserRouter([
+    {
+      element: <RootLayout />,
+      children: [
+        {
+          path: "/",
+          element: <Login changeTheme={(newTheme) => setTheme(newTheme)}/>,
+        },
+        {
+          element: <DashboardLayout />,
+          children: [
+            {
+              path: "/dashboard",
+              element: <DashboardPage />,
+            },
+            {
+              path: "/dashboard/chats/:id",
+              element: <ChatPage />,
+            },
+          ],
+        },
+        {
+          path: "/welcome",
+          element: <Welcome />,
+        },
+        {
+          path: "/survey",
+          element: <Survey />,
+        },
+        {
+          path: "/question",
+          element: <Question />,
+        },
+        {
+          path: "/tutorial",
+          element: <Tutorial />,
+        },
+        {
+          path: "/game-tutorial",
+          element: <GameTutorial />,
+        },
+        {
+          path: "/chatbot-tutorial",
+          element: <ChatbotTutorial />,
+        },
+        {
+          path: "/demo-chat",
+          element: <DemoChat />,
+        },
+        {
+          path: "/game",
+          element: <Game />,
+        },
+
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserProvider>
-      <RouterProvider router={router} />
+      <MainApp/>
     </UserProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

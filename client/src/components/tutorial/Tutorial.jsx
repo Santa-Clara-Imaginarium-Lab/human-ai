@@ -10,8 +10,7 @@ function Tutorial() {
   };
 
   return (
-    <div className="container">
-      <button className="tutorial-button">Tutorial</button>
+    <div className="container tutorial-container">
       <h2 className="tutorial-subtitle">Are you familiar with the rules of the Prisoner's Dilemma?</h2>
       <div className="tutorial-options">
         <button className="no-button" onClick={handleNoClick}>Take Tutorial</button>

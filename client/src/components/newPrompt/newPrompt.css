@@ -18,13 +18,13 @@
         border: none;
         outline: none;
         background-color: transparent;
-        color: #4c4b4b;
+        color: var(--accent-three);
         font-family: 'Chakra Petch', sans-serif;
       }
   
       button,label{
         border-radius: 50%;
-        background-color: #4c4b4b;
+        background-color: var(--accent-five);
         border: none;
         padding: 5px;
         display: flex;
@@ -33,7 +33,7 @@
         cursor: pointer;
   
         &:hover{
-          background-color: #da7e7e;
+          background-color: var(--background-one);
         }
         
         img{

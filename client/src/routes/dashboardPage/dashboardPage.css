@@ -48,7 +48,7 @@
           font-weight: 300;
           font-size: 14px;
           padding: 20px;
-          border: 1px solid #555;
+          border: 0px;
           border-radius: 20px;
   
           img {
@@ -82,11 +82,11 @@
           background-color: transparent;
           border: none;
           outline: none;
-          color: #4c4b4b;
+          color: var(--accent-three);
           font-family: 'Chakra Petch', sans-serif;
         }
         button {
-          background-color: #4c4b4b;
+          background-color: var(--accent-five);
           border-radius: 50%;
           border: none;
           cursor: pointer;
@@ -96,7 +96,7 @@
           justify-content: center;
   
           &:hover{
-            background-color: #da7e7e;
+            background-color: var(--background-one);
           }
           img {
             width: 25px;

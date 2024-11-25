@@ -11,12 +11,13 @@
   top: -50px; 
   left: 50%;
   transform: translateX(-50%);
-  background-color: red;
-  color: white;
+  background-color: white;
+  color: #26244c;
+  font-size: 0.90em;
+  font-family: 'Jockey One';
   padding: 0.5em;
   border-radius: 5px;
   white-space: nowrap;
-  font-size: 0.90em;
   pointer-events: none; 
   z-index: 100;
   opacity: 1;
@@ -105,32 +106,33 @@
 
 .avatar {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 3em;
+  height: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
-  margin: 0 1em;
   font-family: 'Jockey One';
 }
 
 .user-response .avatar {
   background: #fbdf82;
   color: black;
+  margin: 0 1em 0 0.5em;
 }
 
 .ai-response .avatar {
   background-color: #089aca;
   color: white;
+  margin: 0 0.5em 0 1em;
 }
 
 .bubble {
   padding: 1em;
   border-radius: 20px;
   font-family: 'Jockey One';
-  font-size: 1em;
+  font-size: 1.3em;
   max-width: 70%;
 }
 

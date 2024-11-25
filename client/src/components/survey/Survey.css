@@ -1,10 +1,13 @@
 /* Survey.css */
+.survey-container {
+  background-color: var(--background-one);
+}
 
 .survey-button {
     padding: 0.5em 2em;
     font-size: 1.2em;
     cursor: pointer;
-    background-color: #da7e7e;
+    background-color: var(--button-one);
     color: white;
     border: none;
     border-radius: 20px;
@@ -13,8 +16,12 @@
     font-family: 'Chakra Petch', sans-serif;
   }
 
+  .survey-button:hover {
+    background-color: var(--accent-five);
+  }
+
  .survey-subtitle {
     font-size: 60px;
     margin: 0.1em;
-    color: #4c4b4b;
+    color: var(--accent-three);
   }

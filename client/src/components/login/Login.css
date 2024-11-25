@@ -1,5 +1,56 @@
 /* Login.css */
 
+.menu-container {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 1000;
+}
+
+.menu-button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 36px;
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+  position: absolute;
+  top: 70px;
+  right: 5px;
+  background-color: white;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1001;
+  min-width: 200px;
+  width: max-content;
+}
+
+.dropdown-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f9f9f9;
+}
+
+/* Remove the border for the last item */
+.dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
 .login-page-container {
   display: flex;
   flex-direction: column;
@@ -11,7 +62,7 @@
   width: 100vw;
   height: 100vh;
   text-align: center;
-  background-color: #fbdf82;
+  background-color: var(--background-one);
 }
 
 .login-container {
@@ -20,7 +71,7 @@
 
 .shadow-container {
   position: absolute;
-  background-color: #ffb703;
+  background-color: var(--accent-one);
   width: 100%;
   height: 100%;
   top: 10px;
@@ -45,7 +96,7 @@
 .login {
   font-size: 80px;
   margin: 0 0 0.3em 0;
-  color: #26244c;
+  color: var(--accent-three);
   font-family: 'Jaro';
 }
 
@@ -68,14 +119,14 @@
 }
   
 .userid-input[type="text"]:focus {
-  border-color: #99d6ea;
+  border-color: var(--background-two);
 }
 
 .login-button {
   padding: 0.3em 1.5em;
   font-size: 1.5em;
   cursor: pointer;
-  background-color: #99d6ea;
+  background-color: var(--background-two);
   color: white;
   border: none;
   border-radius: 20px;
@@ -83,7 +134,7 @@
 }
 
 .login-button:hover {
-  background-color: #4c4b4b;
+  background-color: var(--accent-five);
 }
 
 .login-tip {
@@ -97,7 +148,7 @@
 
 .login-tip p {
   font-family: 'Jockey One';
-  color: #26244c;
+  color: var(--accent-three);
 }
 
 .error-message {

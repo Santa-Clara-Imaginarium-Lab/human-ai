@@ -1,62 +1,65 @@
 /* GameTutorial.css */
-  .tutorial-button {
-    background-color: #da7e7e;
-    color: white;
+  .game-tutorial {
+    background-color: var(--background-two);
+  }
+
+  .decision-tutorial-button {
+    padding: 0.5em 2em;
+    background-color: white;
+    color: var(--accent-three);
     border: none;
     border-radius: 20px;
     margin-top: 70px;
     font-size: 1.2em;
-
   }
-  
+    
   .game-tutorial-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-
   }
-  
-  /* Horizontal layout for AI score, triangle grid, and User score */
-.horizontal-layout {
+    
+    /* Horizontal layout for AI score, triangle grid, and User score */
+  .tutorial-horizontal-layout {
     display: flex;
     align-items: center; /* Vertically align the elements */
     justify-content: space-around; /* Add some space between the elements */
     width: 100%; /* Make sure it spans the entire width */
-
   }
 
-  .ai-score, .user-score {
+  .tutorial-ai-score, .tutorial-user-score {
+    color: var(--accent-three);
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Chakra Petch', sans-serif;
   }
-  
-  .score-value {
+    
+  .tutorial-score-value {
     font-size: 2em;
-    color: #4c4b4b;
+    color: var(--accent-three);
   }
 
-  .score-change {
+  .tutorial-score-change {
     font-size: 2em;
-    color: #da7e7e;
+    color: var(--background-one);
     font-weight: bold;
   }
-  
-  .decision-boxes {
+    
+  .tutorial-decision-boxes {
     display: flex;
     justify-content: space-around;
     width: 50%;
     color: #4c4b4b;
   }
   
-  .ai-decision, .user-decision {
+  .tutorial-ai-decision, .tutorial-user-decision {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  .decision-button {
+  .tutorial-decision-button {
     background-color: #4c4b4b;
     color: white;
     border: none;
@@ -66,13 +69,13 @@
     cursor: pointer;
   }
 
-  .decision-button:hover, .proceed-button:hover{
-    background-color: #da7e7e;
+  .tutorial-decision-button:hover, .tutorial-proceed-button:hover{
+    background-color: var(--accent-five);
   }
   
-  .proceed-button {
+  .tutorial-proceed-button {
     margin-top: 5em;
-    background-color: #4c4b4b;
+    background-color: var(--accent-one);
     color: white;
     border: none;
     border-radius: 20px;
@@ -82,35 +85,35 @@
     font-family: 'Chakra Petch', sans-serif;
   }
 
-  .triangle-left {
+  .tutorial-triangle-left {
     width: 0;
     height: 0;
     border-left: 100px solid transparent;
     border-right: 100px solid transparent;
-    border-top: 100px solid #ccc; /* Use 87px to ensure an equilateral triangle */
+    border-top: 100px solid white; /* Use 87px to ensure an equilateral triangle */
     transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
     margin-bottom: 7px;
   }
 
-  .triangle-left:hover {
-    border-top: 100px solid #da7e7e;
+  .tutorial-triangle-left:hover {
+    border-top: 100px solid var(--button-one);
   }
 
-  .triangle-right {
+  .tutorial-triangle-right {
     width: 0;
     height: 0;
     border-left: 100px solid transparent;
     border-right: 100px solid transparent;
-    border-bottom: 100px solid #ccc; /* Use 87px to ensure an equilateral triangle */
+    border-bottom: 100px solid white; /* Use 87px to ensure an equilateral triangle */
     transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
     margin-bottom: 7px;
   }
 
-  .triangle-right:hover {
-    border-bottom: 100px solid #da7e7e;
+  .tutorial-triangle-right:hover {
+    border-bottom: 100px solid var(--button-one);
   }
 
-  .column-1, .column-2, .column-3, .column-4 {
+  .tutorial-column-1, .tutorial-column-2, .tutorial-column-3, .tutorial-column-4 {
     width: 105px;
   }
 

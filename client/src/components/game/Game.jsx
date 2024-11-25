@@ -7,12 +7,11 @@ function Game() {
 
 
   return (
-    <div className="container">
-      <div className="game-tutorial-content">
+    <div className="container game">
+      <div className="game-content">
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">
           <div className="ai-score">
-            <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">0</span></h2>
           </div>
           <div className="column-1">

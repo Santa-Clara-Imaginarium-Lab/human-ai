@@ -31,7 +31,7 @@ function Question() {
   };
 
   return (
-    <div className="container">
+    <div className="container survey-question">
       <button className="question-button">
         {currentQuestionIndex + 1}/{questions.length} {/* Display the question number */}
       </button>

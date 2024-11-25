@@ -1,16 +1,46 @@
+:root {
+  --universal-font: 'Chakra Petch', sans-serif;
+}
+
+:root.yellow-blue-theme {
+  --background-one: #FBDF82;
+  --background-two: #99D6EA;
+  --accent-one: #FFB703;
+  --accent-two: #089ACA;
+  --accent-three: #26244C;
+  --accent-four: #757575;
+  --accent-five: #4c4b4b;
+  --button-one: #26244C;
+  --button-two: #FBDF82;
+  --option-circles: #26244C;
+}
+
+:root.pink-grey-theme {
+  --background-one: #E4E4E4;
+  --background-two: #E4E4E4;
+  --accent-one: #da7e7e;
+  --accent-two: #4c4b4b;
+  --accent-three: #4c4b4b;
+  --accent-four: #4c4b4b;
+  --accent-five: #4c4b4b;
+  --button-one: #da7e7e;
+  --button-two: #da7e7e;
+  --option-circles: white;
+}
+
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: #ececec;
-    color: 4c4b4b;
-    font-family: 'Chakra Petch', sans-serif;
-  }
-  
-  a{
-    text-decoration: none;
-    color: inherit;
-  }
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  color: var(--text-color);
+  font-family: 'Chakra Petch', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

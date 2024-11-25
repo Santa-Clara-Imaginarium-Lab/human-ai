@@ -10,38 +10,38 @@ function GameTutorial() {
   };
 
   return (
-    <div className="container">
-      <button className="tutorial-button">Decision Making Tutorial</button>
+    <div className="container game-tutorial">
+      <button className="decision-tutorial-button">Decision Making Tutorial</button>
 
       <div className="game-tutorial-content">
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
-        <div className="horizontal-layout">
-          <div className="ai-score">
-          <p className="score-change ai-change">+5</p>
-            <h2>AI's Score: <span className="score-value">0</span></h2>
+        <div className="tutorial-horizontal-layout">
+          <div className="tutorial-ai-score">
+          <p className="tutorial-score-change tutorial-ai-change">+5</p>
+            <h2>AI's Score: <span className="tutorial-score-value">0</span></h2>
           </div>
-          <div className="column-1">
-          <div className="triangle-left"></div>
+          <div className="tutorial-column-1">
+          <div className="tutorial-triangle-left"></div>
           </div>
-          <div className="column-2">
-          <div className="triangle-left"></div>
-          <div className="triangle-right"></div>
-          <div className="triangle-left"></div>
+          <div className="tutorial-column-2">
+          <div className="tutorial-triangle-left"></div>
+          <div className="tutorial-triangle-right"></div>
+          <div className="tutorial-triangle-left"></div>
           </div>
-          <div className="column-3">
-          <div className="triangle-right"></div>
-          <div className="triangle-left"></div>
-          <div className="triangle-right"></div>
+          <div className="tutorial-column-3">
+          <div className="tutorial-triangle-right"></div>
+          <div className="tutorial-triangle-left"></div>
+          <div className="tutorial-triangle-right"></div>
           </div>
-          <div className="column-4">
-          <div className="triangle-right"></div>
+          <div className="tutorial-column-4">
+          <div className="tutorial-triangle-right"></div>
           </div>
-          <div className="user-score">
-          <p className="score-change user-change">+0</p>
-            <h2>Your Score: <span className="score-value">0</span></h2>
+          <div className="tutorial-user-score">
+          <p className="tutorial-score-change tutorial-user-change">+0</p>
+            <h2>Your Score: <span className="tutorial-score-value">0</span></h2>
           </div>
         </div>
-          <button className="proceed-button" onClick={handleClick}>Proceed</button>
+          <button className="tutorial-proceed-button" onClick={handleClick}>Proceed</button>
       </div>
     </div>
   );

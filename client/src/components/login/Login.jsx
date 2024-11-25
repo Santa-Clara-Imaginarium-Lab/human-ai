@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import './Login.css';
 
-function Login() {
+function Login({changeTheme}) {
   const [userId, setuserId] = useState('');
   const navigate = useNavigate();
   const { login } = useUser();
@@ -18,8 +18,27 @@ function Login() {
     }
   };
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <div className="login-page-container">
+            {/* Top-right corner menu button */}
+            <div className="menu-container">
+        <button className="menu-button" onClick={toggleMenu}>
+          ☰
+        </button>
+        {menuOpen && (
+          <div className="dropdown-menu">
+            <ul>
+              <li onClick={() => changeTheme('yellow-blue-theme')}>Yellow-Blue Theme</li>
+              <li onClick={() => changeTheme('pink-grey-theme')}>Pink-Grey Theme</li>
+            </ul>
+          </div>
+        )}
+      </div>
       <div className="login-container">
         <div className="shadow-container"></div>
         <div className="login-content">

@@ -1,21 +1,12 @@
 /* Tutorial.css */
-  
-  .tutorial-button {
-    background-color: #da7e7e;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1em;
-    font-size: 1.2em;
-    margin-bottom: 1em;
-    font-family: 'Chakra Petch', sans-serif;
+  .tutorial-container {
+    background-color: var(--background-one);
   }
   
   .tutorial-subtitle {
     margin: 20px;
     margin-bottom: 1em;
-    font-family: 'Chakra Petch', sans-serif;
-    color: #4c4b4b;
+    color: var(--accent-three);
     font-size: 60px;
   }
   
@@ -26,7 +17,7 @@
   
   .yes-button, .no-button {
     padding: 0.5em 1.5em;
-    background-color: #4c4b4b;
+    background-color: var(--button-one);
     color: white;
     border: none;
     border-radius: 20px;
@@ -36,6 +27,6 @@
   }
   
   .yes-button:hover, .no-button:hover {
-    background-color: #da7e7e;
+    background-color: var(--accent-five);
   }
   

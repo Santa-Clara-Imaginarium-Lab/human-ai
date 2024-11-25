@@ -9,8 +9,8 @@ const Welcome = () => {
       };
 
     return (
-        <div className="container">
-          <h1 className="welcome">Welcome</h1>
+        <div className="container welcome">
+          <h1 className="welcome-title">Welcome</h1>
           <h2 className="subtitle">to the Prisoner's Dilemma Game</h2>
           <button className="play-button" onClick={handlePlayClick}>Play</button>
         </div>

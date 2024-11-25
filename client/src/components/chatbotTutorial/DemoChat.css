@@ -11,7 +11,7 @@
   top: -50px; 
   left: 50%;
   transform: translateX(-50%);
-  background-color: #99d6ea;
+  background-color: red;
   color: white;
   padding: 0.5em;
   border-radius: 5px;
@@ -67,7 +67,7 @@
   height: 100%;
   top: 10px;
   left: 10px;
-  border-radius: 20px;
+  border-radius: 2em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 0;
 }
@@ -78,7 +78,7 @@
   color: #26244c;
   font-size: 1.9em;
   font-family: 'Jaro';
-  border-radius: 20px;
+  border-radius: 2em;
   padding: 0.5em 1.5em;
 }
 
@@ -127,7 +127,6 @@
 }
 
 .bubble {
-  background-color: #fff;
   padding: 1em;
   border-radius: 20px;
   font-family: 'Jockey One';

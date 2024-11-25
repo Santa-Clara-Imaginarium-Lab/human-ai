@@ -16,10 +16,6 @@
 
 .login-container {
   position: relative;
-  background-color: white;
-  /* padding: 10em; */
-  border-radius: 3em;
-  z-index: 1;
 }
 
 .shadow-container {

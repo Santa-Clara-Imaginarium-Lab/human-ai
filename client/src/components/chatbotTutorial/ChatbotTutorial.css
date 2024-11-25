@@ -1,25 +1,18 @@
 /* ChatbotTutorial.css */
-
-  .top-button {
-    background-color: #da7e7e;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1.5em;
-    font-size: 1.2em;
-    margin-bottom: 2em;
-    font-family: 'Chakra Petch', sans-serif;
+  
+  .chatbot-tutorial {
+    background-color: var(--background-one);
   }
   
   .chatbot-subtitle {
     font-size: 60px;
-    color: #4c4b4b;
+    color: var(--accent-three);
     margin-bottom: 2em;
     font-family: 'Chakra Petch', sans-serif;
   }
   
   .start-chat-button {
-    background-color: #4c4b4b;
+    background-color: var(--button-one);
     color: white;
     border: none;
     border-radius: 20px;
@@ -30,6 +23,6 @@
   }
   
   .start-chat-button:hover {
-    background-color: #da7e7e;
+    background-color: var(--accent-five);
   }
   

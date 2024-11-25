@@ -1,15 +1,9 @@
 /* Game.css */
-.tutorial-button {
-    background-color: #da7e7e;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1.5em;
-    font-size: 1.2em;
-    margin-bottom: 2em;
+  .game{
+    background-color: var(--background-two);
   }
-  
-  .game-tutorial-content {
+
+  .game-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,12 +30,6 @@
     font-size: 2em;
     color: #4c4b4b;
   }
-
-  .score-change {
-    font-size: 2em;
-    color: #da7e7e;
-    font-weight: bold;
-  }
   
   .decision-boxes {
     display: flex;
@@ -58,12 +46,12 @@
   
 
   .proceed-button:hover{
-    background-color: #da7e7e;
+    background-color: var(--accent-five);
   }
   
   .proceed-button {
     margin: 100px;
-    background-color: #4c4b4b;
+    background-color: var(--accent-one);
     color: white;
     border: none;
     border-radius: 20px;
@@ -78,7 +66,7 @@
     height: 0;
     border-left: 100px solid transparent;
     border-right: 100px solid transparent;
-    border-top: 100px solid #ccc; /* Use 87px to ensure an equilateral triangle */
+    border-top: 100px solid white; /* Use 87px to ensure an equilateral triangle */
     transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
     margin-bottom: 7px;
     position: relative;
@@ -95,7 +83,7 @@
     transform: rotate(225deg);
 }
   .triangle-left:hover {
-    border-top: 100px solid #da7e7e;
+    border-top: 100px solid var(--button-one);
   }
 
   .triangle-right {
@@ -103,13 +91,13 @@
     height: 0;
     border-left: 100px solid transparent;
     border-right: 100px solid transparent;
-    border-bottom: 100px solid #ccc; /* Use 87px to ensure an equilateral triangle */
+    border-bottom: 100px solid white; /* Use 87px to ensure an equilateral triangle */
     transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
     margin-bottom: 7px;
   }
 
   .triangle-right:hover {
-    border-bottom: 100px solid #da7e7e;
+    border-bottom: 100px solid var(--button-one);
   }
 
   .column-1, .column-2, .column-3, .column-4 {

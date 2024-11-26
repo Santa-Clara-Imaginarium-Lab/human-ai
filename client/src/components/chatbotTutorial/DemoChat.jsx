@@ -15,15 +15,18 @@ function DemoChat() {
     "Exit Tutorial"
   ];
 
+  useEffect(() => { // Navigate to dashboard after last tooltip
+    if (tooltipIndex >= tooltips.length - 1) {
+      navigate('/dashboard');
+    }
+  }, [tooltipIndex]);
+
   useEffect(() => {
     const handleKeyDown = () => {
       setTooltipIndex((prevIndex) => {
         if (prevIndex + 1 < tooltips.length) {  // Update if not the last tooltip
           return prevIndex + 1;
-        }
-
-        else {   // Go to next page if last tooltip
-          navigate('/dashboard'); 
+        } else {   // Go to next page if last tooltip 
           return prevIndex;
         }
       });
@@ -61,12 +64,12 @@ function DemoChat() {
           {/* AI Response */}
           <div className="chat-bubble ai-response">
             <div className="avatar">AI</div>
-            <div className="bubble" data-tooltip={tooltipIndex === 0 ? tooltips[0] : ''}>Chatbot responses here</div>
+            <div className="bubble" data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
           </div>
 
           {/* User Response */}
           <div className="chat-bubble user-response">
-            <div className="bubble" data-tooltip={tooltipIndex === 1 ? tooltips[1] : ''}>Participant responses here</div>
+            <div className="bubble" data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
             <div className="avatar">You</div>
           </div>
         </div>
@@ -80,8 +83,8 @@ function DemoChat() {
             onChange={handleInputChange}
             className="chat-input"
           />
-          <button onClick={handleSend} className="send-button" data-tooltip={tooltipIndex === 2 ? tooltips[2] : ''}>Send</button>
-          <button onClick={handleExit} className="send-button" data-tooltip={tooltipIndex === 3 ? tooltips[3] : ''}>Exit</button>
+          <button onClick={handleSend} className="send-button" data-tooltip={tooltipIndex === 2 ? tooltips[2] : null}>Send</button>
+          <button onClick={handleExit} className="send-button" data-tooltip={tooltipIndex === 3 ? tooltips[3] : null}>Exit</button>
         </div>
       </div>
     </div>

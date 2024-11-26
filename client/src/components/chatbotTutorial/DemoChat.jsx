@@ -15,20 +15,14 @@ function DemoChat() {
   ];
 
   useEffect(() => { // Navigate to dashboard after last tooltip
-    if (tooltipIndex >= tooltips.length - 1) {
+    if (tooltipIndex >= tooltips.length) {
       navigate('/dashboard');
     }
   }, [tooltipIndex]);
 
   useEffect(() => {
     const handleKeyDown = () => {
-      setTooltipIndex((prevIndex) => {
-        if (prevIndex + 1 < tooltips.length) {  // Update if not the last tooltip
-          return prevIndex + 1;
-        } else {   // Go to next page if last tooltip 
-          return prevIndex;
-        }
-      });
+      setTooltipIndex((prevIndex) => prevIndex + 1);
     };
 
     document.addEventListener('keydown', handleKeyDown);

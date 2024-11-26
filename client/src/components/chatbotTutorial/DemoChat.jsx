@@ -3,7 +3,7 @@ import './DemoChat.css'; // Create a corresponding CSS file
 import {useNavigate } from 'react-router-dom';
 
 function DemoChat() {
-  const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
+  const [tooltipIndex, setTooltipIndex] = useState(-1); // Index of tooltip array
 
   const navigate = useNavigate();
 
@@ -52,6 +52,10 @@ function DemoChat() {
             <div className="bubble" data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
             <div className="avatar">You</div>
           </div>
+        </div>
+
+        <div className="chat-tutorial-instruction">
+          <p>Press any key to continue</p>
         </div>
 
         {/* Input Area */}

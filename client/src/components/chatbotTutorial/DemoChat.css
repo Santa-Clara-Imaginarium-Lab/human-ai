@@ -161,6 +161,27 @@
   color: white;
 }
 
+.chat-tutorial-instruction {
+  position: relative;
+  text-align: center;
+  font-family: 'Jockey One';
+  font-size: 2em;
+  color: black;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .input-area {
   display: flex;
   justify-content: center;

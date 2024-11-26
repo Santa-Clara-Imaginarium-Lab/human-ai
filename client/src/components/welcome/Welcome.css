@@ -1,43 +1,90 @@
+main {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure it takes full height */
+    display: flex; /* If it's a flex container, ensure it properly handles children */
+    flex-direction: column;
+}
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    background-color: white;
-  }
+  position: relative;
+  height: 100vh;
+  z-index: 0
+}
 
-  .welcome {
-    background-color: var(--background-one);
-  }
-  
-  .welcome-title {
-    font-size: 120px;
-    margin: 0.1em;
-    color: var(--accent-three);
-  }
-  
-  .subtitle {
-    font-size: 70px;
-    margin: 0.1em;
-    color: var(--accent-three);
-  }
-  
-  .play-button {
-    padding: 0.5em 2em;
-    font-size: 1.2em;
-    cursor: pointer;
-    background-color: var(--button-one);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    margin-top: 1em;
-    font-family: 'Chakra Petch', sans-serif;
-  }
-  
-  .play-button:hover {
-    background-color: var(--accent-five);
-  }
-  
+.welcome {
+  background-color: var(--background-one);
+}
+
+.welcome-title {
+  font-size: 120px;
+  margin: 0.1em;
+  color: var(--accent-three);
+  font-family: 'Jaro', 'Jockey One', 'Chakra Petch', sans-serif;
+  z-index: 1
+}
+
+.top-text {
+  color: white; /* remove later */
+}
+
+.bottom-text {
+}
+
+.play-button {
+  position: relative;
+  padding: 0em 0.5em;
+  font-size: 70px;
+  margin: 0em;
+  color: var(--accent-three);
+  cursor: pointer;
+  background-color: transparent;
+  border: none; /* use to check button sizes*/
+  font-family: 'Jockey One', 'Chakra Petch', sans-serif;
+  z-index: 2;
+}
+
+.button-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  z-index: 1;
+}
+
+.play-button:hover {
+  color: var(--accent-two);
+}
+
+/* Create that button highlight thing */
+.play-button::before {
+  content: '';
+  position: absolute;
+  top: 60%; /* Vertically center the rectangle */
+  left: 0.40em; /* Slightly offset from the button */
+  width: calc(110% + 20px); /* Slightly wider than the button */
+  height: 28%; /* Height of the rectangle */
+  background-color: white; /* Rectangle color */
+  z-index: -1; /* Ensures the rectangle is behind the button */
+  opacity: 0; /* Initially invisible */
+  transition: opacity 0.3s ease; /* Smooth fade-in effect */
+  pointer-events: none; /* Prevent the ::before pseudo-element from blocking the hover */
+}
+
+.play-button:hover::before {
+    opacity: 1; /* Rectangle becomes visible on hover */
+}
+
+/* Visual background stuff*/
+
+.polygon
+{
+  position: absolute;
+  top: 50%;
+	height: 200%;
+  width: 100%;
+	background: var(--background-two);
+	transform: skewY(0deg);
+  z-index: 0;
+}

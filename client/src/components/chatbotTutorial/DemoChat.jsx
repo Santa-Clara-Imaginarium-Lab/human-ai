@@ -3,7 +3,6 @@ import './DemoChat.css'; // Create a corresponding CSS file
 import {useNavigate } from 'react-router-dom';
 
 function DemoChat() {
-  const [input, setInput] = useState('');
   const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
 
   const navigate = useNavigate();
@@ -39,19 +38,6 @@ function DemoChat() {
     };
   }, []);
 
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
-
-  const handleSend = () => {
-    alert('Message Sent: ' + input); // Dummy action for now
-    setInput(''); // Clear input field after sending
-  };
-
-  const handleExit = () => {
-    navigate('/dashboard'); 
-  };
-
   return (
     <div className="chat-tutorial-page-container">
       <div className="demo-chat-container">
@@ -79,12 +65,11 @@ function DemoChat() {
           <input
             type="text"
             placeholder="Enter message"
-            value={input}
-            onChange={handleInputChange}
             className="chat-input"
+            disabled
           />
-          <button onClick={handleSend} className="send-button" data-tooltip={tooltipIndex === 2 ? tooltips[2] : null}>Send</button>
-          <button onClick={handleExit} className="send-button" data-tooltip={tooltipIndex === 3 ? tooltips[3] : null}>Exit</button>
+          <button className="send-button" data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
+          <button className="send-button" data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Exit</button>
         </div>
       </div>
     </div>

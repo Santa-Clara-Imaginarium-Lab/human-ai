@@ -176,6 +176,8 @@
   font-size: 1.2em;
   font-family: 'Jockey One';
   outline: none;
+  cursor: not-allowed;
+  background-color: white; /* override disabled input background */
 }
 
 .chat-input[type="text"]:focus {
@@ -189,7 +191,7 @@
   border-radius: 20px;
   padding: 0.3em 1em;
   font-size: 1.5em;
-  cursor: pointer;
+  cursor: not-allowed;
   margin-left: 1em;
   font-family: 'Jockey One';
 } 

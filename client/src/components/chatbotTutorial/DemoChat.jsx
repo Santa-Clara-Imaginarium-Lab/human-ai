@@ -46,12 +46,12 @@ function DemoChat() {
           {/* AI Response */}
           <div className="chat-bubble ai-response">
             <div className="avatar">AI</div>
-            <div className={`send-button ${(tooltipIndex === 0 ? ' show' : '')}`} data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
+            <div className={`bubble ${(tooltipIndex === 0 ? ' show' : '')}`} data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
           </div>
 
           {/* User Response */}
           <div className="chat-bubble user-response">
-            <div className={`send-button ${(tooltipIndex === 1 ? ' show' : '')}`} data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
+            <div className={`bubble ${(tooltipIndex === 1 ? ' show' : '')}`} data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
             <div className="avatar">You</div>
           </div>
         </div>

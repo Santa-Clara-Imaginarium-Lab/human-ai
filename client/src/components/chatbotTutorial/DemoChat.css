@@ -7,9 +7,7 @@
 [data-tooltip]::after { /* Tooltip text */
   content: attr(data-tooltip);
   position: absolute;
-  top: -3em; 
   left: 50%;
-  transform: translateX(-50%);
   background-color: white;
   color: var(--accent-three);
   font-size: 0.9em;
@@ -20,19 +18,28 @@
   pointer-events: none; 
   z-index: 100;
   opacity: 1;
-  transition: opacity 0.2s ease-in-out;
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
+  animation: bob 1s infinite;
 }
 
 [data-tooltip]::before { /* Tooltip arrow */
   content: '';
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
   z-index: 100;
+  animation: bob 1s infinite;
+}
+
+@keyframes bob {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -0.5em);
+  }
 }
 
 .bubble[data-tooltip]::before {

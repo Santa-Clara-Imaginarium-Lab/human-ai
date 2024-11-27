@@ -8,10 +8,10 @@ function DemoChat() {
   const navigate = useNavigate();
 
   const tooltips = [
-    "This is the AI's response", 
-    "This is your input message", 
-    "Send your input", 
-    "Exit Tutorial"
+    "This is one of the AI's responses", 
+    "This is one of your messages", 
+    "Send message", 
+    "Finish chatting"
   ];
 
   useEffect(() => { // Navigate to dashboard after last tooltip
@@ -26,9 +26,11 @@ function DemoChat() {
     };
 
     document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('click', handleKeyDown);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('click', handleKeyDown);
     };
   }, []);
 
@@ -44,12 +46,12 @@ function DemoChat() {
           {/* AI Response */}
           <div className="chat-bubble ai-response">
             <div className="avatar">AI</div>
-            <div className="bubble" data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
+            <div className={`send-button ${(tooltipIndex === 0 ? ' show' : '')}`} data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
           </div>
 
           {/* User Response */}
           <div className="chat-bubble user-response">
-            <div className="bubble" data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
+            <div className={`send-button ${(tooltipIndex === 1 ? ' show' : '')}`} data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
             <div className="avatar">You</div>
           </div>
         </div>
@@ -66,8 +68,8 @@ function DemoChat() {
             className="chat-input"
             disabled
           />
-          <button className="send-button" data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
-          <button className="send-button" data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Exit</button>
+          <button className={`send-button ${(tooltipIndex === 2 ? ' show' : '')}`} data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
+          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Exit</button>
         </div>
       </div>
     </div>

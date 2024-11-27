@@ -19,7 +19,7 @@
   z-index: 100;
   opacity: 1;
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
-  animation: bob 1s infinite;
+  /* animation: bob 1s infinite; */
 }
 
 [data-tooltip]::before { /* Tooltip arrow */
@@ -30,7 +30,36 @@
   border-style: solid;
   border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent; 
   z-index: 100;
-  animation: bob 1s infinite;
+  /* animation: bob 1s infinite; */
+}
+
+/* Fading effects */
+[data-tooltip].show::after { /* Tooltip text */
+  animation: fade-in 1.0s, bob 1s infinite;
+  animation-fill-mode: forwards;
+}
+
+[data-tooltip].show::before { /* Tooltip arrow */
+  animation: fade-in 1.0s, bob 1s infinite;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes bob {

@@ -28,7 +28,7 @@
   left: 50%;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
+  border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent; 
   z-index: 100;
   animation: bob 1s infinite;
 }
@@ -43,7 +43,7 @@
 }
 
 .bubble[data-tooltip]::before {
-  top: -0.5em;
+  top: -0.25em;
 }
 
 .bubble[data-tooltip]::after {
@@ -51,7 +51,7 @@
 }
 
 .send-button[data-tooltip]::before {
-  top: -0.4em;
+  top: -0.2em;
 }
 
 .send-button[data-tooltip]::after {

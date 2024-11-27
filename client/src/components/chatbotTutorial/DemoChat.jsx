@@ -1,54 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DemoChat.css'; // Create a corresponding CSS file
 import {useNavigate } from 'react-router-dom';
 
 function DemoChat() {
-  const [input, setInput] = useState('');
+  const [tooltipIndex, setTooltipIndex] = useState(-1); // Index of tooltip array
 
   const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
+  const tooltips = [
+    "This is one of the AI's responses", 
+    "This is one of your messages", 
+    "Send message", 
+    "Finish chatting"
+  ];
 
-  const handleSend = () => {
-    alert('Message Sent: ' + input); // Dummy action for now
-    setInput(''); // Clear input field after sending
-  };
+  useEffect(() => { // Navigate to dashboard after last tooltip
+    if (tooltipIndex >= tooltips.length) {
+      navigate('/dashboard');
+    }
+  }, [tooltipIndex]);
 
-  const handleExit = () => {
-    navigate('/dashboard'); 
-  };
+  useEffect(() => {
+    const handleKeyDown = () => {
+      setTooltipIndex((prevIndex) => prevIndex + 1);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('click', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('click', handleKeyDown);
+    };
+  }, []);
 
   return (
-    <div className="demo-chat-container">
-      <button className="chatbot-button">Chatbot Tutorial</button>
-      
-      <div className="chat-section">
-        {/* AI Response */}
-        <div className="chat-bubble ai-response">
-          <div className="avatar">AI</div>
-          <div className="bubble" data-tooltip="This is the AI's response">Chatbot responses here</div>
+    <div className="chat-tutorial-page-container">
+      <div className="demo-chat-container">
+        <div className="chatbot-button">
+          <div className="chatbot-shadow-button"></div>
+          <h2 className="chatbot-button-text">Chatbot Tutorial</h2>
+        </div>
+        
+        <div className="chat-section">
+          {/* AI Response */}
+          <div className="chat-bubble ai-response">
+            <div className="avatar">AI</div>
+            <div className={`send-button ${(tooltipIndex === 0 ? ' show' : '')}`} data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
+          </div>
+
+          {/* User Response */}
+          <div className="chat-bubble user-response">
+            <div className={`send-button ${(tooltipIndex === 1 ? ' show' : '')}`} data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
+            <div className="avatar">You</div>
+          </div>
         </div>
 
-        {/* User Response */}
-        <div className="chat-bubble user-response">
-          <div className="bubble" data-tooltip="This is your input message">Participant responses here</div>
-          <div className="avatar">You</div>
+        <div className="chat-tutorial-instruction">
+          <p>Press any key to continue</p>
         </div>
-      </div>
 
-      {/* Input Area */}
-      <div className="input-area">
-        <input
-          type="text"
-          placeholder="Enter message"
-          value={input}
-          onChange={handleInputChange}
-          className="chat-input"
-        />
-        <button onClick={handleSend} className="send-button" data-tooltip="Send your input">Send</button>
-        <button onClick={handleExit} className="send-button" data-tooltip="Exit Tutorial">Exit</button>
+        {/* Input Area */}
+        <div className="input-area">
+          <input
+            type="text"
+            placeholder="Enter message"
+            className="chat-input"
+            disabled
+          />
+          <button className={`send-button ${(tooltipIndex === 2 ? ' show' : '')}`} data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
+          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Exit</button>
+        </div>
       </div>
     </div>
   );

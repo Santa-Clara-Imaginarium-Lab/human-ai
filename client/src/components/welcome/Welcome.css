@@ -17,24 +17,95 @@ main {
 }
 
 .welcome-title {
-  font-size: 120px;
+  position: relative; 
+  display: inline-block;
+  text-align:center;
+  font-size: 18vh;
   margin: 0.1em;
-  color: var(--accent-three);
+  padding: 0em 0.5em 0.09em;
   font-family: 'Jaro', 'Jockey One', 'Chakra Petch', sans-serif;
-  z-index: 1
+  color: white;
+  background-color: var(--menu-bubble);
+  border-radius: 50px;
 }
 
+
+/* Says "Chatbot" */
 .top-text {
-  color: white; /* remove later */
+  position: absolute;
+  top: 4vh;
+  left:4vh;
 }
 
+
+/* Says "Co-op" */
 .bottom-text {
+  position: absolute;
+  bottom: 34vh;
+  right:20vh;
+  box-shadow: -20px 20px var(--accent-two);
+}
+
+.top-text span{
+}
+
+.top-text span::before{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  background: radial-gradient(circle, var(--accent-one) 50%, transparent 20%) 0 0 / 10px 10px; /* Dotted pattern */
+  transform: translate(20px, 20px);
+}
+
+/*Turns the bubble into a speech bubble */
+.top-text::before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 60px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 80px solid var(--menu-bubble);
+  right: 15%;
+  top: 100%;
+}
+
+/*Adds the dot shadow to the triangle part of the speech bubble */
+.top-text::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 80px;
+  right: calc(15% - 20px);
+  top: calc(100% + 20px);
+  background: radial-gradient(circle, var(--accent-one)  50%, transparent 20%) 0 0 / 10px 10px; /* Dotted pattern */
+  clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
+  z-index: -1;
+}
+
+/*Turns the second bubble into a speech bubble */
+.bottom-text:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 0px solid transparent;
+  border-right: 60px solid transparent;
+  border-top: 80px solid var(--menu-bubble);
+  right: 65%;
+  top: 100%;
+  filter: drop-shadow(-20px 20px var(--accent-two));
 }
 
 .play-button {
   position: relative;
   padding: 0em 0.5em;
-  font-size: 70px;
+  font-size: 8vh;
   margin: 0em;
   color: var(--accent-three);
   cursor: pointer;
@@ -45,6 +116,9 @@ main {
 }
 
 .button-menu {
+  position: absolute;
+  top: 50vh;
+  left: 10vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -61,23 +135,22 @@ main {
 .play-button::before {
   content: '';
   position: absolute;
-  top: 60%; /* Vertically center the rectangle */
-  left: 0.40em; /* Slightly offset from the button */
-  width: calc(110% + 20px); /* Slightly wider than the button */
-  height: 28%; /* Height of the rectangle */
-  background-color: white; /* Rectangle color */
-  z-index: -1; /* Ensures the rectangle is behind the button */
-  opacity: 0; /* Initially invisible */
-  transition: opacity 0.3s ease; /* Smooth fade-in effect */
-  pointer-events: none; /* Prevent the ::before pseudo-element from blocking the hover */
+  top: 60%;
+  left: 0.40em;
+  width: calc(110% + 15px);
+  height: 28%;
+  background-color: white;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; 
 }
 
 .play-button:hover::before {
-    opacity: 1; /* Rectangle becomes visible on hover */
+    opacity: 1;
 }
 
-/* Visual background stuff*/
-
+/* Diagonal background*/
 .polygon
 {
   position: absolute;
@@ -86,5 +159,5 @@ main {
   width: 100%;
 	background: var(--background-two);
 	transform: skewY(0deg);
-  z-index: 0;
+  z-index: -1;
 }

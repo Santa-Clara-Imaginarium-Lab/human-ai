@@ -7,8 +7,8 @@ const Welcome = () => {
 
     // Handlers for navigation
     const handlePlayClick = () => navigate('/survey');
-    const handleResearchModeClick = () => navigate('/login');
-    const handleSettingsClick = () => navigate('/settings');
+    const handleResearchModeClick = () => navigate('/');
+    const handleSettingsClick = () => window.open('http://make-everything-ok.com/', '_blank');
 
     // Update skew based on viewport dimensions
     useEffect(() => {
@@ -42,8 +42,8 @@ const Welcome = () => {
     return (
         <div className="container welcome">
             <div className="polygon"></div>
-            <h1 className="welcome-title top-text">Chatbot</h1>
-            <h1 className="welcome-title bottom-text">Coop</h1>
+            <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
+            <h1 className="welcome-title bottom-text">Co-op</h1>
             <div className="button-menu">
                 <button className="play-button" onClick={handlePlayClick}>Play</button>
                 <button className="play-button" onClick={handleResearchModeClick}>Research Mode</button>

@@ -1,7 +1,63 @@
 /* GameTutorial.css */
-  .game-tutorial {
-    background-color: var(--background-two);
-  }
+.tutorial-action{
+  padding: 0px;
+  margin-top: 0px;
+
+}
+
+.game-tutorial {
+  background-color: var(--background-two);
+}
+
+.decision-container {
+  position: relative;
+  width: 80%; /* Match the width of decision-tutorial-box */
+  display: inline-block;
+}
+
+.decision-shadow-container {
+  position: absolute;
+  background-color: var(--accent-one); /* Shadow color */
+  width: 100%;
+  top: 10px; /* Offset for the shadow */
+  left: 10px;
+  border-radius: 1em; /* Match the border-radius of decision-tutorial-box */
+  z-index: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a box shadow */
+}
+
+
+.decision-tutorial-box {
+  position: relative;
+  z-index: 1; /* Ensure it is above the shadow */
+  background-color: white; /* Match the button's background */
+  color: var(--accent-three); /* Match the text color */
+  border: 0px; /* Border to define the box */
+  border-radius: 1em; /* Rounded corners */
+  font-size: 1.2em; /* Match the button font size */
+  font-family: 'Chakra Petch', sans-serif; /* Consistent font */
+  text-align: center; /* Center-align the text */
+  line-height: 1.5; /* Improve readability */
+  width: 100%; /* Match the width of the container */
+}
+
+
+
+.decision-tutorial-box2 {
+  background-color: white; /* Match the button's background */
+  color: var(--accent-three); /* Match the text color */
+  border: 0px; /* Border to define the box */
+  border-radius: 1em; /* Rounded corners */
+  padding: 15px 20px; /* Add padding for better readability */
+  margin-top: 70px; /* Same margin as the original button */
+  font-size: 1.2em; /* Match the button font size */
+  font-family: 'Chakra Petch', sans-serif; /* Consistent font */
+  text-align: center; /* Center-align the text */
+  line-height: 1.5; /* Improve readability */
+  width: 80%; /* Restrict width to fit neatly in the layout */
+  margin-bottom: 20px;
+}
+
 
   .decision-tutorial-button {
     padding: 0.5em 2em;
@@ -35,6 +91,10 @@
     font-family: 'Chakra Petch', sans-serif;
   }
     
+  .tutorial-user-score {
+    margin-left: 70px;
+  }
+
   .tutorial-score-value {
     font-size: 2em;
     color: var(--accent-three);
@@ -74,18 +134,19 @@
   }
   
   .tutorial-proceed-button {
-    margin-top: 5em;
     background-color: var(--accent-one);
     color: white;
     border: none;
     border-radius: 20px;
     padding: 0.5em 1.5em;
+    margin: 15px;
     font-size: 1.2em;
     cursor: pointer;
     font-family: 'Chakra Petch', sans-serif;
   }
 
   .tutorial-triangle-left {
+    position: relative;
     width: 0;
     height: 0;
     border-left: 100px solid transparent;
@@ -95,11 +156,16 @@
     margin-bottom: 7px;
   }
 
+  .top {
+    border-top: 100px solid var(--button-one); /* Red for top-pointing triangles */
+  }
+
   .tutorial-triangle-left:hover {
     border-top: 100px solid var(--button-one);
   }
 
   .tutorial-triangle-right {
+    position: relative;
     width: 0;
     height: 0;
     border-left: 100px solid transparent;
@@ -109,6 +175,10 @@
     margin-bottom: 7px;
   }
 
+  .bottom {
+    border-bottom: 100px solid var(--button-one); /* Red for bottom-pointing triangles */
+  }
+
   .tutorial-triangle-right:hover {
     border-bottom: 100px solid var(--button-one);
   }
@@ -116,4 +186,56 @@
   .tutorial-column-1, .tutorial-column-2, .tutorial-column-3, .tutorial-column-4 {
     width: 105px;
   }
+
+  .triangle-number-left {
+    position: absolute; /* Position relative to the triangle */
+    top: -80px; /* Center vertically */
+    left: -10px; /* Center horizontally */
+    transform: rotate(270deg);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--score); /* Adjust for visibility */
+    text-align: center;
+    pointer-events: none; /* Prevent interaction with numbers */
+    font-size: 26px;
+  }
+
+  .triangle-number {
+    position: absolute; /* Position relative to the triangle */
+    top: 45px; /* Center vertically */
+    left: -10px; /* Center horizontally */
+    transform: rotate(270deg);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--score); /* Adjust for visibility */
+    text-align: center;
+    font-size: 26px;
+    pointer-events: none; /* Prevent interaction with numbers */
+  }
+
+  .triangle-number-left-test {
+    position: absolute; /* Position relative to the triangle */
+    top: -80px; /* Center vertically */
+    left: -10px; /* Center horizontally */
+    transform: rotate(270deg);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--score); /* Adjust for visibility */
+    text-align: center;
+    pointer-events: none; /* Prevent interaction with numbers */
+    font-size: 26px;
+  }
+  .triangle-number-test {
+    position: absolute; /* Position relative to the triangle */
+    top: 45px; /* Center vertically */
+    left: -10px; /* Center horizontally */
+    transform: rotate(270deg);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--score); /* Adjust for visibility */
+    text-align: center;
+    font-size: 26px;
+    pointer-events: none; /* Prevent interaction with numbers */
+  }
+  
 

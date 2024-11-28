@@ -13,6 +13,7 @@
   --button-one: #26244C;
   --button-two: #FBDF82;
   --option-circles: #26244C;
+  --score: white;
 }
 
 :root.pink-grey-theme {
@@ -26,6 +27,7 @@
   --button-one: #da7e7e;
   --button-two: #da7e7e;
   --option-circles: white;
+  --score: #4c4b4b;
 }
 
 * {

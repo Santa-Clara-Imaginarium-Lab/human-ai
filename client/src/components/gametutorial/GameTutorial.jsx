@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import './GameTutorial.css'; // Ensure this file contains the necessary CSS
 import { useNavigate } from 'react-router-dom';
 
@@ -32,10 +32,6 @@ function GameTutorial() {
   }); // Track highlighted triangles
   const navigate = useNavigate();
   const [isComplete, setIsComplete] = useState(false); // Track if both rounds are complete
-
-  const handleClick = () => {
-    navigate('/chatbot-tutorial'); // Navigate to the ChatbotTutorial page
-  };
 
   const handleCooperate = () => {
     if (round === 1) {
@@ -91,69 +87,55 @@ function GameTutorial() {
     });
   };
 
-    const tutorialBoxRef = useRef(null);
-    const shadowContainerRef = useRef(null);
-  
-    useEffect(() => {
-      if (tutorialBoxRef.current && shadowContainerRef.current) {
-        shadowContainerRef.current.style.height = `${tutorialBoxRef.current.offsetHeight}px`;
-      }
-    }, [tutorialText1]); // Recalculate height whenever tutorialText changes
-  
-
   return (
-    
     <div className="container game-tutorial">
       {/* Text box for tutorial */}
-      <div className="decision-container">
-      <div ref={shadowContainerRef} className="decision-shadow-container"></div>
-      <div ref={tutorialBoxRef} className="decision-tutorial-box">
-      <p>{tutorialText1}</p>
-      </div>
+      <div className="decision-tutorial-box">
+        <p>{tutorialText1}</p>
       </div>
       <div className="game-tutorial-content">
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="tutorial-horizontal-layout">
           <div className="tutorial-ai-score">
-          <p className="tutorial-score-change tutorial-ai-change">+5</p>
+          {/* <p className="tutorial-score-change tutorial-ai-change">+5</p> */}
             <h2>AI's Score: <span className="tutorial-score-value">0</span></h2>
           </div>
           <div className="tutorial-column-1">
           <div className={`tutorial-triangle-left t1 ${highlightedTriangles.t1.highlight}`}>
-              {highlightedTriangles.t1.number && <span className="triangle-number-left-test">{highlightedTriangles.t1.number}</span>}
+              {highlightedTriangles.t1.number && <span className="triangle-number-left-bottom">{highlightedTriangles.t1.number}</span>}
             </div>
           </div>
           <div className="tutorial-column-2">
           <div className={`tutorial-triangle-left t2 ${highlightedTriangles.t2.highlight}`}>
-              {highlightedTriangles.t2.number && <span className="triangle-number-left-test">{highlightedTriangles.t2.number}</span>}
+              {highlightedTriangles.t2.number && <span className="triangle-number-left-up">{highlightedTriangles.t2.number}</span>}
             </div>
             <div className={`tutorial-triangle-right t3 ${highlightedTriangles.t3.highlight}`}>
-              {highlightedTriangles.t3.number && <span className="triangle-number">{highlightedTriangles.t3.number}</span>}
+              {highlightedTriangles.t3.number && <span className="triangle-number-right-bottom">{highlightedTriangles.t3.number}</span>}
             </div>
             <div className={`tutorial-triangle-left t4 ${highlightedTriangles.t4.highlight}`}>
-              {highlightedTriangles.t4.number != null && (<span className="triangle-number-left">{highlightedTriangles.t4.number}</span>)}
+              {highlightedTriangles.t4.number != null && (<span className="triangle-number-left-bottom">{highlightedTriangles.t4.number}</span>)}
             </div>
           
           </div>
           <div className="tutorial-column-3">
           <div className={`tutorial-triangle-right t5 ${highlightedTriangles.t5.highlight}`}>
-              {highlightedTriangles.t5.number && <span className="triangle-number">{highlightedTriangles.t5.number}</span>}
+              {highlightedTriangles.t5.number && <span className="triangle-number-right-up">{highlightedTriangles.t5.number}</span>}
             </div>
             <div className={`tutorial-triangle-left t6 ${highlightedTriangles.t6.highlight}`}>
-              {highlightedTriangles.t6.number && <span className="triangle-number-left">{highlightedTriangles.t6.number}</span>}
+              {highlightedTriangles.t6.number && <span className="triangle-number-left-up">{highlightedTriangles.t6.number}</span>}
             </div>
             <div className={`tutorial-triangle-right t7 ${highlightedTriangles.t7.highlight}`}>
-              {highlightedTriangles.t7.number != null && (<span className="triangle-number">{highlightedTriangles.t7.number}</span>)}
+              {highlightedTriangles.t7.number != null && (<span className="triangle-number-right-bottom">{highlightedTriangles.t7.number}</span>)}
             </div>
           
           </div>
           <div className="tutorial-column-4">
           <div className={`tutorial-triangle-right t8 ${highlightedTriangles.t8.highlight}`}>
-              {highlightedTriangles.t8.number != null && (<span className="triangle-number">{highlightedTriangles.t8.number}</span>)}
+              {highlightedTriangles.t8.number != null && (<span className="triangle-number-right-up">{highlightedTriangles.t8.number}</span>)}
             </div>
           </div>
           <div className="tutorial-user-score">
-          <p className="tutorial-score-change tutorial-user-change">+0</p>
+          {/*<p className="tutorial-score-change tutorial-user-change">+0</p>*/}
             <h2>Your Score: <span className="tutorial-score-value">0</span></h2>
           </div>
         </div>
@@ -165,10 +147,10 @@ function GameTutorial() {
           {/* Render Cooperate and Defect buttons only if not complete */}
           {!isComplete && (
             <>
-              <button className="tutorial-proceed-button" onClick={handleCooperate}>
+              <button className="tutorial-button cooperate" onClick={handleCooperate}>
                 Cooperate
               </button>
-              <button className="tutorial-proceed-button" onClick={handleDefect}>
+              <button className="tutorial-button defect" onClick={handleDefect}>
                 Defect
               </button>
             </>

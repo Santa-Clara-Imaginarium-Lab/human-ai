@@ -240,3 +240,46 @@
     pointer-events: none; /* Prevent interaction with numbers */
   }
 
+  .ai-defect-desc {
+    position: absolute;
+    left: -100px; 
+    bottom: 20px;
+    color: var(--accent-three);
+    font-size: 14px;
+    white-space: nowrap;
+    transform: rotate(225deg);
+    font-weight: bold;
+}
+
+.ai-cooperate-desc {
+  position: absolute;
+  left: -120px; 
+  bottom: 25px;
+  color: var(--accent-three);
+  font-size: 14px;
+  white-space: nowrap;
+  transform: rotate(225deg);
+  font-weight: bold;
+}
+
+.user-defect-desc {
+  position: absolute;
+  left: -110px; 
+  top: 20px;
+  color: var(--accent-three);
+  font-size: 14px;
+  white-space: nowrap;
+  transform: rotate(315deg);
+  font-weight: bold;
+}
+
+.user-cooperate-desc {
+position: absolute;
+left: -120px; 
+top: 20px;
+color: var(--accent-three);
+font-size: 14px;
+white-space: nowrap;
+transform: rotate(315deg);
+font-weight: bold;
+}

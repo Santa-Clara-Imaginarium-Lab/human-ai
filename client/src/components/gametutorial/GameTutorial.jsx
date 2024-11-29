@@ -63,10 +63,10 @@ function GameTutorial() {
 
   const highlightRound1 = () => {
     setHighlightedTriangles({
-      t4: { highlight: 'top', number: "0" },
-      t6: { highlight: 'top', number: "-1" },
-      t7: { highlight: 'bottom', number: "0" },
-      t8: { highlight: 'bottom', number: "+3" },
+      t4: { highlight: 'top', number: "+1" },
+      t6: { highlight: 'top', number: "+0" },
+      t7: { highlight: 'bottom', number: "+1" },
+      t8: { highlight: 'bottom', number: "+5" },
       t1: { highlight: false, number: null },
       t2: { highlight: false, number: null },
       t3: { highlight: false, number: null },
@@ -80,10 +80,10 @@ function GameTutorial() {
       t6: { highlight: false, number: null },
       t7: { highlight: false, number: null },
       t8: { highlight: false, number: null },
-      t1: { highlight: 'top', number: "+3" },
-      t2: { highlight: 'top', number: "+2" },
-      t3: { highlight: 'bottom', number: "-1" },
-      t5: { highlight: 'bottom', number: "+2" },
+      t1: { highlight: 'top', number: "+5" },
+      t2: { highlight: 'top', number: "+3" },
+      t3: { highlight: 'bottom', number: "+0" },
+      t5: { highlight: 'bottom', number: "+3" },
     });
   };
 

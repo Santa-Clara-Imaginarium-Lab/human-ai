@@ -1,8 +1,8 @@
 main {
     margin: 0;
     padding: 0;
-    height: 100%; /* Ensure it takes full height */
-    display: flex; /* If it's a flex container, ensure it properly handles children */
+    height: 100%;
+    display: flex; 
     flex-direction: column;
 }
 
@@ -26,7 +26,6 @@ main {
   font-family: 'Jaro', 'Jockey One', 'Chakra Petch', sans-serif;
   color: white;
   background-color: var(--menu-bubble);
-  border-radius: 50px;
 }
 
 
@@ -36,9 +35,8 @@ main {
   top: 4vh;
   left:4vh;
   letter-spacing: 4px;
-  padding: 20px 90px;  /* Adds more padding around the text */
-  background-color: var(--menu-bubble); 
-  border-radius: 70px; /* Increase for rounder corners */
+  padding: 20px 90px;
+  border-radius: 115px;
  
 }
 
@@ -49,10 +47,9 @@ main {
   bottom: 35vh;
   right:15vh;
   letter-spacing: 4px;
-  padding: 20px 90px;  /* Adds more padding around the text */
-  background-color: var(--menu-bubble); /* Ensures background color is visible */
-  border-radius: 70px; 
-  box-shadow: -20px 20px var(--accent-two);
+  padding: 20px 90px;
+  border-radius: 115px; 
+  box-shadow: -3vh 3vh var(--accent-two);
 }
 
 .top-text span{
@@ -66,9 +63,9 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 50px;
+  border-radius: 115px;
   background: radial-gradient(circle, var(--accent-one) 50%, transparent 20%) 0 0 / 10px 10px; /* Dotted pattern */
-  transform: translate(20px, 20px);
+  transform: translate(3vh, 3vh);
 }
 
 /*Turns the bubble into a speech bubble */
@@ -90,8 +87,8 @@ main {
   position: absolute;
   width: 60px;
   height: 80px;
-  right: calc(15% - 20px);
-  top: calc(100% + 20px);
+  right: calc(15% - 3vh);
+  top: calc(100% + 3vh);
   background: radial-gradient(circle, var(--accent-one)  50%, transparent 20%) 0 0 / 10px 10px; /* Dotted pattern */
   clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
   z-index: -1;
@@ -108,7 +105,7 @@ main {
   border-top: 80px solid var(--menu-bubble);
   right: 65%;
   top: 100%;
-  filter: drop-shadow(-20px 20px var(--accent-two));
+  filter: drop-shadow(-3vh 3vh var(--accent-two));
 }
 
 .play-button {
@@ -116,10 +113,10 @@ main {
   padding: 0em 0.5em;
   font-size: 8vh;
   margin: 0em;
-  color: var(--accent-three);
+  color: var(--menu-bubble);
   cursor: pointer;
   background-color: transparent;
-  border: none; /* use to check button sizes*/
+  border: none;
   font-family: 'Jockey One', 'Chakra Petch', sans-serif;
   z-index: 2;
 }
@@ -158,6 +155,29 @@ main {
 .play-button:hover::before {
     opacity: 1;
 }
+
+/* The ">" arrow */
+.menu-arrow {
+  position: absolute;
+  left: -0.25em;
+  font-size: 8vh;
+  font-family: 'Jockey One', 'Chakra Petch', sans-serif;
+  color: var(--accent-two);
+  line-height: 3em; 
+  transition: opacity 0.18s ease, top 0.18s ease; 
+  z-index: 1; 
+  display: none;
+  pointer-events: none;
+}
+
+.menu-arrow.visible {
+  display: inline;
+}
+
+.menu-arrow.hidden {
+  display: none;
+}
+
 
 /* Diagonal background*/
 .polygon

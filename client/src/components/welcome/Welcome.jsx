@@ -1,43 +1,55 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./welcome.css";
 
 const Welcome = () => {
     const navigate = useNavigate();
+    const arrowRef = useRef(null); // Reference for the ">" arrow
+    const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
 
     // Handlers for navigation
     const handlePlayClick = () => navigate('/survey');
     const handleResearchModeClick = () => navigate('/');
     const handleSettingsClick = () => window.open('http://make-everything-ok.com/', '_blank');
 
-    // Update skew based on viewport dimensions
+    // Updates the ">" on hover
+    const updateArrowPosition = (event) => {
+        const button = event.target;
+        const arrow = arrowRef.current;
+
+        if (arrow) {
+            const buttonRect = button.getBoundingClientRect(); 
+            const menuRect = button.parentNode.getBoundingClientRect(); 
+
+            const topOffset = buttonRect.top - menuRect.top;
+            arrow.style.top = `${topOffset}px`;
+            arrow.style.lineHeight = `${buttonRect.height}px`; 
+
+            setArrowVisible(true); 
+        }
+    };
+
+    const hideArrow = () => setArrowVisible(false); // Hide the arrow when mouse leaves
+
+    // Makes background diagonal reach corner to corner
     useEffect(() => {
         const polygon = document.querySelector('.polygon');
 
-        function updateSkew() {
-            const vw = window.innerWidth; // Get the viewport width in pixels
-            const vh = window.innerHeight; // Get the viewport height in pixels
+        const updateSkew = () => {
+            const vw = window.innerWidth; 
+            const vh = window.innerHeight; 
 
-            // Calculate the angle using atan2, which works with numbers (in radians)
-            const angle = -Math.atan2(vh, vw) * (180 / Math.PI); // Convert radians to degrees
+            const angle = -Math.atan2(vh, vw) * (180 / Math.PI); 
+            polygon.style.transform = `skewY(${angle}deg)`; 
+        };
 
-            // Apply the skew to the element
-            polygon.style.transform = `skewY(${angle}deg)`;
-        }
-
-        // Update on load and on resize
-        window.addEventListener('load', updateSkew);
         window.addEventListener('resize', updateSkew);
-
-        // Call updateSkew on component mount
         updateSkew();
 
-        // Clean up event listeners on component unmount
         return () => {
-            window.removeEventListener('load', updateSkew);
             window.removeEventListener('resize', updateSkew);
         };
-    }, []); // Empty dependency array ensures this runs once after the component mounts 
+    }, []);
 
     return (
         <div className="container welcome">
@@ -45,9 +57,36 @@ const Welcome = () => {
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Co-op</h1>
             <div className="button-menu">
-                <button className="play-button" onClick={handlePlayClick}>Play</button>
-                <button className="play-button" onClick={handleResearchModeClick}>Research Mode</button>
-                <button className="play-button" onClick={handleSettingsClick}>Settings</button>
+                <div
+                    className={`menu-arrow ${isArrowVisible ? "visible" : "hidden"}`}
+                    ref={arrowRef}
+                >
+                    &gt;
+                </div>
+                <button
+                    className="play-button"
+                    onClick={handlePlayClick}
+                    onMouseEnter={updateArrowPosition}
+                    onMouseLeave={hideArrow}
+                >
+                    Start
+                </button>
+                <button
+                    className="play-button"
+                    onClick={handleResearchModeClick}
+                    onMouseEnter={updateArrowPosition}
+                    onMouseLeave={hideArrow}
+                >
+                    Research Mode
+                </button>
+                <button
+                    className="play-button"
+                    onClick={handleSettingsClick}
+                    onMouseEnter={updateArrowPosition}
+                    onMouseLeave={hideArrow}
+                >
+                    Settings
+                </button>
             </div>
         </div>
     );

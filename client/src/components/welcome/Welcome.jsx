@@ -9,7 +9,7 @@ const Welcome = () => {
 
     // Handlers for navigation
     const handlePlayClick = () => navigate('/survey');
-    const handleResearchModeClick = () => navigate('/');
+    const handleResearchModeClick = () => navigate('/login');
     const handleSettingsClick = () => window.open('http://make-everything-ok.com/', '_blank');
 
     // Updates the ">" on hover

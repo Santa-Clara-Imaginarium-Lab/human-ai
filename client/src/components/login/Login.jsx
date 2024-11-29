@@ -12,7 +12,7 @@ function Login({changeTheme}) {
     e.preventDefault();
     if (userId.trim()) {
       login(userId); // Store userId in context
-      navigate('/welcome');
+      navigate('/survey');
     } else {
       alert('Please enter a valid ID');
     }

@@ -7,6 +7,20 @@ main {
 }
 
 .container {
+  /* do not remove next 5 lines, they impact text on other pages too!
+   * 
+   * this is because (I believe) all imports in main.jsx inadvertently
+   * import the .css files they import too, causing them to be present
+   * in every page. then because every page has a top level div with class 
+   * "container", these styles are applied 
+   *
+   * we might consider reworking our CSS structure in the future (but not now) 
+   * ~ethan */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   position: relative;
   height: 100vh;
   z-index: 0

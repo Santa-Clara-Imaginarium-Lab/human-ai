@@ -98,17 +98,17 @@ function GameTutorial() {
         <div className="tutorial-horizontal-layout">
           <div className="tutorial-ai-score">
           {/* <p className="tutorial-score-change tutorial-ai-change">+5</p> */}
-            <h2>AI's Score: <span className="tutorial-score-value">0</span></h2>
+            <h2>Your Score: <span className="tutorial-score-value">0</span></h2>
           </div>
           <div className="tutorial-column-1">
           <div className={`tutorial-triangle-left t1 ${highlightedTriangles.t1.highlight}`}>
-            <span className="ai-defect-desc">AI DEFECT</span>
+            <span className="ai-defect-desc">YOU DEFECT</span>
               {highlightedTriangles.t1.number && <span className="triangle-number-left-bottom">{highlightedTriangles.t1.number}</span>}
             </div>
           </div>
           <div className="tutorial-column-2">
           <div className={`tutorial-triangle-left t2 ${highlightedTriangles.t2.highlight}`}>
-            <span className="ai-cooperate-desc">AI COOPERATE</span>
+            <span className="ai-cooperate-desc">YOU COOPERATE</span>
               {highlightedTriangles.t2.number && <span className="triangle-number-left-up">{highlightedTriangles.t2.number}</span>}
             </div>
             <div className={`tutorial-triangle-right t3 ${highlightedTriangles.t3.highlight}`}>
@@ -121,7 +121,7 @@ function GameTutorial() {
           </div>
           <div className="tutorial-column-3">
           <div className={`tutorial-triangle-right t5 ${highlightedTriangles.t5.highlight}`}>
-          <span className="user-cooperate-desc">YOU COOPERATE</span>
+          <span className="user-cooperate-desc">AI COOPERATE</span>
               {highlightedTriangles.t5.number && <span className="triangle-number-right-up">{highlightedTriangles.t5.number}</span>}
             </div>
             <div className={`tutorial-triangle-left t6 ${highlightedTriangles.t6.highlight}`}>
@@ -134,13 +134,13 @@ function GameTutorial() {
           </div>
           <div className="tutorial-column-4">
           <div className={`tutorial-triangle-right t8 ${highlightedTriangles.t8.highlight}`}>
-          <span className="user-defect-desc">YOU DEFECT</span>
+          <span className="user-defect-desc">AI DEFECT</span>
               {highlightedTriangles.t8.number != null && (<span className="triangle-number-right-up">{highlightedTriangles.t8.number}</span>)}
             </div>
           </div>
           <div className="tutorial-user-score">
           {/*<p className="tutorial-score-change tutorial-user-change">+0</p>*/}
-            <h2>Your Score: <span className="tutorial-score-value">0</span></h2>
+            <h2>AI's Score: <span className="tutorial-score-value">0</span></h2>
           </div>
         </div>
         <div className="decision-tutorial-box2">

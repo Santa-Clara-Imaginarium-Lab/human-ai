@@ -1,10 +1,10 @@
 // Initial Texts
 export const TEXT_INITIAL_1 = `
-  Let us explain the rules of the Prisoner's Dilemma. In front of you is the AI player. 
-  You both can either choose to COOPERATE or DEFECT.
+  Let's get familiar with the rules of the Prisoner's Dilemma. In front of you is the AI player. 
+  Each round, you both either choose to COOPERATE or DEFECT.
 `;
 export const TEXT_INITIAL_2 = `
-  Let's say the other player defects. What should you do?
+  Let's say the AI player defects. What should you do?
 `;
 
 // Round 1 Outcomes

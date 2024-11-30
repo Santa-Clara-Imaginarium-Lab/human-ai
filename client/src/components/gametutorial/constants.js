@@ -34,7 +34,7 @@ export const TEXT_DEFECT_2 = `
 export const TEXT_COOPERATE_AGAIN_1 = `
   Sure, seems like the right thing to do... OR IS IT?
   Because if you both cooperate, you both give up a potential two points to gain three. 
-  (score: +3 vs +3) But if you defect & they cooperate, you gain five points while they only get one. 
+  (score: +3 vs +3) But if you defect & they cooperate, you gain five points while they gain nothing. 
   (score: +5 vs +0) Therefore: you "should" still DEFECT.
 `;
 export const TEXT_COOPERATE_AGAIN_2 = `
@@ -43,7 +43,7 @@ export const TEXT_COOPERATE_AGAIN_2 = `
 export const TEXT_DEFECT_AGAIN_1 = `
   Wow, that's mean... and also the correct answer!
   Because if you both cooperate, you both give up a potential two points to gain three. 
-  (score: +3 vs +3) But if you defect & they cooperate, you gain five points while they only get one.
+  (score: +3 vs +3) But if you defect & they cooperate, you gain five points while they gain nothing.
   (score: +5 vs +0) Therefore: you "should" still DEFECT.
 `;
 

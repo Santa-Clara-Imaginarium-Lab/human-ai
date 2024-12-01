@@ -26,7 +26,7 @@ function Question() {
       setSelectedOption(''); // Reset selected option for new question
       setShowError(false); // Reset error for next question
     } else {
-        navigate('/tutorial');
+        navigate('/qualtrix');
     }
   };
 

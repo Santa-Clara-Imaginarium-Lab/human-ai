@@ -49,7 +49,7 @@
             padding-right: 20px;
 
             /* modified */
-            background-color: var(--background-one);
+            background-color: var(--button-two);
             color: black;          
 
             border-radius: 20px;
@@ -62,7 +62,7 @@
   }
 
   .user-response .avatar {
-    background: var(--background-one);
+    background: var(--button-two);
     color: black;
     margin: 0 1em 0 0.5em;
   }

@@ -168,7 +168,7 @@
 }
 
 .user-response .avatar {
-  background: var(--background-one);
+  background: var(--button-two);
   color: black;
   margin: 0 1em 0 0.5em;
 }
@@ -188,7 +188,7 @@
 }
 
 .user-response .bubble {
-  background-color: var(--background-one);
+  background: var(--button-two);
   color: black;
 }
 

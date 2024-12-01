@@ -4,6 +4,8 @@ import { IKImage } from "imagekitio-react";
 import model from '../../lib/gemini';
 import Markdown from "react-markdown"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {useNavigate, Link} from 'react-router-dom'
+
 
 const NewPrompt = ({data} ) => {
     const [question,setQuestion] = useState("");
@@ -15,8 +17,33 @@ const NewPrompt = ({data} ) => {
         aiData:{},
     }) 
 
-    // Add check for empty/undefined data
+    const navigate = useNavigate();
+
+    const chat = model.startChat({
+        history: [
+            {
+              role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
+              parts: [{ text: "You are about to play one round of the Prisoner's Dilemma with the current user. During this iteration of the Prisoner's Dilemma scores will be calculated as follows: A choice to Cooperate, while your opponent Cooperates will give you a score of +3 and your opponent a score of +3. A choice to Cooperate, while your opponent Defects will give you a score of +0 and your opponent a score of +5. A choice to Defect, while your opponent Cooperates will give you a score of +5 and your opponent a score of +0. A choice to Defect, while your opponent Defects will give you a score of +1 and your opponent a score of +1. Your task is to discuss your strategies with the player. Do not offer to explain the game's rules, history, or famous strategies. Do not give your final decision until a message beginning with [SYSTEM] is sent."}],
+            },
+            // {
+            //   role: "model",
+            //   parts: [{ text: "Great to meet you. What would you like to know?" }],
+            // },
+          ],
+          generationConfig:{
+
+          },
+        });
+
+/* 
+Original control prompt:You are about to play five rounds of the Prisoner's Dilemma with the current user. During this iteration of the Prisoner's Dilemma scores will be calculated as follows: A choice to Cooperate, while your opponent Cooperates will give you a score of +3 and your opponent a score of +3. A choice to Cooperate, while your opponent Defects will give you a score of +0 and your opponent a score of +5. A choice to Defect, while your opponent Cooperates will give you a score of +5 and your opponent a score of +0. Your task is to discuss your strategies with the player. Do not offer to explain the game's rules, history, or famous strategies with the player. 
+*/
+
+// Add check for empty/undefined data
+    console.log(data);
     if (!data) {
+      console.log("forcing response for empty data");
+      add(data.history[0].parts[0].text, true);
         return (
             <div className="message">
                 Start a new chat by typing a message below.
@@ -32,21 +59,6 @@ const NewPrompt = ({data} ) => {
         );
     }
 
-    const chat = model.startChat({
-        history: [
-            {
-              role: "user",
-              parts: [{ text: "Hello" }],
-            },
-            {
-              role: "model",
-              parts: [{ text: "Great to meet you. What would you like to know?" }],
-            },
-          ],
-          generationConfig:{
-
-          },
-        });
 
     const endRef = useRef(null);
     const formRef = useRef(null);
@@ -133,6 +145,9 @@ const NewPrompt = ({data} ) => {
   }, [data]);
 
 
+  const handleExit = () => {
+    navigate('/game'); 
+  };
 
 
     return (
@@ -150,13 +165,12 @@ const NewPrompt = ({data} ) => {
 
         {question && <div className='message user'>{question}</div>}
         {answer && <div className='message'><Markdown>{answer}</Markdown></div>}
-        <div className='endChat' ref={endRef}></div>
-            <form className='newForm' onSubmit={handleSubmit} ref={formRef}>
+        <div className="demo-chat-container" ref={endRef}></div>
+            <form className="input-area" onSubmit={handleSubmit} ref={formRef}>
                 <input id='file' type='file' multiple={false} hidden />
-                <input type="text" name='text' placeholder='Ask me anything...' />
-                <button>
-                    <img src="/arrow.png" alt="" />
-                </button>
+                <input className="chat-input official" type="text" name='text' placeholder='Enter message...' />
+                <button className="send-button official">Send</button>
+                <button className="send-button official" onClick={handleExit}>Exit</button>
             </form>
         </>
     )

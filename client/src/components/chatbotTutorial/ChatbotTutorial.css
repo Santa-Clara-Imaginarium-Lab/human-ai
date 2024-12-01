@@ -7,8 +7,10 @@
   .chatbot-subtitle {
     font-size: 60px;
     color: var(--accent-three);
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     font-family: 'Chakra Petch', sans-serif;
+    margin-right: 2em;
+    margin-left:2em;
   }
   
   .start-chat-button {

@@ -111,7 +111,10 @@
     border-radius: 20px;
     padding: 0.5em 1.5em;
     font-size: 1.2em;
-    cursor: pointer;
+  }
+
+  .tutorial-decision-button:hover{
+    cursor:pointer;
   }
   
   .tutorial-proceed-button, .tutorial-button {
@@ -149,7 +152,9 @@
   }
 
   .tutorial-triangle-left:hover {
-    border-top: 100px solid var(--button-one);
+    /*border-top: 100px solid var(--accent-five);*/
+    /*cursor: pointer;*/
+    /*opacity: 20%;*/
   }
 
   .tutorial-triangle-right {
@@ -168,7 +173,9 @@
   }
 
   .tutorial-triangle-right:hover {
-    border-bottom: 100px solid var(--button-one);
+    /*border-bottom: 100px solid var(--accent-five);*/
+    /*cursor: pointer;*/
+    /*opacity: 20%;*/
   }
 
   .tutorial-column-1, .tutorial-column-2, .tutorial-column-3, .tutorial-column-4 {

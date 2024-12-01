@@ -11,10 +11,11 @@ function Tutorial() {
 
   return (
     <div className="container tutorial-container">
-      <h2 className="tutorial-subtitle">Are you familiar with the rules of the Prisoner's Dilemma?</h2>
-      <div className="tutorial-options">
-        <button className="no-button" onClick={handleNoClick}>Take Tutorial</button>
-      </div>
+      <h3 className="tutorial-subtitle">Tutorial</h3>
+      <p className="tutorial-description">The Prisoner's Dilemma is a game based in cooperation and defection, <br></br>where you and your opponent's choices affect the scores you receive.</p>
+    <div className="tutorial-options">
+      <button className="no-button" onClick={handleNoClick}>Proceed</button>
+    </div>
     </div>
   );
 }

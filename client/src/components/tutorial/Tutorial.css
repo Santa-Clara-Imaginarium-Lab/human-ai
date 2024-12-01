@@ -4,10 +4,16 @@
   }
   
   .tutorial-subtitle {
-    margin: 20px;
-    margin-bottom: 1em;
+    margin: 10px;
+    margin-bottom: 0.15em;
     color: var(--accent-three);
     font-size: 60px;
+  }
+
+  .tutorial-description{
+    margin: 10px;
+    margin-bottom: 3.5em;
+    color: var(--accent-three);
   }
   
   .tutorial-options {

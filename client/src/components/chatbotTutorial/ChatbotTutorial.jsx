@@ -11,7 +11,7 @@ function ChatbotTutorial() {
 
     return (
     <div className="container chatbot-tutorial">
-      <h2 className="chatbot-subtitle">Now, Try Having a Conversation with the Chatbot</h2>
+      <h2 className="chatbot-subtitle">Now, try having a conversation with the chatbot you will be playing the Prisoner's Dilemma against!</h2>
       <button className="start-chat-button" onClick={handleClick}>Proceed</button>
     </div>
     );

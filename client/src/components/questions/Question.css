@@ -47,6 +47,11 @@
     border-radius: 50%;
     margin-bottom: 0.5em;
     display: inline-block;
+    cursor: pointer;
+  }
+
+  .circle:hover {
+    background-color: var(--accent-five);
   }
   
   input[type="radio"]:checked + .circle {

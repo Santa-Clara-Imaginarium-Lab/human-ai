@@ -36,7 +36,7 @@ function MainApp() {
       children: [
         {
           path: "/",
-          element: <Login changeTheme={(newTheme) => setTheme(newTheme)}/>,
+          element: <Welcome/>,
         },
         {
           element: <DashboardLayout />,
@@ -52,8 +52,8 @@ function MainApp() {
           ],
         },
         {
-          path: "/welcome",
-          element: <Welcome />,
+          path: "/login",
+          element: <Login changeTheme={(newTheme) => setTheme(newTheme)}/>,
         },
         {
           path: "/survey",

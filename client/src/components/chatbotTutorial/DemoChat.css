@@ -1,149 +1,259 @@
 /* DemoChat.css */
 /* Tooltip styles */
 [data-tooltip] {
-    position: relative;
+  position: relative;
+}
+
+[data-tooltip]::after { /* Tooltip text */
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  background-color: white;
+  color: var(--accent-three);
+  font-size: 0.9em;
+  font-family: 'Jockey One';
+  padding: 0.5em;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none; 
+  z-index: 100;
+  opacity: 1;
+  box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
+  /* animation: bob 1s infinite; */
+}
+
+[data-tooltip]::before { /* Tooltip arrow */
+  content: '';
+  position: absolute;
+  left: 50%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent; 
+  z-index: 100;
+  /* animation: bob 1s infinite; */
+}
+
+/* Fading effects */
+[data-tooltip].show::after { /* Tooltip text */
+  animation: fade-in 1.0s, bob 1s infinite;
+  animation-fill-mode: forwards;
+}
+
+[data-tooltip].show::before { /* Tooltip arrow */
+  animation: fade-in 1.0s, bob 1s infinite;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
-
-
-[data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    top: -50px; 
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: white;
-    color: var(--accent-three);
-    padding: 0.5em;
-    border-radius: 5px;
-    white-space: nowrap;
-    font-size: 0.90em;
-    pointer-events: none; 
-    z-index: 100;
+  to {
     opacity: 1;
-    transition: opacity 0.2s ease-in-out;
   }
-  
-  [data-tooltip]:hover::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
-    z-index: 100;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
   }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes bob {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -0.5em);
+  }
+}
+
+.bubble[data-tooltip]::before {
+  top: -0.25em;
+}
+
+.bubble[data-tooltip]::after {
+  top: -3em;
+}
+
+.send-button[data-tooltip]::before {
+  top: -0.2em;
+}
+
+.send-button[data-tooltip]::after {
+  top: -2.95em;
+}
+
+.chat-tutorial-page-container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background-two);
+}
 
 .demo-chat-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    background-color: var(--background-two);
-    padding: 1em;
-    box-sizing: border-box; 
-    font-family: 'Chakra Petch', sans-serif;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 1em;
+  box-sizing: border-box;
+}
   
-  .chatbot-button {
-    background-color: white;
-    color: var(--accent-three);
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1.5em;
-    font-size: 1.2em;
-    margin: 0 auto 2em auto;
-    display: inline-block; 
-    font-family: 'Chakra Petch', sans-serif;
-  }
-  
-  .chat-section {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-  
-  .chat-bubble {
-    display: flex;
-    align-items: center;
-    margin: 1em 0;
-  }
-  
-  .ai-response {
-    justify-content: flex-start;
-  }
-  
-  .user-response {
-    justify-content: flex-end;
-  }
-  
-  .avatar {
-    background-color: white;
-    color: black;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0 1em;
-  }
-  
-  .bubble {
-    padding: 1em;
-    border-radius: 20px;
-    font-family: 'Chakra Petch', sans-serif;
-    font-size: 1em;
-    max-width: 70%;
-  }
+.chatbot-button {
+  position: relative;
+  margin: 0 auto 2em auto;
+}
 
-  .ai-response .bubble {
-    background-color: var(--accent-two);
-    color: white;
-  }
-  
-  .user-response .bubble {
-    background-color: white;
-    color: white;
-  }
-  
-  .input-area {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--background-two);
-    padding: 1em;
-    box-sizing: border-box;
-  }
-  
-  .chat-input {
-    width: 80%;
-    padding: 0.5em;
-    border-radius: 20px;
-    border: 0px;
-    font-size: 1.2em;
-    font-family: 'Chakra Petch', sans-serif;
-    outline: none;
-  }
-  
-  .send-button {
-    background-color: var(--button-two);
-    color: var(--accent-three);
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1em;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-left: 1em;
-    font-family: 'Chakra Petch', sans-serif;
-  }
+.chatbot-shadow-button {
+  position: absolute;
+  background-color: var(--accent-two);
+  width: 100%;
+  height: 100%;
+  top: 10px;
+  left: 10px;
+  border-radius: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 0;
+}
 
-  .send-button:hover{
-    background-color: var(--accent-five);
-    color: white;
+.chatbot-button-text {
+  position: relative;
+  background-color: white;
+  color: var(--accent-three);
+  font-size: 1.9em;
+  font-family: 'Jaro';
+  border-radius: 2em;
+  padding: 0.5em 1.5em;
+}
+
+.chat-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.chat-bubble {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+}
+
+.ai-response {
+  justify-content: flex-start;
+}
+
+.user-response {
+  justify-content: flex-end;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  font-family: 'Jockey One';
+}
+
+.user-response .avatar {
+  background: var(--background-one);
+  color: black;
+  margin: 0 1em 0 0.5em;
+}
+
+.ai-response .avatar {
+  background-color: var(--accent-two);
+  color: white;
+  margin: 0 0.5em 0 1em;
+}
+
+.bubble {
+  padding: 1em;
+  border-radius: 20px;
+  font-family: 'Jockey One';
+  font-size: 1.3em;
+  max-width: 70%;
+}
+
+.user-response .bubble {
+  background-color: var(--background-one);
+  color: black;
+}
+
+.ai-response .bubble {
+  background-color: var(--accent-two);
+  color: white;
+}
+
+.chat-tutorial-instruction {
+  position: relative;
+  text-align: center;
+  font-family: 'Jockey One';
+  font-size: 2em;
+  color: black;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.input-area {
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+}
+
+.chat-input {
+  width: 80%;
+  padding: 0.5em;
+  border-radius: 20px;
+  /* border: 1px solid #ccc; */
+  border: 0px;
+  font-size: 1.2em;
+  font-family: 'Jockey One';
+  outline: none;
+  cursor: not-allowed;
+  background-color: white; /* override disabled input background */
+}
+
+.chat-input[type="text"]:focus {
+  border-color: var(--background-two);
+}
+
+.send-button {
+  background-color: var(--button-two);
+  color: var(--accent-three);
+  border: none;
+  border-radius: 20px;
+  padding: 0.3em 1em;
+  font-size: 1.5em;
+  cursor: not-allowed;
+  margin-left: 1em;
+  font-family: 'Jockey One';
+} 
+
+.send-button:hover{
+  background-color: var(--accent-one);
+}
   

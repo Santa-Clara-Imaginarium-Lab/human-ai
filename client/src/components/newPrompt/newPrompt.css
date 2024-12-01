@@ -1,7 +1,4 @@
-.endChat{
-    padding-bottom: 80px;
-  }
-    .newForm{
+    /* .newForm{
       width: 97%;
       position: absolute;
       bottom: 20px;
@@ -41,4 +38,8 @@
           height: 25px;
         }
       }
-    }
+    } */
+
+.official {
+  cursor: auto !important;
+}

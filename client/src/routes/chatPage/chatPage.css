@@ -7,7 +7,7 @@
    
     .wrapper{
       margin-top: 10px;
-      margin-bottom: 100px;
+      margin-bottom: 10px;
       flex:1;
       overflow-y: auto;
       width: 100%;
@@ -26,10 +26,20 @@
         }
   
         .message{
+          /* copied from DemoChat.css */
+          /* padding: 1em; */
+          /* border-radius: 20px; */
+          font-family: 'Jockey One';
+          font-size: 1.3em;
+          max-width: 70%;
+
           padding-left: 30px;
           padding-right: 20px;
+
+          /* modified */
           background-color: var(--accent-two);
           color: white;
+        
           border-radius: 20px;
           max-width: 80%;
           align-self: flex-start;
@@ -37,8 +47,11 @@
           &.user{
             padding-left: 20px;
             padding-right: 20px;
-            background-color: white;
-            color: var(--accent-three);
+
+            /* modified */
+            background-color: var(--background-one);
+            color: black;          
+
             border-radius: 20px;
             max-width: 80%;
             align-self: flex-end;
@@ -46,4 +59,20 @@
         }
       }
     }
+  }
+
+  .user-response .avatar {
+    background: var(--background-one);
+    color: black;
+    margin: 0 1em 0 0.5em;
+  }
+  
+  .ai-response .avatar {
+    background-color: var(--accent-two);
+    color: white;
+    margin: 0 0.5em 0 1em;
+  }
+  
+  .hide {
+    display: none !important;
   }

@@ -39,13 +39,23 @@ const ChatPage = () => {
                   lqip={{ active: true, quality: 20 }}
                 />
               )}
-              <div
+              <div className={"chat-bubble" + (message.role === "user" ? "  user-response" : " ai-response")}>
+                {/* AI bubble */}
+                <div className={"avatar" + (message.role === "user" ? " hide" : "")}>
+                  AI
+                </div>
+                <div
                 className={
                   message.role === "user" ? "message user" : "message"
                 }
                 key={i}
-              >
-                <Markdown>{message.parts[0].text}</Markdown>
+                >
+                  <Markdown>{message.parts[0].text}</Markdown>
+                </div>
+                {/* You bubble */}
+                <div className={"avatar" + (message.role === "user" ? "" : " hide")}>
+                  You
+                </div>
               </div>
             </>
           ))}

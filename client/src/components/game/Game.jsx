@@ -46,6 +46,7 @@ function Game() {
           <button className="proceed-button">Cooperate</button>
           <button className="proceed-button">Defect</button>
         </div>
+        <div><button className="proceed-button" onClick={() => navigate('/survey')}>Proceed</button></div>
       </div>
     </div>
   );

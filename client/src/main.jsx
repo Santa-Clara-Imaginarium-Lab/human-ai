@@ -37,7 +37,7 @@ function MainApp() {
       children: [
         {
           path: "/",
-          element: <Welcome/>,
+          element: <Welcome changeTheme={(newTheme) => setTheme(newTheme)}/>,
         },
         {
           element: <DashboardLayout />,

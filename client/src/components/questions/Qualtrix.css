@@ -1,6 +1,5 @@
 .qualtrix-container {
     font-family: Arial, sans-serif;
-    padding: 20px;
     max-width: 800px;
     margin: auto;
     text-align: center;
@@ -71,46 +70,5 @@
     min-height: 80px; /* Ensure a minimum height for vertical alignment */
     display: flex; /* Flex layout for better alignment */
     align-items: center; /* Vertically align text */
-  }
-  
-  
-  .circle-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-  }
-  
-  input[type="radio"] {
-    display: none;
-  }
-  
-  .circle {
-    width: 20px;
-    height: 20px;
-    background-color: #ddd;
-    border-radius: 50%;
-    display: inline-block;
-    transition: 0.2s ease;
-    cursor: pointer;
-  }
-  
-  input[type="radio"]:checked + .circle {
-    background-color: #007bff;
-  }
-  
-  .submit-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
   }
   

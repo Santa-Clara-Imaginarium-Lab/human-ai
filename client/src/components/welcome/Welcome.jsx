@@ -2,15 +2,20 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "./welcome.css";
 
-const Welcome = () => {
+const Welcome = ({changeTheme}) => {
     const navigate = useNavigate();
     const arrowRef = useRef(null); // Reference for the ">" arrow
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
 
     // Handlers for navigation
-    const handlePlayClick = () => navigate('/survey');
+    const handlePlayClick = () => navigate('/login');
     const handleResearchModeClick = () => navigate('/login');
     const handleSettingsClick = () => window.open('http://make-everything-ok.com/', '_blank');
+
+    const [menuOpen, setMenuOpen] = useState(false);
+    const toggleMenu = () => {
+      setMenuOpen(!menuOpen);
+    };
 
     // Updates the ">" on hover
     const updateArrowPosition = (event) => {
@@ -53,6 +58,19 @@ const Welcome = () => {
 
     return (
         <div className="container welcome">
+                        <div className="menu-container">
+        <button className="menu-button" onClick={toggleMenu}>
+          ☰
+        </button>
+        {menuOpen && (
+          <div className="dropdown-menu">
+            <ul>
+              <li onClick={() => changeTheme('yellow-blue-theme')}>Yellow-Blue Theme</li>
+              <li onClick={() => changeTheme('pink-grey-theme')}>Pink-Grey Theme</li>
+            </ul>
+          </div>
+        )}
+      </div>
             <div className="polygon"></div>
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Co-op</h1>

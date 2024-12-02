@@ -3,8 +3,22 @@
   background-color: var(--background-one);
 }
 
+.survey-shadow-container {
+  background-color: white;
+  border-radius: 3em;
+  box-shadow: 10px 10px 0 0 var(--accent-one);
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Center align content horizontally */
+  justify-content: center;  /* Center align content vertically */
+  padding: 40px 20px; /* Add padding for spacing */
+  position: relative; /* Position context for the shadow */
+  width: 65%;
+}
+
 .survey-button {
     padding: 0.5em 2em;
+    font-weight: bold;
     font-size: 1.2em;
     cursor: pointer;
     background-color: var(--button-one);
@@ -12,12 +26,15 @@
     border: none;
     border-radius: 20px;
     transition: background-color 0.3s ease;
-    margin-top: 1em;
+    margin-top: 40px;
     font-family: 'Chakra Petch', sans-serif;
+    box-shadow: 0.3em 0.3em 0 0 var(--accent-two);
   }
 
-  .survey-button:hover {
-    background-color: var(--accent-five);
+  .survey-button:active {
+    /* Simulate the button being pressed */
+    transform: translate(0.3em, 0.3em); /* Move the button down */
+    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
  .survey-subtitle {

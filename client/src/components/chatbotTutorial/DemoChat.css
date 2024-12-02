@@ -171,12 +171,14 @@
   background: var(--button-two);
   color: black;
   margin: 0 1em 0 0.5em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .ai-response .avatar {
   background-color: var(--accent-two);
   color: white;
   margin: 0 0.5em 0 1em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .bubble {
@@ -185,6 +187,7 @@
   font-family: 'Jockey One';
   font-size: 1.3em;
   max-width: 70%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .user-response .bubble {

@@ -58,7 +58,7 @@
     padding: 0.5em 1.5em;
     font-size: 1.2em;
     cursor: pointer;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Jockey One';
   }
 
   .triangle-left {
@@ -112,4 +112,8 @@
 
   .action {
     margin-top: 30px;
+  }
+
+  .unavailable {
+    font-family: 'Jockey One';
   }

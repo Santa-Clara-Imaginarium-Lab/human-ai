@@ -27,7 +27,7 @@
     border-radius: 20px;
     transition: background-color 0.3s ease;
     margin-top: 40px;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Jockey One';
     box-shadow: 0.3em 0.3em 0 0 var(--accent-two);
   }
 
@@ -41,4 +41,5 @@
     font-size: 60px;
     margin: 0.1em;
     color: var(--accent-three);
+    font-family: 'Jockey One';
   }

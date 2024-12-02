@@ -42,11 +42,14 @@ function Game() {
             <h2>Your Score: <span className="score-value">0</span></h2>
           </div>
         </div>
-        <div className="action">
+        <div className="action" hidden>
           <button className="proceed-button">Cooperate</button>
           <button className="proceed-button">Defect</button>
         </div>
         <div><button className="proceed-button" onClick={() => navigate('/survey')}>Proceed</button></div>
+        <div className="unavailable">
+          <p>The functionality for this page is not yet available. Please tell the researcher if you would "COOPERATE" or "DEFECT".</p>
+        </div>
       </div>
     </div>
   );

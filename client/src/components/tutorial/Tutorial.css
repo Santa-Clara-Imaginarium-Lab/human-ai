@@ -8,11 +8,13 @@
     margin-bottom: 1em;
     color: var(--accent-three);
     font-size: 60px;
+    font-family: 'Jockey One';
   }
   
   .tutorial-options {
     display: flex;
     gap: 1em;
+    font-family: 'Jockey One';
   }
   
   .yes-button, .no-button {
@@ -23,7 +25,8 @@
     border-radius: 20px;
     font-size: 1.2em;
     cursor: pointer;
-    font-family: 'Chakra Petch', sans-serif;
+    /* font-family: 'Chakra Petch', sans-serif; */
+    font-family: 'Jockey One';
   }
   
   .yes-button:hover, .no-button:hover {

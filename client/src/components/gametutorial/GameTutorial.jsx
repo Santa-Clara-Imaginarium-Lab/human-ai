@@ -98,7 +98,7 @@ function GameTutorial() {
         <div className="tutorial-horizontal-layout">
           <div className="tutorial-ai-score">
           {/* <p className="tutorial-score-change tutorial-ai-change">+5</p> */}
-            <h2>Your Score: <span className="tutorial-score-value">0</span></h2>
+            {/* <h2>Your Score: <span className="tutorial-score-value">0</span></h2> NOT FUNCTIONAL IN TIME */}
           </div>
           <div className="tutorial-column-1">
           <div className={`tutorial-triangle-left t1 ${highlightedTriangles.t1.highlight}`}>
@@ -140,7 +140,7 @@ function GameTutorial() {
           </div>
           <div className="tutorial-user-score">
           {/*<p className="tutorial-score-change tutorial-user-change">+0</p>*/}
-            <h2>AI's Score: <span className="tutorial-score-value">0</span></h2>
+            {/* <h2>AI's Score: <span className="tutorial-score-value">0</span></h2> NOT FUNCTIONAL IN TIME */}
           </div>
         </div>
         <div className="decision-tutorial-box2">

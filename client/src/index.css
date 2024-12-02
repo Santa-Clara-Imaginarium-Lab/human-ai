@@ -3,6 +3,22 @@
 }
 
 :root.yellow-blue-theme {
+  --background-one: #fdd700;
+  --background-two: #00adfd;
+  --accent-one: #fdd700;
+  --accent-two: #00adfd;
+  --accent-three: black;
+  --accent-four: white;
+  --accent-five: grey;
+  --button-one: #00adfd;
+  --button-two: #fdd700;
+  --menu-bubble: black;
+  --option-circles: black;
+  --score: white;
+  --button-shadow: #00adfd;
+}
+
+:root.yellow-blue-theme-1-1 {
   --background-one: #FBDF82;
   --background-two: #99D6EA;
   --accent-one: #FFB703;
@@ -19,6 +35,22 @@
 }
 
 :root.pink-grey-theme {
+  --background-one: #da7e7e;
+  --background-two: #4c4b4b;
+  --accent-one: #da7e7e;
+  --accent-two: #4c4b4b;
+  --accent-three: black;
+  --accent-four: white;
+  --accent-five: grey;
+  --button-one: #4c4b4b;
+  --button-two: #da7e7e;
+  --menu-bubble: black;
+  --option-circles: black;
+  --score: white;
+  --button-shadow: #da7e7e;
+}
+
+:root.pink-grey-theme-1-1 {
   --background-one: #E4E4E4;
   --background-two: #E4E4E4;
   --accent-one: #da7e7e;
@@ -28,10 +60,12 @@
   --accent-five: #4c4b4b;
   --button-one: #da7e7e;
   --button-two: #da7e7e;
-  --option-circles: white;
+  --menu-bubble: #4c4b4b;
+  --option-circles: #4c4b4b;
   --score: #4c4b4b;
   --button-shadow: #da7e7e;
 }
+
 
 * {
   padding: 0;

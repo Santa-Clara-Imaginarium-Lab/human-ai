@@ -205,8 +205,8 @@
 }
 
 .ai-response .bubble {
-  background-color: var(--accent-two);
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 .chat-tutorial-instruction {

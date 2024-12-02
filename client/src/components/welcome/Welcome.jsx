@@ -162,7 +162,7 @@ const Welcome = ({changeTheme}) => {
         <div className="container welcome">
         <div className="menu-container">
         <input type="text" id="theme-input" onKeyDown={handleEnter} placeholder="{researcher code} {combo}" />
-        <button className="menu-button" onClick={toggleMenu}>
+        {/* <button className="menu-button" onClick={toggleMenu}>
           ☰
         </button>
         {menuOpen && (
@@ -172,7 +172,7 @@ const Welcome = ({changeTheme}) => {
               <li onClick={() => changeTheme('pink-grey-theme')}>Pink-Grey Theme</li>
             </ul>
           </div>
-        )}
+        )} */}
       </div>
             <div className="polygon"></div>
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>

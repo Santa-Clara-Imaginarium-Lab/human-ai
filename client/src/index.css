@@ -18,7 +18,7 @@
   --button-shadow: #00adfd;
 }
 
-:root.yellow-blue-theme-1-1 {
+:root.yellow-blue-theme-old {
   --background-one: #FBDF82;
   --background-two: #99D6EA;
   --accent-one: #FFB703;
@@ -34,7 +34,7 @@
   --button-shadow: #089ACA;
 }
 
-:root.pink-grey-theme {
+:root.pink-grey-theme-old {
   --background-one: #da7e7e;
   --background-two: #4c4b4b;
   --accent-one: #da7e7e;
@@ -47,22 +47,6 @@
   --menu-bubble: black;
   --option-circles: black;
   --score: white;
-  --button-shadow: #da7e7e;
-}
-
-:root.red-green-theme-2-1 {
-  --background-one: #E4E4E4;
-  --background-two: #E4E4E4;
-  --accent-one: #da7e7e;
-  --accent-two: #4c4b4b;
-  --accent-three: #4c4b4b;
-  --accent-four: #4c4b4b;
-  --accent-five: #4c4b4b;
-  --button-one: #da7e7e;
-  --button-two: #da7e7e;
-  --menu-bubble: #4c4b4b;
-  --option-circles: #4c4b4b;
-  --score: #4c4b4b;
   --button-shadow: #da7e7e;
 }
 

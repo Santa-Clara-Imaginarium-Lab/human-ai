@@ -45,8 +45,8 @@ function GameTutorial() {
       setTutorialText1(TEXT_COOPERATE_1);
       setTutorialText2(TEXT_COOPERATE_2);
       setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
-      setUserScore(userScore + 5); // Increase user score
-      setAiScore(aiScore + 0); // AI score doesn't change in this case
+      setUserScore(userScore + 0); // Increase user score
+      setAiScore(aiScore + 5); // AI score doesn't change in this case
       setRound(2); // Move to Round 2
     } else if (round === 2) {
       highlightRound2();
@@ -73,8 +73,8 @@ function GameTutorial() {
       setTutorialText1(TEXT_DEFECT_AGAIN_1);
       setTutorialText2(TEXT_DEFECT_AGAIN_2);
       setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
-      setUserScore(userScore + 3); // Increase user score
-      setAiScore(aiScore + 5); // AI score increases more
+      setUserScore(userScore + 5); // Increase user score
+      setAiScore(aiScore + 0); // AI score increases more
       setIsComplete(true); // Mark as complete after Round 2
     }
   };

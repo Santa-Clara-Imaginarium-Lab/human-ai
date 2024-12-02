@@ -1,4 +1,65 @@
 /* Game.css */
+
+.ai-defect-desc {
+  position: absolute;
+  left: -100px; 
+  bottom: 20px;
+  color: var(--accent-three);
+  font-size: 14px;
+  white-space: nowrap;
+  transform: rotate(225deg);
+  font-weight: bold;
+}
+
+.ai-cooperate-desc {
+  position: absolute;
+  left: -120px; 
+  bottom: 25px;
+  color: var(--accent-three);
+  font-size: 14px;
+  white-space: nowrap;
+  transform: rotate(225deg);
+  font-weight: bold;
+}
+
+.user-defect-desc {
+  position: absolute;
+  left: -110px; 
+  top: 20px;
+  color: var(--accent-three);
+  font-size: 14px;
+  white-space: nowrap;
+  transform: rotate(315deg);
+  font-weight: bold;
+}
+
+.user-cooperate-desc {
+position: absolute;
+left: -120px; 
+top: 20px;
+color: var(--accent-three);
+font-size: 14px;
+white-space: nowrap;
+transform: rotate(315deg);
+font-weight: bold;
+}
+
+.game-log {
+  margin-top: 20px;
+  width: 80%;
+  text-align: center;
+  font-family: 'Chakra Petch', sans-serif;
+  color: var(--accent-five);
+  background-color: var(--background-one);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.game-log p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
   .game{
     background-color: var(--background-two);
   }

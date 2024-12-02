@@ -83,7 +83,7 @@
           border: none;
           outline: none;
           color: var(--accent-three);
-          font-family: 'Chakra Petch', sans-serif;
+          font-family: var(--universal-font);
         }
         button {
           background-color: var(--accent-five);

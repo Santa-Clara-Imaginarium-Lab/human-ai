@@ -97,7 +97,7 @@
   font-size: 80px;
   margin: 0 0 0.3em 0;
   color: var(--accent-three);
-  font-family: 'Jaro';
+  font-family: var(--universal-font);
 }
 
 .login-form {
@@ -113,7 +113,7 @@
   border-radius: 20px;
   border: 1px solid #ccc;
   outline: none;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
   width: 250px;
   transition: border-color 0.3s ease;
 }
@@ -130,11 +130,14 @@
   color: white;
   border: none;
   border-radius: 20px;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
+  box-shadow: 0.3em 0.3em 0 0 black;
 }
 
-.login-button:hover {
-  background-color: var(--accent-five);
+.login-button:active {
+  /* Simulate the button being pressed */
+  transform: translate(0.3em, 0.3em); /* Move the button down */
+  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
 }
 
 .login-tip {
@@ -147,7 +150,7 @@
 }
 
 .login-tip p {
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
   color: var(--accent-three);
 }
 

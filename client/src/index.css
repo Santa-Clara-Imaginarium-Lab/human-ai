@@ -1,5 +1,5 @@
 :root {
-  --universal-font: 'Chakra Petch', sans-serif;
+  --universal-font: 'Jockey One';
 }
 
 /* better approach: update global c1 and c2 variables
@@ -588,7 +588,7 @@
 body {
   background-color: white;
   color: var(--text-color);
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: var(--universal-font);
 }
 
 a {

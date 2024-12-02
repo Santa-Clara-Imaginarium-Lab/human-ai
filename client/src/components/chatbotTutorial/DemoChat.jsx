@@ -37,10 +37,9 @@ function DemoChat() {
   return (
     <div className="chat-tutorial-page-container">
       <div className="demo-chat-container">
-        <div className="chatbot-button">
-          <div className="chatbot-shadow-button"></div>
-          <h2 className="chatbot-button-text">Chatbot Tutorial</h2>
-        </div>
+        <button className="chatbot-button">
+          Chatbot Tutorial
+        </button>
         
         <div className="chat-section">
           {/* AI Response */}

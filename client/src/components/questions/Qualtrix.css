@@ -1,5 +1,5 @@
 .qualtrix-container {
-    font-family: Arial, sans-serif;
+  font-family: var(--universal-font);
     max-width: 800px;
     margin: auto;
     text-align: center;

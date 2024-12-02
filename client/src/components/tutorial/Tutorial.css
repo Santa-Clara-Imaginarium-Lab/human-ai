@@ -2,19 +2,32 @@
   .tutorial-container {
     background-color: var(--background-one);
   }
+
+  .survey-shadow-container {
+    background-color: white;
+    border-radius: 3em;
+    box-shadow: 10px 10px 0 0 var(--accent-one);
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Center align content horizontally */
+    justify-content: center;  /* Center align content vertically */
+    padding: 40px 20px; /* Add padding for spacing */
+    position: relative; /* Position context for the shadow */
+    width: 65%;
+  }
   
   .tutorial-subtitle {
     margin: 20px;
     margin-bottom: 1em;
     color: var(--accent-three);
     font-size: 60px;
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
   }
   
   .tutorial-options {
     display: flex;
     gap: 1em;
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
   }
   
   .yes-button, .no-button {
@@ -25,11 +38,14 @@
     border-radius: 20px;
     font-size: 1.2em;
     cursor: pointer;
-    /* font-family: 'Chakra Petch', sans-serif; */
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 black;
+  }
+
+  .no-button:active {
+    /* Simulate the button being pressed */
+    transform: translate(0.3em, 0.3em); /* Move the button down */
+    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
   
-  .yes-button:hover, .no-button:hover {
-    background-color: var(--accent-five);
-  }
   

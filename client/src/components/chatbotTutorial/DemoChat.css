@@ -11,7 +11,7 @@
   background-color: white;
   color: var(--accent-three);
   font-size: 0.9em;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
   padding: 0.5em;
   border-radius: 5px;
   white-space: nowrap;
@@ -110,6 +110,15 @@
 .chatbot-button {
   position: relative;
   margin: 0 auto 2em auto;
+  margin-top: 15px;
+  padding: 10px 50px;
+  font-weight: bold;
+  font-size: 30px;
+  background-color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: var(--universal-font);
+  box-shadow: 0.3em 0.3em 0 0 black;
 }
 
 .chatbot-shadow-button {
@@ -120,7 +129,7 @@
   top: 10px;
   left: 10px;
   border-radius: 2em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px black;
   z-index: 0;
 }
 
@@ -129,7 +138,7 @@
   background-color: white;
   color: var(--accent-three);
   font-size: 1.9em;
-  font-family: 'Jaro';
+  font-family: var(--universal-font);
   border-radius: 2em;
   padding: 0.5em 1.5em;
 }
@@ -164,7 +173,7 @@
   align-items: center;
   font-size: 1.5em;
   font-weight: bold;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
 }
 
 .user-response .avatar {
@@ -175,8 +184,8 @@
 }
 
 .ai-response .avatar {
-  background-color: var(--accent-two);
-  color: white;
+  background-color: white;
+  color: black;
   margin: 0 0.5em 0 1em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
@@ -184,7 +193,7 @@
 .bubble {
   padding: 1em;
   border-radius: 20px;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
   font-size: 1.3em;
   max-width: 70%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -203,7 +212,7 @@
 .chat-tutorial-instruction {
   position: relative;
   text-align: center;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
   font-size: 2em;
   color: black;
   animation: pulse 1s infinite;
@@ -234,7 +243,7 @@
   /* border: 1px solid #ccc; */
   border: 0px;
   font-size: 1.2em;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
   outline: none;
   cursor: not-allowed;
   background-color: white; /* override disabled input background */
@@ -253,10 +262,12 @@
   font-size: 1.5em;
   cursor: not-allowed;
   margin-left: 1em;
-  font-family: 'Jockey One';
+  font-family: var(--universal-font);
+  box-shadow: 0.3em 0.3em 0 0 black;
 } 
-
-.send-button:hover{
-  background-color: var(--accent-one);
-}
   
+.send-button:active {
+  /* Simulate the button being pressed */
+  transform: translate(0.3em, 0.3em); /* Move the button down */
+  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+}

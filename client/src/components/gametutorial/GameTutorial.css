@@ -18,13 +18,12 @@
   border: 0px; /* Border to define the box */
   border-radius: 10px; /* Rounded corners */
   font-size: 1.2em; /* Match the button font size */
-  font-family: 'Chakra Petch', sans-serif; /* Consistent font */
+  font-family: var(--universal-font);
   text-align: center; /* Center-align the text */
   line-height: 1.5; /* Improve readability */
   width: 80%; /* Match the width of the container */
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
-  margin-bottom: 80px;
-  font-family: 'Jockey One';
+  margin-bottom: 90px;
 }
 
 
@@ -36,13 +35,12 @@
   padding: 15px; /* Add padding for better readability */
   margin-top: 70px; /* Same margin as the original button */
   font-size: 1.2em; /* Match the button font size */
-  font-family: 'Chakra Petch', sans-serif; /* Consistent font */
+  font-family: var(--universal-font);
   text-align: center; /* Center-align the text */
   line-height: 1.5; /* Improve readability */
   width: 80%; /* Restrict width to fit neatly in the layout */
   margin-bottom: 20px;
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
-  font-family: 'Jockey One';
 }
 
 
@@ -75,7 +73,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: var(--universal-font);
   }
     
   .tutorial-user-score {
@@ -125,12 +123,11 @@
     margin: 15px;
     font-size: 1.2em;
     cursor: pointer;
-    font-family: 'Chakra Petch', sans-serif;
-    box-shadow: 0.3em 0.3em 0 0 var(--button-shadow);
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 var(--c1);
   }
 
-  .proceed-button:active, .tutorial-button:active {
+  .tutorial-proceed-button:active, .tutorial-button:active {
     /* Simulate the button being pressed */
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
@@ -268,7 +265,7 @@
 .user-defect-desc {
   position: absolute;
   left: -110px; 
-  top: 20px;
+  top: 30px;
   color: var(--accent-three);
   font-size: 14px;
   white-space: nowrap;
@@ -279,10 +276,15 @@
 .user-cooperate-desc {
 position: absolute;
 left: -120px; 
-top: 20px;
+top: 30px;
 color: var(--accent-three);
 font-size: 14px;
 white-space: nowrap;
 transform: rotate(315deg);
 font-weight: bold;
+}
+
+.highlight {
+  font-weight: bold;
+  color: white; /* Yellow */
 }

@@ -3,12 +3,26 @@
   .chatbot-tutorial {
     background-color: var(--background-one);
   }
+
+
+.tutorial-shadow-container {
+  background-color: white;
+  border-radius: 3em;
+  box-shadow: 10px 10px 0 0 var(--accent-one);
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Center align content horizontally */
+  justify-content: center;  /* Center align content vertically */
+  padding: 40px 20px; /* Add padding for spacing */
+  position: relative; /* Position context for the shadow */
+  width: 65%;
+}
   
   .chatbot-subtitle {
+    padding: 60px;
     font-size: 60px;
     color: var(--accent-three);
-    margin-bottom: 2em;
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
   }
   
   .start-chat-button {
@@ -19,10 +33,13 @@
     padding: 0.5em 1.5em;
     font-size: 1.2em;
     cursor: pointer;
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 black;
   }
   
-  .start-chat-button:hover {
-    background-color: var(--accent-five);
+  .start-chat-button:active {
+    /* Simulate the button being pressed */
+    transform: translate(0.3em, 0.3em); /* Move the button down */
+    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
   

@@ -1,9 +1,12 @@
 /* Game.css */
   .game{
     background-color: var(--background-two);
+    padding: 0px;
+    margin: 0px;
   }
 
   .game-content {
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,15 +23,16 @@
 }
 
   .ai-score, .user-score {
+    color: var(--accent-three);
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: var(--universal-font);
   }
   
   .score-value {
     font-size: 2em;
-    color: #4c4b4b;
+    color: var(--accent-three);
   }
   
   .decision-boxes {
@@ -44,21 +48,23 @@
     align-items: center;
   }
   
-
-  .proceed-button:hover{
-    background-color: var(--accent-five);
-  }
-  
   .proceed-button {
     margin: 100px;
-    background-color: var(--accent-one);
+    background-color: var(--accent-three);
     color: white;
     border: none;
     border-radius: 20px;
     padding: 0.5em 1.5em;
     font-size: 1.2em;
     cursor: pointer;
-    font-family: 'Jockey One';
+    box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+    font-family: var(--universal-font);
+  }
+
+  .proceed-button:active {
+    /* Simulate the button being pressed */
+    transform: translate(0.3em, 0.3em); /* Move the button down */
+    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
   .triangle-left {
@@ -76,15 +82,15 @@
     left: -120px; 
 /* Adjust this value to position the text */
     color: #4c4b4b;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: var(--universal-font);
     /* Optional styling */
     font-size: 18px;
     white-space: nowrap;
     transform: rotate(225deg);
 }
-  .triangle-left:hover {
+  /* .triangle-left:hover {
     border-top: 100px solid var(--button-one);
-  }
+  } */
 
   .triangle-right {
     width: 0;
@@ -96,9 +102,9 @@
     margin-bottom: 7px;
   }
 
-  .triangle-right:hover {
+  /* .triangle-right:hover {
     border-bottom: 100px solid var(--button-one);
-  }
+  } */
 
   .column-1, .column-2, .column-3, .column-4 {
     width: 105px;
@@ -113,7 +119,16 @@
   .action {
     margin-top: 30px;
   }
+  
+  .triangle-left.highlight {
+    border-top: 100px solid var(--button-two);
+  }
+  
+  .triangle-right.highlight {
+    border-bottom: 100px solid var(--button-two);
+  }
 
-  .unavailable {
-    font-family: 'Jockey One';
+  .highlight {
+    font-weight: bold;
+    color: white; /* Yellow */
   }

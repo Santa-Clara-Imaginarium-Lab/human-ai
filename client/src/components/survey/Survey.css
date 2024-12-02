@@ -27,8 +27,8 @@
     border-radius: 20px;
     transition: background-color 0.3s ease;
     margin-top: 40px;
-    font-family: 'Jockey One';
-    box-shadow: 0.3em 0.3em 0 0 var(--accent-two);
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 black;
   }
 
   .survey-button:active {
@@ -41,5 +41,5 @@
     font-size: 60px;
     margin: 0.1em;
     color: var(--accent-three);
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
   }

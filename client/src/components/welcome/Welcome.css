@@ -33,7 +33,7 @@ main {
   font-size: 19vh;
   margin: 0.1em;
   padding: 0em 0.5em 0.09em;
-  font-family: 'Jaro', 'Jockey One', 'Chakra Petch', sans-serif;
+  font-family: var(--universal-font);
   color: white;
   background-color: var(--menu-bubble);
 }
@@ -132,7 +132,7 @@ main {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  font-family: 'Jockey One', 'Chakra Petch', sans-serif;
+  font-family: var(--universal-font);
   z-index: 2;
 }
 
@@ -176,7 +176,7 @@ main {
   position: absolute;
   left: -0.25em;
   font-size: 8vh;
-  font-family: 'Jockey One', 'Chakra Petch', sans-serif;
+  font-family: var(--universal-font);
   color: var(--accent-one);
   line-height: 3em; 
   transition: opacity 0.18s ease, top 0.18s ease; 
@@ -223,7 +223,7 @@ main {
     border: 0px;
     font-size: 1em;
     line-height: 1.5;
-    font-family: 'Jockey One';
+    font-family: var(--universal-font);
     outline: none;
     text-align: center;            
     overflow-wrap: break-word;

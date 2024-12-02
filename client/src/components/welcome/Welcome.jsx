@@ -151,17 +151,19 @@ const Welcome = ({changeTheme}) => {
                     changeTheme('black-white-theme-4-3');
                     break;    
                 default:
+                    alert("Code not understood! Please try again. Setting to default theme");
                     console.log(currentText + " theme not found, defaulting to yellow-blue-theme-1-1");
                     changeTheme('yellow-blue-theme-1-1');
                     break;
             }
+            alert("Changing theme, press OK");
         }
       }     
 
     return (
         <div className="container welcome">
         <div className="menu-container">
-        <input type="text" id="theme-input" onKeyDown={handleEnter} placeholder="{researcher code} {combo}" />
+        <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="code combo"></input>
         {/* <button className="menu-button" onClick={toggleMenu}>
           ☰
         </button>

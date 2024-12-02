@@ -20,6 +20,7 @@ import ChatbotTutorial from './components/chatbotTutorial/ChatbotTutorial.jsx'
 import DemoChat from './components/chatbotTutorial/DemoChat.jsx'
 import Game from './components/game/Game.jsx'
 import Login from './components/login/Login.jsx'
+import Qualtrix from './components/questions/Qualtrix.jsx'
 
 function MainApp() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'yellow-blue-theme');
@@ -36,7 +37,7 @@ function MainApp() {
       children: [
         {
           path: "/",
-          element: <Welcome/>,
+          element: <Welcome changeTheme={(newTheme) => setTheme(newTheme)}/>,
         },
         {
           element: <DashboardLayout />,
@@ -63,6 +64,11 @@ function MainApp() {
           path: "/question",
           element: <Question />,
         },
+        {
+          path: "/qualtrix", // New route for the Qualtrix page
+          element: <Qualtrix />,
+        },
+        
         {
           path: "/tutorial",
           element: <Tutorial />,

@@ -26,12 +26,14 @@ function Question() {
       setSelectedOption(''); // Reset selected option for new question
       setShowError(false); // Reset error for next question
     } else {
-        navigate('/tutorial');
+        navigate('/');
     }
   };
 
   return (
     <div className="container survey-question">
+      <div className="question-container">
+
       <button className="question-button">
         {currentQuestionIndex + 1}/{questions.length} {/* Display the question number */}
       </button>
@@ -99,6 +101,7 @@ function Question() {
       <button className="submit-button" onClick={handleSubmit}>
         Submit
       </button>
+      </div>
     </div>
   );
 }

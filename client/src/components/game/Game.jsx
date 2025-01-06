@@ -17,6 +17,8 @@ function Game() {
   const [currentRound, setCurrentRound] = useState(1); // Track current round
   const [aiDecision, setAiDecision] = useState(''); // AI's decision
   const [userDecision, setUserDecision] = useState(''); // User's decision
+  const [aiMessage, setAiMessage] = useState(''); // Show points gained by AI
+  const [userMessage, setUserMessage] = useState(''); // Show points gained by User
   const [gameLog, setGameLog] = useState([]); // Log of decisions and outcomes
   const [highlightedTriangles, setHighlightedTriangles] = useState([]); // Track highlighted triangles
   const [triangleNumbers, setTriangleNumbers] = useState({}); // Store numbers for triangles
@@ -55,6 +57,8 @@ function Game() {
       numbers = { t2: "+3", t5: "+3" };
       newDescHighlight.aiCooperate = true;
       newDescHighlight.userCooperate = true;
+      setAiMessage('+3');
+      setUserMessage('+3');
     } else if (userDecision === 'Defect' && aiChoice === 'Defect') {
       userPoints = 1;
       aiPoints = 1;
@@ -62,6 +66,8 @@ function Game() {
       numbers = { t4: "+1", t7: "+1" };
       newDescHighlight.aiDefect = true;
       newDescHighlight.userDefect = true;
+      setAiMessage('+1');
+      setUserMessage('+1');
     } else if (userDecision === 'Cooperate' && aiChoice === 'Defect') {
       userPoints = 0;
       aiPoints = 5;
@@ -69,6 +75,8 @@ function Game() {
       numbers = { t1: "+5", t3: "+0" };
       newDescHighlight.aiDefect = true;
       newDescHighlight.userCooperate = true;
+      setAiMessage('+5');
+      setUserMessage('+0');
     } else if (userDecision === 'Defect' && aiChoice === 'Cooperate') {
       userPoints = 5;
       aiPoints = 0;
@@ -76,6 +84,8 @@ function Game() {
       numbers = { t6: "+0", t8: "+5" };
       newDescHighlight.aiCooperate = true;
       newDescHighlight.userDefect = true;
+      setRewardMessage('+0');
+      setPenaltyMessage('+5');
     }
 
     // Update the state
@@ -106,6 +116,9 @@ function Game() {
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">
           <div className="ai-score">
+            <div className="ai-message" >
+              {aiMessage}
+            </div>
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
             <p>AI chose: <span>{aiDecision}</span></p>
@@ -151,6 +164,9 @@ function Game() {
           </div>
 
           <div className="user-score">
+            <div className="user-message">
+              {userMessage}
+            </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p>
           </div>

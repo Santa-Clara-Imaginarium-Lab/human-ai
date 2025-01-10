@@ -14,7 +14,8 @@ const NewPrompt = ({data} ) => {
 
   // helper function
   const randomNumber = (min, max) => {
-    return toString(Math.random() * (max - min)) + min;
+    console.log(String( ((Math.random() * (max - min)) + min).toFixed(2) ));
+    return String( ((Math.random() * (max - min)) + min).toFixed(2) );
   }
   
   const PERSONALITY_VALUES = {
@@ -175,23 +176,25 @@ Specifically exhibiting: `,
 
 final: `Your task is to talk it out with the player. Discuss your strategies, 
 share your thoughts or approaches for the game, and prepare to make a decision. 
-Do not offer to explain the game's rules, history, or famous strategies. 
-Do not give your decision for a round until a message beginning with [SYSTEM] is sent.`
+Do not offer to explain the game's rules, history, or famous strategies. Do not
+explicitly reveal your personality profile. Limit your responses to two or 
+three sentences. Do not give your final decision for 
+a round until a message beginning with [SYSTEM] is sent.`
   } // end of FLAVOR_TEXT dictionary
 
   // <!> TODO: PASS THIS IN DYNAMICALLY <!>
   const thisBotType = "average"; // data[botType] or something similar
 
   // building flavor text (if not control)
-  let thisBotFlavorText = " ";
+  let thisBotFlavorText = "";
   if (!(thisBotType === "control")) {
-    thisBotFlavorText = `${FLAVOR_TEXTS[personality_context]}${FLAVOR_TEXTS[personality_average][`personality_${thisBotType}`]}`
+    thisBotFlavorText = `${FLAVOR_TEXTS["personality_context"]}${FLAVOR_TEXTS[`personality_${thisBotType}`]}`
   }
 
   // generating numbers (if not control)
   let thisBotHighLow = {};
   let thisBotPersonalityText = "";
-  if (!thisBotType === "control") {
+  if (!(thisBotType === "control")) {
     thisBotHighLow = {
       extraversion: {
         high: 2 * (PERSONALITY_VALUES[thisBotType].extraversion.mean + PERSONALITY_VALUES[thisBotType].extraversion.sd),
@@ -214,46 +217,48 @@ Do not give your decision for a round until a message beginning with [SYSTEM] is
         low: 2 * (PERSONALITY_VALUES[thisBotType].openness.mean - PERSONALITY_VALUES[thisBotType].openness.sd),
       },
     }
-    thisBotPersonalityText = `Specifically exhibiting:
-${randomNumber(
+    thisBotPersonalityText = 
+`${randomNumber(
   thisBotHighLow.openness.high, 
   thisBotHighLow.openness.low)}
-% in Openness to Experience (creativity, curiosity),
+% in Openness to Experience, 
 
 ${randomNumber(
   thisBotHighLow.conscientiousness.high, 
   thisBotHighLow.conscientiousness.low)}
-% in Conscientiousness (organization, responsibility),
+% in Conscientiousness, 
 
 ${randomNumber(
   thisBotHighLow.extraversion.high, 
   thisBotHighLow.extraversion.low)}
-% in Extraversion (sociability, assertiveness), 
+% in Extraversion, 
 
 ${randomNumber(
   thisBotHighLow.agreeableness.high, 
   thisBotHighLow.agreeableness.low)}
-% in Agreeableness (compassion, cooperativeness), 
+% in Agreeableness, 
 
 ${randomNumber(
   thisBotHighLow.neuroticism.high, 
   thisBotHighLow.neuroticism.low)}
-% in Neuroticism (emotional instability, anxiety),  
+% in Neuroticism, 
 
 where each of these percentages ranges from 0% to 100%, 
 with 0% being low in the Big Five trait, 
-and 100% being high in the Big Five trait. 
-    ` // end of thisBotPersonalityText
+and 100% being high in the Big Five trait.` 
+    // end of thisBotPersonalityText
   } // end of number generation
 
   const STARTING_PROMPT = `
-    ${FLAVOR_TEXTS.flavor_texts.pd_context}
+    ${FLAVOR_TEXTS.pd_context}
     ${thisBotFlavorText} 
     ${thisBotPersonalityText}
-    ${final}
+    ${FLAVOR_TEXTS.final}
   `
 
   const STARTING_PROMPT_ONELINE = STARTING_PROMPT.replace(/\n/g, '');
+
+  console.log(STARTING_PROMPT_ONELINE)
  
   // =================== //
   // END PROMPT BUILDING //
@@ -404,8 +409,13 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
   }, [data]);
 
 
-  const handleExit = () => {
-    navigate('/game'); 
+  const handleExit = async () => {
+    console.log("exiting?");
+    add("[SYSTEM] Decide. Respond with ONLY ONE word. COOPERATE or DEFECT?", false).then((result) => {
+      const decision = (data.history.at(-1).parts[0]); // NEED TO PASS THIS INTO DECISION PHASE PAGE
+      console.log(decision);
+      navigate('/game'); 
+    });
   };
 
 

@@ -264,10 +264,16 @@
   margin-left: 1em;
   font-family: var(--universal-font);
   box-shadow: 0.3em 0.3em 0 0 black;
+  transition: background-color 0.3s ease, color 0.3s ease;
 } 
   
 .send-button:active {
-  /* Simulate the button being pressed */
-  transform: translate(0.3em, 0.3em); /* Move the button down */
-  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+  transform: translate(0.3em, 0.3em); 
+  box-shadow: 0em 0em 0 0; 
+}
+
+.send-button:hover {
+  background-color: var(--accent-three);
+  color: var(--button-two);
+  cursor: pointer;
 }

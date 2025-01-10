@@ -84,8 +84,8 @@ function Game() {
       numbers = { t6: "+0", t8: "+5" };
       newDescHighlight.aiCooperate = true;
       newDescHighlight.userDefect = true;
-      setRewardMessage('+0');
-      setPenaltyMessage('+5');
+      setAiMessage('+0');
+      setUserMessage('+5');
     }
 
     // Update the state

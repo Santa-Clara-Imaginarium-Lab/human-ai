@@ -7,7 +7,12 @@ import { IKImage } from "imagekitio-react";
   
 const ChatPage = () => {
 
-  const path = useLocation().pathname;
+  const location = useLocation();
+  const path = location.pathname;
+
+  const thisBotPrompt = location.state.builtPrompt;
+  console.log("PROMPT IN CHATPAGE");
+  console.log(thisBotPrompt);
   const chatId = path.split("/").pop();
 
   const { isPending, error, data } = useQuery({
@@ -59,7 +64,7 @@ const ChatPage = () => {
               </div>
             </>
           ))}
-          {data && <NewPrompt data={data}/>}
+          {data && <NewPrompt data={data} thisBotPrompt={thisBotPrompt}/>}
         </div>
       </div>
     </div>

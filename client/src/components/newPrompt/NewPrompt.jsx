@@ -7,7 +7,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {useNavigate, Link} from 'react-router-dom'
 
 
-const NewPrompt = ({data} ) => {
+const NewPrompt = ({data, thisBotPrompt} ) => {
+  console.log("PROMPT!!!");
+  console.log(thisBotPrompt)
+  /*
   // ===================== //
   // BEGIN PROMPT BUILDING //
   // ===================== //
@@ -263,6 +266,7 @@ and 100% being high in the Big Five trait.`
   // =================== //
   // END PROMPT BUILDING //
   // =================== //
+  */
   
     const [question,setQuestion] = useState("");
     const [answer,setAnswer] = useState("");
@@ -279,7 +283,7 @@ and 100% being high in the Big Five trait.`
         history: [
             {
               role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
-              parts: [{ text: STARTING_PROMPT_ONELINE}],
+              parts: [{ text: thisBotPrompt}],
             },
             // {
             //   role: "model",

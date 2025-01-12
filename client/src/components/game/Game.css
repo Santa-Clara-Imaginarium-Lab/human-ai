@@ -29,6 +29,16 @@
     align-items: center;
     font-family: var(--universal-font);
   }
+
+  .ai-message {
+    font-size: 2em;
+    color: red;
+  }
+
+  .user-message {
+    font-size: 2em;
+    color: green;
+  }
   
   .score-value {
     font-size: 2em;

@@ -8,8 +8,8 @@ import {useNavigate, Link} from 'react-router-dom'
 
 
 const NewPrompt = ({data, thisBotPrompt} ) => {
-  console.log("PROMPT!!!");
-  console.log(thisBotPrompt)
+  //console.log("PROMPT!!!");
+  //console.log(thisBotPrompt)
   /*
   // ===================== //
   // BEGIN PROMPT BUILDING //
@@ -308,7 +308,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 */
 
 // Add check for empty/undefined data
-    console.log(data);
+    // console.log(data);
     if (!data) {
       console.log("forcing response for empty data");
       add(data.history[0].parts[0].text, true);
@@ -330,6 +330,8 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 
     const endRef = useRef(null);
     const formRef = useRef(null);
+
+    const transitionRef = useRef(null);
     
     useEffect(() => {
         endRef.current.scrollIntoView({behavior: "smooth"});
@@ -356,7 +358,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
           queryClient
             .invalidateQueries({ queryKey: ["chat", data._id] })
             .then(() => {
-              formRef.current.reset();
+              //formRef.current.reset();
               setQuestion("");
               setAnswer("");
               setImg({
@@ -365,6 +367,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
                 dbData: {},
                 aiData: {},
               });
+              console.log("done mutating");
             });
         },
         onError: (err) => {
@@ -374,6 +377,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 
 
       const add = async (text, isInitial) => {
+        console.log("invoke add");
         if (!isInitial) setQuestion(text);
     
         try {
@@ -389,6 +393,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
           }
     
           mutation.mutate();
+          return accumulatedText;
         } catch (err) {
           console.log(err);
         }
@@ -413,13 +418,15 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
   }, [data]);
 
 
-  const handleExit = async () => {
+  const handleExit = async (e) => {
+    e.preventDefault();
     console.log("exiting?");
-    add("[SYSTEM] Decide. Respond with ONLY ONE word. COOPERATE or DEFECT?", false).then((result) => {
-      const decision = (data.history.at(-1).parts[0]); // NEED TO PASS THIS INTO DECISION PHASE PAGE
-      console.log(decision);
-      navigate('/game'); 
-    });
+    transitionRef.current.classList.add('go');
+    const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false)
+    // const arrayEnd = (data.history.at(-1).parts[0]); 
+    // console.log("arrayEnd ", arrayEnd);
+    console.log("<<BOT'S DECISION STATEMENT>> ", decision);
+    navigate('/game'); // TODO: PASS decision with corresponding logic
   };
 
 
@@ -435,6 +442,10 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
                 transformation={[{width: 380}]}
             />
         )}
+
+        <div className="transitioner" ref={transitionRef}>
+          <h1 className="transitioner-text"> Loading... </h1>
+        </div>
 
         {question && <div className='message user'>{question}</div>}
         {answer && <div className='message'><Markdown>{answer}</Markdown></div>}

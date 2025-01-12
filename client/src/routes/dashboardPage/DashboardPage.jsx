@@ -175,9 +175,10 @@ Specifically exhibiting: `,
 final: `Your task is to talk it out with the player. Discuss your strategies, 
 share your thoughts or approaches for the game, and prepare to make a decision. 
 Do not offer to explain the game's rules, history, or famous strategies. Do not
-explicitly reveal your personality profile. Limit your responses to two or 
-three sentences. Do not give your final decision for 
-a round until a message beginning with [SYSTEM] is sent.`
+explicitly reveal your personality profile. Do not mention the "system" in 
+conversation. Respond with a length mirroring the user's sentence length. 
+Do not give your final decision for a round until a message beginning with 
+[SYSTEM] is sent, at which point respond with one word.`
   } // end of FLAVOR_TEXT dictionary
 
   // building flavor text (if not control)
@@ -293,7 +294,12 @@ const DashboardPage = () => {
         },
         onSuccess: (id) => {
             queryClient.invalidateQueries({ queryKey: ["userChats", userId] });
-            const builtPrompt = buildPrompt("average"); // TODO: MAKE DYNAMIC SO WE DO ALL 5
+            
+            // TESTING VERSION - INSERT PERSONALITY INTO BOX, SIMILAR TO COLOR 
+            const botPersonality = localStorage.getItem("personality");
+            console.log(botPersonality);
+
+            const builtPrompt = buildPrompt(botPersonality); // TODO: MAKE DYNAMIC SO WE DO ALL 5
             console.log(builtPrompt);
             navigate(`/dashboard/chats/${id}`, { state: { builtPrompt }});
         },

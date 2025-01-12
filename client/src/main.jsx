@@ -24,6 +24,7 @@ import Qualtrix from './components/questions/Qualtrix.jsx'
 
 function MainApp() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'yellow-blue-theme');
+  const [personality, setPersonality] = useState(localStorage.getItem('botPersonality') || 'control');
 
   useEffect(() => {
     // Apply the theme to the document
@@ -31,13 +32,18 @@ function MainApp() {
     localStorage.setItem('theme', theme); // Persist theme in localStorage
   }, [theme]);
 
+  useEffect(() => {
+    // Apply personality changes
+    localStorage.setItem('personality', personality); // Persist theme in localStorage
+  }, [personality]);
+
   const router = createBrowserRouter([
     {
       element: <RootLayout />,
       children: [
         {
           path: "/",
-          element: <Welcome changeTheme={(newTheme) => setTheme(newTheme)}/>,
+          element: <Welcome changeTheme={(newTheme) => setTheme(newTheme)} changePersonality={(newPersonality) => setPersonality(newPersonality)}/>,
         },
         {
           element: <DashboardLayout />,
@@ -54,7 +60,7 @@ function MainApp() {
         },
         {
           path: "/login",
-          element: <Login changeTheme={(newTheme) => setTheme(newTheme)}/>,
+          element: <Login changeTheme={(newTheme) => setTheme(newTheme)} changePersonality={(newPersonality) => setPersonality(newPersonality)}/>,
         },
         {
           path: "/survey",

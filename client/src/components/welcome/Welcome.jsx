@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "./welcome.css";
 
-const Welcome = ({changeTheme}) => {
+const Welcome = ({changeTheme, changePersonality}) => {
     const navigate = useNavigate();
     const arrowRef = useRef(null); // Reference for the ">" arrow
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
@@ -56,6 +56,54 @@ const Welcome = ({changeTheme}) => {
         };
     }, []);
 
+    const [personalityState, setPersonality] = useState(localStorage.getItem('personality') || 'unknown'); // State for arrow visibility
+
+    useEffect(() => {
+
+    }, [personalityState]);
+
+    function handleEnterPersonality (e) {
+        if (e.key === 'Enter') {
+            const currentText = e.target.value;
+            switch (currentText) {
+                case 'control':
+                    changePersonality('control');
+                    setPersonality('control');
+                    break;
+                case 'average':
+                    changePersonality('average');
+                    setPersonality('average');
+                    break;
+                case 'role model':
+                    changePersonality('role_model');
+                    setPersonality('role_model');
+                    break;
+                case 'role_model':
+                    changePersonality('role_model');
+                    setPersonality('role_model');
+                    break;  
+                case 'self centered':
+                    changePersonality('self_centered');
+                    setPersonality('self_centered');
+                    break;
+                case 'self_centered':
+                  changePersonality('self_centered');
+                  setPersonality('self_centered');
+                  break;  
+                case 'reserved':
+                    changePersonality('reserved');
+                    setPersonality('reserved');
+                    break;
+                default:
+                    alert("Code not understood! Please try again. Setting to control personality");
+                    console.log(currentText + " personality not found, defaulting to control");
+                    changePersonality('control');
+                    setPersonality('control');
+                    break;
+            }
+            alert("Changing personality, press OK");
+        }
+      }
     function handleEnter (e) {
         if (e.key === 'Enter') {
             const currentText = e.target.value;
@@ -158,12 +206,14 @@ const Welcome = ({changeTheme}) => {
             }
             alert("Changing theme, press OK");
         }
-      }     
+      }          
 
     return (
         <div className="container welcome">
         <div className="menu-container">
-        <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="code combo"></input>
+        <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="color combo" />
+        <input type="text" className="personality-input" onKeyDown={handleEnterPersonality} placeholder="personality"/>
+        <p>{`Current Personality: ${personalityState}`}</p>
         {/* <button className="menu-button" onClick={toggleMenu}>
           ☰
         </button>

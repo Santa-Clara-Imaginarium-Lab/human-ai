@@ -254,7 +254,7 @@ and 100% being high in the Big Five trait.`
 
   const STARTING_PROMPT_ONELINE = STARTING_PROMPT.replace(/\n/g, '');
 
-  console.log(STARTING_PROMPT_ONELINE)
+  //console.log(STARTING_PROMPT_ONELINE)
   return STARTING_PROMPT_ONELINE
  
   // =================== //

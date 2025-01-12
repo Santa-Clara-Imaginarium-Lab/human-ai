@@ -95,7 +95,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
                     setPersonality('reserved');
                     break;
                 default:
-                    alert("Code not understood! Please try again. Setting to control personality");
+                    alert("Code not understood! Please enter one of: 'control', 'average', 'role model', 'self centered', 'reserved'. Defaulting to control personality");
                     console.log(currentText + " personality not found, defaulting to control");
                     changePersonality('control');
                     setPersonality('control');

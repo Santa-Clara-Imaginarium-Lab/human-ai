@@ -7,7 +7,12 @@ import { IKImage } from "imagekitio-react";
   
 const ChatPage = () => {
 
-  const path = useLocation().pathname;
+  const location = useLocation();
+  const path = location.pathname;
+
+  const thisBotPrompt = location.state.builtPrompt;
+  // console.log("PROMPT IN CHATPAGE");
+  // console.log(thisBotPrompt);
   const chatId = path.split("/").pop();
 
   const { isPending, error, data } = useQuery({
@@ -27,6 +32,23 @@ const ChatPage = () => {
       <div className='wrapper'>
         <div className='chat'>
           {data?.history?.map((message, i) => (
+            /* 
+            // ============ //
+            // !!! NOTE !!! //
+            // ============ //
+
+            Currently, system messages are also appended to the data array.
+            So, they are rendered here, as this is a simple 
+            map function with no "checking" in place.
+
+            The existence of system messages to get chat decisions are
+            already handled by the "transitioner" in newPrompt. It gets
+            activated and hides the system messages upon 
+            exiting the chat to enter the prisoner's dilemma.
+
+            TODO: we must not render them as chat bubbles, for when players
+            come back from the game, for the next chat cycle.
+            */
             <>
               {message.img && (
                 <IKImage
@@ -59,7 +81,7 @@ const ChatPage = () => {
               </div>
             </>
           ))}
-          {data && <NewPrompt data={data}/>}
+          {data && <NewPrompt data={data} thisBotPrompt={thisBotPrompt}/>}
         </div>
       </div>
     </div>

@@ -228,3 +228,19 @@ main {
     text-align: center;            
     overflow-wrap: break-word;
 }
+
+.personality-input {
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+  border-radius: 20px;
+  /* border: 1px solid #ccc; */
+  border: 0px;
+  font-size: 1em;
+  line-height: 1.5;
+  font-family: var(--universal-font);
+  outline: none;
+  text-align: center;            
+  overflow-wrap: break-word;
+  float: right;
+}

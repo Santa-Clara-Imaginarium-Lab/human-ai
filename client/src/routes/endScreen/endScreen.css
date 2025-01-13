@@ -70,13 +70,15 @@
     position: relative;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
     width: 90em;
     height: 6em;
     bottom: 0;
     left: 0;
-    /* transform: translateY(50%); */
+    /* gap: 2em; */
+    padding: 0 2em;
 
     background: var(--accent-four);
     border-radius: 45px;
@@ -88,5 +90,49 @@
     font-size: 2em;
     color: #3E3B41; /* TO DO: change to variable */
     text-align: center;
-    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.scores-labels-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1em;
+}
+
+.chatbot-score-label {
+    font-size: 1.5em;
+    color: var(--c1);
+}
+
+.user-score-label {
+    font-size: 1.5em;
+    color: #3E3B41; /* TO DO: change to variable */
+}
+
+.scores-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 9.55em;
+    margin-right: 2em;
+    padding: 0 3em;
+}
+
+.chatbot-score {
+    font-size: 2em;
+    color: var(--c1);
+}
+
+.user-score {
+    font-size: 2em;
+    color: #3E3B41; /* TO DO: change to variable */
+}
+
+.chatbot-victory-text {
+    font-size: 3em;
+    color: #3E3B41; /* TO DO: change to variable */
+    margin-left: 0.5em;
 }

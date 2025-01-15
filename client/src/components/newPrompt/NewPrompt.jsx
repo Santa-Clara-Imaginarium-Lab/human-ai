@@ -426,7 +426,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
     // const arrayEnd = (data.history.at(-1).parts[0]); 
     // console.log("arrayEnd ", arrayEnd);
     console.log("<<BOT'S DECISION STATEMENT>> ", decision);
-    navigate('/game'); // TODO: PASS decision with corresponding logic
+    navigate('/game', { state: { decision }}); // TODO: PASS decision with corresponding logic
   };
 
 

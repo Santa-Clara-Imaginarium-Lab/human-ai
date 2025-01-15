@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import './Game.css'; // Ensure this file contains the necessary CSS
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Game() {
   const navigate = useNavigate();
 
-  // Function to simulate AI's random response (Cooperate or Defect)
+  const location = useLocation();
+  const decision = location.state.decision;
+  console.log(decision);
+
+  // Function to extrapolate AI's response
   const getAiResponse = () => {
     const choices = ['Cooperate', 'Defect'];
-    const randomChoice = choices[Math.floor(Math.random() * choices.length)];
-    return randomChoice;
+    // TASK: REPLACE WITH ACTUAL LOGIC, USING "DECISION VARIABLE"
+    return choices[0];
+
+    // Below is the random number generator version
+    // const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+    // return randomChoice;
   };
 
   const [userScore, setUserScore] = useState(0); // Track user score

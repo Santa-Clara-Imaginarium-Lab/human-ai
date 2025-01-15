@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import './Game.css'; // Ensure this file contains the necessary CSS
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Game() {
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const chatId = location.state.chatId;
+  const builtPrompt = location.state.builtPrompt;
+  console.log(chatId);
+  console.log(builtPrompt);
 
   // Function to simulate AI's random response (Cooperate or Defect)
   const getAiResponse = () => {
@@ -183,7 +189,7 @@ function Game() {
               </button>
             </>
           ) : (
-            <button className="proceed-button" onClick={() => navigate('/survey')}>
+            <button className="proceed-button" onClick={() => navigate(`/dashboard/chats/${chatId}`, { state: { builtPrompt, chatId }})}>
               Proceed
             </button>
           )}

@@ -12,8 +12,6 @@ function Game() {
   // Function to extrapolate AI's response
   const getAiResponse = () => {
     const choices = ['Cooperate', 'Defect'];
-    //LOGIC, USING "DECISION VARIABLE"
-    return choices[0];
 
     let text = decision.toLowerCase();
     if (text === "[system] cooperate") {

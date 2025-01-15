@@ -12,12 +12,23 @@ function Game() {
   // Function to extrapolate AI's response
   const getAiResponse = () => {
     const choices = ['Cooperate', 'Defect'];
-    // TASK: REPLACE WITH ACTUAL LOGIC, USING "DECISION VARIABLE"
+    //LOGIC, USING "DECISION VARIABLE"
     return choices[0];
 
-    // Below is the random number generator version
-    // const randomChoice = choices[Math.floor(Math.random() * choices.length)];
-    // return randomChoice;
+    let text = decision.toLowerCase();
+    if (text === "[system] cooperate") {
+      const randomChoice = choices[0];
+    }
+
+    else if (text === "[system] defect") {
+      const randomChoice = choices[1];
+    }
+
+    else {
+      const randomChoice = choices[Math.floor(Math.random() * choices.length)]
+    }
+
+    return randomChoice;
   };
 
   const [userScore, setUserScore] = useState(0); // Track user score

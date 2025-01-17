@@ -160,8 +160,6 @@ function Game() {
 
     const pArr = sessionStorage.getItem('personalitiesArr') 
     const botNum = JSON.parse(pArr).length;
-    if (botNum === null)
-      botNum = 0;
 
     if (cr === 1) {
       let personality = sessionStorage.getItem('personality');

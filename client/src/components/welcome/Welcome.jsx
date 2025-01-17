@@ -8,7 +8,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
 
     // Handlers for navigation
-    const handlePlayClick = () => navigate('/login');
+    const handlePlayClick = () => navigate('/tutorial'); // NOTE: now skips login! TODO: turn data collecting off.
     const handleResearchModeClick = () => navigate('/login');
     const handleSettingsClick = () => window.open('http://make-everything-ok.com/', '_blank');
 

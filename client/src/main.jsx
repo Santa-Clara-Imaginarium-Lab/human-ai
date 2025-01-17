@@ -21,6 +21,7 @@ import DemoChat from './components/chatbotTutorial/DemoChat.jsx'
 import Game from './components/game/Game.jsx'
 import Login from './components/login/Login.jsx'
 import Qualtrix from './components/questions/Qualtrix.jsx'
+import EndScreen from './routes/endScreen/EndScreen.jsx';
 
 function MainApp() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'yellow-blue-theme');
@@ -95,7 +96,10 @@ function MainApp() {
           path: "/game",
           element: <Game />,
         },
-
+        {
+          path: "/end-screen",
+          element: <EndScreen />,
+        },
       ],
     },
   ]);

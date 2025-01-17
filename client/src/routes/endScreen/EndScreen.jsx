@@ -2,7 +2,7 @@ import './endScreen.css';
 
 const EndScreen = () => {
     return (
-        <div className="end-screen-container">
+        <div className="container end-screen-container">
             <button className="results-title-button">
                 Results
             </button>

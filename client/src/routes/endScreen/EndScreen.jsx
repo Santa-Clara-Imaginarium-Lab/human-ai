@@ -40,18 +40,18 @@ const EndScreen = () => {
                         let totalChatbotScore = 0;
                         let totalUserScore = 0;
                         return (
-                            <div className="chatbot-results-rectangle">
+                            <div className="chatbot-results-rectangle" key={index}>
                                 <p className="chatbot-results-text">Chatbot {index + 1}</p>
                                 <div className="scores-labels-container">
                                     <p className="chatbot-score-label">Chatbot's Score:</p>
                                     <p className="user-score-label">Your Score:</p>
                                 </div>
                                 <div className="scores-container">
-                                    {gameLog.data.map((gameLogData, index) => {
+                                    {gameLog && gameLog.data.map((gameLogData, index) => {
                                         totalChatbotScore += gameLogData[`Round${index + 1}`].AI;
                                         totalUserScore += gameLogData[`Round${index + 1}`].You;
                                         return (
-                                            <div className={`scores-${index + 1}`}>
+                                            <div className={`scores-${index + 1}`} key={index}>
                                                 <p className="chatbot-score">{totalChatbotScore}</p>
                                                 <p className="user-score">{totalUserScore}</p>
                                             </div>

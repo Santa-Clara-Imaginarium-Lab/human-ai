@@ -116,23 +116,57 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 9.55em;
     margin-right: 2em;
-    padding: 0 3em;
+}
+
+.scores-1 {
+    position: absolute;
+    left: 23.6%;
+    padding: 0 25px;
+}
+
+.scores-2 {
+    position: absolute;
+    left: 35.7%;
+    padding: 0 25px;
+}
+
+.scores-3 {
+    position: absolute;
+    left: 47.7%;
+    padding: 0 25px;
+}
+
+.scores-4 {
+    position: absolute;
+    left: 60%;
+    padding: 0 25px;
+}
+
+.scores-5 {
+    position: absolute;
+    left: 72.1%;
+    padding: 0 25px;
 }
 
 .chatbot-score {
     font-size: 2em;
     color: var(--c1);
+    width: 100%;
+    text-align: center;
 }
 
 .user-score {
     font-size: 2em;
     color: #3E3B41; /* TO DO: change to variable */
+    width: 100%;
+    text-align: center;
 }
 
 .chatbot-victory-text {
     font-size: 3em;
     color: #3E3B41; /* TO DO: change to variable */
     margin-left: 0.5em;
+    position: absolute;
+    right: 5%;
 }

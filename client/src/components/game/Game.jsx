@@ -158,7 +158,8 @@ function Game() {
       sessionStorage.setItem(`gameLog${botNum}`, builtLog);
     }
 
-    let botNum = sessionStorage.getItem('botNum') 
+    const pArr = sessionStorage.getItem('personalitiesArr') 
+    const botNum = JSON.parse(pArr).length;
     if (botNum === null)
       botNum = 0;
 

@@ -1,5 +1,6 @@
 import './dashboardPage.css';
 import { useNavigate } from "react-router-dom";
+import { useRef } from 'react';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "../../context/UserContext";
 import { useState } from 'react';
@@ -294,6 +295,8 @@ const DashboardPage = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { userId } = useUser();
+
+    const transitionRef = useRef(null);
     
     const mutation = useMutation({
         mutationFn: (text) => {
@@ -351,6 +354,9 @@ const DashboardPage = () => {
     // safety: render bottom form in case redirect above does not work
     return (
         <div className = 'dashboardPage'>
+          <div className="transitioner go" ref={transitionRef}>
+            <h1 className="transitioner-text">Preparing Chatbot...</h1>
+          </div>
             <div className='formContainer'>
                 <form onSubmit={handleSubmit}>
                     <input type="text" name='text' placeholder='Ask me anything...' />

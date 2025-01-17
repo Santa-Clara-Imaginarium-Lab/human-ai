@@ -31,6 +31,7 @@ const ChatPage = () => {
   return (
     <div className = 'chatPage'>
       <div className='wrapper'>
+        <div className="debug-personality-display">{sessionStorage.getItem('personality')}</div>
         <div className='chat'>
           {data?.history?.map((message, i) => (
            // hide system prompts

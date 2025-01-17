@@ -18,22 +18,31 @@ function Game() {
   // Function to simulate AI's random response (Cooperate or Defect)
   const getAiResponse = () => {
     const choices = ['Cooperate', 'Defect'];
-    let randomChoice;
+    const rng = () => choices[Math.floor(Math.random() * choices.length)];
 
-    let text = decision.toLowerCase();
-    if (text === "[system] cooperate") {
-      randomChoice = choices[0];
+    let text = "";
+
+    // failsafe in case google API doesn't respond
+    try {
+      let text = decision.toLowerCase();
+    }
+    catch (err) {
+      console.error("ERROR! " + err + " -- Randomizing!");
+      return rng();
+
     }
 
-    else if (text === "[system] defect") {
-      randomChoice = choices[1];
+    // had to change to string indexOf, === was bugging
+    if (text.indexOf("cooperate") > -1) {
+      return choices[0];
     }
-
+    else if (text.indexOf("defect") > -1) {
+      return choices[1];
+    }
     else {
-      randomChoice = choices[Math.floor(Math.random() * choices.length)]
+      console.warn("Warning! Could not determine AI's response -- Randomizing!");
+      return rng();
     }
-
-    return randomChoice;
   };
 
   const [userScore, setUserScore] = useState(0); // Track user score
@@ -127,24 +136,89 @@ function Game() {
     // Update the state
     setUserScore((prev) => prev + userPoints);
     setAiScore((prev) => prev + aiPoints);
-    setGameLog((prev) => [
-      ...prev,
-      `Round ${currentRound}: You chose ${userDecision}, AI chose ${aiChoice}.`,
-    ]);
+
+    let cr = (parseInt(sessionStorage.getItem('currentRound')) ? parseInt(sessionStorage.getItem('currentRound')) : 1);
+
+    // helper function for below
+    const appendGameLog = (add, botNum, resetFlag) => {
+      let currGameLog = sessionStorage.getItem(`gameLog${botNum}`);
+      if (currGameLog === null)
+        currGameLog = ""; 
+
+      console.log(currGameLog);
+
+      let builtLog = "";
+      if (resetFlag) {
+        builtLog = "".concat(add);
+      }
+      else {
+        builtLog = currGameLog.concat(add);
+      }
+      console.log(builtLog);
+      sessionStorage.setItem(`gameLog${botNum}`, builtLog);
+    }
+
+    let botNum = sessionStorage.getItem('botNum') 
+    if (botNum === null)
+      botNum = 0;
+
+    if (cr === 1) {
+      let personality = sessionStorage.getItem('personality');
+      if (personality === null)
+        personality = "control";
+      appendGameLog(`{"personality": "${personality}", "data": [`, botNum, true);
+    }
+
+
+    updateCurrentRound(cr + 1);
+
+    const logString = `"Round${currentRound}": {"You": ${userPoints}, "AI": ${aiPoints}}`;
+
+    if (cr !== MAX_ROUNDS) {
+      appendGameLog(`{${logString}}, `, botNum, false);      
+    }
+    else {
+      appendGameLog(`{${logString}}`, botNum, false);
+    }
+
+
+    // const storage = sessionStorage.getItem('gameLog');
+    // const currGameLog = JSON.parse(storage);
+    // const builtLog = (JSON.stringify(`${personality}: ` + gameLog + `,`));
+    // console.log(builtLog);
+    // sessionStorage.setItem('gameLog', builtLog);
+
+    // console.log(userScore);
+    // console.log(aiScore);
+    
+    // let personality = sessionStorage.getItem('personality');
+    // console.log(gameLog);
+    // let result = `Round${currentRound}: { You: ${userPoints}, AI: ${aiPoints}}`;
+    // let combined = gameLog.concat(result);
+    // console.log(combined);
+    // setGameLog(combined);
+    // // setGameLog()
+    // // setGameLog((prev) => { console.log(prev); return prev.concat(
+    // //   `Round${currentRound}: { You: ${userPoints}, AI: ${aiPoints}}`
+    // //   //`Round ${currentRound}: You chose ${userDecision}, AI chose ${aiChoice}.`,
+    // // )});
+
+    // console.log(gameLog)
 
     // Set highlighted triangles and numbers, then reset them after 5 seconds
     setHighlightedTriangles(highlightTriangles);
     setTriangleNumbers(numbers);
     setHighlightedDesc(newDescHighlight);
 
-    let cr = (parseInt(sessionStorage.getItem('currentRound')) ?  parseInt(sessionStorage.getItem('currentRound')) : 1);
-    updateCurrentRound(cr + 1);
     setIsRoundOver(true);
 
     // Move to the next round or end the game
-    if (sessionStorage.getItem('currentRound') >= MAX_ROUNDS) {
+    if (sessionStorage.getItem('currentRound') > MAX_ROUNDS) {
       setIsGameOver(true); // Mark the game as over
       updateCurrentRound(1);
+      appendGameLog(`]}`, botNum, false);
+
+      console.log(JSON.parse(sessionStorage.getItem(`gameLog${botNum}`)));
     }
   };
 

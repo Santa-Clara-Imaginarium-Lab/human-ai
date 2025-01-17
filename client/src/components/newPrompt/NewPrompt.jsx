@@ -456,7 +456,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
                 <input id='file' type='file' multiple={false} hidden />
                 <input className="chat-input official" type="text" name='text' placeholder='Enter message...' />
                 <button className="send-button official">Send</button>
-                <button className="send-button official" onClick={handleExit}>Exit</button>
+                <button className="send-button official" onClick={handleExit}>Continue</button>
             </form>
         </>
     )

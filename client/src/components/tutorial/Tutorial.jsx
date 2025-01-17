@@ -15,9 +15,9 @@ function Tutorial() {
   return (
     <div className="container tutorial-container">
       <div className='survey-shadow-container'>
-      <h2 className="tutorial-subtitle">Are you familiar with the rules of the Prisoner's Dilemma?</h2>
+      <h2 className="tutorial-subtitle">Learn about the Prisoner's Dilemma, a game based on cooperation and defection.</h2>
       <div className="tutorial-options">
-        <button className="no-button" onClick={handleNoClick}>Take Tutorial</button>
+        <button className="no-button" onClick={handleNoClick}>Proceed</button>
       </div>
       </div>
     </div>

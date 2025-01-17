@@ -119,14 +119,14 @@ function Game() {
     setTriangleNumbers(numbers);
     setHighlightedDesc(newDescHighlight);
 
+    let cr = (parseInt(sessionStorage.getItem('currentRound')) ?  parseInt(sessionStorage.getItem('currentRound')) : 1);
+    updateCurrentRound(cr + 1);
+    setIsRoundOver(true);
+
     // Move to the next round or end the game
     if (sessionStorage.getItem('currentRound') >= MAX_ROUNDS) {
       setIsGameOver(true); // Mark the game as over
       updateCurrentRound(1);
-    } else {
-      let cr = (parseInt(sessionStorage.getItem('currentRound')) ?  parseInt(sessionStorage.getItem('currentRound')) : 1);
-      updateCurrentRound(cr + 1 ); // Move to the next round
-      setIsRoundOver(true);
     }
   };
 

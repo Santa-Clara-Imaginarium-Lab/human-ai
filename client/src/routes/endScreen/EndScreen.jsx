@@ -1,6 +1,19 @@
+import { useEffect, useState } from 'react';
 import './endScreen.css';
 
 const EndScreen = () => {
+    const [gameLogs, setGameLogs] = useState([]);
+
+    useEffect(() => {
+        const gameLog1Info = JSON.parse(sessionStorage.getItem('gameLog1'));
+        const gameLog2Info = JSON.parse(sessionStorage.getItem('gameLog2'));
+        const gameLog3Info = JSON.parse(sessionStorage.getItem('gameLog3'));
+        const gameLog4Info = JSON.parse(sessionStorage.getItem('gameLog4'));
+        const gameLog5Info = JSON.parse(sessionStorage.getItem('gameLog5'));
+
+        setGameLogs([gameLog1Info, gameLog2Info, gameLog3Info, gameLog4Info, gameLog5Info]);
+    }, []);
+
     return (
         <div className="container end-screen-container">
             <button className="results-title-button">
@@ -23,164 +36,34 @@ const EndScreen = () => {
                     <p className="round-results-text">R5</p>
                 </div>
                 <div className="chatbot-results-wrapper">
-                    <div className="chatbot-results-rectangle">
-                        <p className="chatbot-results-text">Chatbot 1</p>
-                        <div className="scores-labels-container">
-                            <p className="chatbot-score-label">Chatbot's Score:</p>
-                            <p className="user-score-label">Your Score:</p>
-                        </div>
-                        <div className="scores-container">
-                            <div className="scores-1">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">0</p>
+                    {gameLogs.map((gameLog, index) => {
+                        let totalChatbotScore = 0;
+                        let totalUserScore = 0;
+                        return (
+                            <div className="chatbot-results-rectangle">
+                                <p className="chatbot-results-text">Chatbot {index + 1}</p>
+                                <div className="scores-labels-container">
+                                    <p className="chatbot-score-label">Chatbot's Score:</p>
+                                    <p className="user-score-label">Your Score:</p>
+                                </div>
+                                <div className="scores-container">
+                                    {gameLog.data.map((gameLogData, index) => {
+                                        totalChatbotScore += gameLogData[`Round${index + 1}`].AI;
+                                        totalUserScore += gameLogData[`Round${index + 1}`].You;
+                                        return (
+                                            <div className={`scores-${index + 1}`}>
+                                                <p className="chatbot-score">{totalChatbotScore}</p>
+                                                <p className="user-score">{totalUserScore}</p>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                {totalChatbotScore < totalUserScore && 
+                                    <p className="chatbot-victory-text">VICTORY !!</p>
+                                }
                             </div>
-                            <div className="scores-2">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">10</p>
-                            </div>
-                            <div className="scores-3">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">15</p>
-                            </div>
-                            <div className="scores-4">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                            <div className="scores-5">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                        </div>
-                        <p className="chatbot-victory-text">VICTORY !!</p>
-                    </div>
-                    <div className="chatbot-results-rectangle">
-                        <p className="chatbot-results-text">Chatbot 2</p>
-                        <div className="scores-labels-container">
-                            <p className="chatbot-score-label">Chatbot's Score:</p>
-                            <p className="user-score-label">Your Score:</p>
-                        </div>
-                        <div className="scores-container">
-                            <div className="scores-1">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">0</p>
-                            </div>
-                            <div className="scores-2">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">10</p>
-                            </div>
-                            <div className="scores-3">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">15</p>
-                            </div>
-                            <div className="scores-4">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                            <div className="scores-5">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                        </div>
-                        <div className="chatbot-victory-container">
-                            <p className="chatbot-victory-text">VICTORY !!</p>
-                        </div>
-                    </div>
-                    <div className="chatbot-results-rectangle">
-                        <p className="chatbot-results-text">Chatbot 3</p>
-                        <div className="scores-labels-container">
-                            <p className="chatbot-score-label">Chatbot's Score:</p>
-                            <p className="user-score-label">Your Score:</p>
-                        </div>
-                        <div className="scores-container">
-                            <div className="scores-1">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">0</p>
-                            </div>
-                            <div className="scores-2">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">10</p>
-                            </div>
-                            <div className="scores-3">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">15</p>
-                            </div>
-                            <div className="scores-4">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                            <div className="scores-5">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                        </div>
-                        <div className="chatbot-victory-container">
-                            <p className="chatbot-victory-text">VICTORY !!</p>
-                        </div>
-                    </div>
-                    <div className="chatbot-results-rectangle">
-                        <p className="chatbot-results-text">Chatbot 4</p>
-                        <div className="scores-labels-container">
-                            <p className="chatbot-score-label">Chatbot's Score:</p>
-                            <p className="user-score-label">Your Score:</p>
-                        </div>
-                        <div className="scores-container">
-                            <div className="scores-1">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">0</p>
-                            </div>
-                            <div className="scores-2">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">10</p>
-                            </div>
-                            <div className="scores-3">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">15</p>
-                            </div>
-                            <div className="scores-4">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                            <div className="scores-5">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                        </div>
-                        <div className="chatbot-victory-container">
-                            <p className="chatbot-victory-text">VICTORY !!</p>
-                        </div>
-                    </div>
-                    <div className="chatbot-results-rectangle">
-                        <p className="chatbot-results-text">Chatbot 5</p>
-                        <div className="scores-labels-container">
-                            <p className="chatbot-score-label">Chatbot's Score:</p>
-                            <p className="user-score-label">Your Score:</p>
-                        </div>
-                        <div className="scores-container">
-                            <div className="scores-1">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">0</p>
-                            </div>
-                            <div className="scores-2">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">10</p>
-                            </div>
-                            <div className="scores-3">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">15</p>
-                            </div>
-                            <div className="scores-4">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                            <div className="scores-5">
-                                <p className="chatbot-score">5</p>
-                                <p className="user-score">20</p>
-                            </div>
-                        </div>
-                        <div className="chatbot-victory-container">
-                            <p className="chatbot-victory-text">VICTORY !!</p>
-                        </div>
-                    </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>

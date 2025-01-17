@@ -44,7 +44,7 @@ const EndScreen = () => {
                                 <p className="chatbot-results-text">Chatbot {index + 1}</p>
                                 <div className="scores-labels-container">
                                     <p className="chatbot-score-label">Chatbot's Score:</p>
-                                    <p className="user-score-label">Your Score:</p>
+                                    <p className="player-score-label">Your Score:</p>
                                 </div>
                                 <div className="scores-container">
                                     {gameLog && gameLog.data.map((gameLogData, index) => {
@@ -53,7 +53,7 @@ const EndScreen = () => {
                                         return (
                                             <div className={`scores-${index + 1}`} key={index}>
                                                 <p className="chatbot-score">{totalChatbotScore}</p>
-                                                <p className="user-score">{totalUserScore}</p>
+                                                <p className="player-score">{totalUserScore}</p>
                                             </div>
                                         );
                                     })}

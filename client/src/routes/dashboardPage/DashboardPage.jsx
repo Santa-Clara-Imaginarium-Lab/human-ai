@@ -301,7 +301,8 @@ const DashboardPage = () => {
 
             const builtPrompt = buildPrompt(botPersonality); // TODO: MAKE DYNAMIC SO WE DO ALL 5
             console.log(builtPrompt);
-            navigate(`/dashboard/chats/${id}`, { state: { builtPrompt }});
+            const none = null;
+            navigate(`/dashboard/chats/${id}`, { state: { builtPrompt, none } });
         },
         onError: (error) => {
             console.error("Mutation error:", error);

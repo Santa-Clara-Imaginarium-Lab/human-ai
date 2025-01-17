@@ -10,6 +10,12 @@ function Game() {
   console.log(decision);
 
   // Function to extrapolate AI's response
+  const chatId = location.state.chatId;
+  const builtPrompt = location.state.builtPrompt;
+  console.log(chatId);
+  console.log(builtPrompt);
+
+  // Function to simulate AI's random response (Cooperate or Defect)
   const getAiResponse = () => {
     const choices = ['Cooperate', 'Defect'];
     let randomChoice;
@@ -32,7 +38,18 @@ function Game() {
 
   const [userScore, setUserScore] = useState(0); // Track user score
   const [aiScore, setAiScore] = useState(0); // Track AI score
-  const [currentRound, setCurrentRound] = useState(1); // Track current round
+
+  const [currentRound, setCurrentRound] = useState(() => {  // Track current round
+    // Load initial value from sessionStorage or use default (1)
+    const savedRound = sessionStorage.getItem('currentRound');
+    return savedRound ? parseInt(savedRound, 10) : 1;
+  });
+
+  const updateCurrentRound = (newRound) => {
+    setCurrentRound(newRound); // Update state
+    sessionStorage.setItem('currentRound', newRound); // Persist in sessionStorage
+  };
+
   const [aiDecision, setAiDecision] = useState(''); // AI's decision
   const [userDecision, setUserDecision] = useState(''); // User's decision
   const [aiMessage, setAiMessage] = useState(''); // Show points gained by AI
@@ -47,10 +64,11 @@ function Game() {
     aiDefect: false,
   }); // Manage description highlighting
   const MAX_ROUNDS = 5; // Total number of rounds
-  const [isGameOver, setIsGameOver] = useState(false); // Track if the game is over
+  const [isRoundOver, setIsRoundOver] = useState(false); // Track if the game is over
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleUserDecision = async (userDecision) => {
-    if (isGameOver) return; // Prevent further gameplay if the game is over
+    if (isRoundOver) return; // Prevent further gameplay if the game is over
     const aiChoice = getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
     setUserDecision(userDecision); 
@@ -119,14 +137,27 @@ function Game() {
     setTriangleNumbers(numbers);
     setHighlightedDesc(newDescHighlight);
 
+    let cr = (parseInt(sessionStorage.getItem('currentRound')) ?  parseInt(sessionStorage.getItem('currentRound')) : 1);
+    updateCurrentRound(cr + 1);
+    setIsRoundOver(true);
+
     // Move to the next round or end the game
-    if (currentRound >= MAX_ROUNDS) {
+    if (sessionStorage.getItem('currentRound') >= MAX_ROUNDS) {
       setIsGameOver(true); // Mark the game as over
-      setCurrentRound((prev) => prev + 1);
-    } else {
-      setCurrentRound((prev) => prev + 1); // Move to the next round
+      updateCurrentRound(1);
     }
   };
+
+  const handleNavigation = () => {
+    const moveToSurvey = isGameOver; // Go to survey if game over
+
+    const path = moveToSurvey 
+      ? `/survey`
+      : `/dashboard/chats/${chatId}`;
+
+    navigate(path, { state: { builtPrompt, chatId } });
+  };
+
 
   return (
     <div className="container game">
@@ -191,7 +222,7 @@ function Game() {
         </div>
 
         <div className="action">
-          {!isGameOver ? (
+          {!isRoundOver ? (
             <>
               <button className="proceed-button" onClick={() => handleUserDecision('Cooperate')}>
                 Cooperate
@@ -201,7 +232,7 @@ function Game() {
               </button>
             </>
           ) : (
-            <button className="proceed-button" onClick={() => navigate('/survey')}>
+            <button className="proceed-button" onClick={() => handleNavigation()}>
               Proceed
             </button>
           )}

@@ -10,10 +10,11 @@ const ChatPage = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  const thisBotPrompt = location.state.builtPrompt;
+  const builtPrompt = location.state.builtPrompt;
   // console.log("PROMPT IN CHATPAGE");
-  // console.log(thisBotPrompt);
+  // console.log(builtPrompt);
   const chatId = path.split("/").pop();
+  console.log(chatId);  
 
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", chatId],
@@ -66,7 +67,7 @@ const ChatPage = () => {
               </div>
             </>
           ))}
-          {data && <NewPrompt data={data} thisBotPrompt={thisBotPrompt}/>}
+          {data && <NewPrompt data={data} builtPrompt={builtPrompt} chatId={chatId}/>}
         </div>
       </div>
     </div>

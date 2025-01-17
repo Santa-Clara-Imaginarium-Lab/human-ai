@@ -12,8 +12,7 @@ function Survey() {
   return (
     <div className="container survey-container">
       <div className="survey-shadow-container">
-      <h2 className="survey-subtitle">Please answer some questions about yourself...</h2>
-      
+      <h2 className="survey-subtitle">Please reflect on the chatbot you just finished interacting with.</h2>
       </div>
       <button className="survey-button" onClick={handleSurveyClick}>Proceed</button>
     </div>

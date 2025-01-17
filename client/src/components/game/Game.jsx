@@ -33,6 +33,8 @@ function Game() {
     }
 
     // had to change to string indexOf, === was bugging
+    // CRITICAL: RE-RENDERS ARE CAUSING ISSUES HERE
+    console.log(text);
     if (text.indexOf("cooperate") > -1) {
       return choices[0];
     }

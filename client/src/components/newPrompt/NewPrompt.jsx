@@ -446,7 +446,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         )}
 
         <div className="transitioner" ref={transitionRef}>
-          <h1 className="transitioner-text"> Loading... </h1>
+          <h1 className="transitioner-text"> Loading Prisoner's Dilemma... </h1>
         </div>
 
         {question && <div className='message user'>{question}</div>}

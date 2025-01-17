@@ -405,6 +405,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         const text = e.target.text.value;
         if(!text) return;
         add(text, false);
+        e.target.reset();
     };
 
     const hasRun = useRef(false);

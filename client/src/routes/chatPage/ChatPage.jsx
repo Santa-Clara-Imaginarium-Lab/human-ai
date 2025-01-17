@@ -10,10 +10,11 @@ const ChatPage = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  const thisBotPrompt = location.state.builtPrompt;
+  const builtPrompt = location.state.builtPrompt;
   // console.log("PROMPT IN CHATPAGE");
-  // console.log(thisBotPrompt);
+  // console.log(builtPrompt);
   const chatId = path.split("/").pop();
+  console.log(chatId);  
 
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", chatId],
@@ -30,25 +31,11 @@ const ChatPage = () => {
   return (
     <div className = 'chatPage'>
       <div className='wrapper'>
+        <div className="debug-personality-display">{sessionStorage.getItem('personality')}</div>
         <div className='chat'>
           {data?.history?.map((message, i) => (
-            /* 
-            // ============ //
-            // !!! NOTE !!! //
-            // ============ //
-
-            Currently, system messages are also appended to the data array.
-            So, they are rendered here, as this is a simple 
-            map function with no "checking" in place.
-
-            The existence of system messages to get chat decisions are
-            already handled by the "transitioner" in newPrompt. It gets
-            activated and hides the system messages upon 
-            exiting the chat to enter the prisoner's dilemma.
-
-            TODO: we must not render them as chat bubbles, for when players
-            come back from the game, for the next chat cycle.
-            */
+           // hide system prompts
+           message.parts[0].text.toLowerCase().includes("[system]") ? null :
             <>
               {message.img && (
                 <IKImage
@@ -81,7 +68,7 @@ const ChatPage = () => {
               </div>
             </>
           ))}
-          {data && <NewPrompt data={data} thisBotPrompt={thisBotPrompt}/>}
+          {data && <NewPrompt data={data} builtPrompt={builtPrompt} chatId={chatId}/>}
         </div>
       </div>
     </div>

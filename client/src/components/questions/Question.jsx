@@ -26,7 +26,12 @@ function Question() {
       setSelectedOption(''); // Reset selected option for new question
       setShowError(false); // Reset error for next question
     } else {
-        navigate('/');
+        const remainingPersonalities = JSON.parse(sessionStorage.getItem('remainingPersonalities'));
+        if (remainingPersonalities.length > 0) {
+          navigate('/dashboard'); // Navigate to the dashboard
+        } else {
+          navigate('/end-screen'); // Navigate to the end screen
+        }
     }
   };
 

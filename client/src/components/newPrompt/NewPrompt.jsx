@@ -7,9 +7,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {useNavigate, Link} from 'react-router-dom'
 
 
-const NewPrompt = ({data, thisBotPrompt} ) => {
+const NewPrompt = ({data, builtPrompt, chatId} ) => {
+  console.log(chatId);
   //console.log("PROMPT!!!");
-  //console.log(thisBotPrompt)
+  //console.log(builtPrompt)
   /*
   // ===================== //
   // BEGIN PROMPT BUILDING //
@@ -283,7 +284,7 @@ and 100% being high in the Big Five trait.`
         history: [
             {
               role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
-              parts: [{ text: thisBotPrompt}],
+              parts: [{ text: builtPrompt}],
             },
             // {
             //   role: "model",
@@ -404,6 +405,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         const text = e.target.text.value;
         if(!text) return;
         add(text, false);
+        e.target.reset();
     };
 
     const hasRun = useRef(false);
@@ -426,7 +428,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
     // const arrayEnd = (data.history.at(-1).parts[0]); 
     // console.log("arrayEnd ", arrayEnd);
     console.log("<<BOT'S DECISION STATEMENT>> ", decision);
-    navigate('/game'); // TODO: PASS decision with corresponding logic
+    navigate('/game', {state: { builtPrompt, chatId, decision }}); // TODO: PASS decision with corresponding logic
   };
 
 

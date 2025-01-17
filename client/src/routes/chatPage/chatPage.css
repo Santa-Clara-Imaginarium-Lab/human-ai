@@ -77,3 +77,12 @@
   .hide {
     display: none !important;
   }
+
+  .debug-personality-display {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-style: italic;
+    opacity: 0.5;
+    font-size: 0.8em;
+  }

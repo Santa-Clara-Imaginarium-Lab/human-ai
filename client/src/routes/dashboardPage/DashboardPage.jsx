@@ -1,8 +1,10 @@
 import './dashboardPage.css';
 import { useNavigate } from "react-router-dom";
+import { useRef } from 'react';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "../../context/UserContext";
 import { useState } from 'react';
+import personalities from '../../constants/personalities';
 
 function buildPrompt(thisBotType){
 
@@ -262,6 +264,30 @@ and 100% being high in the Big Five trait.`
   // =================== //
 }
 
+function pickRandomPersonality() {
+  const remainingPersonalities = JSON.parse(sessionStorage.getItem("remainingPersonalities"));
+  const personalitiesArr = JSON.parse(sessionStorage.getItem("personalitiesArr"));
+  
+  if (!remainingPersonalities) { // if we don't have a list of personalities, make one
+    sessionStorage.setItem("remainingPersonalities", JSON.stringify(personalities));
+    sessionStorage.setItem("personalitiesArr", JSON.stringify([]));
+    return pickRandomPersonality();
+  }
+
+  const randomIndex = Math.floor(Math.random() * remainingPersonalities.length);
+  const nextPersonality = remainingPersonalities[randomIndex];
+  
+  // Remove personality from list of remaining personalities
+  remainingPersonalities.splice(randomIndex, 1);
+  sessionStorage.setItem("remainingPersonalities", JSON.stringify(remainingPersonalities));
+  
+  // Add personality to list of personalities the user has seen
+  personalitiesArr.push(nextPersonality);
+  sessionStorage.setItem("personalitiesArr", JSON.stringify(personalitiesArr));
+
+  return nextPersonality;
+}
+
 const DashboardPage = () => {
 
     const [debounce,setDebounce] = useState(true);
@@ -269,6 +295,8 @@ const DashboardPage = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { userId } = useUser();
+
+    const transitionRef = useRef(null);
     
     const mutation = useMutation({
         mutationFn: (text) => {
@@ -295,13 +323,14 @@ const DashboardPage = () => {
         onSuccess: (id) => {
             queryClient.invalidateQueries({ queryKey: ["userChats", userId] });
             
-            // TESTING VERSION - INSERT PERSONALITY INTO BOX, SIMILAR TO COLOR 
-            const botPersonality = localStorage.getItem("personality");
-            console.log(botPersonality);
+            const botPersonality = pickRandomPersonality();
+            sessionStorage.setItem("personality", botPersonality);
+            console.log('Bot Personality: ', botPersonality);
 
             const builtPrompt = buildPrompt(botPersonality); // TODO: MAKE DYNAMIC SO WE DO ALL 5
             console.log(builtPrompt);
-            navigate(`/dashboard/chats/${id}`, { state: { builtPrompt }});
+            const none = null;
+            navigate(`/dashboard/chats/${id}`, { state: { builtPrompt, none } });
         },
         onError: (error) => {
             console.error("Mutation error:", error);
@@ -325,6 +354,9 @@ const DashboardPage = () => {
     // safety: render bottom form in case redirect above does not work
     return (
         <div className = 'dashboardPage'>
+          <div className="transitioner go" ref={transitionRef}>
+            <h1 className="transitioner-text">Preparing Chatbot...</h1>
+          </div>
             <div className='formContainer'>
                 <form onSubmit={handleSubmit}>
                     <input type="text" name='text' placeholder='Ask me anything...' />

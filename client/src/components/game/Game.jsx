@@ -12,18 +12,19 @@ function Game() {
   // Function to extrapolate AI's response
   const getAiResponse = () => {
     const choices = ['Cooperate', 'Defect'];
+    let randomChoice;
 
     let text = decision.toLowerCase();
     if (text === "[system] cooperate") {
-      const randomChoice = choices[0];
+      randomChoice = choices[0];
     }
 
     else if (text === "[system] defect") {
-      const randomChoice = choices[1];
+      randomChoice = choices[1];
     }
 
     else {
-      const randomChoice = choices[Math.floor(Math.random() * choices.length)]
+      randomChoice = choices[Math.floor(Math.random() * choices.length)]
     }
 
     return randomChoice;

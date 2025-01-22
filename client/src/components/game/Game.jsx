@@ -24,7 +24,7 @@ function Game() {
 
     // failsafe in case google API doesn't respond
     try {
-      let text = decision.toLowerCase();
+      text = decision.toLowerCase();
     }
     catch (err) {
       console.error("ERROR! " + err + " -- Randomizing!");

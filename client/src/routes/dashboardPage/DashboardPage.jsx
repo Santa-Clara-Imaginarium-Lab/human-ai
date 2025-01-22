@@ -265,6 +265,14 @@ and 100% being high in the Big Five trait.`
 }
 
 function pickRandomPersonality() {
+
+  // handle forced scenarios
+  const forcedPersonality = localStorage.getItem("forcedPersonality");
+  if (forcedPersonality && forcedPersonality !== "random") {
+    return forcedPersonality;
+  } 
+  
+  // standard scenarios
   const remainingPersonalities = JSON.parse(sessionStorage.getItem("remainingPersonalities"));
   const personalitiesArr = JSON.parse(sessionStorage.getItem("personalitiesArr"));
   

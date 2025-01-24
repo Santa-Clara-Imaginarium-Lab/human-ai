@@ -1,16 +1,39 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useUser } from "../../context/UserContext";
 import "./welcome.css";
+import { use } from "react";
 
 const Welcome = ({changeTheme, changePersonality}) => {
     const navigate = useNavigate();
+    
+    // Reset settings
+    const { login } = useUser();
+    login("guest");
+
     const arrowRef = useRef(null); // Reference for the ">" arrow
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
+    const [settingsHidden, setSettingsHidden] = useState(true);
+    const [isAdmin, setAdmin] = useState(false); 
+
+    localStorage.setItem('isResearchMode', false);
 
     // Handlers for navigation
     const handlePlayClick = () => navigate('/tutorial'); // NOTE: now skips login! TODO: turn data collecting off.
     const handleResearchModeClick = () => navigate('/login');
-    const handleSettingsClick = () => window.open('http://make-everything-ok.com/', '_blank');
+    const handleSettingsClick = () => {
+        setSettingsHidden(false);
+    }
+    const handleSettingsClose = () => {
+        setSettingsHidden(true);
+    }
+    const handleAdminEnter = (e) => {
+        if (e.key === 'Enter') {
+            setAdmin(true);
+        }
+    }
+
+    console.log(isAdmin)
 
     const [menuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => {
@@ -56,11 +79,12 @@ const Welcome = ({changeTheme, changePersonality}) => {
         };
     }, []);
 
-    const [personalityState, setPersonality] = useState(localStorage.getItem('personality') || 'unknown'); // State for arrow visibility
+    const [personalityState, setPersonality] = useState('random');
 
+    // Set default settings
     useEffect(() => {
-
-    }, [personalityState]);
+        changePersonality('random'); 
+    }, []);
 
     function handleEnterPersonality (e) {
         if (e.key === 'Enter') {
@@ -75,157 +99,95 @@ const Welcome = ({changeTheme, changePersonality}) => {
                     setPersonality('average');
                     break;
                 case 'role model':
-                    changePersonality('role_model');
-                    setPersonality('role_model');
-                    break;
                 case 'role_model':
                     changePersonality('role_model');
                     setPersonality('role_model');
-                    break;  
+                    break;
                 case 'self centered':
+                case 'self_centered':
                     changePersonality('self_centered');
                     setPersonality('self_centered');
                     break;
-                case 'self_centered':
-                  changePersonality('self_centered');
-                  setPersonality('self_centered');
-                  break;  
                 case 'reserved':
                     changePersonality('reserved');
                     setPersonality('reserved');
                     break;
                 default:
-                    alert("Code not understood! Please enter one of: 'control', 'average', 'role model', 'self centered', 'reserved'. Defaulting to control personality");
+                    alert("Code not understood! Please enter one of: 'control', 'average', 'role model', 'self centered', 'reserved'. Defaulting to randomizer");
                     console.log(currentText + " personality not found, defaulting to control");
-                    changePersonality('control');
-                    setPersonality('control');
+                    changePersonality('random');
+                    setPersonality('random');
                     break;
             }
             alert("Changing personality, press OK");
         }
       }
+
+    const [themeState, setTheme] = useState('black-white-theme-4-2');
+
+    useEffect(() => {
+        changeTheme('black-white-theme-4-2'); 
+    }, []);
+
     function handleEnter (e) {
+        // helper function - default case
+        function defaultTheme(currentText) {
+            alert("Code not understood! Please try again. Setting to default theme");
+            console.log(currentText + " theme not found, defaulting to yellow-blue-theme-1-1");
+            setTheme('black-white-theme-4-2');
+            changeTheme('black-white-theme-4-2');
+        }
+    
         if (e.key === 'Enter') {
             const currentText = e.target.value;
-            switch (currentText) {
-                case '1 1':
-                    changeTheme('yellow-blue-theme-1-1');
+
+            const split = currentText.split(' ');
+            if (split.length !== 2) {
+                console.warn("color change: fail length")
+                return defaultTheme(currentText);
+            }
+
+            const firstNum = parseInt(currentText.split(' ')[0]);
+            if (isNaN(firstNum) || firstNum < 0 || firstNum > 4) {
+                console.warn("color change: fail 1st num");
+                return defaultTheme(currentText);
+            }
+
+            const secondNum = parseInt(currentText.split(' ')[1]);
+            if (isNaN(secondNum) || secondNum < 0 || ( ( (firstNum == 4) && (secondNum > 4) ) || secondNum > 9) ) {
+                console.warn("color change: fail 2nd num");
+                return defaultTheme(currentText);
+            }
+
+            // if second num is not 0 through 9 
+            console.log(firstNum + " " + secondNum);
+            switch (firstNum) {
+                case 1:
+                    setTheme(`yellow-blue-theme-1-${secondNum}`);
+                    changeTheme(`yellow-blue-theme-1-${secondNum}`);
                     break;
-                case '1 2':
-                    changeTheme('yellow-blue-theme-1-2');
+                case 2:
+                    setTheme(`red-green-theme-2-${secondNum}`);
+                    changeTheme(`red-green-theme-2-${secondNum}`);
                     break;
-                case '1 3':
-                    changeTheme('yellow-blue-theme-1-3');
+                case 3:
+                    setTheme(`purple-turquoise-theme-3-${secondNum}`);
+                    changeTheme(`purple-turquoise-theme-3-${secondNum}`);
                     break;
-                case '1 4':
-                    changeTheme('yellow-blue-theme-1-4');
+                case 4:
+                    setTheme(`black-white-theme-4-${secondNum}`);
+                    changeTheme(`black-white-theme-4-${secondNum}`);
                     break;
-                case '1 5':
-                    changeTheme('yellow-blue-theme-1-5');
-                    break;
-                case '1 6':
-                    changeTheme('yellow-blue-theme-1-6');
-                    break;
-                case '1 7':
-                    changeTheme('yellow-blue-theme-1-7');
-                    break;
-                case '1 8':
-                    changeTheme('yellow-blue-theme-1-8');
-                    break;
-                case '1 9':
-                    changeTheme('yellow-blue-theme-1-9');
-                    break;
-                case '2 1':
-                    changeTheme('red-green-theme-2-1');
-                    break;
-                case '2 2':
-                    changeTheme('red-green-theme-2-2');
-                    break;
-                case '2 3':
-                    changeTheme('red-green-theme-2-3');
-                    break;
-                case '2 4':
-                    changeTheme('red-green-theme-2-4');
-                    break;
-                case '2 5':
-                    changeTheme('red-green-theme-2-5');
-                    break;
-                case '2 6':
-                    changeTheme('red-green-theme-2-6');
-                    break;
-                case '2 7':
-                    changeTheme('red-green-theme-2-7');
-                    break;
-                case '2 8':
-                    changeTheme('red-green-theme-2-8');
-                    break;
-                case '2 9':
-                    changeTheme('red-green-theme-2-9');
-                    break;
-                case '3 1':
-                    changeTheme('purple-turquoise-theme-3-1');
-                    break;
-                case '3 2':
-                    changeTheme('purple-turquoise-theme-3-2');
-                    break;
-                case '3 3':
-                    changeTheme('purple-turquoise-theme-3-3');
-                    break;
-                case '3 4':
-                    changeTheme('purple-turquoise-theme-3-4');
-                    break;
-                case '3 5':
-                    changeTheme('purple-turquoise-theme-3-5');
-                    break;
-                case '3 6':
-                    changeTheme('purple-turquoise-theme-3-6');
-                    break;
-                case '3 7':
-                    changeTheme('purple-turquoise-theme-3-7');
-                    break;
-                case '3 8':
-                    changeTheme('purple-turquoise-theme-3-8');
-                    break;
-                case '3 9':
-                    changeTheme('purple-turquoise-theme-3-9');
-                    break;
-                case '4 1':
-                    changeTheme('black-white-theme-4-1');
-                    break;
-                case '4 2':
-                    changeTheme('black-white-theme-4-2');
-                    break;
-                case '4 3':
-                    changeTheme('black-white-theme-4-3');
-                    break;    
                 default:
-                    alert("Code not understood! Please try again. Setting to default theme");
-                    console.log(currentText + " theme not found, defaulting to yellow-blue-theme-1-1");
-                    changeTheme('yellow-blue-theme-1-1');
-                    break;
+                    console.warn("color change: fail matching");
+                    return defaultTheme(currentText);
             }
             alert("Changing theme, press OK");
         }
-      }          
+      }
 
     return (
         <div className="container welcome">
-        <div className="menu-container">
-        <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="color combo" />
-        <input type="text" className="personality-input" onKeyDown={handleEnterPersonality} placeholder="personality"/>
-        <p>{`Current Personality: ${personalityState}`}</p>
-        {/* <button className="menu-button" onClick={toggleMenu}>
-          ☰
-        </button>
-        {menuOpen && (
-          <div className="dropdown-menu">
-            <ul>
-              <li onClick={() => changeTheme('yellow-blue-theme')}>Yellow-Blue Theme</li>
-              <li onClick={() => changeTheme('pink-grey-theme')}>Pink-Grey Theme</li>
-            </ul>
-          </div>
-        )} */}
-      </div>
             <div className="polygon"></div>
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Co-op</h1>
@@ -260,6 +222,31 @@ const Welcome = ({changeTheme, changePersonality}) => {
                 >
                     Settings
                 </button>
+            </div>
+            <div className="settings-hider-wrapper" hidden={settingsHidden}>
+                <div className='settings-container'>
+                    <h2 className="settings-title">Settings</h2>
+                    <button className="x-button" onClick={handleSettingsClose}>X</button>
+                    <div className="admin-controls-wrapper" hidden={!isAdmin}>
+                        <p className="admin-header">Admin Panel</p>
+                        <div className="admin-controls">
+                        <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="color combo" />
+                        <p>{`Current Color Theme: ${themeState}`}</p>
+                        <input type="text" className="personality-input" onKeyDown={handleEnterPersonality} placeholder="personality"/>
+                        <p>{`Current Personality: ${personalityState}`}</p>
+                        </div>
+                    </div>
+
+                    <div className="admin-password-wrapper" hidden={isAdmin}>
+                    <input
+                        type="password" 
+                        className="admin-password-input" 
+                        onKeyDown={handleAdminEnter} 
+                        placeholder="Enter Admin Password" 
+                    />
+                    </div>
+
+                </div>
             </div>
         </div>
     );

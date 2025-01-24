@@ -47,8 +47,8 @@ function Game() {
     }
   };
 
-  const [userScore, setUserScore] = useState(0); // Track user score
-  const [aiScore, setAiScore] = useState(0); // Track AI score
+  const [userScore, setUserScore] = useState(parseInt(sessionStorage.getItem('userScore'))); // Track user score
+  const [aiScore, setAiScore] = useState(parseInt(sessionStorage.getItem('aiScore'))); // Track AI score
 
   const [currentRound, setCurrentRound] = useState(() => {  // Track current round
     // Load initial value from sessionStorage or use default (1)
@@ -136,8 +136,8 @@ function Game() {
     }
 
     // Update the state
-    setUserScore((prev) => prev + userPoints);
-    setAiScore((prev) => prev + aiPoints);
+    setUserScore((prev) => { const newPts = prev + userPoints; sessionStorage.setItem('userScore', newPts); return newPts; });
+    setAiScore((prev) => { const newPts = prev + aiPoints; sessionStorage.setItem('aiScore', newPts); return newPts; });
 
     let cr = (parseInt(sessionStorage.getItem('currentRound')) ? parseInt(sessionStorage.getItem('currentRound')) : 1);
 

@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useUser } from "../../context/UserContext";
 import "./welcome.css";
+import { use } from "react";
 
 const Welcome = ({changeTheme, changePersonality}) => {
     const navigate = useNavigate();
+    
+    // Reset settings
+    const { login } = useUser();
+    login("guest");
+
     const arrowRef = useRef(null); // Reference for the ">" arrow
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
     const [settingsHidden, setSettingsHidden] = useState(true);
@@ -72,11 +79,12 @@ const Welcome = ({changeTheme, changePersonality}) => {
         };
     }, []);
 
-    const [personalityState, setPersonality] = useState(localStorage.getItem('forcedPersonality') || 'random'); // State for arrow visibility
+    const [personalityState, setPersonality] = useState('random');
 
+    // Set default settings
     useEffect(() => {
-
-    }, [personalityState]);
+        changePersonality('random'); 
+    }, []);
 
     function handleEnterPersonality (e) {
         if (e.key === 'Enter') {
@@ -115,11 +123,18 @@ const Welcome = ({changeTheme, changePersonality}) => {
         }
       }
 
+    const [themeState, setTheme] = useState('black-white-theme-4-2');
+
+    useEffect(() => {
+        changeTheme('black-white-theme-4-2'); 
+    }, []);
+
     function handleEnter (e) {
         // helper function - default case
         function defaultTheme(currentText) {
             alert("Code not understood! Please try again. Setting to default theme");
             console.log(currentText + " theme not found, defaulting to yellow-blue-theme-1-1");
+            setTheme('black-white-theme-4-2');
             changeTheme('black-white-theme-4-2');
         }
     
@@ -148,15 +163,19 @@ const Welcome = ({changeTheme, changePersonality}) => {
             console.log(firstNum + " " + secondNum);
             switch (firstNum) {
                 case 1:
+                    setTheme(`yellow-blue-theme-1-${secondNum}`);
                     changeTheme(`yellow-blue-theme-1-${secondNum}`);
                     break;
                 case 2:
+                    setTheme(`red-green-theme-2-${secondNum}`);
                     changeTheme(`red-green-theme-2-${secondNum}`);
                     break;
                 case 3:
+                    setTheme(`purple-turquoise-theme-3-${secondNum}`);
                     changeTheme(`purple-turquoise-theme-3-${secondNum}`);
                     break;
                 case 4:
+                    setTheme(`black-white-theme-4-${secondNum}`);
                     changeTheme(`black-white-theme-4-${secondNum}`);
                     break;
                 default:
@@ -209,19 +228,24 @@ const Welcome = ({changeTheme, changePersonality}) => {
                     <h2 className="settings-title">Settings</h2>
                     <button className="x-button" onClick={handleSettingsClose}>X</button>
                     <div className="admin-controls-wrapper" hidden={!isAdmin}>
+                        <p className="admin-header">Admin Panel</p>
                         <div className="admin-controls">
                         <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="color combo" />
+                        <p>{`Current Color Theme: ${themeState}`}</p>
                         <input type="text" className="personality-input" onKeyDown={handleEnterPersonality} placeholder="personality"/>
                         <p>{`Current Personality: ${personalityState}`}</p>
                         </div>
                     </div>
 
+                    <div className="admin-password-wrapper" hidden={isAdmin}>
                     <input
                         type="password" 
                         className="admin-password-input" 
                         onKeyDown={handleAdminEnter} 
                         placeholder="Enter Admin Password" 
                     />
+                    </div>
+
                 </div>
             </div>
         </div>

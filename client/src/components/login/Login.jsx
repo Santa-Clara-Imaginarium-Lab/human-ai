@@ -12,6 +12,7 @@ function Login({changeTheme, changePersonality}) {
     e.preventDefault();
     if (userId.trim()) {
       login(userId); // Store userId in context
+      localStorage.setItem('isResearchMode', true); // Enable data logging in future files
       navigate('/tutorial');
     } else {
       alert('Please enter a valid ID');
@@ -43,7 +44,7 @@ function Login({changeTheme, changePersonality}) {
             <p>
               <br/>
               <strong>Note: </strong>
-              Your participant ID has been provided via the researcher. <br/> If you are taking this study remotely, it is available in the study invitation email. For any questions or further assistance, please notify the researcher.
+              Your participant ID has been provided via the researcher. <br/> If you are taking this study remotely, it is available in the study invitation email. <br/><br/> For any questions or further assistance, please notify the researcher.
             </p>
           </div>
         </div>

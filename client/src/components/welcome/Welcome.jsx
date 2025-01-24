@@ -9,6 +9,8 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const [settingsHidden, setSettingsHidden] = useState(true);
     const [isAdmin, setAdmin] = useState(false); 
 
+    localStorage.setItem('isResearchMode', false);
+
     // Handlers for navigation
     const handlePlayClick = () => navigate('/tutorial'); // NOTE: now skips login! TODO: turn data collecting off.
     const handleResearchModeClick = () => navigate('/login');

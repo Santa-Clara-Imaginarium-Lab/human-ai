@@ -24,8 +24,8 @@ import Qualtrix from './components/questions/Qualtrix.jsx'
 import EndScreen from './routes/endScreen/EndScreen.jsx';
 
 function MainApp() {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'yellow-blue-theme');
-  const [personality, setPersonality] = useState(localStorage.getItem('botPersonality') || 'control');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'black-white-theme-4-2');
+  const [personality, setPersonality] = useState(localStorage.getItem('forcedPersonality') || 'random');
 
   useEffect(() => {
     // Apply the theme to the document
@@ -35,7 +35,7 @@ function MainApp() {
 
   useEffect(() => {
     // Apply personality changes
-    localStorage.setItem('personality', personality); // Persist theme in localStorage
+    localStorage.setItem('forcedPersonality', personality); // Persist theme in localStorage
   }, [personality]);
 
   const router = createBrowserRouter([

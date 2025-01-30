@@ -9,6 +9,8 @@ const EndScreen = () => {
     const aiChoices = JSON.parse(sessionStorage.getItem('aiChoices'));
     const userChoices = JSON.parse(sessionStorage.getItem('userChoices'));
     
+    const chatbotScoreInt = parseInt(totalChatbotScore);
+    const userScoreInt = parseInt(totalUserScore);
     const allChoices = aiChoices.concat(userChoices);
 
     return (
@@ -24,7 +26,10 @@ const EndScreen = () => {
                         <p>{totalUserScore}</p>
                     </div>
                     <div className="win-banner">
-                        <div className="win-text">YOU WIN</div>
+                        {userScoreInt > chatbotScoreInt && <div className="win-text">YOU WIN</div>}
+                        {userScoreInt < chatbotScoreInt && <div className="win-text">YOU LOSE</div>}
+                        {userScoreInt === chatbotScoreInt && <div className="win-text">YOU TIE</div>}
+
                         <div className="divider"></div>
                     </div>
                 </div>

@@ -2,17 +2,13 @@ import { useEffect, useState } from 'react';
 import './endScreen.css';
 
 const EndScreen = () => {
-    const [gameLog, setGameLog] = useState(null);
-    let totalChatbotScore = 0;
-    let totalUserScore = 0;
-
-    useEffect(() => {
-        const gameLogInfo = JSON.parse(sessionStorage.getItem('gameLog1'));
-
-        setGameLog(gameLogInfo);
-
-        console.log(gameLogInfo);
-    }, []);
+    const gameLog = JSON.parse(sessionStorage.getItem('gameLog1'));
+    const totalChatbotScore = sessionStorage.getItem('aiScore') || '?';
+    const totalUserScore = sessionStorage.getItem('userScore') || '?';
+    const aiChoices = JSON.parse(sessionStorage.getItem('aiChoices'));
+    const userChoices = JSON.parse(sessionStorage.getItem('userChoices'));
+    
+    const allChoices = aiChoices.concat(userChoices);
 
     return (
         <div className="container end-screen-container">
@@ -44,9 +40,9 @@ const EndScreen = () => {
                         </div>
                         <div className="right-side">
                             <div className="grid-container">
-                                {Array.from({ length: 10 }, (_, index) => (
+                                {allChoices.map((choice, index) => (
                                     <div className="cell" key={index}>
-                                        {index % 2 === 0 ? "Defect" : "Cooperate"}
+                                        {choice}
                                     </div>
                                 ))}
                                 {/* Vertical dividers */}

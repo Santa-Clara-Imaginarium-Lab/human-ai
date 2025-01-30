@@ -78,11 +78,24 @@ function Game() {
   const [isRoundOver, setIsRoundOver] = useState(false); // Track if the game is over
   const [isGameOver, setIsGameOver] = useState(false);
 
-  const handleUserDecision = async (userDecision) => {
+  const addChoices = (aiChoice, userChoice) => {
+    let aiChoices = JSON.parse(sessionStorage.getItem('aiChoices')) || [];
+    let userChoices = JSON.parse(sessionStorage.getItem('userChoices')) || [];
+
+    aiChoices.push(aiChoice);
+    userChoices.push(userChoice);
+
+    sessionStorage.setItem('aiChoices', JSON.stringify(aiChoices));
+    sessionStorage.setItem('userChoices', JSON.stringify(userChoices));
+  }
+
+  const handleUserDecision = async (userChoice) => {
     if (isRoundOver) return; // Prevent further gameplay if the game is over
     const aiChoice = getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
-    setUserDecision(userDecision); 
+    setUserDecision(userChoice); 
+
+    addChoices(aiChoice, userChoice);
 
     // Calculate scores based on decisions
     let userPoints = 0;
@@ -97,7 +110,7 @@ function Game() {
     };
 
     // Highlight logic and numbers
-    if (userDecision === 'Cooperate' && aiChoice === 'Cooperate') {
+    if (userChoice === 'Cooperate' && aiChoice === 'Cooperate') {
       userPoints = 3;
       aiPoints = 3;
       highlightTriangles = ['t2', 't5'];
@@ -106,7 +119,7 @@ function Game() {
       newDescHighlight.userCooperate = true;
       setAiMessage('+3');
       setUserMessage('+3');
-    } else if (userDecision === 'Defect' && aiChoice === 'Defect') {
+    } else if (userChoice === 'Defect' && aiChoice === 'Defect') {
       userPoints = 1;
       aiPoints = 1;
       highlightTriangles = ['t4', 't7'];
@@ -115,7 +128,7 @@ function Game() {
       newDescHighlight.userDefect = true;
       setAiMessage('+1');
       setUserMessage('+1');
-    } else if (userDecision === 'Cooperate' && aiChoice === 'Defect') {
+    } else if (userChoice === 'Cooperate' && aiChoice === 'Defect') {
       userPoints = 0;
       aiPoints = 5;
       highlightTriangles = ['t1', 't3'];
@@ -124,7 +137,7 @@ function Game() {
       newDescHighlight.userCooperate = true;
       setAiMessage('+5');
       setUserMessage('+0');
-    } else if (userDecision === 'Defect' && aiChoice === 'Cooperate') {
+    } else if (userChoice === 'Defect' && aiChoice === 'Cooperate') {
       userPoints = 5;
       aiPoints = 0;
       highlightTriangles = ['t6', 't8'];

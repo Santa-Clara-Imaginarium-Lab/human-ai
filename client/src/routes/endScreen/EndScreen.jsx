@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
 import './endScreen.css';
+import formattedPersonalities from '../../constants/formattedPersonalities';'../../constants/formattedPersonalities'
 
 const EndScreen = () => {
     const gameLog = JSON.parse(sessionStorage.getItem('gameLog1'));
     const totalChatbotScore = sessionStorage.getItem('aiScore') || '?';
     const totalUserScore = sessionStorage.getItem('userScore') || '?';
+    const personality = sessionStorage.getItem('personality');
     const aiChoices = JSON.parse(sessionStorage.getItem('aiChoices'));
     const userChoices = JSON.parse(sessionStorage.getItem('userChoices'));
     
@@ -29,7 +30,7 @@ const EndScreen = () => {
                 </div>
                 <div className="bottom-half">
                     <div className="personality">
-                        <h2>Role-Model</h2>
+                        <h2>{formattedPersonalities[personality]}</h2>
                         <p>Click here to learn more about this personality</p>
                     </div>
                     <div className="actions">

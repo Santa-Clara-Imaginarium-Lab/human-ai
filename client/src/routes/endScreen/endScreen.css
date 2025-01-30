@@ -12,161 +12,228 @@
     background-color: var(--c2);
 }
 
-.results-title-button {
-    position: relative;
-    margin: 0 auto 2em auto;
-    margin-top: 15px;
-    padding: 10px 100px;
-    font-size: 30px;
-    background-color: #3E3B41; /* TO DO: change to variable */
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-family: var(--universal-font);
-    /* box-shadow: 0.3em 0.3em 0 0 black; */
-}
-
 .results-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    gap: 4em;
-}
-
-.round-results-rectangle {
-    box-sizing: border-box;
-    width: 7em;
-    height: 45em;
-    background: var(--c2);
-    border: 10px solid var(--accent-four);
-    border-radius: 45px;
-    box-shadow: 0.6em 0 0 0 black;
-    position: relative;
-    z-index: 1;
-}
-
-.round-results-text {
-    font-size: 3em;
-    color: #3E3B41; /* TO DO: change to variable */
-    text-align: center;
-    margin-top: 0.3em;
-}
-
-.chatbot-results-wrapper {
-    position: absolute;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    gap: 2em;
+    position: relative;
+    z-index: 1;
+    background-color: var(--accent-four);
+    padding: 5%;
+    border-radius: 50px;
+    box-shadow: 15px 15px 0 0 #3E3B41; /* TO DO: change to variable */
 }
 
-.chatbot-results-rectangle {
-    position: relative;
+.results-container::after { /* Speech bubble tail */
+    content: '';
+    position: absolute;
+    top: 95%;
+    left: 10%;
+
+    /* No width/height so that triangle can be made purely from border */
+    width: 0; 
+    height: 0;
+
+    border: 100px solid transparent;
+    border-top-color: var(--accent-four);
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 15px;
+}
+
+.results-container::before { /* Speech bubble tail shadow */
+    content: '';
+    position: absolute;
+    top: 100%; /* shadow must be below the speech bubble */
+    left: 10.5%; /* offset the shadow */
+
+    /* No width/height so that triangle can be made purely from border */
+    width: 0; 
+    height: 0;
+
+    border: 85px solid transparent; /* must be shorter than the tail */
+    border-top-color: #3E3B41; /* TO DO: change to variable */
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 15px;
+}
+
+.top-half {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
-    box-sizing: border-box;
-    width: 90em;
-    height: 6em;
-    bottom: 0;
-    left: 0;
-    /* gap: 2em; */
-    padding: 0 2em;
-
-    background: var(--accent-four);
-    border-radius: 45px;
-    box-shadow: 0 0.6em 0 0 var(--c1);
-    z-index: 2;
+    width: 100%;
+    gap: 10%;
 }
 
-.chatbot-results-text {
-    font-size: 2em;
-    color: #3E3B41; /* TO DO: change to variable */
-    text-align: center;
-    margin-right: 1em;
-}
-
-.scores-labels-container {
+.bottom-half {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    width: 100%;
     gap: 1em;
 }
 
-.chatbot-score-label {
-    font-size: 1.5em;
-    color: var(--c1);
+.chatbot-results,
+.user-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Equal width */
+    min-width: 150px;
 }
 
-.player-score-label {
-    font-size: 1.5em;
+.chatbot-results > h2,
+.user-results > h2 {
+    font-size: 100px;
+    color: var(--accent-three);
+}
+
+.chatbot-results > p,
+.user-results > p {
+    font-size: 125px;
     color: #3E3B41; /* TO DO: change to variable */
 }
 
-.scores-container {
+.win-banner {
+    position: absolute;
+    top: -20%;
+
+    height: 80%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.win-text {
+    font-size: 60px;
+    color: var(--accent-four);
+    /*text-shadow: 2px 2px 0 #3E3B41; /* TO DO: change to variable */
+
+    padding: 5% 2em;
+    background-color: #3E3B41;
+    border-radius: 50px;
+}
+
+.divider {
+    width: 5%;
+    height: 50%;
+    background-color: #3E3B41;
+    border-radius: 0px 0px 50px 50px;
+}
+
+.personality {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 0.5;
+    gap: 1em;
+    position: relative;
+    padding: 5%;
+    border: 8px solid var(--c2);
+    border-radius: 25px;
+}
+
+.personality::after { /* Sticker note tail */
+    content: '';
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+    width: 0;
+    height: 0;
+    border: 15px solid var(--c2);
+}
+
+.personality > h2 {
+    font-size: 40px;
+}
+
+.personality > p {
+    color: #3E3B41; /* TO DO: change to variable */
+}
+
+.actions {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-right: 2em;
+    flex: 1.5;
+    height: 100%;
+
+    border: 8px solid var(--c2);
+    border-radius: 25px;
 }
 
-.scores-1 {
-    position: absolute;
-    left: 23.6%;
-    padding: 0 25px;
+.left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    
+    color: var(--accent-four);
+    background-color: var(--c2);
 }
 
-.scores-2 {
-    position: absolute;
-    left: 35.7%;
-    padding: 0 25px;
+.divider2 {
+    width: 90%;
+    height: 3%;
+    background-color: var(--accent-four);
+    border-radius: 30px;
 }
 
-.scores-3 {
-    position: absolute;
-    left: 47.7%;
-    padding: 0 25px;
-}
-
-.scores-4 {
-    position: absolute;
-    left: 60%;
-    padding: 0 25px;
-}
-
-.scores-5 {
-    position: absolute;
-    left: 72.1%;
-    padding: 0 25px;
-}
-
-.chatbot-score {
-    font-size: 2em;
-    color: var(--c1);
+.right-side {
     width: 100%;
-    text-align: center;
+    height: 100%;
 }
 
-.player-score {
-    font-size: 2em;
-    color: #3E3B41; /* TO DO: change to variable */
-    width: 100%;
-    text-align: center;
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr); /* 2 equal rows */
+    grid-template-columns: repeat(5, 1fr); /* 5 equal columns */ 
+    gap: 1em;
+    height: 100%;
+    position: relative;
 }
 
-.chatbot-victory-text {
-    font-size: 3em;
-    color: #3E3B41; /* TO DO: change to variable */
-    margin-left: 0.5em;
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--accent-four);
+    color: var(--c2);
+    font-size: 24px;
+    border-radius: 15px;
+}
+
+.vertical-divider,
+.horizontal-divider {
     position: absolute;
-    right: 5%;
+    background-color: var(--c2);
+    border-radius: 30px;
+}
+
+.horizontal-divider { /* Horizontal divider between the rows */
+    width: calc(100% - 16px); /* Accounts for gap spacing */
+    height: 8px; /* Thickness of the line */
+    left: 8px; /* Moves left to align with grid gap */
+
+    top: 48.5%; /* Centered between the rows */
+}
+
+.vertical-divider { /* Vertical dividers between the columns */
+    width: 8px; /* Thickness of the line */
+    height: calc(100% - 16px); /* Accounts for gap spacing */
+    top: 8px; /* Moves down to align with grid gap */
+
+    /* left is set inline */
 }

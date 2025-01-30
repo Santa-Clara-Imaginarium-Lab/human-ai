@@ -92,6 +92,20 @@
 .user-results > h2 {
     font-size: 100px;
     color: var(--accent-three);
+    position: relative;
+}
+
+.chatbot-results > h2::after,
+.user-results > h2::after {
+    content: '';
+    background-color: var(--c2);
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    left: -4%; /* Offset to center with text */
+    z-index: -1;
+    width: 110%;
+    height: 20px;
 }
 
 .chatbot-results > p,

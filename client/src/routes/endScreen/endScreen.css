@@ -165,6 +165,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 0.5em;
     flex: 1.5;
     height: 100%;
 

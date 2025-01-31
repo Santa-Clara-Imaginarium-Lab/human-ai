@@ -13,7 +13,7 @@ function Login({changeTheme, changePersonality}) {
     if (userId.trim()) {
       login(userId); // Store userId in context
       localStorage.setItem('isResearchMode', true); // Enable data logging in future files
-      navigate('/tutorial');
+      navigate('/brief');
     } else {
       alert('Please enter a valid ID');
     }

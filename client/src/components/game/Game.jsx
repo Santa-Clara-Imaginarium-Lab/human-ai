@@ -275,11 +275,55 @@ function Game() {
     const cAS = parseInt(sessionStorage.getItem('chatbotApproachScore'))
     sessionStorage.setItem('chatbotApproachScore', cAS + 1);
     navigate(`/dashboard/chats/${chatId}`, { state: { builtPrompt, chatId, speedFlag } });
+    navigate(path, { state: { builtPrompt, chatId } });
+
+  };
+
+  const getHelp = () => {
+
+    let alertBox =
+        document.getElementById("customAlertBox");
+    let alert_Message_container =
+        document.getElementById("alertMessage");
+    let custom_button =
+        document.querySelector(".custom-button");
+    let close_img =
+        document.querySelector(".close");
+    let body =
+        document.querySelector("body");
+
+      var textWall = "The choice to cooperate or defect offers you different amounts of points, depending on you and your opponents’ choices.<br/><br/>" +
+        "1. If you defect while your opponent cooperates, you get +5 points, and your opponent gets +0.<br/><br/>" +
+        "2. If you cooperate while your opponent defects, you get +0 points, and your opponent gets +5.<br/><br/>" +
+        "3. If you both cooperate, you both get +3 points.<br/><br/>" +
+        "4. If you both defect, you both get +1 point."
+
+    alert_Message_container.innerHTML = textWall;
+    alertBox.style.display = "block";
+
+    close_img.addEventListener
+        ('click', function () {
+            alertBox.style.display = "none";
+        });
   }
 
   return (
     <div className="container game">
       <div className="game-content">
+    
+        <div>
+          <button className= "help-button" onClick={() => getHelp()}>
+            ?
+          </button>
+        </div>
+
+        <div id="customAlertBox" class="custom-alert">
+        <div class="custom-alert-content">
+            <span class="close">&times;</span>
+            <p id="alertMessage"></p>
+        </div>
+      </div>
+
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">
           <div className="ai-score">

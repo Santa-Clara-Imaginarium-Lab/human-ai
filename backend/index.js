@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
 import GameScore from "./models/gameScores.js";
+import SurveyResponse from "./models/surveyQuestions.js";
 
 
 const port = 3000;
@@ -155,6 +156,22 @@ app.put("/api/chats/:id", async (req, res) => {
     }
 });
 
+app.post("/api/surveyresponses", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+    
+    const surveyResponse = new SurveyResponse({
+      userId,
+      responses
+    });
+    
+    await surveyResponse.save();
+    res.status(201).json({ message: "Survey responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving survey responses:", error);
+    res.status(500).json({ error: "Failed to save survey responses." });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

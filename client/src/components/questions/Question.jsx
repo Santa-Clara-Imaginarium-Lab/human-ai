@@ -4,10 +4,11 @@ import questions from './constants'; // Import the questions from the constants 
 import { useNavigate } from 'react-router-dom';
 
 function Question() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Manage the current question index
-  const [selectedOption, setSelectedOption] = useState(''); // Store the selected option
-  const [showError, setShowError] = useState(false); // To show error if no option is selected
-
+  const [responses, setResponses] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [showError, setShowError] = useState(false);
+  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
   const handleOptionChange = (event) => {
@@ -15,25 +16,48 @@ function Question() {
     setShowError(false); // Hide error message if an option is selected
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!selectedOption) {
-      setShowError(true); // Show error if no option is selected
+      setShowError(true);
       return;
     }
-    
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1); // Move to next question
-      setSelectedOption(''); // Reset selected option for new question
-      setShowError(false); // Reset error for next question
-    } else {
-        const remainingPersonalities = JSON.parse(sessionStorage.getItem('remainingPersonalities'));
-        const continueOn = sessionStorage.getItem('allBots'); // for settings
-        console.log(continueOn);
-        if (continueOn && remainingPersonalities.length > 0) {
-          navigate('/dashboard'); // Navigate to the dashboard
-        } else {
-          navigate('/end-screen'); // Navigate to the end screen
+
+    // Add current response to responses array
+    const newResponse = {
+      questionNumber: currentQuestionIndex + 1,
+      selectedOption
+    };
+    const updatedResponses = [...responses, newResponse];
+    setResponses(updatedResponses);
+
+    if (currentQuestionIndex === questions.length - 1) {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/surveyresponses`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId,
+            responses: updatedResponses
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save responses');
         }
+
+        console.log('Survey responses saved successfully');
+        navigate('/end-screen'); // Simply navigate to end screen after all questions
+        
+      } catch (error) {
+        console.error('Error saving responses:', error);
+      }
+    } else {
+      // Move to next question if not the last one
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedOption('');
+      setShowError(false);
     }
   };
 

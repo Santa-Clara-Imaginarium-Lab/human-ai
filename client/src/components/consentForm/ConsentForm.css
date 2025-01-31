@@ -30,7 +30,7 @@ Tutorial.css
     font-family: var(--universal-font);
   }
   
-  .yes-button, .no-button {
+  #no-button {
     padding: 0.5em 1.5em;
     background-color: var(--button-one);
     color: white;
@@ -46,6 +46,10 @@ Tutorial.css
     /* Simulate the button being pressed */
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+  }
+
+  .wait {
+    background-color: var(--button-two);
   }
   
   

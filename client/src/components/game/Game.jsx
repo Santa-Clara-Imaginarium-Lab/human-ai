@@ -275,8 +275,6 @@ function Game() {
     const cAS = parseInt(sessionStorage.getItem('chatbotApproachScore'))
     sessionStorage.setItem('chatbotApproachScore', cAS + 1);
     navigate(`/dashboard/chats/${chatId}`, { state: { builtPrompt, chatId, speedFlag } });
-    navigate(path, { state: { builtPrompt, chatId } });
-
   };
 
   const getHelp = () => {

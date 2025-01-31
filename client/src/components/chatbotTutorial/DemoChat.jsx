@@ -16,7 +16,7 @@ function DemoChat() {
 
   useEffect(() => { // Navigate to dashboard after last tooltip
     if (tooltipIndex >= tooltips.length) {
-      navigate('/dashboard');
+      navigate('/pregame');
     }
   }, [tooltipIndex]);
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './Game.css'; // Ensure this file contains the necessary CSS
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -76,13 +76,30 @@ function Game() {
   }); // Manage description highlighting
   const MAX_ROUNDS = 5; // Total number of rounds
   const [isRoundOver, setIsRoundOver] = useState(false); // Track if the game is over
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);  
+  const coopButtonRef = useRef(null);
+  const defectButtonRef = useRef(null);
 
-  const handleUserDecision = async (userDecision) => {
+  const handleUserDecision = (decision) => {
+    // Update user's decision
+    setUserDecision(decision);
+    console.log(decision);
+    switch (decision) {
+      case 'Cooperate':
+        coopButtonRef.current.classList.add('selected');
+        defectButtonRef.current.classList.remove('selected');
+        break;
+      case 'Defect':
+        coopButtonRef.current.classList.remove('selected');
+        defectButtonRef.current.classList.add('selected');
+        break;
+    }
+  };  
+
+  const handleLockIn = async () => {
     if (isRoundOver) return; // Prevent further gameplay if the game is over
     const aiChoice = getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
-    setUserDecision(userDecision); 
 
     // Calculate scores based on decisions
     let userPoints = 0;
@@ -223,6 +240,10 @@ function Game() {
     }
   };
 
+  const reset = () => {
+    print("reset round");
+  };
+
   const handleNavigation = () => {
     const moveToSurvey = isGameOver; // Go to survey if game over
 
@@ -230,9 +251,14 @@ function Game() {
       ? `/survey`
       : `/dashboard/chats/${chatId}`;
 
-    navigate(path, { state: { builtPrompt, chatId } });
+    const speedFlag = true;
+    navigate(path, { state: { builtPrompt, chatId, speedFlag } });
   };
 
+  const handleChatNavigation = () => {
+    const speedFlag = false;
+    navigate(`/dashboard/chats/${chatId}`, { state: { builtPrompt, chatId, speedFlag } });
+  }
 
   return (
     <div className="container game">
@@ -299,19 +325,28 @@ function Game() {
         <div className="action">
           {!isRoundOver ? (
             <>
-              <button className="proceed-button" onClick={() => handleUserDecision('Cooperate')}>
+              <button className="proceed-button" ref={coopButtonRef} onClick={() => handleUserDecision('Cooperate')}>
                 Cooperate
               </button>
-              <button className="proceed-button" onClick={() => handleUserDecision('Defect')}>
+              <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
                 Defect
+              </button>
+              <br></br>
+              <button className="lockin-button" onClick={() => handleLockIn()}>
+                Lock In
               </button>
             </>
           ) : (
-            <button className="proceed-button" onClick={() => handleNavigation()}>
+            <button className="next-round-button" onClick={() => handleNavigation()}> {/* round up */ }
               Proceed
             </button>
           )}
         </div>
+      </div>
+      <div>
+        <button className="proceed-chat" onClick={() => handleChatNavigation()}>
+        Go to Chat
+        </button>
       </div>
     </div>
   );

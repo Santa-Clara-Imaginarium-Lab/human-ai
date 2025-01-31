@@ -9,6 +9,8 @@ const ChatPage = () => {
 
   const location = useLocation();
   const path = location.pathname;
+  const speedFlag = location.state.speedFlag;
+  console.log(speedFlag);
 
   const builtPrompt = location.state.builtPrompt;
   // console.log("PROMPT IN CHATPAGE");
@@ -68,7 +70,7 @@ const ChatPage = () => {
               </div>
             </>
           ))}
-          {data && <NewPrompt data={data} builtPrompt={builtPrompt} chatId={chatId}/>}
+          {data && <NewPrompt data={data} builtPrompt={builtPrompt} chatId={chatId} speedFlag={speedFlag}/>}
         </div>
       </div>
     </div>

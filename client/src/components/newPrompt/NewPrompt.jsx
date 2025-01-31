@@ -5,9 +5,10 @@ import model from '../../lib/gemini';
 import Markdown from "react-markdown"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {useNavigate, Link} from 'react-router-dom'
+import { use } from 'react';
 
 
-const NewPrompt = ({data, builtPrompt, chatId} ) => {
+const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
   console.log(chatId);
   //console.log("PROMPT!!!");
   //console.log(builtPrompt)
@@ -421,16 +422,22 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 
 
   const handleExit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log("exiting?");
     transitionRef.current.classList.add('go');
     const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false)
     // const arrayEnd = (data.history.at(-1).parts[0]); 
     // console.log("arrayEnd ", arrayEnd);
     console.log("<<BOT'S DECISION STATEMENT>> ", decision);
-    navigate('/game', {state: { builtPrompt, chatId, decision }}); // TODO: PASS decision with corresponding logic
+    navigate('/game', {state: { builtPrompt, chatId, decision }}); 
   };
 
+    useEffect(() => {
+      console.log(speedFlag);
+      if (speedFlag) {
+        console.log("speedFlag is true");
+        handleExit();      
+      }});
 
     return (
         <>
@@ -456,7 +463,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
                 <input id='file' type='file' multiple={false} hidden />
                 <input className="chat-input official" type="text" name='text' placeholder='Enter message...' />
                 <button className="send-button official">Send</button>
-                <button className="send-button official" onClick={handleExit}>Continue</button>
+                <button className="send-button official" onClick={handleExit}>Go to Game</button>
             </form>
         </>
     )

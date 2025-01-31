@@ -172,12 +172,11 @@ function GameTutorial() {
           )}
 
           {isComplete && (
-            <button
-              className="tutorial-proceed-button"
-              onClick={() => navigate('/chatbot-tutorial')}
-            >
-              Proceed
+          <div>
+            <button className="proceed-chat" onClick={() => navigate('/chatbot-tutorial')}>
+            Go to Chat
             </button>
+          </div>
           )}
         </div>
       </div>

@@ -204,7 +204,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
                     onMouseEnter={updateArrowPosition}
                     onMouseLeave={hideArrow}
                 >
-                    Start
+                    Free Play
                 </button>
                 <button
                     className="play-button"

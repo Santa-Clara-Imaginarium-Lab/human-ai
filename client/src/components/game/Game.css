@@ -77,6 +77,21 @@
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
+  .lockin-button {
+    margin: 0px;
+    background-color: var(--accent-three);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+    font-family: var(--universal-font);
+
+
+  }
+
   .help-button {
     position: absolute;
     top: 10px;
@@ -86,11 +101,52 @@
     border: none;
     border-radius: 20px;
     padding: 0.5em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+    font-family: var(--universal-font);
+  }
+
+
+  .proceed-chat {
+    margin: 100px;
+    background-color: var(--accent-three);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+    font-family: var(--universal-font);
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform-origin: top right;
+}
+
+.selected {
+  background-color: var(--button-one);
+}
+
+.next-round-button {
+  margin: 100px;
+  background-color: var(--accent-three);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5em 1.5em;
+  font-size: 1.2em;
+  cursor: pointer;
+  box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+  font-family: var(--universal-font);
+}
+
+.help-button { 
     font-size: 1.3em;
     cursor: pointer;
     box-shadow: 0.3em 0.3em 0 0 var(--button-two);
     font-family: var(--universal-font);
-
   }
 
   .help-button:active {

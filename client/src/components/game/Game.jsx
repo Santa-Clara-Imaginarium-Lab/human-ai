@@ -79,19 +79,34 @@ function Game() {
   const [isGameOver, setIsGameOver] = useState(false);  
   const coopButtonRef = useRef(null);
   const defectButtonRef = useRef(null);
+  const [isFirstDecision, setisFirstDecision] = useState(true);
 
   const handleUserDecision = (decision) => {
-    // Update user's decision
+    // Do nothing if clicked same button twice
+    if (userDecision == decision)
+      return;
+
+    // Update user's decision    
     setUserDecision(decision);
     console.log(decision);
     switch (decision) {
       case 'Cooperate':
         coopButtonRef.current.classList.add('selected');
         defectButtonRef.current.classList.remove('selected');
+        if (!isFirstDecision) { 
+          const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
+          sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
+        }
+        setisFirstDecision(false);
         break;
       case 'Defect':
         coopButtonRef.current.classList.remove('selected');
         defectButtonRef.current.classList.add('selected');
+        if (!isFirstDecision) { 
+          const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
+          sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
+        }
+        setisFirstDecision(false);
         break;
     }
   };  
@@ -257,6 +272,8 @@ function Game() {
 
   const handleChatNavigation = () => {
     const speedFlag = false;
+    const cAS = parseInt(sessionStorage.getItem('chatbotApproachScore'))
+    sessionStorage.setItem('chatbotApproachScore', cAS + 1);
     navigate(`/dashboard/chats/${chatId}`, { state: { builtPrompt, chatId, speedFlag } });
   }
 

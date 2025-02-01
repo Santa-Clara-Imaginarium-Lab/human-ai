@@ -5,32 +5,20 @@ import './Survey.css';
 
 function Survey() {
   const navigate = useNavigate();
-  const [gameLogs, setGameLogs] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const userId = localStorage.getItem('userId');
   const submitAttempted = useRef(false);
 
   useEffect(() => {
     const gameLog1Info = JSON.parse(sessionStorage.getItem('gameLog1'));
-    const gameLog2Info = JSON.parse(sessionStorage.getItem('gameLog2'));
-    const gameLog3Info = JSON.parse(sessionStorage.getItem('gameLog3'));
-    const gameLog4Info = JSON.parse(sessionStorage.getItem('gameLog4'));
-    const gameLog5Info = JSON.parse(sessionStorage.getItem('gameLog5'));
     const currentPersonality = sessionStorage.getItem('personality');
 
     // Log retrieved data
     console.log('Retrieved from sessionStorage:', {
         gameLog1: gameLog1Info,
-        gameLog2: gameLog2Info,
-        gameLog3: gameLog3Info,
-        gameLog4: gameLog4Info,
-        gameLog5: gameLog5Info,
         personality: currentPersonality,
         userId: userId
     });
-
-    const gameLogsData = [gameLog1Info, gameLog2Info, gameLog3Info, gameLog4Info, gameLog5Info];
-    setGameLogs(gameLogsData);
 
     // Send game logs to MongoDB
     const saveGameLogs = async () => {

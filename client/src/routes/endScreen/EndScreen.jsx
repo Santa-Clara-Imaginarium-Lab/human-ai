@@ -2,7 +2,6 @@ import './endScreen.css';
 import formattedPersonalities from '../../constants/formattedPersonalities';'../../constants/formattedPersonalities'
 
 const EndScreen = () => {
-    const gameLog = JSON.parse(sessionStorage.getItem('gameLog1'));
     const totalChatbotScore = sessionStorage.getItem('aiScore') || '?';
     const totalUserScore = sessionStorage.getItem('userScore') || '?';
     const personality = sessionStorage.getItem('personality');

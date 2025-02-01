@@ -3,6 +3,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
+import GameScore from "./models/gameScores.js";
+import SurveyResponse from "./models/surveyQuestions.js";
 
 
 const port = 3000;
@@ -24,6 +26,46 @@ const connect = async () => {
   }
 }
 
+app.post("/api/gamescores", async (req, res) => {
+    const { user_id, personality, rounds } = req.body;
+  
+    // Ensure all required fields are present
+    if (!user_id || !personality || !rounds || rounds.length !== 5) {
+      return res.status(400).json({ error: "Invalid data. Ensure 5 rounds are included." });
+    }
+  
+    try {
+      const newGameScore = new GameScore({
+        user_id,
+        personality,
+        rounds,
+      });
+  
+      await newGameScore.save();
+      res.status(201).json({ message: "Game scores saved successfully!" });
+    } catch (error) {
+      console.error("Error saving game scores:", error);
+      res.status(500).json({ error: "Failed to save game scores." });
+    }
+  });
+
+  app.get("/api/gamescores/:userId", async (req, res) => {
+    const { userId } = req.params;
+  
+    try {
+      const gameScores = await GameScore.find({ user_id: userId });
+  
+      if (!gameScores.length) {
+        return res.status(404).json({ error: "No game scores found for this user." });
+      }
+  
+      res.status(200).json(gameScores);
+    } catch (error) {
+      console.error("Error fetching game scores:", error);
+      res.status(500).json({ error: "Failed to fetch game scores." });
+    }
+  });
+  
 app.post("/api/chats", async (req,res) =>{
     const {text, userId} = req.body
     try {
@@ -114,6 +156,22 @@ app.put("/api/chats/:id", async (req, res) => {
     }
 });
 
+app.post("/api/surveyresponses", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+    
+    const surveyResponse = new SurveyResponse({
+      userId,
+      responses
+    });
+    
+    await surveyResponse.save();
+    res.status(201).json({ message: "Survey responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving survey responses:", error);
+    res.status(500).json({ error: "Failed to save survey responses." });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

@@ -20,6 +20,12 @@ import ChatbotTutorial from './components/chatbotTutorial/ChatbotTutorial.jsx'
 import DemoChat from './components/chatbotTutorial/DemoChat.jsx'
 import Game from './components/game/Game.jsx'
 import Login from './components/login/Login.jsx'
+import Brief from './components/brief/Brief.jsx'
+import ConsentForm from './components/consentForm/ConsentForm.jsx'
+import AiPretest from './components/aiPretest/AiPretest.jsx'
+import PersonalityQuestions from './components/personalityQuestions/PersonalityQuestions.jsx'
+import DemographicQuestions from './components/demographicQuestions/DemographicQuestions.jsx'
+import Pregame from './components/pregame/Pregame.jsx'
 import Qualtrix from './components/questions/Qualtrix.jsx'
 import EndScreen from './routes/endScreen/EndScreen.jsx';
 
@@ -62,6 +68,30 @@ function MainApp() {
         {
           path: "/login",
           element: <Login changeTheme={(newTheme) => setTheme(newTheme)} changePersonality={(newPersonality) => setPersonality(newPersonality)}/>,
+        },
+        {
+          path: "/brief",
+          element: <Brief />,
+        },
+        {
+          path: "/consent-form",
+          element: <ConsentForm />,
+        },
+        {
+          path: "/ai-pretest",
+          element: <AiPretest />,
+        },
+        {
+          path: "/personality-questions",
+          element: <PersonalityQuestions />,
+        },
+        {
+          path: "/demographic-questions",
+          element: <DemographicQuestions />,
+        },
+        {
+          path: "/pregame",
+          element: <Pregame />,
         },
         {
           path: "/survey",

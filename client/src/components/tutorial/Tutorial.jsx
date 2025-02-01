@@ -14,6 +14,9 @@ function Tutorial() {
     sessionStorage.setItem('aiScore', 0);
     sessionStorage.setItem('userScore', 0);
     sessionStorage.setItem('currentRound', 1);
+    sessionStorage.setItem('chatbotApproachScore', 0);
+    sessionStorage.setItem('chatbotSkipScore', 0);
+    sessionStorage.setItem('numChangeDescisions', 0);
     sessionStorage.setItem('aiChoices', JSON.stringify([]));
     sessionStorage.setItem('userChoices', JSON.stringify([]));
     navigate('/game-tutorial'); // Navigate to the GameTutorial page

@@ -1,7 +1,7 @@
 import './dashboardPage.css';
 import { useNavigate } from "react-router-dom";
-import { useRef } from 'react';
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRef, useEffect } from 'react';
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useUser } from "../../context/UserContext";
 import { useState } from 'react';
 import personalities from '../../constants/personalities';
@@ -305,40 +305,73 @@ const DashboardPage = () => {
     const { userId } = useUser();
 
     const transitionRef = useRef(null);
-    
-    const mutation = useMutation({
-        mutationFn: (text) => {
-            if (!userId) {
-                throw new Error('No userId found');
-            }
-            
-            return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ 
-                    text,
-                    userId 
-                }),
-            }).then((res) => {
-                if (!res.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return res.json();
-            });
+  // Add new query to fetch user's chats
+  const { data: userChats } = useQuery({
+    queryKey: ["userChats", userId],
+    queryFn: () => {
+      if (!userId) return [];
+      return fetch(`${import.meta.env.VITE_API_URL}/api/userchats?userId=${userId}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        });
+    },
+    enabled: !!userId,
+  });
+
+  useEffect(() => {
+    if (debounce && userChats) {
+      if (userChats.length > 0) {
+        // User has existing chats, navigate to most recent one
+        const mostRecentChat = userChats[userChats.length - 1];
+        const botPersonality = pickRandomPersonality();
+        sessionStorage.setItem("personality", botPersonality);
+        const builtPrompt = buildPrompt(botPersonality);
+        navigate(`/dashboard/chats/${mostRecentChat._id}`, { state: { builtPrompt, none: null } });
+      } else {
+        // No existing chats, create new one
+        mutation.mutate("begin");
+      }
+      setDebounce(false);
+    }
+  }, [userChats, debounce]);
+
+  const mutation = useMutation({
+    mutationFn: (text) => {
+      if (!userId) {
+        throw new Error('No userId found');
+      }
+      
+      return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        onSuccess: (id) => {
-            queryClient.invalidateQueries({ queryKey: ["userChats", userId] });
-            
-            const botPersonality = pickRandomPersonality();
-            sessionStorage.setItem("personality", botPersonality);
-            console.log('Bot Personality: ', botPersonality);
+        body: JSON.stringify({ 
+          text,
+          userId 
+        }),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      });
+    },
+    onSuccess: (id) => {
+      queryClient.invalidateQueries({ queryKey: ["userChats", userId] });
+      
+      const botPersonality = pickRandomPersonality();
+      sessionStorage.setItem("personality", botPersonality);
+      console.log('Bot Personality: ', botPersonality);
 
             const builtPrompt = buildPrompt(botPersonality); // TODO: MAKE DYNAMIC SO WE DO ALL 5
             console.log(builtPrompt);
             const none = null;
-            navigate(`/dashboard/chats/${id}`, { state: { builtPrompt, none } });
+            const speedFlag = true;
+            navigate(`/dashboard/chats/${id}`, { state: { builtPrompt, none, speedFlag } });
         },
         onError: (error) => {
             console.error("Mutation error:", error);
@@ -353,28 +386,22 @@ const DashboardPage = () => {
         mutation.mutate(text);
     };
 
-    // redirect to a new chat page automatically by inputting a dummy submission
-    if (debounce){
-        mutation.mutate("begin");
-        setDebounce(false);
-    }
-
-    // safety: render bottom form in case redirect above does not work
-    return (
-        <div className = 'dashboardPage'>
-          <div className="transitioner go" ref={transitionRef}>
-            <h1 className="transitioner-text">Preparing Chatbot...</h1>
-          </div>
-            <div className='formContainer'>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name='text' placeholder='Ask me anything...' />
-                    <button>
-                        <img src="/arrow.png" alt="" />
-                    </button>
-                </form>
-            </div>
-        </div>
-    )
+  // safety: render bottom form in case redirect above does not work
+  return (
+    <div className = 'dashboardPage'>
+      <div className="transitioner go" ref={transitionRef}>
+        <h1 className="transitioner-text">Preparing Chatbot...</h1>
+      </div>
+      <div className='formContainer'>
+        <form onSubmit={handleSubmit}>
+          <input type="text" name='text' placeholder='Ask me anything...' />
+          <button>
+            <img src="/arrow.png" alt="" />
+          </button>
+        </form>
+      </div>
+    </div>
+  )
 }
 export default DashboardPage
 

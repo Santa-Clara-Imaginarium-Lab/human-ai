@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './Game.css'; // Ensure this file contains the necessary CSS
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -76,7 +76,10 @@ function Game() {
   }); // Manage description highlighting
   const MAX_ROUNDS = 5; // Total number of rounds
   const [isRoundOver, setIsRoundOver] = useState(false); // Track if the game is over
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);  
+  const coopButtonRef = useRef(null);
+  const defectButtonRef = useRef(null);
+  const [isFirstDecision, setisFirstDecision] = useState(true);
 
   const addChoices = (aiChoice, userChoice) => {
     let aiChoices = JSON.parse(sessionStorage.getItem('aiChoices')) || [];
@@ -89,13 +92,43 @@ function Game() {
     sessionStorage.setItem('userChoices', JSON.stringify(userChoices));
   }
 
-  const handleUserDecision = async (userChoice) => {
+  const handleUserDecision = (decision) => {
+    // Do nothing if clicked same button twice
+    if (userDecision == decision)
+      return;
+
+    // Update user's decision    
+    setUserDecision(decision);
+    console.log(decision);
+    switch (decision) {
+      case 'Cooperate':
+        coopButtonRef.current.classList.add('selected');
+        defectButtonRef.current.classList.remove('selected');
+        if (!isFirstDecision) { 
+          const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
+          sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
+        }
+        setisFirstDecision(false);
+        break;
+      case 'Defect':
+        coopButtonRef.current.classList.remove('selected');
+        defectButtonRef.current.classList.add('selected');
+        if (!isFirstDecision) { 
+          const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
+          sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
+        }
+        setisFirstDecision(false);
+        break;
+    }
+  };  
+
+  const handleLockIn = async () => {
     if (isRoundOver) return; // Prevent further gameplay if the game is over
     const aiChoice = getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
-    setUserDecision(userChoice); 
+    setUserDecision(userDecision); 
 
-    addChoices(aiChoice, userChoice);
+    addChoices(aiChoice, userDecision);
 
     // Calculate scores based on decisions
     let userPoints = 0;
@@ -110,7 +143,7 @@ function Game() {
     };
 
     // Highlight logic and numbers
-    if (userChoice === 'Cooperate' && aiChoice === 'Cooperate') {
+    if (userDecision === 'Cooperate' && aiChoice === 'Cooperate') {
       userPoints = 3;
       aiPoints = 3;
       highlightTriangles = ['t2', 't5'];
@@ -119,7 +152,7 @@ function Game() {
       newDescHighlight.userCooperate = true;
       setAiMessage('+3');
       setUserMessage('+3');
-    } else if (userChoice === 'Defect' && aiChoice === 'Defect') {
+    } else if (userDecision === 'Defect' && aiChoice === 'Defect') {
       userPoints = 1;
       aiPoints = 1;
       highlightTriangles = ['t4', 't7'];
@@ -128,7 +161,7 @@ function Game() {
       newDescHighlight.userDefect = true;
       setAiMessage('+1');
       setUserMessage('+1');
-    } else if (userChoice === 'Cooperate' && aiChoice === 'Defect') {
+    } else if (userDecision === 'Cooperate' && aiChoice === 'Defect') {
       userPoints = 0;
       aiPoints = 5;
       highlightTriangles = ['t1', 't3'];
@@ -137,7 +170,7 @@ function Game() {
       newDescHighlight.userCooperate = true;
       setAiMessage('+5');
       setUserMessage('+0');
-    } else if (userChoice === 'Defect' && aiChoice === 'Cooperate') {
+    } else if (userDecision === 'Defect' && aiChoice === 'Cooperate') {
       userPoints = 5;
       aiPoints = 0;
       highlightTriangles = ['t6', 't8'];
@@ -236,6 +269,10 @@ function Game() {
     }
   };
 
+  const reset = () => {
+    print("reset round");
+  };
+
   const handleNavigation = () => {
     const moveToSurvey = isGameOver; // Go to survey if game over
 
@@ -243,13 +280,62 @@ function Game() {
       ? `/survey`
       : `/dashboard/chats/${chatId}`;
 
-    navigate(path, { state: { builtPrompt, chatId } });
+    const speedFlag = true;
+    navigate(path, { state: { builtPrompt, chatId, speedFlag } });
   };
 
+  const handleChatNavigation = () => {
+    const speedFlag = false;
+    const cAS = parseInt(sessionStorage.getItem('chatbotApproachScore'))
+    sessionStorage.setItem('chatbotApproachScore', cAS + 1);
+    navigate(`/dashboard/chats/${chatId}`, { state: { builtPrompt, chatId, speedFlag } });
+  };
+
+  const getHelp = () => {
+
+    let alertBox =
+        document.getElementById("customAlertBox");
+    let alert_Message_container =
+        document.getElementById("alertMessage");
+    let custom_button =
+        document.querySelector(".custom-button");
+    let close_img =
+        document.querySelector(".close");
+    let body =
+        document.querySelector("body");
+
+      var textWall = "The choice to cooperate or defect offers you different amounts of points, depending on you and your opponents’ choices.<br/><br/>" +
+        "1. If you defect while your opponent cooperates, you get +5 points, and your opponent gets +0.<br/><br/>" +
+        "2. If you cooperate while your opponent defects, you get +0 points, and your opponent gets +5.<br/><br/>" +
+        "3. If you both cooperate, you both get +3 points.<br/><br/>" +
+        "4. If you both defect, you both get +1 point."
+
+    alert_Message_container.innerHTML = textWall;
+    alertBox.style.display = "block";
+
+    close_img.addEventListener
+        ('click', function () {
+            alertBox.style.display = "none";
+        });
+  }
 
   return (
     <div className="container game">
       <div className="game-content">
+    
+        <div>
+          <button className= "help-button" onClick={() => getHelp()}>
+            ?
+          </button>
+        </div>
+
+        <div id="customAlertBox" class="custom-alert">
+        <div class="custom-alert-content">
+            <span class="close">&times;</span>
+            <p id="alertMessage"></p>
+        </div>
+      </div>
+
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">
           <div className="ai-score">
@@ -312,19 +398,28 @@ function Game() {
         <div className="action">
           {!isRoundOver ? (
             <>
-              <button className="proceed-button" onClick={() => handleUserDecision('Cooperate')}>
+              <button className="proceed-button" ref={coopButtonRef} onClick={() => handleUserDecision('Cooperate')}>
                 Cooperate
               </button>
-              <button className="proceed-button" onClick={() => handleUserDecision('Defect')}>
+              <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
                 Defect
+              </button>
+              <br></br>
+              <button className="lockin-button" onClick={() => handleLockIn()}>
+                Lock In
               </button>
             </>
           ) : (
-            <button className="proceed-button" onClick={() => handleNavigation()}>
+            <button className="next-round-button" onClick={() => handleNavigation()}> {/* round up */ }
               Proceed
             </button>
           )}
         </div>
+      </div>
+      <div>
+        <button className="proceed-chat" onClick={() => handleChatNavigation()}>
+        Go to Chat
+        </button>
       </div>
     </div>
   );

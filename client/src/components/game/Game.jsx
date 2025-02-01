@@ -126,7 +126,6 @@ function Game() {
     if (isRoundOver) return; // Prevent further gameplay if the game is over
     const aiChoice = getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
-    setUserDecision(userDecision); 
 
     addChoices(aiChoice, userDecision);
 

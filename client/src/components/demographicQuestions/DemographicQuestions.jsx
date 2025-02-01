@@ -6,7 +6,7 @@ function DemographicQuestions() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/game-tutorial'); 
+        navigate('/tutorial'); 
     };
 
     return (

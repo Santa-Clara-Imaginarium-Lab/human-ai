@@ -81,6 +81,17 @@ function Game() {
   const defectButtonRef = useRef(null);
   const [isFirstDecision, setisFirstDecision] = useState(true);
 
+  const addChoices = (aiChoice, userChoice) => {
+    let aiChoices = JSON.parse(sessionStorage.getItem('aiChoices')) || [];
+    let userChoices = JSON.parse(sessionStorage.getItem('userChoices')) || [];
+
+    aiChoices.push(aiChoice);
+    userChoices.push(userChoice);
+
+    sessionStorage.setItem('aiChoices', JSON.stringify(aiChoices));
+    sessionStorage.setItem('userChoices', JSON.stringify(userChoices));
+  }
+
   const handleUserDecision = (decision) => {
     // Do nothing if clicked same button twice
     if (userDecision == decision)
@@ -115,6 +126,8 @@ function Game() {
     if (isRoundOver) return; // Prevent further gameplay if the game is over
     const aiChoice = getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
+
+    addChoices(aiChoice, userDecision);
 
     // Calculate scores based on decisions
     let userPoints = 0;

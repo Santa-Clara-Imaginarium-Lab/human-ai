@@ -8,9 +8,22 @@ function Login({changeTheme, changePersonality}) {
   const navigate = useNavigate();
   const { login } = useUser();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (userId.trim()) {
+      // Check if userId exists in the chats collection
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats?userId=${userId}`);
+      if (!response.ok) {
+        alert('Critical error: Unable to check user ID. Please try again later.');
+        return;
+      }
+      
+      const chatData = await response.json();
+      if (chatData.length > 0) {
+        alert('Critical error: This user ID has already been used.');
+        return;
+      }
+
       login(userId); // Store userId in context
       localStorage.setItem('isResearchMode', true); // Enable data logging in future files
       navigate('/brief');

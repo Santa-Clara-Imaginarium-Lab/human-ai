@@ -14,6 +14,7 @@ function Tutorial() {
     sessionStorage.setItem('aiScore', 0);
     sessionStorage.setItem('userScore', 0);
     sessionStorage.setItem('currentRound', 1);
+    sessionStorage.setItem('maxRounds', Math.floor(Math.random() * 3) + 2) // 2 to 5
     sessionStorage.setItem('chatbotApproachScore', 0);
     sessionStorage.setItem('chatbotSkipScore', 0);
     sessionStorage.setItem('numChangeDescisions', 0);

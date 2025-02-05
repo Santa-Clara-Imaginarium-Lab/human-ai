@@ -74,7 +74,7 @@ function Game() {
     aiCooperate: false,
     aiDefect: false,
   }); // Manage description highlighting
-  const MAX_ROUNDS = 5; // Total number of rounds
+  const MAX_ROUNDS = parseInt(sessionStorage.getItem('maxRounds')); // Total number of rounds
   const [isRoundOver, setIsRoundOver] = useState(false); // Track if the game is over
   const [isGameOver, setIsGameOver] = useState(false);  
   const coopButtonRef = useRef(null);

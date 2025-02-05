@@ -23,6 +23,7 @@ import Login from './components/login/Login.jsx'
 import Brief from './components/brief/Brief.jsx'
 import ConsentForm from './components/consentForm/ConsentForm.jsx'
 import AiPretest from './components/aiPretest/AiPretest.jsx'
+import AiLiteracy_Qualtrix from './components/aiPretest/AiLiteracy.jsx'
 import AiPretestFollowUp from './components/aiPretest/AiPretestFollowUp.jsx';
 import PersonalityQuestions from './components/personalityQuestions/PersonalityQuestions.jsx'
 import DemographicQuestions from './components/demographicQuestions/DemographicQuestions.jsx'
@@ -85,6 +86,10 @@ function MainApp() {
         {
           path: "/ai-pretest-follow-up",
           element: <AiPretestFollowUp />,
+        },
+        {
+          path: "/ai-literacy",
+          element: <AiLiteracy_Qualtrix />,
         },
         {
           path: "/personality-questions",

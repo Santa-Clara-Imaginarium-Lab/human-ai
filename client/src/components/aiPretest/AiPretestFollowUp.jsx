@@ -16,7 +16,9 @@ function AiPretestFollowUp() {
         setShowError(true);
         return;
       }
-      navigate('/personality-questions'); 
+      //navigate('/personality-questions');
+      navigate('/ai-literacy');
+      
     };
 
     return (

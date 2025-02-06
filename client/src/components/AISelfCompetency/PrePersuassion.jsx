@@ -28,14 +28,42 @@ function PrePersuassion() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (Object.keys(responses).length < statements.length) {
       setError("Please select an option for each statement.");
       return;
     }
     setError('');
-    console.log("Survey Responses:", responses);
-    navigate('/pre-txai');
+
+    // Prepare data to send
+    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+    const data = {
+      userId,
+      responses: Object.entries(responses).map(([questionNumber, selectedOption]) => ({
+        questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
+        selectedOption,
+      })),
+    };  
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/aiselfcompetency`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save responses');
+      }
+
+      console.log("AI Self Competency responses saved successfully");
+      navigate('/pre-txai'); // Navigate after successful submission
+    } catch (error) {
+      console.error('Error saving AI Self Competency responses:', error);
+      setError("Failed to save responses. Please try again.");
+    }
   };
 
   return (

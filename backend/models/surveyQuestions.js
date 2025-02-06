@@ -22,4 +22,4 @@ const surveyQuestionsSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.models.SurveyResponse || mongoose.model("SurveyResponse", surveyQuestionsSchema);
+export default mongoose.models.PostTestSurveyResponse || mongoose.model("PostTestSurveyResponse", surveyQuestionsSchema);

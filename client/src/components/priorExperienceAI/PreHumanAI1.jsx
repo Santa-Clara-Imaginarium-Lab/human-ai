@@ -12,11 +12,21 @@ function PreHumanAI1() {
       setShowError(false); // Hide error message if an option is selected
     };
 
-    const handleClick = () => {
+    const handleClick = async () => {
       if (!selectedOption) {
         setShowError(true);
         return;
       }
+      // Save the selected option to the database
+      const userId = localStorage.getItem('userId'); // Get userId from local storage
+      await fetch(`${import.meta.env.VITE_API_URL}/api/prior-experience-ai`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, selectedOption }),
+      });
+      
       if (selectedOption === "Yes") {
         navigate('/pre-humanai-2'); // Corrected navigation path
       } else {

@@ -30,14 +30,45 @@ function PreTPA2() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (Object.keys(responses).length < statements.length) {
       setError("Please select an option for each statement.");
       return;
     }
     setError('');
-    console.log("Survey Responses:", responses);
-    navigate('/demographic-question1');
+    
+    // Prepare data to send
+    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+    const data = {
+        userId,
+        responses: Object.entries(responses).map(([statementIndex, selectedOption]) => ({
+            questionNumber: parseInt(statementIndex) + 6, // Convert to 1-based index
+            selectedOption, // This should be a string
+        })),
+    };
+
+    console.log("Data being sent:", data); // Log the data being sent
+
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trustpeopleautomation`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json(); // Get error response
+            throw new Error(`Failed to save responses: ${errorResponse.error}`);
+        }
+
+        console.log("Trust between People and Automation Responses saved successfully");
+        navigate('/demographic-question1'); // Navigate after successful submission
+    } catch (error) {
+        console.error('Error saving Trust between People and Automation responses:', error);
+        setError("Failed to save responses. Please try again.");
+    }    
   };
 
   return (

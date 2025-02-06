@@ -11,14 +11,23 @@ function PreHumanAI2() {
       setFreeResponse(event.target.value); // Update free response state
     };
 
-    const handleClick = () => {
+    const handleClick = async () => {
       if (!freeResponse) { 
         setShowError(true);
         return;
       }
-      //navigate('/personality-questions');
+      const userId = localStorage.getItem('userId'); // Get userId from local storage
+
+      // Update the existing entry in the database
+      await fetch(`${import.meta.env.VITE_API_URL}/api/prior-experience-ai`, {
+        method: 'PUT', // Changed from POST to PUT
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, freeResponse }), // Removed selectedOption if not needed
+      });
+
       navigate('/pre-apply');
-      
     };
 
     return (

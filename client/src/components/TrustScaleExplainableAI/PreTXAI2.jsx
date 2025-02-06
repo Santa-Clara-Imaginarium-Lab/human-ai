@@ -28,14 +28,45 @@ function PreTXAI2() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (Object.keys(responses).length < statements.length) {
       setError("Please select an option for each statement.");
       return;
     }
     setError('');
-    console.log("Survey Responses:", responses);
-    navigate('/pre-tpa');
+
+    // Prepare data to send
+    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+    const data = {
+        userId,
+        responses: Object.entries(responses).map(([statementIndex, selectedOption]) => ({
+            questionNumber: parseInt(statementIndex) + 5, // Convert to 1-based index
+            selectedOption, // This should be a string
+        })),
+    };
+
+    console.log("Data being sent:", data); // Log the data being sent
+
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trustscaleexplainableai`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json(); // Get error response
+            throw new Error(`Failed to save responses: ${errorResponse.error}`);
+        }
+
+        console.log("Trust Scale for Explainable AI Responses saved successfully");
+        navigate('/pre-tpa'); // Navigate after successful submission
+    } catch (error) {
+        console.error('Error saving Trust Scale for Explainable AI responses:', error);
+        setError("Failed to save responses. Please try again.");
+    }    
   };
 
   return (

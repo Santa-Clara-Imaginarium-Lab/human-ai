@@ -9,266 +9,10 @@ import { use } from 'react';
 
 
 const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
-  console.log(chatId);
+  console.log("speedFlag: ", speedFlag);
+  //console.log(chatId);
   //console.log("PROMPT!!!");
   //console.log(builtPrompt)
-  /*
-  // ===================== //
-  // BEGIN PROMPT BUILDING //
-  // ===================== //
-
-  // helper function
-  const randomNumber = (min, max) => {
-    console.log(String( ((Math.random() * (max - min)) + min).toFixed(2) ));
-    return String( ((Math.random() * (max - min)) + min).toFixed(2) );
-  }
-  
-  const PERSONALITY_VALUES = {
-    // using data from https://bright-journal.org/Journal/index.php/JADS/article/view/32/67
-    // table on PDF page 6
-    
-    // this uses a 0-50 point scale, so we multiply by 2 when doing math 
-    // to get a 0-100 point (percent) scale
-
-    self_centered: {
-      extraversion: {
-        mean: 28.17, 
-        sd: 4.00
-      }, 
-      neuroticism: {
-        mean: 23.48, 
-        sd: 4.22
-      },
-      agreeableness: {
-        mean: 27.72, 
-        sd: 4.11
-      },
-      conscientiousness: {
-        mean: 26.26, 
-        sd: 3.85
-      },
-      openness: {
-        mean: 27.39, 
-        sd: 4.15
-      },
-    },
-
-    reserved: {
-      extraversion: {
-        mean: 31.33, 
-        sd: 3.75
-      }, 
-      neuroticism: {
-        mean: 37.35, 
-        sd: 3.98
-      },
-      agreeableness: {
-        mean: 33.84, 
-        sd: 3.39
-      },
-      conscientiousness: {
-        mean: 34.35, 
-        sd: 3.46
-      },
-      openness: {
-        mean: 34.75, 
-        sd: 3.45
-      },
-    },
-
-    average: {
-      extraversion: {
-        mean: 29.45, 
-        sd: 3.11
-      }, 
-      neuroticism: {
-        mean: 33.22, 
-        sd: 3.20
-      },
-      agreeableness: {
-        mean: 30.86, 
-        sd: 3.10
-      },
-      conscientiousness: {
-        mean: 30.10, 
-        sd: 3.14
-      },
-      openness: {
-        mean: 31.44, 
-        sd: 3.42
-      },
-    },
-
-    
-    role_model: {
-      extraversion: {
-        mean: 30.85, 
-        sd: 3.17
-      }, 
-      neuroticism: {
-        mean: 24.43, 
-        sd: 3.38
-      },
-      agreeableness: {
-        mean: 31.63, 
-        sd: 3.22
-      },
-      conscientiousness: {
-        mean: 31.37, 
-        sd: 3.31
-      },
-      openness: {
-        mean: 33.58, 
-        sd: 3.19
-      }
-    },
-  }
-
-  // remember to place spaces before the line breaks
-  // and do NO indenting, else we risk double-spaces in the final string
-  // we strip all "\n" later, so this is fine
-  const FLAVOR_TEXTS = {
-pd_context: `You are about to play five rounds of the Prisoner's Dilemma 
-with the current user. During this iteration of the Prisoner's Dilemma 
-scores will be calculated as follows: 
-
-A choice to Cooperate, while your opponent Cooperates will 
-give you a score of +3 and your opponent a score of +3. 
-A choice to Cooperate, while your opponent Defects will 
-give you a score of +0 and your opponent a score of +5. 
-A choice to Defect, while your opponent Cooperates will 
-give you a score of +5 and your opponent a score of +0. 
-A choice to Defect, while your opponent Defects will 
-give you a score of +1 and your opponent a score of +1. `,
-
-personality_context: `You must maintain a personality 
-according to the Big Five personality scale. 
-The Big Five Personality scale is: 
-
-High Openness to Experience (creativity, curiousity) 
-Low Openness to Experience (practical, conventional) 
-
-High Conscientiousness (organization, responsibility) 
-Low Conscientiousness (impulsive, careless) 
-
-High Extraversion (sociability, assertiveness) 
-Low Extraversion (quiet, withdrawn) 
-
-High Agreeableness (compassion, cooperativeness) 
-Low Agreeableness (uncooperative, critical) 
-
-High Neuroticism (emotional instability, anxiety) 
-Low Neuroticism (calm, secure) 
-
-Based on this description of Big Five personality traits, 
-you must play as someone: `,
-
-personality_average: `Typically average, having high neuroticism, with low openness, 
-conscientiousness, extraversion, and agreeableness. 
-Specifically exhibiting: `,
-
-personality_role_model: `Typically socially desirable, with low neuroticism, high 
-openness, conscientiousness, extraversion, and agreeableness. 
-Specifically exhibiting: `,
-
-personality_self_centered: `Typically self-centered, with low levels of openness, 
-conscientiousness, extraversion, agreeableness, and neuroticism. 
-Specifically exhibiting: `,
-
-personality_reserved: `Typically reserved, having relatively high openness, 
-conscientiousness, extraversion, agreeableness, and neuroticism.
-Specifically exhibiting: `,
-
-final: `Your task is to talk it out with the player. Discuss your strategies, 
-share your thoughts or approaches for the game, and prepare to make a decision. 
-Do not offer to explain the game's rules, history, or famous strategies. Do not
-explicitly reveal your personality profile. Limit your responses to two or 
-three sentences. Do not give your final decision for 
-a round until a message beginning with [SYSTEM] is sent.`
-  } // end of FLAVOR_TEXT dictionary
-
-  // <!> TODO: PASS THIS IN DYNAMICALLY <!>
-  const thisBotType = "average"; // data[botType] or something similar
-
-  // building flavor text (if not control)
-  let thisBotFlavorText = "";
-  if (!(thisBotType === "control")) {
-    thisBotFlavorText = `${FLAVOR_TEXTS["personality_context"]}${FLAVOR_TEXTS[`personality_${thisBotType}`]}`
-  }
-
-  // generating numbers (if not control)
-  let thisBotHighLow = {};
-  let thisBotPersonalityText = "";
-  if (!(thisBotType === "control")) {
-    thisBotHighLow = {
-      extraversion: {
-        high: 2 * (PERSONALITY_VALUES[thisBotType].extraversion.mean + PERSONALITY_VALUES[thisBotType].extraversion.sd),
-        low: 2 * (PERSONALITY_VALUES[thisBotType].extraversion.mean - PERSONALITY_VALUES[thisBotType].extraversion.sd),
-      },
-      conscientiousness: {
-        high: 2 * (PERSONALITY_VALUES[thisBotType].conscientiousness.mean + PERSONALITY_VALUES[thisBotType].conscientiousness.sd),
-        low: 2 * (PERSONALITY_VALUES[thisBotType].conscientiousness.mean - PERSONALITY_VALUES[thisBotType].conscientiousness.sd),
-      },
-      agreeableness: {
-        high: 2 * (PERSONALITY_VALUES[thisBotType].agreeableness.mean + PERSONALITY_VALUES[thisBotType].agreeableness.sd),
-        low: 2 * (PERSONALITY_VALUES[thisBotType].agreeableness.mean - PERSONALITY_VALUES[thisBotType].agreeableness.sd),
-      },
-      neuroticism: {
-        high: 2 * (PERSONALITY_VALUES[thisBotType].neuroticism.mean + PERSONALITY_VALUES[thisBotType].neuroticism.sd),
-        low: 2 * (PERSONALITY_VALUES[thisBotType].neuroticism.mean - PERSONALITY_VALUES[thisBotType].neuroticism.sd),
-      },
-      openness: {
-        high: 2 * (PERSONALITY_VALUES[thisBotType].openness.mean + PERSONALITY_VALUES[thisBotType].openness.sd),
-        low: 2 * (PERSONALITY_VALUES[thisBotType].openness.mean - PERSONALITY_VALUES[thisBotType].openness.sd),
-      },
-    }
-    thisBotPersonalityText = 
-`${randomNumber(
-  thisBotHighLow.openness.high, 
-  thisBotHighLow.openness.low)}
-% in Openness to Experience, 
-
-${randomNumber(
-  thisBotHighLow.conscientiousness.high, 
-  thisBotHighLow.conscientiousness.low)}
-% in Conscientiousness, 
-
-${randomNumber(
-  thisBotHighLow.extraversion.high, 
-  thisBotHighLow.extraversion.low)}
-% in Extraversion, 
-
-${randomNumber(
-  thisBotHighLow.agreeableness.high, 
-  thisBotHighLow.agreeableness.low)}
-% in Agreeableness, 
-
-${randomNumber(
-  thisBotHighLow.neuroticism.high, 
-  thisBotHighLow.neuroticism.low)}
-% in Neuroticism, 
-
-where each of these percentages ranges from 0% to 100%, 
-with 0% being low in the Big Five trait, 
-and 100% being high in the Big Five trait.` 
-    // end of thisBotPersonalityText
-  } // end of number generation
-
-  const STARTING_PROMPT = `
-    ${FLAVOR_TEXTS.pd_context}
-    ${thisBotFlavorText} 
-    ${thisBotPersonalityText}
-    ${FLAVOR_TEXTS.final}
-  `
-
-  const STARTING_PROMPT_ONELINE = STARTING_PROMPT.replace(/\n/g, '');
-
-  console.log(STARTING_PROMPT_ONELINE)
- 
-  // =================== //
-  // END PROMPT BUILDING //
-  // =================== //
-  */
   
     const [question,setQuestion] = useState("");
     const [answer,setAnswer] = useState("");
@@ -423,13 +167,19 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 
   const handleExit = async (e) => {
     // e.preventDefault();
-    console.log("exiting?");
+    console.log("exiting!");
     transitionRef.current.classList.add('go');
     const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false)
     // const arrayEnd = (data.history.at(-1).parts[0]); 
     // console.log("arrayEnd ", arrayEnd);
     console.log("<<BOT'S DECISION STATEMENT>> ", decision);
-    navigate('/game', {state: { builtPrompt, chatId, decision }}); 
+
+    transitionRef.current.children[0].textContent = "Ready!";
+    transitionRef.current.classList.add('col');
+
+    setTimeout(() => {
+      navigate('/game', {state: { builtPrompt, chatId, decision }});
+    }, 1000); 
   };
 
     useEffect(() => {
@@ -437,7 +187,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
       if (speedFlag) {
         console.log("speedFlag is true");
         handleExit();      
-      }});
+      }}, [speedFlag]); // adding speedFlag dependency should no longer get 429 Too Many Requests
 
     return (
         <>
@@ -453,7 +203,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         )}
 
         <div className="transitioner" ref={transitionRef}>
-          <h1 className="transitioner-text"> Loading Prisoner's Dilemma... </h1>
+          <h1 className="transitioner-text"> Chatbot is thinking... </h1>
         </div>
 
         {question && <div className='message user'>{question}</div>}

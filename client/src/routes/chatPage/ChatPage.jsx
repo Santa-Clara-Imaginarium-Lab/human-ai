@@ -10,13 +10,11 @@ const ChatPage = () => {
   const location = useLocation();
   const path = location.pathname;
   const speedFlag = location.state.speedFlag;
-  console.log(speedFlag);
 
   const builtPrompt = location.state.builtPrompt;
   // console.log("PROMPT IN CHATPAGE");
   // console.log(builtPrompt);
   const chatId = path.split("/").pop();
-  console.log(chatId);  
 
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", chatId],

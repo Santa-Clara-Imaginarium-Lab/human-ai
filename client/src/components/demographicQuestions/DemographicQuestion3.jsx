@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './AiPretest.css'; 
+import React, {useState} from 'react';
+import './DemographicQuestions.css'; 
 import { useNavigate } from 'react-router-dom';
 
-function AiPretestFollowUp() {
+function DemographicQuestion3() {
     const navigate = useNavigate();
     const [showError, setShowError] = useState(false);
     const [freeResponse, setFreeResponse] = useState(''); // State for free response input
@@ -12,27 +12,27 @@ function AiPretestFollowUp() {
     };
 
     const handleClick = () => {
-      if (!freeResponse) { // Check if either is empty
+      if (!freeResponse) { 
         setShowError(true);
         return;
       }
-      //navigate('/personality-questions');
-      navigate('/ai-literacy');
-      
+      navigate('/demographic-question4'); 
     };
 
     return (
         <div className="container tutorial-container">
-          <div className='survey-shadow-container'>
-          <h2 className="brief-subtitle">About how many times per day do you use generative AI?</h2>
-          <div className="ans-textbox">
-              <input 
-                type="text" 
-                placeholder="Type your answer here..." 
-                className="userid-input"
-                value={freeResponse} // Bind the input value to state
-                onChange={handleFreeResponseChange} // Handle input changes
+          <div className='demographic-container'>
+          <h2 className="brief-subtitle">What is your age?</h2>
+          <div className="demographic-options">
+
+            <label className="demographic-option">
+              <input
+                type="text"
+                className="age-input"
+                value={freeResponse}
+                onChange={handleFreeResponseChange}
               />
+            </label>
           </div>
           {showError && <p className="error-message">Please provide an answer before proceeding.</p>}
           <button className="submit-button" onClick={handleClick}>Submit</button>
@@ -41,4 +41,4 @@ function AiPretestFollowUp() {
       );
 }
 
-export default AiPretestFollowUp;
+export default DemographicQuestion3;

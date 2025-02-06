@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './Qualtrix.css';
+import { useNavigate } from 'react-router-dom';
 
 const statements = [
-  "I can operate AI applications in everyday life.",
-  "I can use AI applications to make my everyday life easier.",
-  "I can use artificial intelligence meaningfully to achieve my everyday goals.",
-  "In everyday life, I can interact with AI in a way that makes my tasks easier.",
+  "I am confident in AI. I feel that it works well",
+  "The outputs of AI are very predictable.",
+  "AI is very reliable. I can count on it to be correct all the time.",
+  "I feel safe that when I rely on AI I will get the right answers.",
 ];
 
 const options = [
@@ -17,8 +17,9 @@ const options = [
   "I do not use AI",
 ];
 
-function Qualtrix() {
+function PreTXAI() {
   const [responses, setResponses] = useState({});
+  const navigate = useNavigate();
 
   const handleOptionChange = (statementIndex, selectedOption) => {
     setResponses({
@@ -29,10 +30,11 @@ function Qualtrix() {
 
   const handleSubmit = () => {
     console.log("Survey Responses:", responses);
-    // Add any additional handling, like API submission
+    navigate('/pre-txai2');
   };
 
   return (
+    <div className="container tutorial-container">
     <div className="qualtrix-container">
       <h1 className="title">AI Usage Survey</h1>
       <p className="description">
@@ -69,7 +71,8 @@ function Qualtrix() {
         Submit
       </button>
     </div>
+    </div>
   );
 }
 
-export default Qualtrix;
+export default PreTXAI;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './AiPretest.css'; 
+import './PreHumanAI.css'; 
 import { useNavigate } from 'react-router-dom';
 
-function AiPretest() {
+function PreHumanAI1() {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('');
     const [showError, setShowError] = useState(false);
@@ -18,7 +18,7 @@ function AiPretest() {
         return;
       }
       if (selectedOption === "Yes") {
-        navigate('/ai-pretest-follow-up'); // Navigate to AiPretestFollowUp if "Yes" is selected
+        navigate('/pre-humanai-2'); // Corrected navigation path
       } else {
         navigate('/personality-questions'); // Navigate to personality questions for "No"
       }
@@ -57,4 +57,4 @@ function AiPretest() {
       );
 }
 
-export default AiPretest;
+export default PreHumanAI1;

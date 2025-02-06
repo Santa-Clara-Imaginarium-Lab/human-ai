@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import './AiLiteracy.css';
+import { useNavigate } from 'react-router-dom';
 
 const statements = [
-  "I can operate AI applications in everyday life.",
-  "I can use AI applications to make my everyday life easier.",
-  "I can use artificial intelligence meaningfully to achieve my everyday goals.",
-  "In everyday life, I can interact with AI in a way that makes my tasks easier.",
+  "I can rely on my skills in difficult situations when using AI.",
+  "I can handle most problems in dealing with AI on my own.",
+  "I can usually solve strenuous and complicated tasks when working with AI well.",
 ];
 
 const options = [
@@ -17,8 +16,9 @@ const options = [
   "I do not use AI",
 ];
 
-function AiLiteracy_Qualtrix() {
+function PreEfficacy() {
   const [responses, setResponses] = useState({});
+  const navigate = useNavigate();
 
   const handleOptionChange = (statementIndex, selectedOption) => {
     setResponses({
@@ -29,10 +29,11 @@ function AiLiteracy_Qualtrix() {
 
   const handleSubmit = () => {
     console.log("Survey Responses:", responses);
-    // Add any additional handling, like API submission
+    navigate('/pre-persuassion');
   };
 
   return (
+    <div className="container tutorial-container">
     <div className="qualtrix-container">
       <h1 className="title">AI Usage Survey</h1>
       <p className="description">
@@ -69,7 +70,8 @@ function AiLiteracy_Qualtrix() {
         Submit
       </button>
     </div>
+    </div>
   );
 }
 
-export default AiLiteracy_Qualtrix;
+export default PreEfficacy;

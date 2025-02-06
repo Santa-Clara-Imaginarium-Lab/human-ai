@@ -14,7 +14,14 @@
     justify-content: center;  /* Center align content vertically */
     padding: 40px 20px; /* Add padding for spacing */
     position: relative; /* Position context for the shadow */
-    width: 50%;
+    width: 80%;
+  }
+
+  @media (min-width: 2000px) {
+    .qualtrix-container {
+        width: 65%; /* Adjust width for smaller screens */
+        padding: 20px; /* Reduce padding for smaller screens */
+    }
   }
 
   @media (max-width: 1250px) {
@@ -26,7 +33,7 @@
 
   @media (max-width: 883px) {
     .qualtrix-container {
-        width: 100%; /* Adjust width for smaller screens */
+        width: 98%; /* Adjust width for smaller screens */
         padding: 20px; /* Reduce padding for smaller screens */
     }
   }
@@ -38,7 +45,7 @@
     }
     
     .description {
-      font-size: 1em;
+      font-size: large;
       color: #666;
       margin-bottom: 20px;
       text-align: left;
@@ -82,6 +89,7 @@
       color: #333;
       position: relative;
       margin-bottom: 20px;
+      font-size: large;
     }
     
     .qualtrix-row {
@@ -91,7 +99,7 @@
     .statement {
       text-align: left;
       padding: 20px; /* Increase padding to make the box larger */
-      font-size: 0.9em;
+      font-size: large;
       border-bottom: 1px solid #ddd;
       min-height: 80px; /* Ensure a minimum height for vertical alignment */
       display: flex; /* Flex layout for better alignment */

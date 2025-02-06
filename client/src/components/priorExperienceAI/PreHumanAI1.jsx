@@ -20,7 +20,7 @@ function PreHumanAI1() {
       if (selectedOption === "Yes") {
         navigate('/pre-humanai-2'); // Corrected navigation path
       } else {
-        navigate('/personality-questions'); // Navigate to personality questions for "No"
+        navigate('/pre-apply'); // Navigate to personality questions for "No"
       }
     };
 

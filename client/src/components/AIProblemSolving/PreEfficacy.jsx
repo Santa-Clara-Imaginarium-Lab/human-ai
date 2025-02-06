@@ -35,7 +35,7 @@ function PreEfficacy() {
   return (
     <div className="container tutorial-container">
     <div className="qualtrix-container">
-      <h1 className="title">AI Usage Survey</h1>
+      <h1 className="title">AI Problem Solving Survey</h1>
       <p className="description">
         Please indicate the extent to which you agree or disagree with the following statements.
       </p>

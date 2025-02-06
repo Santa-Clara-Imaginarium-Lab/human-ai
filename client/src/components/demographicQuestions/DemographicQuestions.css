@@ -39,7 +39,7 @@ Tutorial.css
   .demographic-option p {
     margin: 0;
     margin-left: 20px;
-    font-size: 0.9em;
+    font-size: large;
     font-weight: bold;
     font-family: var(--universal-font);
     color: var(--accent-two);
@@ -60,7 +60,7 @@ Tutorial.css
 
   .gender-input{
     font-family: var(--universal-font);
-    font-size: medium;
+    font-size: large;
     margin-left: 8px;
     border: none;
     outline: none;

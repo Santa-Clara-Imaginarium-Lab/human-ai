@@ -21,7 +21,8 @@ const options = [
 function PreTPA2() {
   const [responses, setResponses] = useState({});
   const navigate = useNavigate();
-
+  const [error, setError] = useState('');
+  
   const handleOptionChange = (statementIndex, selectedOption) => {
     setResponses({
       ...responses,
@@ -30,6 +31,11 @@ function PreTPA2() {
   };
 
   const handleSubmit = () => {
+    if (Object.keys(responses).length < statements.length) {
+      setError("Please select an option for each statement.");
+      return;
+    }
+    setError('');
     console.log("Survey Responses:", responses);
     navigate('/demographic-question1');
   };
@@ -68,6 +74,7 @@ function PreTPA2() {
           </div>
         ))}
       </div>
+      {error && <div className="error-message">{error}</div>}
       <button className="submit-button" onClick={handleSubmit}>
         Submit
       </button>

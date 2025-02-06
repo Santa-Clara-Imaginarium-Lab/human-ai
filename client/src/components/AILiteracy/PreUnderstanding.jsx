@@ -21,6 +21,7 @@ const options = [
 function PreUnderstanding() {
   const [responses, setResponses] = useState({});
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const handleOptionChange = (statementIndex, selectedOption) => {
     setResponses({
@@ -30,6 +31,11 @@ function PreUnderstanding() {
   };
 
   const handleSubmit = () => {
+    if (Object.keys(responses).length < statements.length) {
+        setError("Please select an option for each statement.");
+        return;
+      }
+      setError('');
     console.log("Survey Responses:", responses);
     navigate('/pre-efficacy');
   };
@@ -68,6 +74,7 @@ function PreUnderstanding() {
           </div>
         ))}
       </div>
+      {error && <div className="error-message">{error}</div>}
       <button className="submit-button" onClick={handleSubmit}>
         Submit
       </button>

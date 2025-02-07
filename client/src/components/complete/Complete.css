@@ -191,6 +191,10 @@ main {
   display: none;
 }
 
+button.hidden {
+  display: none;
+}
+
 
 /* Diagonal background*/
 .polygon

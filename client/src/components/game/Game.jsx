@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Game.css'; // Ensure this file contains the necessary CSS
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -7,13 +7,10 @@ function Game() {
 
   const location = useLocation();
   const decision = location.state.decision;
-  console.log(decision);
 
   // Function to extrapolate AI's response
   const chatId = location.state.chatId;
   const builtPrompt = location.state.builtPrompt;
-  console.log(chatId);
-  console.log(builtPrompt);
 
   // Function to simulate AI's random response (Cooperate or Defect)
   const getAiResponse = () => {
@@ -33,7 +30,6 @@ function Game() {
     }
 
     // had to change to string indexOf, === was bugging
-    // CRITICAL: RE-RENDERS ARE CAUSING ISSUES HERE
     console.log(text);
     if (text.indexOf("cooperate") > -1) {
       return choices[0];
@@ -46,6 +42,8 @@ function Game() {
       return rng();
     }
   };
+
+  const transitionRef = useRef(null);
 
   const [userScore, setUserScore] = useState(parseInt(sessionStorage.getItem('userScore'))); // Track user score
   const [aiScore, setAiScore] = useState(parseInt(sessionStorage.getItem('aiScore'))); // Track AI score
@@ -318,9 +316,28 @@ function Game() {
         });
   }
 
+  useEffect(() => {
+    setTimeout(() => {
+      document.getElementById('rtu').classList.add('round-underline-go');
+    }, 500);
+    setTimeout(() => {
+      document.getElementById('rt').classList.add('round-go');
+      document.getElementById('rtt').classList.add('round-go');
+      document.getElementById('rtu').classList.add('round-underline-hide');
+    }, 2000);
+    setTimeout(() => {
+      document.getElementById('rt').classList.add('round-vanish');
+    }, 2500);
+  }, [chatId]);
+
   return (
     <div className="container game">
       <div className="game-content">
+
+      <div id="rt" className="round-transitioner" ref={transitionRef}>
+        <h1 id="rtt" className="round-transitioner-text"> Round {currentRound} </h1>
+        <div id="rtu" className="round-transitioner-underline"/>
+      </div>
     
         <div>
           <button className= "help-button" onClick={() => getHelp()}>

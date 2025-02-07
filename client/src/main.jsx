@@ -41,6 +41,7 @@ import PreTXAI from './components/TrustScaleExplainableAI/PreTXAI.jsx';
 import PreTXAI2 from './components/TrustScaleExplainableAI/PreTXAI2.jsx';
 import PreTPA from './components/TrustPeopleAutomation/PreTPA.jsx';
 import PreTPA2 from './components/TrustPeopleAutomation/PreTPA2.jsx';
+import PreSurveys from './components/priorExperienceAI/PreSurveys.jsx';
 import PreHumanAI1 from './components/priorExperienceAI/PreHumanAI1.jsx';
 import PreHumanAI2 from './components/priorExperienceAI/PreHumanAI2.jsx';
 
@@ -91,6 +92,10 @@ function MainApp() {
         {
           path: "/consent-form",
           element: <ConsentForm />,
+        },
+        {
+          path: "/pre-surveys",
+          element: <PreSurveys />,
         },
         {
           path: "/pre-humanai-1",

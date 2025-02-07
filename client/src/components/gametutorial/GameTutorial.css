@@ -302,7 +302,7 @@ font-weight: bold;
   font-family: var(--universal-font);
   position: absolute;
   right: 0px;
-  top: 300px;
+  top: 0px;
   transform-origin: top right;
-  transform: translateY(150px);
 }
+

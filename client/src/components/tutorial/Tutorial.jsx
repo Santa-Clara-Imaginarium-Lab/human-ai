@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useEffect } from 'react';
 import './Tutorial.css'; // Assuming you have a CSS file for this component
 import { useNavigate } from 'react-router-dom';
 import personalities from '../../constants/personalities';
@@ -22,8 +22,24 @@ function Tutorial() {
     navigate('/game-tutorial'); // Navigate to the GameTutorial page
   };
 
+      useEffect(() => {
+        setTimeout(() => {
+          document.getElementById("btu").classList.add("brief-underline-go");
+        }, 500)
+        setTimeout(() => {
+          document.getElementById("bt").classList.add("brief-go");
+          document.getElementById("btt").classList.add("brief-txt");
+          document.getElementById("btu").classList.add("brief-underline-hide");
+        }, 2000)
+      }, );
+  
+
   return (
     <div className="container tutorial-container">
+          <div id="bt" className="brief-transitioner">
+            <h1 id="btt" className="brief-transitioner-text"> Game Tutorial </h1>
+            <div id="btu" className="brief-transitioner-underline"/>
+          </div>
       <div className='survey-shadow-container'>
       <h2 className="tutorial-subtitle">Learn about the Prisoner's Dilemma, a game based on cooperation and defection.</h2>
       <div className="tutorial-options">

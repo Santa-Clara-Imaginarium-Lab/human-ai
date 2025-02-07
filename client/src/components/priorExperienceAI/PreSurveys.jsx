@@ -1,28 +1,11 @@
-import React from 'react';
-import './Pregame.css'; 
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Pregame() {
+function PreSurveys() {
     const navigate = useNavigate();
 
-    const [termsIndex, setTermsIndex] = useState(0);
-
-    const terms =[
-        "We have finished the tutorial.",
-        "The goal of this game is for you to play the prisoner's dilemma with a chatbot.",
-        "You have the option to chat with your opponent if you would like to understand their strategy, but it is not required.",
-        "Please go through this game with intent, we are excited to see your results!"
-    ];
-
-    useEffect(() => {
-      if (termsIndex >= terms.length) {
-        navigate('/dashboard'); //change this
-      }
-    }, [termsIndex])
-
     const handleClick = () => {
-      setTermsIndex((prevTerm) => prevTerm + 1);
+        navigate('/pre-humanai-1'); 
     };
 
     useEffect(() => {
@@ -35,16 +18,15 @@ function Pregame() {
         document.getElementById("btu").classList.add("brief-underline-hide");
       }, 2000)
     }, );
-    
 
     return (
         <div className="container tutorial-container">
           <div id="bt" className="brief-transitioner">
-            <h1 id="btt" className="brief-transitioner-text"> Prepare to Play! </h1>
+            <h1 id="btt" className="brief-transitioner-text"> Pre-Game Questions </h1>
             <div id="btu" className="brief-transitioner-underline"/>
           </div>
           <div className='survey-shadow-container'>
-          <h2 className="brief-subtitle">{terms[termsIndex]}</h2>
+          <h2 className="brief-subtitle">Please answer the following questions.</h2>
           <div className="brief-options">
             <button className="no-button" onClick={handleClick}>Proceed</button>
           </div>
@@ -53,4 +35,4 @@ function Pregame() {
       );
 }
 
-export default Pregame;
+export default PreSurveys;

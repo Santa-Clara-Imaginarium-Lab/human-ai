@@ -123,9 +123,8 @@ function buildPrompt(thisBotType){
   // and do NO indenting, else we risk double-spaces in the final string
   // we strip all "\n" later, so this is fine
   const FLAVOR_TEXTS = {
-pd_context: `You are about to play five rounds of the Prisoner's Dilemma 
-with the current user. During this iteration of the Prisoner's Dilemma 
-scores will be calculated as follows: 
+pd_context: `You are about to play several rounds of the Prisoner's Dilemma 
+with the current user. Scores will be calculated as follows: 
 
 A choice to Cooperate, while your opponent Cooperates will 
 give you a score of +3 and your opponent a score of +3. 
@@ -176,7 +175,7 @@ Specifically exhibiting: `,
 
 final: `Your task is to talk it out with the player. Discuss your strategies, 
 share your thoughts or approaches for the game, and prepare to make a decision. 
-Do not offer to explain the game's rules, history, or famous strategies. Do not
+Do not offer to explain the game's rules, history, or famous strategies. Do not 
 explicitly reveal your personality profile. Do not mention the "system" in 
 conversation. Respond with a length mirroring the user's sentence length. 
 Do not give your final decision for a round until a message beginning with 

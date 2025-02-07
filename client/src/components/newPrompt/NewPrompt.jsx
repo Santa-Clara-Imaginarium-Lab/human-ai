@@ -10,6 +10,7 @@ import { use } from 'react';
 
 const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
   console.log("speedFlag: ", speedFlag);
+  console.log(data);
   //console.log(chatId);
   //console.log("PROMPT!!!");
   //console.log(builtPrompt)
@@ -25,21 +26,37 @@ const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
 
     const navigate = useNavigate();
 
-    const chat = model.startChat({
-        history: [
-            {
-              role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
-              parts: [{ text: builtPrompt}],
-            },
-            // {
-            //   role: "model",
-            //   parts: [{ text: "Great to meet you. What would you like to know?" }],
-            // },
-          ],
-          generationConfig:{
+    let arr = [
+      {
+        role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
+        parts: [{ text: builtPrompt}],
+      },
+      // {
+      //   role: "model",
+      //   parts: [{ text: "Great to meet you. What would you like to know?" }],
+      // },
+    ]
 
-          },
-        });
+
+    data.history.map((item) => {
+      let dupedItem = JSON.parse(JSON.stringify(item));
+      console.log(dupedItem);
+      delete dupedItem._id; 
+
+      dupedItem.parts.map((item) => {
+        delete item._id;
+      });
+      arr.push(dupedItem)}
+  );
+
+    console.log("data", arr)
+
+    const chat = model.startChat({
+      history: arr,
+        generationConfig:{
+
+        },
+      });
 
 /*
 UX Test prompt:

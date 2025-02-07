@@ -29,7 +29,6 @@ import DemographicQuestion2 from './components/demographicQuestions/DemographicQ
 import DemographicQuestion3 from './components/demographicQuestions/DemographicQuestion3.jsx';
 import DemographicQuestion4 from './components/demographicQuestions/DemographicQuestion4.jsx';
 import Pregame from './components/pregame/Pregame.jsx'
-import Qualtrix from './components/questions/Qualtrix.jsx'
 import EndScreen from './routes/endScreen/EndScreen.jsx'
 import Debrief from './components/Debrief/Debrief.jsx';
 import Complete from './components/Complete/Complete.jsx';

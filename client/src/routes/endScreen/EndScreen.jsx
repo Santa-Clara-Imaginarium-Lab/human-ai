@@ -1,5 +1,6 @@
 import './endScreen.css';
 import formattedPersonalities from '../../constants/formattedPersonalities';'../../constants/formattedPersonalities'
+import { useNavigate } from 'react-router-dom';
 
 const EndScreen = () => {
     const totalChatbotScore = sessionStorage.getItem('aiScore') || '?';
@@ -11,6 +12,14 @@ const EndScreen = () => {
     const chatbotScoreInt = parseInt(totalChatbotScore);
     const userScoreInt = parseInt(totalUserScore);
     const allChoices = aiChoices.concat(userChoices);
+
+    const navigate = useNavigate();
+    
+    const handleClick = () => {
+        if(localStorage.getItem("isResearchMode")   === "true")
+            navigate('/debrief'); 
+        else navigate('/complete'); 
+    }
 
     return (
         <div className="container end-screen-container">
@@ -61,6 +70,7 @@ const EndScreen = () => {
                         </div>
                     </div>
                 </div>
+                <button className="no-button" onClick={handleClick}>Next</button>
             </div>
         </div>
     );

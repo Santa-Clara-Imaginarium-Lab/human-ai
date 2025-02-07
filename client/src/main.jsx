@@ -29,7 +29,10 @@ import DemographicQuestion2 from './components/demographicQuestions/DemographicQ
 import DemographicQuestion3 from './components/demographicQuestions/DemographicQuestion3.jsx';
 import DemographicQuestion4 from './components/demographicQuestions/DemographicQuestion4.jsx';
 import Pregame from './components/pregame/Pregame.jsx'
-import EndScreen from './routes/endScreen/EndScreen.jsx';
+import Qualtrix from './components/questions/Qualtrix.jsx'
+import EndScreen from './routes/endScreen/EndScreen.jsx'
+import Debrief from './components/Debrief/Debrief.jsx';
+import Complete from './components/Complete/Complete.jsx';
 
 import PreApply from './components/AILiteracy/PreApply.jsx';
 import PreUnderstanding from './components/AILiteracy/PreUnderstanding.jsx';
@@ -185,6 +188,14 @@ function MainApp() {
         {
           path: "/end-screen",
           element: <EndScreen />,
+        },
+        {
+          path: "/debrief",
+          element: <Debrief />,
+        },
+        {
+          path: "/complete",
+          element: <Complete />,
         },
       ],
     },

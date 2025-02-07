@@ -19,6 +19,6 @@ const aiSelfCompetencySchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+}, {versionKey: false});
 
 export default mongoose.models.AISelfCompetency || mongoose.model("AISelfCompetency", aiSelfCompetencySchema);

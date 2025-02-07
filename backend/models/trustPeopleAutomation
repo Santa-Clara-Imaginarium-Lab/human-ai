@@ -19,6 +19,6 @@ const trustPeopleAutomationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+}, {versionKey: false});
 
 export default mongoose.models.trustPeopleAutomation || mongoose.model("trustPeopleAutomation", trustPeopleAutomationSchema);

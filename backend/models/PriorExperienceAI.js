@@ -18,6 +18,6 @@ const priorExperienceAISchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+}, {versionKey: false});
 
 export default mongoose.models.PriorExperience || mongoose.model("PriorExperience", priorExperienceAISchema);

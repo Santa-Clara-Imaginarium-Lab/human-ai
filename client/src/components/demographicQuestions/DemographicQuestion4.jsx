@@ -6,6 +6,7 @@ function DemographicQuestion4() {
     const navigate = useNavigate();
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [showError, setShowError] = useState(false);
+    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
 
     const handleOptionChange = (event) => {
       const value = event.target.value;
@@ -17,12 +18,34 @@ function DemographicQuestion4() {
       );
     };
 
-    const handleClick = () => {
+    const handleClick = async () => {
       if (selectedOptions.length === 0) { // Check if no options are selected
         setShowError(true);
         return;
       }
-      navigate('/tutorial'); 
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/demographics`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId,
+            ethnicity: selectedOptions, // Send selected options as ethnicity
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update demographic data');
+        }
+
+        console.log("Demographic data updated successfully");
+        navigate('/tutorial'); // Navigate after successful submission
+      } catch (error) {
+        console.error('Error updating demographic data:', error);
+        setShowError(true); // Optionally show an error message
+      }
     };
 
     return (
@@ -103,8 +126,8 @@ function DemographicQuestion4() {
             <label className="demographic-option">
               <input
                 type="checkbox"
-                value="Prefer not to say "
-                checked={selectedOptions.includes("Prefer not to say ")}
+                value="Prefer not to say"
+                checked={selectedOptions.includes("Prefer not to say")}
                 onChange={handleOptionChange}
               />
               <p>Prefer not to say</p>

@@ -20,6 +20,6 @@ const surveyQuestionsSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+}, {versionKey: false});
 
 export default mongoose.models.PostTestSurveyResponse || mongoose.model("PostTestSurveyResponse", surveyQuestionsSchema);

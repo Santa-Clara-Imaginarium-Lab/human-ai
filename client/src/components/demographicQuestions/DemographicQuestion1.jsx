@@ -7,7 +7,7 @@ function DemographicQuestion1() {
     const [selectedOption, setSelectedOption] = useState('');
     const [showError, setShowError] = useState(false);
     const [showError2, setShowError2] = useState(false);
-
+    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
 
     const handleOptionChange = (event) => {
       const value = event.target.value;
@@ -19,7 +19,7 @@ function DemographicQuestion1() {
       }
     };
 
-    const handleClick = () => {
+    const handleClick = async () => {
       if (!selectedOption) {
         setShowError(true);
         return;
@@ -28,7 +28,36 @@ function DemographicQuestion1() {
         setShowError2(true); // Show error if "Other" is selected but textbox is empty
         return;
       }
-      navigate('/demographic-question2'); 
+
+      // Prepare data to send
+      const gender = selectedOption === "Other" ? document.querySelector('.gender-input').value : selectedOption;
+
+      // Log the data being sent
+      const dataToSend = {
+        userId,
+        gender
+      };
+      console.log("Data to send:", dataToSend); // Log the data
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/demographics`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dataToSend),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save demographic data');
+        }
+
+        console.log("Demographic data saved successfully");
+        navigate('/demographic-question2'); // Navigate after successful submission
+      } catch (error) {
+        console.error('Error saving demographic data:', error);
+        setShowError(true); // Optionally show an error message
+      }
     };
 
     return (

@@ -7,6 +7,7 @@ function DemographicQuestion2() {
     const [selectedOption, setSelectedOption] = useState('');
     const [showError, setShowError] = useState(false);
     const [showError2, setShowError2] = useState(false);
+    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
 
     const handleOptionChange = (event) => {
       const value = event.target.value;
@@ -18,7 +19,7 @@ function DemographicQuestion2() {
       }
     };
 
-    const handleClick = () => {
+    const handleClick = async () => {
       if (!selectedOption) {
         setShowError(true);
         return;
@@ -27,7 +28,32 @@ function DemographicQuestion2() {
         setShowError2(true); // Show error if "Other" is selected but textbox is empty
         return;
       }
-      navigate('/demographic-question3'); 
+
+      // Prepare data to send
+      const gender = selectedOption === "Other" ? document.querySelector('.gender-input').value : selectedOption;
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/demographics`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId,
+            transgenderInfo: gender, // Send the selected gender as transgenderInfo
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update demographic data');
+        }
+
+        console.log("Demographic data updated successfully");
+        navigate('/demographic-question3'); // Navigate after successful submission
+      } catch (error) {
+        console.error('Error updating demographic data:', error);
+        setShowError(true); // Optionally show an error message
+      }
     };
 
     return (

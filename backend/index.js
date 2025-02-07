@@ -11,6 +11,7 @@ import aiProblemSolving from "./models/aiProblemSolving.js";
 import aiSelfCompetency from "./models/aiSelfCompetency.js";
 import trustScaleExplainableAI from "./models/trustScaleExplainableAI";
 import trustPeopleAutomation from "./models/trustPeopleAutomation";
+import demographic from "./models/demographic.js";
 
 const port = 3000;
 const app = express();
@@ -391,6 +392,63 @@ app.put("/api/trustpeopleautomation", async (req, res) => {
     res.status(500).json({ error: "Failed to update Trust between People and Automation responses." });
   }
 });
+
+app.post("/api/demographics", async (req, res) => {
+  try {
+    const { userId, gender, transgenderInfo, age, ethnicity } = req.body;
+
+    const newDemographic = new demographic({
+      userId,
+      gender,
+      transgenderInfo,
+      age,
+      ethnicity
+    });
+
+    await newDemographic.save();
+    res.status(201).json(newDemographic);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.put("/api/demographics", async (req, res) => {
+  const { userId, transgenderInfo, age, ethnicity } = req.body;
+
+  // Ensure required fields are present
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required." });
+  }
+
+  try {
+    // Find the existing demographic entry by userId
+    const existingDemographic = await demographic.findOne({ userId });
+
+    if (!existingDemographic) {
+      return res.status(404).json({ error: "No demographic entry found for this userId." });
+    }
+
+    // Update the fields if provided
+    if (transgenderInfo !== undefined) {
+      existingDemographic.transgenderInfo = transgenderInfo;
+    }
+    if (age !== undefined) {
+      existingDemographic.age = age;
+    }
+    if (ethnicity !== undefined) {
+      existingDemographic.ethnicity = ethnicity;
+    }
+
+    // Save the updated entry
+    await existingDemographic.save();
+
+    res.status(200).json({ message: "Demographic data updated successfully!", updatedEntry: existingDemographic });
+  } catch (error) {
+    console.error("Error updating demographic data:", error);
+    res.status(500).json({ error: "Failed to update demographic data." });
+  }
+});
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

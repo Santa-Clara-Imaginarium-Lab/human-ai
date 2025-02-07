@@ -6,17 +6,40 @@ function DemographicQuestion3() {
     const navigate = useNavigate();
     const [showError, setShowError] = useState(false);
     const [freeResponse, setFreeResponse] = useState(''); // State for free response input
-
+    const userId = localStorage.getItem('userId');
+    
     const handleFreeResponseChange = (event) => {
       setFreeResponse(event.target.value); // Update free response state
     };
 
-    const handleClick = () => {
+    const handleClick = async () => {
       if (!freeResponse) { 
         setShowError(true);
         return;
       }
-      navigate('/demographic-question4'); 
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/demographics`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId,
+            age: freeResponse, // Send the selected gender as transgenderInfo
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update demographic data');
+        }
+
+        console.log("Demographic data updated successfully");
+        navigate('/demographic-question4'); // Navigate after successful submission
+      } catch (error) {
+        console.error('Error updating demographic data:', error);
+        setShowError(true); // Optionally show an error message
+      }
     };
 
     return (

@@ -28,7 +28,7 @@ const chatSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true }, {versionKey: false}
 );
 
 export default mongoose.models.chat || mongoose.model("chat", chatSchema);

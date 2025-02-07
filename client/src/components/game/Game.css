@@ -57,19 +57,6 @@
     flex-direction: column;
     align-items: center;
   }
-  
-  .proceed-button {
-    margin: 100px;
-    background-color: var(--accent-three);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1.5em;
-    font-size: 1.2em;
-    cursor: pointer;
-    box-shadow: 0.3em 0.3em 0 0 var(--button-two);
-    font-family: var(--universal-font);
-  }
 
   .proceed-button:active {
     /* Simulate the button being pressed */
@@ -108,8 +95,10 @@
   }
 
 
-  .proceed-chat {
-    margin: 100px;
+  .proceed-chat2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     background-color: var(--accent-three);
     color: white;
     border: none;
@@ -119,10 +108,6 @@
     cursor: pointer;
     box-shadow: 0.3em 0.3em 0 0 var(--button-two);
     font-family: var(--universal-font);
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    transform-origin: top right;
 }
 
 .selected {

@@ -345,9 +345,15 @@ function Game() {
           </button>
         </div>
 
-        <div id="customAlertBox" class="custom-alert">
-        <div class="custom-alert-content">
-            <span class="close">&times;</span>
+        <div>
+          <button className="proceed-chat2" onClick={() => handleChatNavigation()}>
+          Go to Chat
+          </button>
+        </div>
+
+        <div id="customAlertBox" className="custom-alert">
+        <div className="custom-alert-content">
+            <span className="close">&times;</span>
             <p id="alertMessage"></p>
         </div>
       </div>
@@ -431,11 +437,6 @@ function Game() {
             </button>
           )}
         </div>
-      </div>
-      <div>
-        <button className="proceed-chat" onClick={() => handleChatNavigation()}>
-        Go to Chat
-        </button>
       </div>
     </div>
   );

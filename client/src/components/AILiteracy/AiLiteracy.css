@@ -63,7 +63,7 @@
       grid-template-columns: 2fr repeat(6, 1fr); /* Statement + 6 options */
       gap: 10px;
       position: relative;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
     
     .qualtrix-grid::before {

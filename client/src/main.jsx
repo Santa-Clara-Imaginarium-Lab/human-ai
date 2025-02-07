@@ -22,14 +22,28 @@ import Game from './components/game/Game.jsx'
 import Login from './components/login/Login.jsx'
 import Brief from './components/brief/Brief.jsx'
 import ConsentForm from './components/consentForm/ConsentForm.jsx'
-import AiPretest from './components/aiPretest/AiPretest.jsx'
+
 import PersonalityQuestions from './components/personalityQuestions/PersonalityQuestions.jsx'
-import DemographicQuestions from './components/demographicQuestions/DemographicQuestions.jsx'
+import DemographicQuestion1 from './components/demographicQuestions/DemographicQuestion1.jsx'
+import DemographicQuestion2 from './components/demographicQuestions/DemographicQuestion2.jsx';
+import DemographicQuestion3 from './components/demographicQuestions/DemographicQuestion3.jsx';
+import DemographicQuestion4 from './components/demographicQuestions/DemographicQuestion4.jsx';
 import Pregame from './components/pregame/Pregame.jsx'
 import Qualtrix from './components/questions/Qualtrix.jsx'
 import EndScreen from './routes/endScreen/EndScreen.jsx'
 import Debrief from './components/Debrief/Debrief.jsx';
 import Complete from './components/Complete/Complete.jsx';
+
+import PreApply from './components/AILiteracy/PreApply.jsx';
+import PreUnderstanding from './components/AILiteracy/PreUnderstanding.jsx';
+import PreEfficacy from './components/AIProblemSolving/PreEfficacy.jsx';
+import PrePersuassion from './components/AISelfCompetency/PrePersuassion.jsx';
+import PreTXAI from './components/TrustScaleExplainableAI/PreTXAI.jsx';
+import PreTXAI2 from './components/TrustScaleExplainableAI/PreTXAI2.jsx';
+import PreTPA from './components/TrustPeopleAutomation/PreTPA.jsx';
+import PreTPA2 from './components/TrustPeopleAutomation/PreTPA2.jsx';
+import PreHumanAI1 from './components/priorExperienceAI/PreHumanAI1.jsx';
+import PreHumanAI2 from './components/priorExperienceAI/PreHumanAI2.jsx';
 
 function MainApp() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'black-white-theme-4-2');
@@ -80,16 +94,64 @@ function MainApp() {
           element: <ConsentForm />,
         },
         {
-          path: "/ai-pretest",
-          element: <AiPretest />,
+          path: "/pre-humanai-1",
+          element: <PreHumanAI1 />,
+        },
+        {
+          path: "/pre-humanai-2",
+          element: <PreHumanAI2 />,
+        },
+        {
+          path: "/pre-apply",
+          element: <PreApply />,
+        },
+        {
+          path: "/pre-understanding",
+          element: <PreUnderstanding />,
+        },
+        {
+          path: "/pre-efficacy",
+          element: <PreEfficacy />,
+        },
+        {
+          path: "/pre-persuassion",
+          element: <PrePersuassion />,
+        },
+        {
+          path: "/pre-txai",
+          element: <PreTXAI />,
+        },
+        {
+          path: "/pre-txai2",
+          element: <PreTXAI2 />,
+        },
+        {
+          path: "/pre-tpa",
+          element: <PreTPA />,
+        },
+        {
+          path: "/pre-tpa2",
+          element: <PreTPA2 />,
         },
         {
           path: "/personality-questions",
           element: <PersonalityQuestions />,
         },
         {
-          path: "/demographic-questions",
-          element: <DemographicQuestions />,
+          path: "/demographic-question1",
+          element: <DemographicQuestion1 />,
+        },
+        {
+          path: "/demographic-question2",
+          element: <DemographicQuestion2 />,
+        },
+        {
+          path: "/demographic-question3",
+          element: <DemographicQuestion3 />,
+        },
+        {
+          path: "/demographic-question4",
+          element: <DemographicQuestion4 />,
         },
         {
           path: "/pregame",
@@ -102,12 +164,7 @@ function MainApp() {
         {
           path: "/question",
           element: <Question />,
-        },
-        {
-          path: "/qualtrix", // New route for the Qualtrix page
-          element: <Qualtrix />,
-        },
-        
+        },       
         {
           path: "/tutorial",
           element: <Tutorial />,

@@ -3,7 +3,7 @@ Tutorial.css
     background-color: var(--background-one);
   }
 
-  .survey-shadow-container {
+  .demographic-container {
     background-color: white;
     border-radius: 3em;
     box-shadow: 10px 10px 0 0 var(--accent-one);
@@ -13,7 +13,7 @@ Tutorial.css
     justify-content: center;  /* Center align content vertically */
     padding: 40px 20px; /* Add padding for spacing */
     position: relative; /* Position context for the shadow */
-    width: 65%;
+    width: 50%;
   }
   
   .brief-subtitle {
@@ -24,28 +24,63 @@ Tutorial.css
     font-family: var(--universal-font);
   }
   
-  .brief-options {
+  .demographic-options {
     display: flex;
+    flex-direction: column;
     gap: 1em;
     font-family: var(--universal-font);
   }
-  
-  .yes-button, .no-button {
-    padding: 0.5em 1.5em;
-    background-color: var(--button-one);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-size: 1.2em;
-    cursor: pointer;
-    font-family: var(--universal-font);
-    box-shadow: 0.3em 0.3em 0 0 black;
+
+  .demographic-option {
+      display: flex; /* Use flexbox to align items */
+      align-items: center; /* Center align items vertically */
   }
 
-  .no-button:active {
-    /* Simulate the button being pressed */
-    transform: translate(0.3em, 0.3em); /* Move the button down */
-    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+  .demographic-option p {
+    margin: 0;
+    margin-left: 20px;
+    font-size: large;
+    font-weight: bold;
+    font-family: var(--universal-font);
+    color: var(--accent-two);
   }
   
+  .demographic-circle {
+    height: 30px;
+    width: 30px;
+    background-color: var(--option-circles);
+    border-radius: 50%;
+
+    display: inline-block;
+  }
+
+  input[type="radio"]:checked + .demographic-circle {
+    background-color: var(--accent-one);
+  }
+
+  .gender-input{
+    font-family: var(--universal-font);
+    font-size: large;
+    margin-left: 8px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--accent-two); /* Optional: Add a bottom border for the line effect */
+  }
   
+  .age-input{
+    font-family: var(--universal-font);
+    font-size: large;
+    margin-left: 8px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--accent-two); /* Optional: Add a bottom border for the line effect */
+    text-align: center; /* Center the text inside the input */
+  }
+
+  .demographic-option input[type="checkbox"] {
+    transform: scale(1.7); 
+  }
+  
+  .demographic-option input[type="checkbox"]:checked {
+    accent-color: var(--accent-one); 
+}

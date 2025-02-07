@@ -5,7 +5,13 @@ import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
 import GameScore from "./models/gameScores.js";
 import SurveyResponse from "./models/surveyQuestions.js";
-
+import PriorExperienceAI from "./models/PriorExperienceAI.js";
+import AILiteracy from "./models/ailiteracy.js";
+import aiProblemSolving from "./models/aiProblemSolving.js";
+import aiSelfCompetency from "./models/aiSelfCompetency.js";
+import trustScaleExplainableAI from "./models/trustScaleExplainableAI";
+import trustPeopleAutomation from "./models/trustPeopleAutomation";
+import demographic from "./models/demographic.js";
 
 const port = 3000;
 const app = express();
@@ -170,6 +176,276 @@ app.post("/api/surveyresponses", async (req, res) => {
   } catch (error) {
     console.error("Error saving survey responses:", error);
     res.status(500).json({ error: "Failed to save survey responses." });
+  }
+});
+
+app.post("/api/prior-experience-ai", async (req, res) => {
+  try {
+    const { userId, selectedOption } = req.body;
+
+    // Ensure required fields are present
+    if (!userId || !selectedOption) {
+      return res.status(400).json({ error: "userId and selectedOption are required." });
+    }
+
+    const priorExperienceAI = new PriorExperienceAI({
+      userId,
+      selectedOption,
+    });
+
+    await priorExperienceAI.save();
+    res.status(201).json({ message: "Prior experience data saved successfully!" });
+  } catch (error) {
+    console.error("Error saving prior experience data:", error);
+    res.status(500).json({ error: "Failed to save prior experience data." });
+  }
+});
+
+app.put("/api/prior-experience-ai", async (req, res) => {
+  const { userId, freeResponse } = req.body;
+
+  // Ensure required fields are present
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required." });
+  }
+
+  try {
+    const updatedEntry = await PriorExperienceAI.findOneAndUpdate(
+      { userId }, // Find the entry by userId
+      { freeResponse }, // Update the freeResponse field
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedEntry) {
+      return res.status(404).json({ error: "No entry found for this userId." });
+    }
+
+    res.status(200).json({ message: "Prior experience data updated successfully!", updatedEntry });
+  } catch (error) {
+    console.error("Error updating prior experience data:", error);
+    res.status(500).json({ error: "Failed to update prior experience data." });
+  }
+});
+
+app.post("/api/ailiteracy", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+
+    const aiLiteracyResponse = new AILiteracy({
+      userId,
+      responses
+    });
+
+    await aiLiteracyResponse.save();
+    res.status(201).json({ message: "AI Literacy responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving AI Literacy responses:", error);
+    res.status(500).json({ error: "Failed to save AI Literacy responses." });
+  }
+});
+
+app.put("/api/ailiteracy", async (req, res) => {
+  const { userId, responses } = req.body;
+
+  // Ensure required fields are present
+  if (!userId || !responses) {
+    return res.status(400).json({ error: "userId and responses are required." });
+  }
+
+  try {
+    // Find the existing entry by userId
+    const existingEntry = await AILiteracy.findOne({ userId });
+
+    if (!existingEntry) {
+      return res.status(404).json({ error: "No entry found for this userId." });
+    }
+
+    // Append new responses to the existing responses array
+    existingEntry.responses.push(...responses); // Directly append the new responses
+    await existingEntry.save(); // Save the updated entry
+
+    res.status(200).json({ message: "AI Literacy responses updated successfully!" });
+  } catch (error) {
+    console.error("Error updating AI Literacy responses:", error);
+    res.status(500).json({ error: "Failed to update AI Literacy responses." });
+  }
+});
+
+app.post("/api/aiproblemsolving", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+
+    const aiProblemSolvingResponse = new aiProblemSolving({
+      userId,
+      responses
+    });
+
+    await aiProblemSolvingResponse.save();
+    res.status(201).json({ message: "AI Problem Solving responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving AI Problem Solving responses:", error);
+    res.status(500).json({ error: "Failed to save AI Problem Solving responses." });
+  }
+});
+
+app.post("/api/aiselfcompetency", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+
+    const aiSelfCompetencyResponse = new aiSelfCompetency({
+      userId,
+      responses
+    });
+
+    await aiSelfCompetencyResponse.save();
+    res.status(201).json({ message: "AI Self Competency responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving AI Self Competency responses:", error);
+    res.status(500).json({ error: "Failed to save AI Self Competency responses." });
+  }
+});
+
+app.post("/api/trustscaleexplainableai", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+
+    const trustScaleExplainableAIResponse = new trustScaleExplainableAI({
+      userId,
+      responses
+    });
+
+    await trustScaleExplainableAIResponse.save();
+    res.status(201).json({ message: "Trust Scale for Explainable AI responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving Trust Scale for Explainable AI responses:", error);
+    res.status(500).json({ error: "Failed to save Trust Scale for Explainable AI responses." });
+  }
+});
+
+app.put("/api/trustscaleexplainableai", async (req, res) => {
+  const { userId, responses } = req.body;
+
+  // Ensure required fields are present
+  if (!userId || !responses) {
+    return res.status(400).json({ error: "userId and responses are required." });
+  }
+
+  try {
+    // Find the existing entry by userId
+    const existingEntry = await trustScaleExplainableAI.findOne({ userId });
+
+    if (!existingEntry) {
+      return res.status(404).json({ error: "No entry found for this userId." });
+    }
+
+    // Append new responses to the existing responses array
+    existingEntry.responses.push(...responses); // Directly append the new responses
+    await existingEntry.save(); // Save the updated entry
+
+    res.status(200).json({ message: "Trust Scale for Explainable AI responses updated successfully!" });
+  } catch (error) {
+    console.error("Error updating Trust Scale for Explainable AI responses:", error);
+    res.status(500).json({ error: "Failed to update Trust Scale for Explainable AI responses." });
+  }
+});
+
+app.post("/api/trustpeopleautomation", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+
+    const trustPeopleAutomationResponse = new trustPeopleAutomation({
+      userId,
+      responses
+    });
+
+    await trustPeopleAutomationResponse.save();
+    res.status(201).json({ message: "Trust between People and Automation responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving Trust between People and Automation responses:", error);
+    res.status(500).json({ error: "Failed to save Trust between People and Automation responses." });
+  }
+});
+
+app.put("/api/trustpeopleautomation", async (req, res) => {
+  const { userId, responses } = req.body;
+
+  // Ensure required fields are present
+  if (!userId || !responses) {
+    return res.status(400).json({ error: "userId and responses are required." });
+  }
+
+  try {
+    // Find the existing entry by userId
+    const existingEntry = await trustPeopleAutomation.findOne({ userId });
+
+    if (!existingEntry) {
+      return res.status(404).json({ error: "No entry found for this userId." });
+    }
+
+    // Append new responses to the existing responses array
+    existingEntry.responses.push(...responses); // Directly append the new responses
+    await existingEntry.save(); // Save the updated entry
+
+    res.status(200).json({ message: "Trust between People and Automation responses updated successfully!" });
+  } catch (error) {
+    console.error("Error updating Trust between People and Automation responses:", error);
+    res.status(500).json({ error: "Failed to update Trust between People and Automation responses." });
+  }
+});
+
+app.post("/api/demographics", async (req, res) => {
+  try {
+    const { userId, gender, transgenderInfo, age, ethnicity } = req.body;
+
+    const newDemographic = new demographic({
+      userId,
+      gender,
+      transgenderInfo,
+      age,
+      ethnicity
+    });
+
+    await newDemographic.save();
+    res.status(201).json(newDemographic);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.put("/api/demographics", async (req, res) => {
+  const { userId, transgenderInfo, age, ethnicity } = req.body;
+
+  // Ensure required fields are present
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required." });
+  }
+
+  try {
+    // Find the existing demographic entry by userId
+    const existingDemographic = await demographic.findOne({ userId });
+
+    if (!existingDemographic) {
+      return res.status(404).json({ error: "No demographic entry found for this userId." });
+    }
+
+    // Update the fields if provided
+    if (transgenderInfo !== undefined) {
+      existingDemographic.transgenderInfo = transgenderInfo;
+    }
+    if (age !== undefined) {
+      existingDemographic.age = age;
+    }
+    if (ethnicity !== undefined) {
+      existingDemographic.ethnicity = ethnicity;
+    }
+
+    // Save the updated entry
+    await existingDemographic.save();
+
+    res.status(200).json({ message: "Demographic data updated successfully!", updatedEntry: existingDemographic });
+  } catch (error) {
+    console.error("Error updating demographic data:", error);
+    res.status(500).json({ error: "Failed to update demographic data." });
   }
 });
 

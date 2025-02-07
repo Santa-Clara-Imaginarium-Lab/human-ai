@@ -31,6 +31,7 @@ Tutorial.css
   }
   
   #no-button {
+    margin-top: 25px;
     padding: 0.5em 1.5em;
     background-color: var(--button-one);
     color: white;

@@ -26,7 +26,7 @@ function ConsentForm() {
         brief_subtitle.innerHTML = terms[termsIndex];
 
         if (termsIndex >= terms.length) {
-            navigate('/ai-pretest'); //change this
+            navigate('/pre-humanai-1'); //change this
         }
 
         let noButton = document.getElementById("no-button-text");

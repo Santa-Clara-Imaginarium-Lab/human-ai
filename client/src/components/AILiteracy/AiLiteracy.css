@@ -54,7 +54,7 @@
     
     .qualtrix-grid {
       display: grid;
-      grid-template-columns: 1fr repeat(6, 1fr); /* Statement + 6 options */
+      grid-template-columns: 2fr repeat(6, 1fr); /* Statement + 6 options */
       gap: 10px;
       position: relative;
     }
@@ -65,7 +65,7 @@
       width: 2px;
       height: 100%;
       background-color: #ddd;
-      left: calc(20% - 43px); /* Adjust to align with the space between the statement and options */
+      left: calc(24%); /* Adjust to align with the space between the statement and options */
       top: 0;
     }
     

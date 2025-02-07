@@ -20,6 +20,10 @@ const demographicSchema = new mongoose.Schema({
   ethnicity: {
     type: [String], // Array to allow multiple values
     required: false
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now
   }
 }, {versionKey: false});
 

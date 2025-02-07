@@ -16,14 +16,10 @@ const userChatsSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        createdAt: {
-          type: Date,
-          default: Date.now()
-        },
       },
     ],
   },
-  { timestamps: true }, {versionKey: false}
+  {versionKey: false}
 );
 
 export default mongoose.models.userchats ||

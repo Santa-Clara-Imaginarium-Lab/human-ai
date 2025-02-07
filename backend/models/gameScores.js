@@ -27,8 +27,11 @@ const gameScoreSchema = new mongoose.Schema(
         },
       },
     ],
-  },
-  { timestamps: true }, {versionKey: false}
+    timestamp: {
+      type: Date,
+      default: Date.now
+    }
+  }, {versionKey: false}
 );
 
 export default mongoose.models.GameScore || mongoose.model("GameScore", gameScoreSchema);

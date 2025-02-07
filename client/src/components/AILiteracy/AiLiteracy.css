@@ -15,6 +15,12 @@
     padding: 40px 20px; /* Add padding for spacing */
     position: relative; /* Position context for the shadow */
     width: 80%;
+    height: 90%;
+  }
+
+  .row-container {
+    overflow: scroll;
+    display: contents;
   }
 
   @media (min-width: 2000px) {
@@ -57,6 +63,7 @@
       grid-template-columns: 2fr repeat(6, 1fr); /* Statement + 6 options */
       gap: 10px;
       position: relative;
+      overflow-y: scroll;
     }
     
     .qualtrix-grid::before {
@@ -78,9 +85,18 @@
       top: 48px; /* Position below the option headers */
       left: 0;
     }
+
+    .qualtrix-grid-header > div {
+      background: white; 
+      position: sticky;
+      top: 0;
+      z-index: 4;  
+      padding: 10px;
+      border-bottom: 2px solid #ddd;
+    }
     
     .qualtrix-grid-header {
-      display: contents;
+      display: contents; 
     }
     
     .option-header {

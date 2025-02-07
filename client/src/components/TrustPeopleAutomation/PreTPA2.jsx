@@ -87,23 +87,25 @@ function PreTPA2() {
             </div>
           ))}
         </div>
-        {statements.map((statement, statementIndex) => (
-          <div key={statementIndex} className="qualtrix-row">
-            <div className="statement">{statement}</div>
-            {options.map((option, optionIndex) => (
-              <label key={optionIndex} className="circle-container">
-                <input
-                  type="radio"
-                  name={`statement-${statementIndex}`}
-                  value={option}
-                  checked={responses[statementIndex] === option}
-                  onChange={() => handleOptionChange(statementIndex, option)}
-                />
-                <span className="circle"></span>
-              </label>
-            ))}
-          </div>
-        ))}
+        {/* <div classname="row-container"> */}
+          {statements.map((statement, statementIndex) => (
+            <div key={statementIndex} className="qualtrix-row">
+              <div className="statement">{statement}</div>
+              {options.map((option, optionIndex) => (
+                <label key={optionIndex} className="circle-container">
+                  <input
+                    type="radio"
+                    name={`statement-${statementIndex}`}
+                    value={option}
+                    checked={responses[statementIndex] === option}
+                    onChange={() => handleOptionChange(statementIndex, option)}
+                  />
+                  <span className="circle"></span>
+                </label>
+              ))}
+            </div>
+          ))}
+        {/* </div> */}
       </div>
       {error && <div className="error-message">{error}</div>}
       <button className="submit-button" onClick={handleSubmit}>

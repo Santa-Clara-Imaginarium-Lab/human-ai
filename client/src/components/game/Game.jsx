@@ -301,11 +301,12 @@ function Game() {
     let body =
         document.querySelector("body");
 
-      var textWall = "The choice to cooperate or defect offers you different amounts of points, depending on you and your opponents’ choices.<br/><br/>" +
-        "1. If you defect while your opponent cooperates, you get +5 points, and your opponent gets +0.<br/><br/>" +
-        "2. If you cooperate while your opponent defects, you get +0 points, and your opponent gets +5.<br/><br/>" +
-        "3. If you both cooperate, you both get +3 points.<br/><br/>" +
-        "4. If you both defect, you both get +1 point."
+      var textWall = "You and the AI analyze market trends and decide each day (round) whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
+        "1. If you withhold data and the AI chooses to share data, you will gain a boost in profit. You will earn +5 Caboodle, while the AI will earn +0 Caboodle.<br/><br/>" +
+        "2. If the AI withholds data and you choose to share data, the AI will gain a boost in profit. The AI will gain +5 Caboodle, while you earn +0 Caboodle.<br/><br/>" +
+        "3. If you both share data, investments are optimized, and profits increase steadily. You both earn +3 Caboodle.<br/><br/>" +
+        "4. If you both withhold data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn +1 Caboodle."
+        
 
     alert_Message_container.innerHTML = textWall;
     alertBox.style.display = "block";
@@ -365,13 +366,13 @@ function Game() {
           <div className="column-1">
             <div className={`triangle-left ${highlightedTriangles.includes('t1') ? 'highlight' : ''}`}>
               {highlightedTriangles.includes('t1') && <span className="triangle-number-left-bottom">{triangleNumbers.t1}</span>}
-              <span className={`ai-defect-desc ${highlightedDesc.aiDefect ? 'highlight' : ''}`}>AI DEFECT</span>
+              <span className={`ai-defect-desc ${highlightedDesc.aiDefect ? 'highlight' : ''}`}>AI WITHHOLD</span>
             </div>
           </div>
           <div className="column-2">
             <div className={`triangle-left ${highlightedTriangles.includes('t2') ? 'highlight' : ''}`}>
               {highlightedTriangles.includes('t2') && <span className="triangle-number-left-up">{triangleNumbers.t2}</span>}
-              <span className={`ai-cooperate-desc ${highlightedDesc.aiCooperate ? 'highlight' : ''}`}>AI COOPERATE</span>
+              <span className={`ai-cooperate-desc ${highlightedDesc.aiCooperate ? 'highlight' : ''}`}>AI SHARE</span>
             </div>
             <div className={`triangle-right ${highlightedTriangles.includes('t3') ? 'highlight' : ''}`}>
               {highlightedTriangles.includes('t3') && <span className="triangle-number-right-bottom">{triangleNumbers.t3}</span>}
@@ -383,7 +384,7 @@ function Game() {
           <div className="column-3">
             <div className={`triangle-right ${highlightedTriangles.includes('t5') ? 'highlight' : ''}`}>
               {highlightedTriangles.includes('t5') && <span className="triangle-number-right-up">{triangleNumbers.t5}</span>}
-              <span className={`user-cooperate-desc ${highlightedDesc.userCooperate ? 'highlight' : ''}`}>YOU COOPERATE</span>
+              <span className={`user-cooperate-desc ${highlightedDesc.userCooperate ? 'highlight' : ''}`}>YOU SHARE</span>
             </div>
             <div className={`triangle-left ${highlightedTriangles.includes('t6') ? 'highlight' : ''}`}>
               {highlightedTriangles.includes('t6') && <span className="triangle-number-left-up">{triangleNumbers.t6}</span>}
@@ -395,7 +396,7 @@ function Game() {
           <div className="column-4">
             <div className={`triangle-right ${highlightedTriangles.includes('t8') ? 'highlight' : ''}`}>
               {highlightedTriangles.includes('t8') && <span className="triangle-number-right-up">{triangleNumbers.t8}</span>}
-              <span className={`user-defect-desc ${highlightedDesc.userDefect ? 'highlight' : ''}`}>YOU DEFECT</span>
+              <span className={`user-defect-desc ${highlightedDesc.userDefect ? 'highlight' : ''}`}>YOU WITHHOLD</span>
             </div>
           </div>
           <div className="column-5">
@@ -415,10 +416,12 @@ function Game() {
           {!isRoundOver ? (
             <>
               <button className="proceed-button" ref={coopButtonRef} onClick={() => handleUserDecision('Cooperate')}>
-                Cooperate
+                SHARE
+                <div>(cooperate)</div>
               </button>
               <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
-                Defect
+                WITHHOLD
+                <div>(deflect)</div>
               </button>
               <br></br>
               <button className="lockin-button" onClick={() => handleLockIn()}>

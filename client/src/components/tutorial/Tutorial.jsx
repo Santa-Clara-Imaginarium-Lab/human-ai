@@ -41,7 +41,7 @@ function Tutorial() {
             <div id="btu" className="brief-transitioner-underline"/>
           </div>
       <div className='survey-shadow-container'>
-      <h2 className="tutorial-subtitle">Learn about the Prisoner's Dilemma, a game based on cooperation and defection.</h2>
+      <h2 className="tutorial-subtitle">Learn about your job at Caboodle, a job based on sharing and withholding data.</h2>
       <div className="tutorial-options">
         <button className="no-button" onClick={handleNoClick}>Proceed</button>
       </div>

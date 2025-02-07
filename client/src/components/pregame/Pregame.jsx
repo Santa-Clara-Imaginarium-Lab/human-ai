@@ -10,9 +10,9 @@ function Pregame() {
 
     const terms =[
         "We have finished the tutorial.",
-        "The goal of this game is for you to play the prisoner's dilemma with a chatbot.",
-        "You have the option to chat with your opponent if you would like to understand their strategy, but it is not required.",
-        "Please go through this game with intent, we are excited to see your results!"
+        "The goal of this job is for you to make the best investment decision with the AI Agent.",
+        "You have the option to chat with the AI Agent if you would like to understand their strategy, but it is not required.",
+        "Please go through your job with intent, we are excited to see your results!"
     ];
 
     useEffect(() => {

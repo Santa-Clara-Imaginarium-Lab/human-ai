@@ -27,7 +27,9 @@ import PersonalityQuestions from './components/personalityQuestions/PersonalityQ
 import DemographicQuestions from './components/demographicQuestions/DemographicQuestions.jsx'
 import Pregame from './components/pregame/Pregame.jsx'
 import Qualtrix from './components/questions/Qualtrix.jsx'
-import EndScreen from './routes/endScreen/EndScreen.jsx';
+import EndScreen from './routes/endScreen/EndScreen.jsx'
+import Debrief from './components/Debrief/Debrief.jsx';
+import Complete from './components/Complete/Complete.jsx';
 
 function MainApp() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'black-white-theme-4-2');
@@ -129,6 +131,14 @@ function MainApp() {
         {
           path: "/end-screen",
           element: <EndScreen />,
+        },
+        {
+          path: "/debrief",
+          element: <Debrief />,
+        },
+        {
+          path: "/complete",
+          element: <Complete />,
         },
       ],
     },

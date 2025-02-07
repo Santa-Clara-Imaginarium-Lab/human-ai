@@ -267,3 +267,75 @@
 #alertMessage {
     color: black;
 }
+
+.round-transitioner {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100vw;
+  height: 100vh;
+  transform-origin: center;
+  background-color: var(--background-two);
+  display: block;
+  transition: left 0.5s ease-in-out;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.round-transitioner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 5em;
+  text-align: center;
+}
+
+.round-go {
+  /* left: -100%; */
+  /* transition: left 0.5s ease-in-out; */
+  opacity: 0;
+  animation: fadeOut 0.5s ease-in;
+  /* top: -100%; */
+  /* transition: top 0.5s ease-in; */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.round-vanish {
+  display: none;
+}
+
+.round-transitioner-underline {
+  display: block;
+  position: relative;
+  transform-origin: center;
+  top: 60%; /* need a better metric */
+  left: 25%;
+  width: 50%;
+  height: 2vh;
+  background-color: var(--accent-four);
+  transform: scaleX(0);
+  transition: transform 0.5s ease-in-out;
+}
+
+.round-underline-go {
+  animation: swoosh 1.5s ease-in-out;
+}
+
+@keyframes swoosh {
+  0% { transform: scaleX(0); }
+  50% { transform: scaleX(1); opacity: 1 }
+  100% { transform: scaleX(1); opacity: 0 }
+}
+
+.round-underline-hide {
+  display: none;
+}

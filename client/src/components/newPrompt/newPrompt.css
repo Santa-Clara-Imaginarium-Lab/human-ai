@@ -69,3 +69,17 @@
   display: block;
   transition: left 0.25s ease-in-out;
 }
+
+.col {
+  background-color: var(--background-two);
+  animation: colorChange 1s ease-out;
+}
+
+@keyframes colorChange {
+  0% {
+    background-color: var(--background-one);
+  }
+  100% {
+    background-color: var(--background-two);
+  }
+}

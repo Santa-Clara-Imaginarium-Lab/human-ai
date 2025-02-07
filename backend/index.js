@@ -449,6 +449,17 @@ app.put("/api/demographics", async (req, res) => {
   }
 });
 
+app.get("/api/chats", async (req, res) => {
+    const { userId } = req.query;
+
+    try {
+        const chats = await Chat.find({ userId });
+        res.status(200).json(chats);
+    } catch (error) {
+        console.error("Error fetching chats:", error);
+        res.status(500).json({ error: "Failed to fetch chats." });
+    }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

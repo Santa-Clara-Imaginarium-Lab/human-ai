@@ -40,7 +40,7 @@ const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
 
     data.history.map((item) => {
       let dupedItem = JSON.parse(JSON.stringify(item));
-      console.log(dupedItem);
+      // console.log(dupedItem);
       delete dupedItem._id; 
 
       dupedItem.parts.map((item) => {
@@ -49,7 +49,7 @@ const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
       arr.push(dupedItem)}
   );
 
-    console.log("data", arr)
+    console.log("data for chat: ", arr)
 
     const chat = model.startChat({
       history: arr,
@@ -150,7 +150,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
           let accumulatedText = "";
           for await (const chunk of result.stream) {
             const chunkText = chunk.text();
-            console.log(chunkText);
+            console.log("[chunk]",chunkText);
             accumulatedText += chunkText;
             setAnswer(accumulatedText);
           }

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function DemographicQuestion3() {
     const navigate = useNavigate();
     const [showError, setShowError] = useState(false);
+    const [showError2, setShowError2] = useState(false);
     const [freeResponse, setFreeResponse] = useState(''); // State for free response input
     const userId = localStorage.getItem('userId');
     
@@ -15,6 +16,15 @@ function DemographicQuestion3() {
     const handleClick = async () => {
       if (!freeResponse) { 
         setShowError(true);
+        setShowError2(false); // Hide other error message if it is shown
+        return;
+      }
+
+      const freeResponseNum = Number(freeResponse);
+
+      if (isNaN(freeResponseNum) || !Number.isInteger(freeResponseNum) || freeResponseNum < 0) {
+        setShowError2(true);
+        setShowError(false); // Hide other error message if it is shown
         return;
       }
 
@@ -58,6 +68,7 @@ function DemographicQuestion3() {
             </label>
           </div>
           {showError && <p className="error-message">Please provide an answer before proceeding.</p>}
+          {showError2 && <p className="error-message">Please provide a valid number.</p>}
           <button className="submit-button" onClick={handleClick}>Submit</button>
           </div>
         </div>

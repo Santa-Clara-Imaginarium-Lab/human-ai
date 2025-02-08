@@ -1,10 +1,13 @@
-import { React, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import './Tutorial.css'; // Assuming you have a CSS file for this component
 import { useNavigate } from 'react-router-dom';
 import personalities from '../../constants/personalities';
 
 function Tutorial() {
   const navigate = useNavigate();
+
+  const [briefGo, setBriefGo] = useState(false);
+  const [btuGo, setBtuGo] = useState(false);
 
   const handleNoClick = () => {
     /* <!> Game variable resets occur here <!> */
@@ -25,21 +28,21 @@ function Tutorial() {
 
       useEffect(() => {
         setTimeout(() => {
-          document.getElementById("btu").classList.add("brief-underline-go");
+          setBtuGo(true); // Show the underline
         }, 500)
         setTimeout(() => {
-          document.getElementById("bt").classList.add("brief-go");
-          document.getElementById("btt").classList.add("brief-txt");
-          document.getElementById("btu").classList.add("brief-underline-hide");
+          setBriefGo(true); // Hide the brief transitioner
+          // document.getElementById("btt").classList.add("brief-txt");
+          // document.getElementById("btu").classList.add("brief-underline-hide");
         }, 2000)
-      }, );
+      }, []);
   
 
   return (
     <div className="container tutorial-container">
-          <div id="bt" className="brief-transitioner">
-            <h1 id="btt" className="brief-transitioner-text"> Game Tutorial </h1>
-            <div id="btu" className="brief-transitioner-underline"/>
+          <div className={`brief-transitioner ${briefGo ? 'brief-go' : ''}`}>
+            <h1 className="brief-transitioner-text"> Game Tutorial </h1>
+            <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
           </div>
       <div className='survey-shadow-container'>
       <h2 className="tutorial-subtitle">Learn about your job at Caboodle, a job based on sharing and withholding data.</h2>

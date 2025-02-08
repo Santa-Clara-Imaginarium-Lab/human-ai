@@ -5,6 +5,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function Game() {
   const navigate = useNavigate();
 
+  const [showRt, setShowRt] = useState(true);
+  const [rtGo, setRtGo] = useState(false);
+  const [rtuGo, setRtuGo] = useState(false);
+  
+  const [showCustomAlert, setShowCustomAlert] = useState(false);
+
+  const textWall = "You and the AI analyze market trends and decide each day (round) whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
+    "1. If you withhold data and the AI chooses to share data, you will gain a boost in profit. You will earn +5 Caboodle, while the AI will earn +0 Caboodle.<br/><br/>" +
+    "2. If the AI withholds data and you choose to share data, the AI will gain a boost in profit. The AI will gain +5 Caboodle, while you earn +0 Caboodle.<br/><br/>" +
+    "3. If you both share data, investments are optimized, and profits increase steadily. You both earn +3 Caboodle.<br/><br/>" +
+    "4. If you both withhold data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn +1 Caboodle."
+
   const location = useLocation();
   const decision = location.state.decision;
 
@@ -42,8 +54,6 @@ function Game() {
       return rng();
     }
   };
-
-  const transitionRef = useRef(null);
 
   const [userScore, setUserScore] = useState(parseInt(sessionStorage.getItem('userScore'))); // Track user score
   const [aiScore, setAiScore] = useState(parseInt(sessionStorage.getItem('aiScore'))); // Track AI score
@@ -291,46 +301,25 @@ function Game() {
     navigate(`/dashboard/chats/${chatId}`, { state: { builtPrompt, chatId, speedFlag } });
   };
 
-  const getHelp = () => {
+  const getHelp = () => {    
+    setShowCustomAlert(true);
+  }
 
-    let alertBox =
-        document.getElementById("customAlertBox");
-    let alert_Message_container =
-        document.getElementById("alertMessage");
-    let custom_button =
-        document.querySelector(".custom-button");
-    let close_img =
-        document.querySelector(".close");
-    let body =
-        document.querySelector("body");
-
-      var textWall = "You and the AI analyze market trends and decide each day (round) whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
-        "1. If you withhold data and the AI chooses to share data, you will gain a boost in profit. You will earn +5 Caboodle, while the AI will earn +0 Caboodle.<br/><br/>" +
-        "2. If the AI withholds data and you choose to share data, the AI will gain a boost in profit. The AI will gain +5 Caboodle, while you earn +0 Caboodle.<br/><br/>" +
-        "3. If you both share data, investments are optimized, and profits increase steadily. You both earn +3 Caboodle.<br/><br/>" +
-        "4. If you both withhold data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn +1 Caboodle."
-        
-
-    alert_Message_container.innerHTML = textWall;
-    alertBox.style.display = "block";
-
-    close_img.addEventListener
-        ('click', function () {
-            alertBox.style.display = "none";
-        });
+  const closeHelp = () => {
+    setShowCustomAlert(false);
   }
 
   useEffect(() => {
     setTimeout(() => {
-      document.getElementById('rtu').classList.add('round-underline-go');
+      setRtuGo(true);
     }, 500);
     setTimeout(() => {
-      document.getElementById('rt').classList.add('round-go');
-      document.getElementById('rtt').classList.add('round-go');
-      document.getElementById('rtu').classList.add('round-underline-hide');
+      setRtGo(true);
+      // document.getElementById('rtt').classList.add('round-go');
+      // document.getElementById('rtu').classList.add('round-underline-hide');
     }, 2000);
     setTimeout(() => {
-      document.getElementById('rt').classList.add('round-vanish');
+      setShowRt(false);
     }, 2500);
   }, [chatId]);
 
@@ -338,23 +327,25 @@ function Game() {
     <div className="container game">
       <div className="game-content">
 
-      <div id="rt" className="round-transitioner" ref={transitionRef}>
-        <h1 id="rtt" className="round-transitioner-text"> Round {currentRound} </h1>
-        <div id="rtu" className="round-transitioner-underline"/>
-      </div>
+        {showRt && <div className={`round-transitioner ${rtGo ? 'round-go' : ''}`}>
+            <h1 className="round-transitioner-text"> Round {currentRound} </h1>
+            <div className={`round-transitioner-underline ${rtuGo ? 'round-underline-go' : ''}`}/>
+          </div>
+        }
     
         <div>
-          <button className= "help-button" onClick={() => getHelp()}>
+          <button className="help-button" onClick={getHelp}>
             ?
           </button>
         </div>
 
-        <div id="customAlertBox" class="custom-alert">
-        <div class="custom-alert-content">
-            <span class="close">&times;</span>
-            <p id="alertMessage"></p>
-        </div>
-      </div>
+        {showCustomAlert && <div className="custom-alert">
+            <div className="custom-alert-content">
+                <span className="close" onClick={closeHelp}>&times;</span>
+                <p id="alertMessage" dangerouslySetInnerHTML={{ __html: textWall }}></p>
+            </div>
+          </div>
+        }
 
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">

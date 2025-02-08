@@ -8,6 +8,9 @@ function Pregame() {
 
     const [termsIndex, setTermsIndex] = useState(0);
 
+    const [briefGo, setBriefGo] = useState(false);
+    const [btuGo, setBtuGo] = useState(false);
+
     const terms =[
         "We have finished the tutorial.",
         "The goal of this job is for you to make the best investment decision with the AI Agent.",
@@ -27,21 +30,21 @@ function Pregame() {
 
     useEffect(() => {
       setTimeout(() => {
-        document.getElementById("btu").classList.add("brief-underline-go");
+        setBtuGo(true); // Show the underline
       }, 500)
       setTimeout(() => {
-        document.getElementById("bt").classList.add("brief-go");
-        document.getElementById("btt").classList.add("brief-txt");
-        document.getElementById("btu").classList.add("brief-underline-hide");
+        setBriefGo(true); // Hide the brief transitioner
+        // document.getElementById("btt").classList.add("brief-txt");
+        // document.getElementById("btu").classList.add("brief-underline-hide");
       }, 2000)
-    }, );
+    }, []);
     
 
     return (
         <div className="container tutorial-container">
-          <div id="bt" className="brief-transitioner">
-            <h1 id="btt" className="brief-transitioner-text"> Prepare to Play! </h1>
-            <div id="btu" className="brief-transitioner-underline"/>
+          <div className={`brief-transitioner ${briefGo ? 'brief-go' : ''}`}>
+            <h1 className="brief-transitioner-text"> Prepare to Play! </h1>
+            <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
           </div>
           <div className='survey-shadow-container'>
           <h2 className="brief-subtitle">{terms[termsIndex]}</h2>

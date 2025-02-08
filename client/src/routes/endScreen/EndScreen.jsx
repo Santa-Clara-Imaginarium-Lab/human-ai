@@ -16,8 +16,8 @@ const EndScreen = () => {
     // Fill in missing rounds with empty strings
 
     for (let i = MAX_ROUNDS; i < MAX_POSSIBLE_ROUNDS; i++) {
-        aiChoices.push('');
-        userChoices.push('');
+        aiChoices.push('X');
+        userChoices.push('X');
     }
 
     const chatbotScoreInt = parseInt(totalChatbotScore);
@@ -83,8 +83,8 @@ const EndScreen = () => {
                         <div className="right-side">
                             <div className="grid-container">
                                 {allChoices.map((choice, index) => (
-                                    <div className="cell" key={index}>
-                                        {choice}
+                                    <div className={`cell ${choice === 'X' ? 'unplayed' : ''}`} key={index}>
+                                        {choice === 'X' ? '✖' : choice}
                                     </div>
                                 ))}
                                 {/* Vertical dividers */}

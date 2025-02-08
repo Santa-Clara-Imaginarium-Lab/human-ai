@@ -22,7 +22,7 @@ function DemographicQuestion3() {
 
       const freeResponseNum = Number(freeResponse);
 
-      if (isNaN(freeResponseNum) || !Number.isInteger(freeResponseNum) || freeResponseNum < 0) {
+      if (isNaN(freeResponseNum) || !Number.isInteger(freeResponseNum) || freeResponseNum < 0 || freeResponseNum > 120) {
         setShowError2(true);
         setShowError(false); // Hide other error message if it is shown
         return;

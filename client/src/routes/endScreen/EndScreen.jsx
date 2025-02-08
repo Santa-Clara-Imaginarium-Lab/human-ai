@@ -30,9 +30,11 @@ const EndScreen = () => {
     const navigate = useNavigate();
     
     const handleClick = () => {
-        if(localStorage.getItem("isResearchMode") === "true")
+        if(sessionStorage.getItem("isResearchMode") === "true"){
             navigate('/debrief'); 
-        else navigate('/complete'); 
+        } else {
+            navigate('/complete');
+        }
     }
 
     useEffect(() => {

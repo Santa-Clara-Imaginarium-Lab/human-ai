@@ -7,7 +7,7 @@ function DemographicQuestion3() {
     const [showError, setShowError] = useState(false);
     const [showError2, setShowError2] = useState(false);
     const [freeResponse, setFreeResponse] = useState(''); // State for free response input
-    const userId = localStorage.getItem('userId');
+    const userId = sessionStorage.getItem('userId');
     
     const handleFreeResponseChange = (event) => {
       setFreeResponse(event.target.value); // Update free response state

@@ -6,7 +6,7 @@ import './Survey.css';
 function Survey() {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const userId = localStorage.getItem('userId');
+  const userId = sessionStorage.getItem('userId');
   const submitAttempted = useRef(false);
 
   const [briefGo, setBriefGo] = useState(false);
@@ -37,7 +37,7 @@ function Survey() {
             }));
 
             const gameScoreData = {
-                user_id: userId, // Use actual user ID from localStorage
+                user_id: userId, // Use actual user ID from sessionStorage
                 personality: currentPersonality,
                 rounds: rounds
             };

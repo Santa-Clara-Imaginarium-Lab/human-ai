@@ -25,7 +25,7 @@ function Login({changeTheme, changePersonality}) {
       }
 
       login(userId); // Store userId in context
-      localStorage.setItem('isResearchMode', true); // Enable data logging in future files
+      sessionStorage.setItem('isResearchMode', true); // Enable data logging in future files
       navigate('/brief');
     } else {
       alert('Please enter a valid ID');

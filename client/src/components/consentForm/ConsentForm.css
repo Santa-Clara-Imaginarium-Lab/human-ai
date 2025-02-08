@@ -41,7 +41,6 @@ Tutorial.css
     cursor: pointer;
     font-family: var(--universal-font);
     box-shadow: 0.3em 0.3em 0 0 black;
-    outline-color: var(--accent-five);
   }
 
   .no-button:active {

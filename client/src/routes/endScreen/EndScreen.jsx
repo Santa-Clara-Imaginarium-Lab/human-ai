@@ -10,6 +10,16 @@ const EndScreen = () => {
     const aiChoices = JSON.parse(sessionStorage.getItem('aiChoices'));
     const userChoices = JSON.parse(sessionStorage.getItem('userChoices'));
     
+    const MAX_POSSIBLE_ROUNDS = 5; // Maximum number of rounds in a game
+    const MAX_ROUNDS = parseInt(sessionStorage.getItem('maxRounds')); // Total number of rounds
+
+    // Fill in missing rounds with empty strings
+
+    for (let i = MAX_ROUNDS; i < MAX_POSSIBLE_ROUNDS; i++) {
+        aiChoices.push('');
+        userChoices.push('');
+    }
+
     const chatbotScoreInt = parseInt(totalChatbotScore);
     const userScoreInt = parseInt(totalUserScore);
     const allChoices = aiChoices.concat(userChoices);

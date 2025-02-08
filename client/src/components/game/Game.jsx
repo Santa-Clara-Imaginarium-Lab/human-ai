@@ -122,6 +122,9 @@ function Game() {
 
   const handleLockIn = async () => {
     if (isRoundOver) return; // Prevent further gameplay if the game is over
+
+    if (userDecision === '') return; // Do nothing if user hasn't made a decision
+
     const aiChoice = getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
 

@@ -1,9 +1,9 @@
-import './endScreen.css';
+import './chatbotArchetype.css';
 import formattedPersonalities from '../../constants/formattedPersonalities';'../../constants/formattedPersonalities'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-const EndScreen = () => {
+const ChatbotArchetype = () => {
     const totalChatbotScore = sessionStorage.getItem('aiScore') || '?';
     const totalUserScore = sessionStorage.getItem('userScore') || '?';
     const personality = sessionStorage.getItem('personality');
@@ -31,14 +31,10 @@ const EndScreen = () => {
     
     const handleClick = () => {
         if(sessionStorage.getItem("isResearchMode") === "true"){
-            navigate('/chatbot-archetype'); 
+            navigate('/debrief'); 
         } else {
             navigate('/complete');
         }
-    }
-
-    const handlePersonalityClick = () => {
-        navigate('/chatbot-archetype');
     }
 
     useEffect(() => {
@@ -63,7 +59,7 @@ const EndScreen = () => {
             <div className="results-container">
                 <div className="top-half">
                     <div className="chatbot-results">
-                        <h2>Chatbot</h2>
+                        <h2>Role Model</h2>
                         <p>{totalChatbotScore}</p>
                     </div>
                     <div className="user-results">
@@ -79,10 +75,7 @@ const EndScreen = () => {
                     </div>
                 </div>
                 <div className="bottom-half">
-                    <div className="personality"
-                        onClick={handlePersonalityClick}
-                        style={{cursor: 'pointer'}}
-                    >
+                    <div className="personality">
                         <h2>{formattedPersonalities[personality]}</h2>
                         <p>Click here to learn more about this personality</p>
                     </div>
@@ -116,4 +109,4 @@ const EndScreen = () => {
     );
 }
 
-export default EndScreen;
+export default ChatbotArchetype;

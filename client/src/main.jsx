@@ -30,6 +30,7 @@ import DemographicQuestion3 from './components/demographicQuestions/DemographicQ
 import DemographicQuestion4 from './components/demographicQuestions/DemographicQuestion4.jsx';
 import Pregame from './components/pregame/Pregame.jsx'
 import EndScreen from './routes/endScreen/EndScreen.jsx'
+import ChatbotArchetype from './components/chatbotArchetype/ChatbotArchetype.jsx'
 import Debrief from './components/Debrief/Debrief.jsx';
 import Complete from './components/Complete/Complete.jsx';
 
@@ -192,6 +193,10 @@ function MainApp() {
         {
           path: "/end-screen",
           element: <EndScreen />,
+        },
+        {
+          path: "/chatbot-archetype",
+          element: <ChatbotArchetype />,
         },
         {
           path: "/debrief",

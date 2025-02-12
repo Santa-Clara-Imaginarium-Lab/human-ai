@@ -81,14 +81,14 @@ const Complete = ({changeTheme, changePersonality}) => {
                     Play Again!
                 </button>
                 <button
-                    className={`play-button ${localStorage.getItem("isResearchMode")  === "true" ? "hidden" : "visible"}`}
+                    className={`play-button ${sessionStorage.getItem("isResearchMode")  === "true" ? "hidden" : "visible"}`}
                     onClick={handleSecretsClick}
                     onMouseEnter={updateArrowPosition}
                     onMouseLeave={hideArrow}
                 >
                     Secrets
                 </button>
-                {console.log("Button class:", localStorage.getItem("isResearchMode") === "true" ? "hidden" : "visible")}
+                {console.log("Button class:", sessionStorage.getItem("isResearchMode") === "true" ? "hidden" : "visible")}
             </div>
         </div>
     );

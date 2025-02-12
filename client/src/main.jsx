@@ -46,18 +46,18 @@ import PreHumanAI1 from './components/priorExperienceAI/PreHumanAI1.jsx';
 import PreHumanAI2 from './components/priorExperienceAI/PreHumanAI2.jsx';
 
 function MainApp() {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'black-white-theme-4-2');
-  const [personality, setPersonality] = useState(localStorage.getItem('forcedPersonality') || 'random');
+  const [theme, setTheme] = useState(sessionStorage.getItem('theme') || 'black-white-theme-4-2');
+  const [personality, setPersonality] = useState(sessionStorage.getItem('forcedPersonality') || 'random');
 
   useEffect(() => {
     // Apply the theme to the document
     document.documentElement.className = theme;
-    localStorage.setItem('theme', theme); // Persist theme in localStorage
+    sessionStorage.setItem('theme', theme); // Persist theme in sessionStorage
   }, [theme]);
 
   useEffect(() => {
     // Apply personality changes
-    localStorage.setItem('forcedPersonality', personality); // Persist theme in localStorage
+    sessionStorage.setItem('forcedPersonality', personality); // Persist theme in sessionStorage
   }, [personality]);
 
   const router = createBrowserRouter([

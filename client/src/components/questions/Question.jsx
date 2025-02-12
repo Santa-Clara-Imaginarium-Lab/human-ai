@@ -8,7 +8,7 @@ function Question() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState('');
   const [showError, setShowError] = useState(false);
-  const userId = localStorage.getItem('userId');
+  const userId = sessionStorage.getItem('userId');
   const navigate = useNavigate();
 
   const handleOptionChange = (event) => {

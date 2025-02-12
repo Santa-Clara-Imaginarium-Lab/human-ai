@@ -36,7 +36,7 @@ function PreTXAI2() {
     setError('');
 
     // Prepare data to send
-    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+    const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
     const data = {
         userId,
         responses: Object.entries(responses).map(([statementIndex, selectedOption]) => ({

@@ -230,6 +230,11 @@
     border-radius: 15px;
 }
 
+.unplayed {
+    font-size: 50px;
+    font-weight: bold;
+}
+
 .vertical-divider,
 .horizontal-divider {
     position: absolute;

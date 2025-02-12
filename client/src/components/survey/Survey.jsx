@@ -6,8 +6,11 @@ import './Survey.css';
 function Survey() {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const userId = localStorage.getItem('userId');
+  const userId = sessionStorage.getItem('userId');
   const submitAttempted = useRef(false);
+
+  const [briefGo, setBriefGo] = useState(false);
+    const [btuGo, setBtuGo] = useState(false);
 
   useEffect(() => {
     const gameLog1Info = JSON.parse(sessionStorage.getItem('gameLog1'));
@@ -34,7 +37,7 @@ function Survey() {
             }));
 
             const gameScoreData = {
-                user_id: userId, // Use actual user ID from localStorage
+                user_id: userId, // Use actual user ID from sessionStorage
                 personality: currentPersonality,
                 rounds: rounds
             };
@@ -81,20 +84,20 @@ function Survey() {
 
       useEffect(() => {
         setTimeout(() => {
-          document.getElementById("btu").classList.add("brief-underline-go");
+          setBtuGo(true); // Show the underline
         }, 500)
         setTimeout(() => {
-          document.getElementById("bt").classList.add("brief-go");
-          document.getElementById("btt").classList.add("brief-txt");
-          document.getElementById("btu").classList.add("brief-underline-hide");
+          setBriefGo(true); // Hide the brief transitioner
+          // document.getElementById("btt").classList.add("brief-txt");
+          // document.getElementById("btu").classList.add("brief-underline-hide");
         }, 2000)
-      }, );
+      }, []);
 
   return (
     <div className="container survey-container">
-        <div id="bt" className="brief-transitioner">
-            <h1 id="btt" className="brief-transitioner-text"> Post-Game Survey </h1>
-            <div id="btu" className="brief-transitioner-underline"/>
+        <div className={`brief-transitioner ${briefGo ? 'brief-go' : ''}`}>
+            <h1 className="brief-transitioner-text"> Post-Game Survey </h1>
+            <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
         </div>
       <div className="survey-shadow-container">
       <h2 className="survey-subtitle">Please reflect on the chatbot you just finished interacting with.</h2>

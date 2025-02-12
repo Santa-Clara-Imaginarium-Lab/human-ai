@@ -18,7 +18,7 @@ function PreHumanAI1() {
         return;
       }
       // Save the selected option to the database
-      const userId = localStorage.getItem('userId'); // Get userId from local storage
+      const userId = sessionStorage.getItem('userId'); // Get userId from sessionStorage
       await fetch(`${import.meta.env.VITE_API_URL}/api/prior-experience-ai`, {
         method: 'POST',
         headers: {

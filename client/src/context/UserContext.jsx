@@ -4,16 +4,16 @@ const UserContext = createContext();
 
 export function UserProvider({ children }) {
     const [userId, setuserId] = useState(() => {
-        // Initialize from localStorage if available
-        return localStorage.getItem('userId') || null;
+        // Initialize from sessionStorage if available
+        return sessionStorage.getItem('userId') || null;
     });
 
-    // Update localStorage whenever userId changes
+    // Update sessionStorage whenever userId changes
     useEffect(() => {
         if (userId) {
-            localStorage.setItem('userId', userId);
+            sessionStorage.setItem('userId', userId);
         } else {
-            localStorage.removeItem('userId');
+            sessionStorage.removeItem('userId');
         }
     }, [userId]);
 

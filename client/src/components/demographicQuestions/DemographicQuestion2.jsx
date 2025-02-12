@@ -7,7 +7,7 @@ function DemographicQuestion2() {
     const [selectedOption, setSelectedOption] = useState('');
     const [showError, setShowError] = useState(false);
     const [showError2, setShowError2] = useState(false);
-    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+    const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
 
     const handleOptionChange = (event) => {
       const value = event.target.value;

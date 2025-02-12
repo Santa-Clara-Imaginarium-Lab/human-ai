@@ -16,7 +16,7 @@ function PreHumanAI2() {
         setShowError(true);
         return;
       }
-      const userId = localStorage.getItem('userId'); // Get userId from local storage
+      const userId = sessionStorage.getItem('userId'); // Get userId from sessionStorage
 
       // Update the existing entry in the database
       await fetch(`${import.meta.env.VITE_API_URL}/api/prior-experience-ai`, {

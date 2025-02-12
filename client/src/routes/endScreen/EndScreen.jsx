@@ -1,7 +1,7 @@
 import './endScreen.css';
 import formattedPersonalities from '../../constants/formattedPersonalities';'../../constants/formattedPersonalities'
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const EndScreen = () => {
     const totalChatbotScore = sessionStorage.getItem('aiScore') || '?';
@@ -10,6 +10,19 @@ const EndScreen = () => {
     const aiChoices = JSON.parse(sessionStorage.getItem('aiChoices'));
     const userChoices = JSON.parse(sessionStorage.getItem('userChoices'));
     
+    const MAX_POSSIBLE_ROUNDS = 5; // Maximum number of rounds in a game
+    const MAX_ROUNDS = parseInt(sessionStorage.getItem('maxRounds')); // Total number of rounds
+
+    const [showBt, setShowBt] = useState(true);
+    const [briefGo, setBriefGo] = useState(false);
+    const [btuGo, setBtuGo] = useState(false);
+
+    // Fill in missing rounds with X's
+    for (let i = MAX_ROUNDS; i < MAX_POSSIBLE_ROUNDS; i++) {
+        aiChoices.push('X');
+        userChoices.push('X');
+    }
+
     const chatbotScoreInt = parseInt(totalChatbotScore);
     const userScoreInt = parseInt(totalUserScore);
     const allChoices = aiChoices.concat(userChoices);
@@ -17,29 +30,31 @@ const EndScreen = () => {
     const navigate = useNavigate();
     
     const handleClick = () => {
-        if(localStorage.getItem("isResearchMode")   === "true")
+        if(sessionStorage.getItem("isResearchMode") === "true"){
             navigate('/debrief'); 
-        else navigate('/complete'); 
+        } else {
+            navigate('/complete');
+        }
     }
 
     useEffect(() => {
-    setTimeout(() => {
-        document.getElementById("btu").classList.add("brief-underline-go");
-    }, 500)
-    setTimeout(() => {
-        document.getElementById("bt").classList.add("brief-go");
-        document.getElementById("btt").classList.add("brief-txt");
-        document.getElementById("btu").classList.add("brief-underline-hide");
-    }, 2000)
-    }, );
+        setTimeout(() => {
+            setBtuGo(true); // Show the underline
+        }, 500)
+        setTimeout(() => {
+            setBriefGo(true); // Hide the brief transitioner
+            setShowBt(false); // Hide the header
+        }, 2000)
+    }, []);
     
 
     return (
         <div className="container end-screen-container">
-            <div id="bt" className="brief-transitioner">
-                <h1 id="btt" className="brief-transitioner-text"> Results </h1>
-                <div id="btu" className="brief-transitioner-underline"/>
-          </div>
+            {showBt && <div className={`brief-transitioner ${briefGo ? 'brief-go' : ''}`}>
+                    <h1 className="brief-transitioner-text">Results</h1>
+                    <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
+                </div>
+            }
 
             <div className="results-container">
                 <div className="top-half">
@@ -73,8 +88,8 @@ const EndScreen = () => {
                         <div className="right-side">
                             <div className="grid-container">
                                 {allChoices.map((choice, index) => (
-                                    <div className="cell" key={index}>
-                                        {choice}
+                                    <div className={`cell ${choice === 'X' ? 'unplayed' : ''}`} key={index}>
+                                        {choice === 'X' ? '✖' : choice}
                                     </div>
                                 ))}
                                 {/* Vertical dividers */}

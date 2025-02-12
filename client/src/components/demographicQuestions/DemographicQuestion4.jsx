@@ -6,7 +6,7 @@ function DemographicQuestion4() {
     const navigate = useNavigate();
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [showError, setShowError] = useState(false);
-    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+    const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
 
     const handleOptionChange = (event) => {
       const value = event.target.value;

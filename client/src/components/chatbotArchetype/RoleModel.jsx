@@ -3,7 +3,7 @@ import formattedPersonalities from '../../constants/formattedPersonalities';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-const ChatbotArchetype = () => {
+const RoleModel = () => {
     const totalChatbotScore = sessionStorage.getItem('aiScore') || '?';
     const totalUserScore = sessionStorage.getItem('userScore') || '?';
     const personality = sessionStorage.getItem('personality');
@@ -73,4 +73,4 @@ const ChatbotArchetype = () => {
     );
 }
 
-export default ChatbotArchetype;
+export default RoleModel;

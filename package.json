@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "scripts": {
       "install-all": "npm install && npm install --prefix backend --legacy-peer-deps && npm install --prefix client --legacy-peer-deps",
-      "start-all": "concurrently --names \"backend,client\" \"npm run start --prefix backend\" \"npm run dev --prefix client\"",
+      "start-all": "concurrently --names \"backend,client\" \"node --env-file backend/.env backend/index.js --prefix backend\" \"npm run dev --prefix client\"",
       "build": "npm run build --prefix client",
-      "start-production": "concurrently --names \"backend,client\" \"npm run start --prefix backend\" \"npm run preview --prefix client\""
+      "start-production": "concurrently --names \"backend,client\" \"node --env-file backend/.env backend/index.js --prefix backend\" \"npm run preview --prefix client\""
     },
     "devDependencies": {
       "concurrently": "^7.0.0"

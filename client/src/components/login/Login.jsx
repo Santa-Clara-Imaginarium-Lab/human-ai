@@ -12,7 +12,7 @@ function Login({changeTheme, changePersonality}) {
     e.preventDefault();
     if (userId.trim()) {
       // Check if userId exists in the chats collection
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats?userId=${userId}`);
+      const response = await fetch(`https://human-ai-9bp5.onrender.com/api/chats?userId=${userId}`);
       if (!response.ok) {
         alert('Critical error: Unable to check user ID. Please try again later.');
         return;

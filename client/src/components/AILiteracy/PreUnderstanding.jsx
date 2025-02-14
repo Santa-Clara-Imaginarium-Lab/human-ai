@@ -50,7 +50,7 @@ function PreUnderstanding() {
     console.log("Data being sent:", data); // Log the data being sent
 
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ailiteracy`, {
+        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/ailiteracy`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

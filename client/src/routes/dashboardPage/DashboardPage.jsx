@@ -310,7 +310,7 @@ const DashboardPage = () => {
     queryKey: ["userChats", userId],
     queryFn: () => {
       if (!userId) return [];
-      return fetch(`${import.meta.env.VITE_API_URL}/api/userchats?userId=${userId}`)
+      return fetch(`https://human-ai-9bp5.onrender.com/api/userchats?userId=${userId}`)
         .then((res) => {
           if (!res.ok) {
             throw new Error('Network response was not ok');
@@ -344,7 +344,7 @@ const DashboardPage = () => {
         throw new Error('No userId found');
       }
       
-      return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
+      return fetch(`https://human-ai-9bp5.onrender.com/api/chats`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

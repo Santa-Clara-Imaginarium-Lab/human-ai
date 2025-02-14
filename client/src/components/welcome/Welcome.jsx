@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/UserContext";
-import "./welcome.css";
+import "./Welcome.css";
 import { use } from "react";
 
 const Welcome = ({changeTheme, changePersonality}) => {

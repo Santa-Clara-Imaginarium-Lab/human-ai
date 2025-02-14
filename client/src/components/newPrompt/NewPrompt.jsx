@@ -9,7 +9,9 @@ import { use } from 'react';
 
 
 const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
+  let n1 = Date.now();
   console.log("speedFlag: ", speedFlag);
+  console.log(data);
   //console.log(chatId);
   //console.log("PROMPT!!!");
   //console.log(builtPrompt)
@@ -25,21 +27,37 @@ const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
 
     const navigate = useNavigate();
 
-    const chat = model.startChat({
-        history: [
-            {
-              role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
-              parts: [{ text: builtPrompt}],
-            },
-            // {
-            //   role: "model",
-            //   parts: [{ text: "Great to meet you. What would you like to know?" }],
-            // },
-          ],
-          generationConfig:{
+    let arr = [
+      {
+        role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
+        parts: [{ text: builtPrompt}],
+      },
+      // {
+      //   role: "model",
+      //   parts: [{ text: "Great to meet you. What would you like to know?" }],
+      // },
+    ]
 
-          },
-        });
+
+    data.history.map((item) => {
+      let dupedItem = JSON.parse(JSON.stringify(item));
+      // console.log(dupedItem);
+      delete dupedItem._id; 
+
+      dupedItem.parts.map((item) => {
+        delete item._id;
+      });
+      arr.push(dupedItem)}
+  );
+
+    console.log("data for chat: ", arr)
+
+    const chat = model.startChat({
+      history: arr,
+        generationConfig:{
+
+        },
+      });
 
 /*
 UX Test prompt:
@@ -114,6 +132,9 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
                 aiData: {},
               });
               console.log("done mutating");
+              let n2 = Date.now();
+              console.log("mutation time taken in ms:")
+              console.log(n2 - n1);
             });
         },
         onError: (err) => {
@@ -133,11 +154,12 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
           let accumulatedText = "";
           for await (const chunk of result.stream) {
             const chunkText = chunk.text();
-            console.log(chunkText);
+            console.log("[chunk]",chunkText);
             accumulatedText += chunkText;
             setAnswer(accumulatedText);
           }
     
+          console.log("hit mutation");
           mutation.mutate();
           return accumulatedText;
         } catch (err) {
@@ -153,22 +175,15 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         e.target.reset();
     };
 
-    const hasRun = useRef(false);
 
-  useEffect(() => {
-    if (!hasRun.current && data) {
-      if (data?.history?.length === 1) {
-        add(data.history[0].parts[0].text, true);
-      }
-    }
-    hasRun.current = true;
-  }, [data]);
+  // useEffect(() => {
+  // }, [data]);
 
 
   const handleExit = async (e) => {
+    /*
     // e.preventDefault();
     console.log("exiting!");
-    transitionRef.current.classList.add('go');
     const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false)
     // const arrayEnd = (data.history.at(-1).parts[0]); 
     // console.log("arrayEnd ", arrayEnd);
@@ -176,18 +191,56 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 
     transitionRef.current.children[0].textContent = "Ready!";
     transitionRef.current.classList.add('col');
+    */ 
 
-    setTimeout(() => {
-      navigate('/game', {state: { builtPrompt, chatId, decision }});
-    }, 1000); 
+    navigate('/game', {state: { builtPrompt, chatId, data }});
   };
 
+  const hasRun = useRef(false);
+
     useEffect(() => {
-      console.log(speedFlag);
-      if (speedFlag) {
-        console.log("speedFlag is true");
-        handleExit();      
-      }}, [speedFlag]); // adding speedFlag dependency should no longer get 429 Too Many Requests
+        console.log("hasRun", hasRun);
+        if (!hasRun.current && data) {
+          console.log("test for data in INITIAL ADD", data);
+          console.log("test for data in INITIAL ADD", data?.history?.length);
+          if (data?.history?.length === 1) {
+            console.log("INITIAL ADD!");
+            add(data.history[0].parts[0].text, true);
+          }
+        }
+        if (!hasRun.current) {
+          transitionRef.current.classList.add('go'); 
+        }
+        hasRun.current = true;
+
+        if (speedFlag) { 
+          transitionRef.current.children[0].textContent = "Chatbot is thinking...";
+        }
+        else {
+          transitionRef.current.children[0].textContent = "Entering Chat...";
+        }
+
+        setTimeout(() => {
+          console.log("data after in INITIAL ADD", data);
+          transitionRef.current.classList.add('col');
+
+          if (!speedFlag){
+            setTimeout(() => {
+              transitionRef.current.classList.add('fade');
+              setTimeout(() => {
+                transitionRef.current.classList.remove('go');
+              }, 1000)
+            }, 1000)
+          }
+          else {
+            setTimeout(() => {
+              handleExit()
+            }, 1000)
+          }
+          }, 1000);
+    
+
+      }, [speedFlag, data]); // adding speedFlag dependency should no longer get 429 Too Many Requests
 
     return (
         <>

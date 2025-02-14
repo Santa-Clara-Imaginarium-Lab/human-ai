@@ -209,9 +209,7 @@ function MainApp() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <UserProvider>
       <MainApp/>
     </UserProvider>
-  </React.StrictMode>
 );

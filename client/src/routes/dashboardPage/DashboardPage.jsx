@@ -329,7 +329,8 @@ const DashboardPage = () => {
         const botPersonality = pickRandomPersonality();
         sessionStorage.setItem("personality", botPersonality);
         const builtPrompt = buildPrompt(botPersonality);
-        navigate(`/dashboard/chats/${mostRecentChat._id}`, { state: { builtPrompt, none: null } });
+        const speedFlag = true;
+        navigate(`/dashboard/chats/${mostRecentChat._id}`, { state: { builtPrompt, none: null, speedFlag } });
       } else {
         // No existing chats, create new one
         mutation.mutate("begin");

@@ -534,7 +534,7 @@ function Game() {
               </button>
               <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
                 WITHHOLD
-                <div>(deflect)</div>
+                <div>(defect)</div>
               </button>
               <br></br>
               <button className="lockin-button" onClick={() => handleLockIn()}>

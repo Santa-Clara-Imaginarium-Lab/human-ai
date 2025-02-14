@@ -105,7 +105,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
   
     const mutation = useMutation({
         mutationFn: () => {
-          return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
+          return fetch(`https://human-ai-9bp5.onrender.com/api/chats/${data._id}`, {
             method: "PUT",
             credentials: "include",
             headers: {

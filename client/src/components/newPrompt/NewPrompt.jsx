@@ -170,16 +170,9 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         e.target.reset();
     };
 
-    const hasRun = useRef(false);
 
-  useEffect(() => {
-    if (!hasRun.current && data) {
-      if (data?.history?.length === 1) {
-        add(data.history[0].parts[0].text, true);
-      }
-    }
-    hasRun.current = true;
-  }, [data]);
+  // useEffect(() => {
+  // }, [data]);
 
 
   const handleExit = async (e) => {
@@ -199,12 +192,26 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
     navigate('/game', {state: { builtPrompt, chatId, data }});
   };
 
+  const hasRun = useRef(false);
+
     useEffect(() => {
-      console.log(speedFlag);
-      if (speedFlag) {
-        console.log("speedFlag is true");
-        handleExit();      
-      }}, [speedFlag]); // adding speedFlag dependency should no longer get 429 Too Many Requests
+      async function run() {
+        if (!hasRun.current && data) {
+          if (data?.history?.length === 1) {
+            await add(data.history[0].parts[0].text, true);
+          }
+        }
+        hasRun.current = true;
+    
+        console.log(speedFlag);
+        if (speedFlag) {
+          console.log("speedFlag is true");
+          handleExit();      
+        }
+      }
+
+      run();
+      }, [speedFlag]); // adding speedFlag dependency should no longer get 429 Too Many Requests
 
     return (
         <>

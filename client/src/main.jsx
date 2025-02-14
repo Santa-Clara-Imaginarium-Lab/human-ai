@@ -30,8 +30,8 @@ import DemographicQuestion3 from './components/demographicQuestions/DemographicQ
 import DemographicQuestion4 from './components/demographicQuestions/DemographicQuestion4.jsx';
 import Pregame from './components/pregame/Pregame.jsx'
 import EndScreen from './routes/endScreen/EndScreen.jsx'
-import Debrief from './components/Debrief/Debrief.jsx';
-import Complete from './components/Complete/Complete.jsx';
+import Debrief from './components/debrief/Debrief.jsx';
+import Complete from './components/complete/Complete.jsx';
 
 import PreApply from './components/AILiteracy/PreApply.jsx';
 import PreUnderstanding from './components/AILiteracy/PreUnderstanding.jsx';

@@ -17,10 +17,29 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const [isAdmin, setAdmin] = useState(false); 
 
     // Handlers for navigation
-    const handlePlayClick = () => { // NOTE: now skips login! TODO: turn data collecting off.
+    const handlePlayClick = async () => { // NOTE: now skips login! TODO: turn data collecting off.
         sessionStorage.setItem('isResearchMode', false);
+
+        // random number between 0 and 10 million
+        const randomNumber = Math.floor(Math.random() * 10000000);
+        const guestID = "guest" + String(randomNumber);
+
+        // Check if userId exists in the chats collection
+        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/chats?userId=${guestID}`);
+        if (!response.ok) {
+            alert('Critical error: Unable to check user ID. Please try again later.');
+            return;
+        }
+
+        const chatData = await response.json();
+        if (chatData.length > 0) {
+            alert('Critical error: This user ID has already been used. Press Play again.');
+            return;
+        }
+        login(guestID);
+        navigate('/tutorial');
+
         
-        navigate('/tutorial'); 
     }
     const handleResearchModeClick = () => {
         sessionStorage.setItem('isResearchMode', true);

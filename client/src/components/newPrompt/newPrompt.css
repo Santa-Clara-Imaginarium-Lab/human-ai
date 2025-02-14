@@ -83,3 +83,21 @@
     background-color: var(--background-two);
   }
 }
+
+.fade {
+    /* left: -100%; */
+    /* transition: left 0.5s ease-in-out; */
+    opacity: 0;
+    animation: fadeOut 0.5s ease-in;
+    /* top: -100%; */
+    /* transition: top 0.5s ease-in; */
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  } 

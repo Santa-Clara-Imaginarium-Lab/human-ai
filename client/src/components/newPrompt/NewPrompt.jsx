@@ -184,7 +184,6 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
     /*
     // e.preventDefault();
     console.log("exiting!");
-    transitionRef.current.classList.add('go');
     const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false)
     // const arrayEnd = (data.history.at(-1).parts[0]); 
     // console.log("arrayEnd ", arrayEnd);
@@ -200,30 +199,45 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
   const hasRun = useRef(false);
 
     useEffect(() => {
-      async function run() {
+        console.log("hasRun", hasRun);
         if (!hasRun.current && data) {
           console.log("test for data in INITIAL ADD", data);
           console.log("test for data in INITIAL ADD", data?.history?.length);
           if (data?.history?.length === 1) {
             console.log("INITIAL ADD!");
-            await add(data.history[0].parts[0].text, true);
+            add(data.history[0].parts[0].text, true);
           }
         }
         hasRun.current = true;
+        transitionRef.current.classList.add('go'); 
+
+        if (speedFlag) { 
+          transitionRef.current.children[0].textContent = "Chatbot is thinking...";
+        }
+        else {
+          transitionRef.current.children[0].textContent = "Entering Chat...";
+        }
+
         setTimeout(() => {
           console.log("data after in INITIAL ADD", data);
-    
-          console.log(speedFlag);
-          if (speedFlag) {
-            console.log("speedFlag is true");
-            handleExit();      
+          transitionRef.current.classList.add('col');
+
+          if (!speedFlag){
+            setTimeout(() => {
+              transitionRef.current.classList.add('fade');
+              setTimeout(() => {
+                transitionRef.current.classList.remove('go');
+              }, 1000)
+            }, 1000)
+          }
+          else {
+            setTimeout(() => {
+              handleExit()
+            }, 1000)
           }
           }, 1000);
     
 
-      }
-
-      run();
       }, [speedFlag, data]); // adding speedFlag dependency should no longer get 429 Too Many Requests
 
     return (

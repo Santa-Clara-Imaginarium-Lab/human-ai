@@ -140,6 +140,8 @@ function Game() {
         },
       });
 
+    // MUTATION IS OK HERE, BECAUSE THERE IS AN ACTION REQUIRED BY USER: CONTINUE ON
+    // WILL GIVE THE FUNCTION THE ~100MS NECESSARY TO DO ITS WORK
     const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false, chat)
     console.log("<<BOT'S DECISION STATEMENT>> ", decision);
 
@@ -546,11 +548,11 @@ function Game() {
           )}
         </div>
       </div>
-      <div>
+      { !isRoundOver && <div>
         <button className="proceed-chat" onClick={() => handleChatNavigation()}>
         Go to Chat
         </button>
-      </div>
+      </div>}
     </div>
   );
 }

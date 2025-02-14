@@ -208,8 +208,10 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
             add(data.history[0].parts[0].text, true);
           }
         }
+        if (!hasRun.current) {
+          transitionRef.current.classList.add('go'); 
+        }
         hasRun.current = true;
-        transitionRef.current.classList.add('go'); 
 
         if (speedFlag) { 
           transitionRef.current.children[0].textContent = "Chatbot is thinking...";

@@ -126,7 +126,7 @@
 
 
   .proceed-chat {
-    margin: 100px;
+    margin: 0px;
     background-color: var(--accent-three);
     color: white;
     border: none;

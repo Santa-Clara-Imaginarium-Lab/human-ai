@@ -76,7 +76,7 @@ function Game() {
 
     const add = async (text, isInitial, chat) => {
       console.log("invoke add");
-      if (!isInitial) console.log('setQuestion(text);');
+      if (!isInitial) setQuestion(text);
   
       console.log(text);
       try {
@@ -97,6 +97,9 @@ function Game() {
         console.log(err);
       }
     }; 
+
+
+    console.log(data);
 
 
   // Function to extrapolate AI's response

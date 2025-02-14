@@ -9,6 +9,7 @@ import { use } from 'react';
 
 
 const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
+  let n1 = Date.now();
   console.log("speedFlag: ", speedFlag);
   console.log(data);
   //console.log(chatId);
@@ -131,6 +132,9 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
                 aiData: {},
               });
               console.log("done mutating");
+              let n2 = Date.now();
+              console.log("mutation time taken in ms:")
+              console.log(n2 - n1);
             });
         },
         onError: (err) => {
@@ -155,6 +159,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
             setAnswer(accumulatedText);
           }
     
+          console.log("hit mutation");
           mutation.mutate();
           return accumulatedText;
         } catch (err) {
@@ -197,21 +202,29 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
     useEffect(() => {
       async function run() {
         if (!hasRun.current && data) {
+          console.log("test for data in INITIAL ADD", data);
+          console.log("test for data in INITIAL ADD", data?.history?.length);
           if (data?.history?.length === 1) {
+            console.log("INITIAL ADD!");
             await add(data.history[0].parts[0].text, true);
           }
         }
         hasRun.current = true;
+        setTimeout(() => {
+          console.log("data after in INITIAL ADD", data);
     
-        console.log(speedFlag);
-        if (speedFlag) {
-          console.log("speedFlag is true");
-          handleExit();      
-        }
+          console.log(speedFlag);
+          if (speedFlag) {
+            console.log("speedFlag is true");
+            handleExit();      
+          }
+          }, 1000);
+    
+
       }
 
       run();
-      }, [speedFlag]); // adding speedFlag dependency should no longer get 429 Too Many Requests
+      }, [speedFlag, data]); // adding speedFlag dependency should no longer get 429 Too Many Requests
 
     return (
         <>

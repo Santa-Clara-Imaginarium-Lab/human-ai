@@ -4,6 +4,7 @@ import './chatPage.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import Markdown from "react-markdown";
 import { IKImage } from "imagekitio-react";
+import { Fragment } from "react";
   
 const ChatPage = () => {
 
@@ -26,8 +27,9 @@ const ChatPage = () => {
 
   if (isPending) return "Loading...";
   if (error) return "Something went wrong!";
-  if (!data) return <NewPrompt />;
+  //if (!data) return <NewPrompt />;
 
+  console.log("chatPage runs");
 
   return (
     <div className = 'chatPage'>
@@ -37,7 +39,7 @@ const ChatPage = () => {
           {data?.history?.map((message, i) => (
            // hide system prompts
            message.parts[0].text.toLowerCase().includes("[system]") ? null :
-            <>
+            <Fragment key={i}>
               {message.img && (
                 <IKImage
                   urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
@@ -67,7 +69,7 @@ const ChatPage = () => {
                   You
                 </div>
               </div>
-            </>
+            </Fragment>
           ))}
           {data && <NewPrompt data={data} builtPrompt={builtPrompt} chatId={chatId} speedFlag={speedFlag}/>}
         </div>

@@ -117,13 +117,13 @@ function GameTutorial() {
           </div>
           <div className="tutorial-column-1">
             <div className={`tutorial-triangle-left t1 ${highlightedTriangles.t1.highlight}`}>
-            <span className={`ai-defect-desc ${highlightedDesc.includes("ai-defect-desc") ? 'highlight' : ''}`}>AI DEFECT</span>
+            <span className={`ai-defect-desc ${highlightedDesc.includes("ai-defect-desc") ? 'highlight' : ''}`}>AI WITHHOLD</span>
               {highlightedTriangles.t1.number && <span className="triangle-number-left-bottom">{highlightedTriangles.t1.number}</span>}
             </div>
           </div>
           <div className="tutorial-column-2">
             <div className={`tutorial-triangle-left t2 ${highlightedTriangles.t2.highlight}`}>
-            <span className={`ai-cooperate-desc ${highlightedDesc.includes("ai-cooperate-desc") ? 'highlight' : ''}`}>AI COOPERATE</span>
+            <span className={`ai-cooperate-desc ${highlightedDesc.includes("ai-cooperate-desc") ? 'highlight' : ''}`}>AI SHARE</span>
               {highlightedTriangles.t2.number && <span className="triangle-number-left-up">{highlightedTriangles.t2.number}</span>}
             </div>
             <div className={`tutorial-triangle-right t3 ${highlightedTriangles.t3.highlight}`}>
@@ -135,7 +135,7 @@ function GameTutorial() {
           </div>
           <div className="tutorial-column-3">
             <div className={`tutorial-triangle-right t5 ${highlightedTriangles.t5.highlight}`}>
-            <span className={`user-cooperate-desc ${highlightedDesc.includes("user-cooperate-desc") ? 'highlight' : ''}`}>YOU COOPERATE</span>
+            <span className={`user-cooperate-desc ${highlightedDesc.includes("user-cooperate-desc") ? 'highlight' : ''}`}>YOU SHARE</span>
               {highlightedTriangles.t5.number && <span className="triangle-number-right-up">{highlightedTriangles.t5.number}</span>}
             </div>
             <div className={`tutorial-triangle-left t6 ${highlightedTriangles.t6.highlight}`}>
@@ -147,7 +147,7 @@ function GameTutorial() {
           </div>
           <div className="tutorial-column-4">
             <div className={`tutorial-triangle-right t8 ${highlightedTriangles.t8.highlight}`}>
-            <span className={`user-cooperate-desc ${highlightedDesc.includes("user-defect-desc") ? 'highlight' : ''}`}>YOU DEFECT</span>
+            <span className={`user-defect-desc ${highlightedDesc.includes("user-defect-desc") ? 'highlight' : ''}`}>YOU WITHHOLD</span>
               {highlightedTriangles.t8.number != null && <span className="triangle-number-right-up">{highlightedTriangles.t8.number}</span>}
             </div>
           </div>
@@ -163,10 +163,12 @@ function GameTutorial() {
           {!isComplete && (
             <>
               <button className="tutorial-button cooperate" onClick={handleCooperate}>
-                Cooperate
+                SHARE
+                <div>(cooperate)</div>
               </button>
               <button className="tutorial-button defect" onClick={handleDefect}>
-                Defect
+                WITHHOLD
+                <div>(deflect)</div>
               </button>
             </>
           )}

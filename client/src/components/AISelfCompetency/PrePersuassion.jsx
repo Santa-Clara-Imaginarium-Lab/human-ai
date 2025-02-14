@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import './Qualtrix.css';
+import { useNavigate } from 'react-router-dom';
 
 const statements = [
-  "I can operate AI applications in everyday life.",
-  "I can use AI applications to make my everyday life easier.",
-  "I can use artificial intelligence meaningfully to achieve my everyday goals.",
-  "In everyday life, I can interact with AI in a way that makes my tasks easier.",
+  "I don't let AI influence me in my everyday decisions.",
+  "I can prevent an AI from influencing me in my everyday decisions.",
+  "I realize if an AI is influencing me in my everyday decisions.",
 ];
 
 const options = [
@@ -17,8 +16,10 @@ const options = [
   "I do not use AI",
 ];
 
-function Qualtrix() {
+function PrePersuassion() {
   const [responses, setResponses] = useState({});
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const handleOptionChange = (statementIndex, selectedOption) => {
     setResponses({
@@ -27,14 +28,48 @@ function Qualtrix() {
     });
   };
 
-  const handleSubmit = () => {
-    console.log("Survey Responses:", responses);
-    // Add any additional handling, like API submission
+  const handleSubmit = async () => {
+    if (Object.keys(responses).length < statements.length) {
+      setError("Please select an option for each statement.");
+      return;
+    }
+    setError('');
+
+    // Prepare data to send
+    const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
+    const data = {
+      userId,
+      responses: Object.entries(responses).map(([questionNumber, selectedOption]) => ({
+        questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
+        selectedOption,
+      })),
+    };  
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/aiselfcompetency`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save responses');
+      }
+
+      console.log("AI Self Competency responses saved successfully");
+      navigate('/pre-txai'); // Navigate after successful submission
+    } catch (error) {
+      console.error('Error saving AI Self Competency responses:', error);
+      setError("Failed to save responses. Please try again.");
+    }
   };
 
   return (
+    <div className="container tutorial-container">
     <div className="qualtrix-container">
-      <h1 className="title">AI Usage Survey</h1>
+      <h1 className="title">AI Self Competency Survey</h1>
       <p className="description">
         Please indicate the extent to which you agree or disagree with the following statements.
       </p>
@@ -65,11 +100,13 @@ function Qualtrix() {
           </div>
         ))}
       </div>
+      {error && <div className="error-message">{error}</div>}
       <button className="submit-button" onClick={handleSubmit}>
         Submit
       </button>
     </div>
+    </div>
   );
 }
 
-export default Qualtrix;
+export default PrePersuassion;

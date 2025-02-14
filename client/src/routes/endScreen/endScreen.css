@@ -21,7 +21,7 @@
     position: relative;
     z-index: 1;
     background-color: var(--accent-four);
-    padding: 5%;
+    padding: 5% 5% 2% 5%;
     border-radius: 50px;
     box-shadow: 15px 15px 0 0 #3E3B41; /* TO DO: change to variable */
 }
@@ -230,6 +230,11 @@
     border-radius: 15px;
 }
 
+.unplayed {
+    font-size: 50px;
+    font-weight: bold;
+}
+
 .vertical-divider,
 .horizontal-divider {
     position: absolute;
@@ -252,3 +257,22 @@
 
     /* left is set inline */
 }
+
+.yes-button, .no-button {
+    margin-top: 1em; 
+    padding: 0.5em 1.5em;
+    background-color: var(--button-one);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 black;
+  }
+
+  .no-button:active {
+    /* Simulate the button being pressed */
+    transform: translate(0.3em, 0.3em); /* Move the button down */
+    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+  }

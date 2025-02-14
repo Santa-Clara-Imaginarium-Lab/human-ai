@@ -12,6 +12,23 @@
     align-items: center;
   }
   
+  .ai-cooperate-desc {
+    position: relative;
+    top: -45px;
+    margin-left: 25px;
+    display: inline-block; 
+    transform: rotate(-135deg);  
+    transform-origin: center; 
+  }
+  .user-cooperate-desc {
+    position: relative;
+    top: 20px;
+    margin-left: 25px;
+    display: inline-block;  
+    transform: rotate(-45deg);  
+    transform-origin: center;  
+  }
+  
   /* Horizontal layout for AI score, triangle grid, and User score */
   .horizontal-layout {
     margin-top: 100px;
@@ -222,7 +239,6 @@
   }
 
   .custom-alert {
-    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;

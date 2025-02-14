@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const surveyQuestionsSchema = new mongoose.Schema({
+const aiProblemSolvingSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true
@@ -12,8 +12,7 @@ const surveyQuestionsSchema = new mongoose.Schema({
     },
     selectedOption: {
       type: String,
-      required: true,
-      enum: ['Strongly Disagree', 'Somewhat Disagree', 'Neutral', 'Somewhat Agree', 'Strongly Agree']
+      required: true
     }
   }],
   timestamp: {
@@ -22,4 +21,4 @@ const surveyQuestionsSchema = new mongoose.Schema({
   }
 }, {versionKey: false});
 
-export default mongoose.models.PostTestSurveyResponse || mongoose.model("PostTestSurveyResponse", surveyQuestionsSchema);
+export default mongoose.models.AIProblemSolving || mongoose.model("AIProblemSolving", aiProblemSolvingSchema);

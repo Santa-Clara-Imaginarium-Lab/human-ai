@@ -9,6 +9,8 @@
 }
 
 
+
+
 .decision-tutorial-box {
   position: relative;
   padding: 15px; /* Add padding for better readability */
@@ -253,7 +255,7 @@
 
 .ai-cooperate-desc {
   position: absolute;
-  left: -120px; 
+  left: -116px; 
   bottom: 25px;
   color: var(--accent-three);
   font-size: 14px;
@@ -269,7 +271,7 @@
   color: var(--accent-three);
   font-size: 14px;
   white-space: nowrap;
-  transform: rotate(315deg);
+  transform: rotate(316deg);
   font-weight: bold;
 }
 
@@ -302,7 +304,7 @@ font-weight: bold;
   font-family: var(--universal-font);
   position: absolute;
   right: 0px;
-  top: 300px;
+  top: 0px;
   transform-origin: top right;
-  transform: translateY(150px);
 }
+

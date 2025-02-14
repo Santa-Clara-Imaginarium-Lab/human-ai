@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Game.css'; // Ensure this file contains the necessary CSS
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import model from '../../lib/gemini';
+
 
 function Game() {
   const navigate = useNavigate();
@@ -18,14 +21,125 @@ function Game() {
     "4. If you both withhold data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn +1 Caboodle."
 
   const location = useLocation();
-  const decision = location.state.decision;
+  const data = location.state.data;
+  const chat = location.state.chat;
+
+  const [question,setQuestion] = useState("");
+  const [answer,setAnswer] = useState("");
+  const [img, setImg] = useState({
+      isLoading: false,
+      error:"",
+      dbData:{},
+      aiData:{},
+  }) 
+
+
+  // Get AI responses here
+  const queryClient = useQueryClient();
+  
+  const mutation = useMutation({
+      mutationFn: () => {
+        return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question: question.length ? question : undefined,
+            answer,
+            img: img.dbData?.filePath || undefined,
+          }),
+        }).then((res) => res.json());
+      },
+      onSuccess: () => {
+        queryClient
+          .invalidateQueries({ queryKey: ["chat", data._id] })
+          .then(() => {
+            //formRef.current.reset();
+            setQuestion("");
+            setAnswer("");
+            setImg({
+              isLoading: false,
+              error: "",
+              dbData: {},
+              aiData: {},
+            });
+            console.log("done mutating");
+          });
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
+
+
+    const add = async (text, isInitial, chat) => {
+      console.log("invoke add");
+      if (!isInitial) console.log('setQuestion(text);');
+  
+      console.log(text);
+      try {
+        const result = await chat.sendMessageStream(
+          [text]
+        );
+        let accumulatedText = "";
+        for await (const chunk of result.stream) {
+          const chunkText = chunk.text();
+          console.log("[chunk]",chunkText);
+          accumulatedText += chunkText;
+          setAnswer(accumulatedText);
+        }
+  
+        mutation.mutate();
+        return accumulatedText;
+      } catch (err) {
+        console.log(err);
+      }
+    }; 
+
 
   // Function to extrapolate AI's response
   const chatId = location.state.chatId;
   const builtPrompt = location.state.builtPrompt;
 
   // Function to simulate AI's random response (Cooperate or Defect)
-  const getAiResponse = () => {
+  const getAiResponse = async () => {
+    let arr = [
+      {
+        role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
+        parts: [{ text: builtPrompt}],
+      },
+      // {
+      //   role: "model",
+      //   parts: [{ text: "Great to meet you. What would you like to know?" }],
+      // },
+    ]
+
+
+    data.history.map((item) => {
+      let dupedItem = JSON.parse(JSON.stringify(item));
+      // console.log(dupedItem);
+      delete dupedItem._id; 
+
+      dupedItem.parts.map((item) => {
+        delete item._id;
+      });
+      arr.push(dupedItem)}
+  );
+
+    console.log("data for chat: ", arr)
+
+    const chat = model.startChat({
+      history: arr,
+        generationConfig:{
+
+        },
+      });
+
+    const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false, chat)
+    console.log("<<BOT'S DECISION STATEMENT>> ", decision);
+
     const choices = ['Cooperate', 'Defect'];
     const rng = () => choices[Math.floor(Math.random() * choices.length)];
 
@@ -135,7 +249,7 @@ function Game() {
 
     if (userDecision === '') return; // Do nothing if user hasn't made a decision
 
-    const aiChoice = getAiResponse(); // Get AI's random response
+    const aiChoice = await getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
 
     addChoices(aiChoice, userDecision);

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import NewPrompt from '../../components/newPrompt/NewPrompt'
 import './chatPage.css'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Markdown from "react-markdown";
 import { IKImage } from "imagekitio-react";
   
@@ -27,6 +27,7 @@ const ChatPage = () => {
   if (isPending) return "Loading...";
   if (error) return "Something went wrong!";
   if (!data) return <NewPrompt />;
+
 
   return (
     <div className = 'chatPage'>

@@ -183,6 +183,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 
 
   const handleExit = async (e) => {
+    /*
     // e.preventDefault();
     console.log("exiting!");
     transitionRef.current.classList.add('go');
@@ -193,10 +194,9 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
 
     transitionRef.current.children[0].textContent = "Ready!";
     transitionRef.current.classList.add('col');
+    */ 
 
-    setTimeout(() => {
-      navigate('/game', {state: { builtPrompt, chatId, decision }});
-    }, 1000); 
+    navigate('/game', {state: { builtPrompt, chatId, data }});
   };
 
     useEffect(() => {

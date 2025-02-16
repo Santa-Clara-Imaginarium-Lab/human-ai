@@ -31,17 +31,33 @@ const EndScreen = () => {
     
     const handleClick = () => {
         if(sessionStorage.getItem("isResearchMode") === "true"){
-            navigate('/chatbot-archetype'); 
+            if (personality == "average") {
+                navigate('/average');
+            }
+    
+            else if (personality == "role model") {
+                navigate('/role-model');
+            }
+    
+            else if (personality == "control") {
+                navigate('/control');
+            }
+    
+            else if (personality == "reserved") {
+                navigate('/reserved');
+            }
+    
+            else {
+                navigate('/self-centered')
+            }
+
         } else {
             navigate('/complete');
         }
     }
 
-    const handlePersonalityClick = () => {
-        navigate('/chatbot-archetype');
-    }
-
     useEffect(() => {
+        console.log("peronality: ", personality);
         setTimeout(() => {
             setBtuGo(true); // Show the underline
         }, 500)
@@ -79,12 +95,8 @@ const EndScreen = () => {
                     </div>
                 </div>
                 <div className="bottom-half">
-                    <div className="personality"
-                        onClick={handlePersonalityClick}
-                        style={{cursor: 'pointer'}}
-                    >
+                    <div className="personality">
                         <h2>{formattedPersonalities[personality]}</h2>
-                        <p>Click here to learn more about this personality</p>
                     </div>
                     <div className="actions">
                         <div className="left-side">

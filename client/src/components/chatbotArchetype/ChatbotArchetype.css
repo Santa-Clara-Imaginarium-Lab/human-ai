@@ -1,4 +1,4 @@
-.end-screen-container {
+.end-screen-container1 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,25 +8,51 @@
 }
 
 .results-container {
-    background-color: var(--accent-four);
-    border-radius: 25px;
-    box-shadow: 10px 10px 0 0 #3E3B41;
-    width: 90%;
-    max-width: 800px;
-    padding: 2em;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
     position: relative;
+    z-index: 1;
+    background-color: var(--accent-four);
+    padding: 5% 5% 2% 5%;
+    border-radius: 50px;
+    box-shadow: 15px 15px 0 0 #3E3B41; /* TO DO: change to variable */
 }
 
-/* Speech bubble tail */
-.results-container::after {
+.results-container::after { /* Speech bubble tail */
     content: '';
     position: absolute;
-    bottom: -20px;
-    left: 20px;
-    border: 20px solid transparent;
+    top: 95%;
+    left: 10%;
+
+    /* No width/height so that triangle can be made purely from border */
+    width: 0; 
+    height: 0;
+
+    border: 100px solid transparent;
     border-top-color: var(--accent-four);
-    transform: rotate(45deg);
-    box-shadow: -5px 5px 0 #3E3B41;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 15px;
+}
+
+.results-container::before { /* Speech bubble tail shadow */
+    content: '';
+    position: absolute;
+    top: 100%; /* shadow must be below the speech bubble */
+    left: 10.5%; /* offset the shadow */
+
+    /* No width/height so that triangle can be made purely from border */
+    width: 0; 
+    height: 0;
+
+    border: 85px solid transparent; /* must be shorter than the tail */
+    border-top-color: #3E3B41; /* TO DO: change to variable */
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 15px;
 }
 
 /* Header section */
@@ -35,16 +61,6 @@
     align-items: center;
     gap: 1em;
     margin-bottom: 1em;
-}
-
-.back-button {
-    background: var(--accent-four);
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-    padding: 0.3em 0.6em;
-    border-radius: 10px;
-    box-shadow: 5px 5px 0 #3E3B41;
 }
 
 .title {
@@ -61,33 +77,146 @@
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.role-model-title {
-    font-size: 1.8em;
-    margin-bottom: 1em;
-    text-align: left;
-    color: #3E3B41;
+.top-half {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    gap: 10%;
 }
 
-.actions {
+.bottom-half {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     gap: 1em;
+}
+
+.chatbot-results1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Equal width */
+    min-width: 150px;
+}
+
+.chatbot-results1 > h2 {
+    font-size: 70px;
+    color: var(--accent-three);
+    position: relative;
+}
+
+.chatbot-results1 > h2::after {
+    content: '';
+    background-color: var(--c2);
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    left: -5%; /* Offset to center with text */
+    z-index: -1;
+    width: 110%;
+    height: 20px;
+}
+
+.chatbot-results > p,
+.user-results > p {
+    font-size: 125px;
+    color: #3E3B41; /* TO DO: change to variable */
+}
+
+.personality {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 0.5;
+    gap: 1em;
+    position: relative;
+    padding: 5%;
+    border: 8px solid var(--c2);
+    border-radius: 25px;
+}
+
+.personality::after { /* Sticker note tail */
+    content: '';
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+    width: 0;
+    height: 0;
+    border: 15px solid var(--c2);
+}
+
+.personality > h2 {
+    font-size: 40px;
+}
+
+.personality > p {
+    color: #3E3B41; /* TO DO: change to variable */
+}
+
+.win-banner1 {
+    position: absolute;
+    top: -40%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.win-text {
+    font-size: 80px;
+    color: var(--accent-four);
+    padding: 5% 2em;
+    background-color: #3E3B41;
+    border-radius: 50px;
+}
+
+.scores {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 40%;
+    height: 100%;
+    align-items: center;
 }
 
 /* Choices and rounds */
 .choices {
     background-color: var(--c2);
-    padding: 1em;
-    border-radius: 15px;
-    width: 40%;
-    box-shadow: 5px 5px 0 #3E3B41;
+    background-color: var(--accent-four);
+    border-style: solid;
+    border-width: 1cap;
+    border-color: var(--accent-five);
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    flex-grow: 1;
 }
 
 .choice-header {
     display: flex;
-    justify-content: space-between;
+    background-color: var(--accent-five);
+    flex-direction:row;
+    justify-content: space-evenly;
+    padding: 0 10%;
     font-weight: bold;
+    width: 100%; 
+    height: 60px;
     margin-bottom: 1em;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.choice-header p {
+    color: var(--accent-four);
+    font-size: 2em;
 }
 
 .rounds {
@@ -98,32 +227,57 @@
 
 .round {
     display: flex;
-    justify-content: space-between;
-    background-color: var(--accent-four);
+    justify-content: space-evenly;
+    background-color: var(--c2);
     padding: 0.5em;
-    border-radius: 10px;
+    border-radius: 20px;
     color: var(--c2);
     font-size: 1.1em;
+    margin: 0px 10px 10px 10px;
 }
 
-/* Description section */
-.description {
-    background-color: var(--accent-four);
-    padding: 1em;
-    border-radius: 15px;
-    color: var(--c2);
-    width: 55%;
-    box-shadow: 5px 5px 0 #3E3B41;
-}
-
-.description h3 {
+.round span {
+    color: var(--accent-four);
     font-size: 1.5em;
-    margin-bottom: 0.5em;
+    z-index: 4;
 }
 
-.description p {
+.actions1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5em;
+    flex: 1.5;
+    height: 100%;
+    margin-top: 10px;
+
+    border: 15px solid var(--c2);
+    border-radius: 25px;
+    padding: 2%;
+}
+
+.actions1 h3 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    text-align: left;
+}
+
+.actions1 p {
     line-height: 1.5em;
-    font-size: 1em;
+    font-size: 1.7em;
+    color: var(--accent-five);
+    text-align: left;
+}
+
+.vertical-divider1 {
+    position: relative;
+    background-color: var(--accent-four);
+    border-radius: 30px;
+    width: 8px; 
+    height: 70%;
+    vertical-align: top;
+    margin-right: 45%;
 }
 
 /* Button styling */

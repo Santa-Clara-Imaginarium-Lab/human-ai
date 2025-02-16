@@ -30,40 +30,47 @@ const Average = () => {
     }
 
     return (
-        <div className="container end-screen-container">
+        <div className="container end-screen-container1">
             <div className="results-container">
-                <div className="header">
-                    <button className="back-button">&lt;</button>
-                    <h1 className="title">Chatbot Archetype</h1>
+                <div className="win-banner1">
+                    <div className="win-text">Chatbot Archetype</div>
                 </div>
-
-                <div className="content">
-                    <h2 className="role-model-title">Average</h2>
-
-                    <div className="actions">
-                        <div className="choices">
-                            <div className="choice-header">
-                                <span>Cooperate</span>
-                                <span>Defect</span>
-                            </div>
-                            <div className="rounds">
-                                {aiChoices.map((choice, index) => (
-                                    <div className="round" key={index}>
-                                        <span className={choice === '✔' ? 'cooperate' : 'defect'}>
-                                            {choice === 'X' ? '✖' : choice}
-                                        </span>
-                                        <span>Round {index + 1}</span>
-                                    </div>
-                                ))}
+                <div className="bottom-half">
+                    <div className="scores">
+                        <div className="top-half">
+                            <div className="chatbot-results1">
+                                <h2>Average</h2>
                             </div>
                         </div>
-
-                        <div className="description">
+                        <div className="bottom-half">
+                            <div className="choices">
+                                <div className="choice-header">
+                                    <p>Cooperate</p>
+                                    <div className="vertical-divider1" style={{ left: "18.5%" }}></div>
+                                    <p>Defect</p>
+                                </div>
+                                <div className="rounds">
+                                    {aiChoices.map((choice, index) => (
+                                        <div className="round" key={index}>
+                                            <span>
+                                                {aiChoices[index] === 'Cooperate' ? '✔' : ''}
+                                            </span>
+                                            <span>Round {index + 1}</span>
+                                            <span>
+                                                {aiChoices[index] === 'Defect' ? '✔' : ''}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="actions1">
                             <h3>Description</h3>
                             <p>
-                                You played against the Role Model chatbot! This chatbot is ethical and considerate, responding in a thoughtful and fair way. It values honesty and cooperation, always aiming to do the right thing. It avoids extreme or selfish choices, making decisions that are predictable and focused on fairness.
+                                You played against the Average chatbot! This chatbot has a balanced personality, responding in a neutral and practical way. It doesn’t lean too strongly in any direction but engages in a straightforward and reasonable manner. Its decisions are predictable and fair, without extreme reactions. 
                             </p>
-                        </div>
                     </div>
                 </div>
 

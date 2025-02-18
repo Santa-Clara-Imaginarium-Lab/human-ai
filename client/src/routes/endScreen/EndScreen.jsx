@@ -96,6 +96,7 @@ const EndScreen = () => {
                 </div>
                 <div className="bottom-half">
                     <div className="personality">
+                        <h1>This Chatbot's Personality: </h1>
                         <h2>{formattedPersonalities[personality]}</h2>
                     </div>
                     <div className="actions">

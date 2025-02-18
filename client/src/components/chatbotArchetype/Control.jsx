@@ -70,7 +70,7 @@ const Control = () => {
                     <div className="actions1">
                             <h3>Description</h3>
                             <p>
-                                You played against the Control chatbot! This chatbot is Chat-GPT4 with no personality priming. Chat-GPT4 remains neutral, analytical, and adaptable, making decisions based on context rather than a predefined behavioral pattern. Its responses are the least predictable among the archetypes since they are not influenced by any set personality framework.
+                                You played against the Control chatbot! This chatbot is Google Gemini 1.5-Flash with no personality priming. Gemini remains neutral, analytical, and adaptable, making decisions based on context rather than a predefined behavioral pattern. Its responses are the least predictable among the archetypes since they are not influenced by any set personality framework.
                             </p>
                     </div>
                 </div>

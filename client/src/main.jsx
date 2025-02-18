@@ -36,8 +36,8 @@ import Control from './components/chatbotArchetype/Control.jsx'
 import SelfCentered from './components/chatbotArchetype/SelfCentered.jsx'
 import Reserved from './components/chatbotArchetype/Reserved.jsx'
 
-import Debrief from './components/Debrief/Debrief.jsx';
-import Complete from './components/Complete/Complete.jsx';
+import Debrief from './components/debrief/Debrief.jsx';
+import Complete from './components/complete/Complete.jsx';
 
 import PreApply from './components/AILiteracy/PreApply.jsx';
 import PreUnderstanding from './components/AILiteracy/PreUnderstanding.jsx';

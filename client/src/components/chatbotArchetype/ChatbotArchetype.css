@@ -290,6 +290,7 @@
     border-radius: 20px;
     font-size: 1.2em;
     cursor: pointer;
+    font-family: var(--universal-font);
     box-shadow: 5px 5px 0 #3E3B41;
 }
 

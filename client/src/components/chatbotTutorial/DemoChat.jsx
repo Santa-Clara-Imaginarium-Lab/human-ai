@@ -68,7 +68,7 @@ function DemoChat() {
             disabled
           />
           <button className={`send-button ${(tooltipIndex === 2 ? ' show' : '')}`} data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
-          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Continue</button>
+          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Go to Game</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import './dashboardLayout.css'
 import { Outlet } from "react-router-dom";
-import ChatList from '../../components/chatList/ChatList';
 
 const DashboardLayout = () => {
     return (

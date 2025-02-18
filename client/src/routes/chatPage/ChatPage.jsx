@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import NewPrompt from '../../components/newPrompt/NewPrompt'
 import './chatPage.css'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Markdown from "react-markdown";
 import { IKImage } from "imagekitio-react";
+import { Fragment } from "react";
   
 const ChatPage = () => {
 
@@ -19,14 +20,16 @@ const ChatPage = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`, {
+      fetch(`https://human-ai-9bp5.onrender.com/api/chats/${chatId}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
   if (error) return "Something went wrong!";
-  if (!data) return <NewPrompt />;
+  //if (!data) return <NewPrompt />;
+
+  console.log("chatPage runs");
 
   return (
     <div className = 'chatPage'>
@@ -36,7 +39,7 @@ const ChatPage = () => {
           {data?.history?.map((message, i) => (
            // hide system prompts
            message.parts[0].text.toLowerCase().includes("[system]") ? null :
-            <>
+            <Fragment key={i}>
               {message.img && (
                 <IKImage
                   urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
@@ -66,7 +69,7 @@ const ChatPage = () => {
                   You
                 </div>
               </div>
-            </>
+            </Fragment>
           ))}
           {data && <NewPrompt data={data} builtPrompt={builtPrompt} chatId={chatId} speedFlag={speedFlag}/>}
         </div>

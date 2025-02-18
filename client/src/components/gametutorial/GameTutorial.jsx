@@ -168,7 +168,7 @@ function GameTutorial() {
               </button>
               <button className="tutorial-button defect" onClick={handleDefect}>
                 WITHHOLD
-                <div>(deflect)</div>
+                <div>(defect)</div>
               </button>
             </>
           )}

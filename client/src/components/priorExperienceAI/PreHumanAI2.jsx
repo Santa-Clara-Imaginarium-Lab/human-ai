@@ -19,7 +19,7 @@ function PreHumanAI2() {
       const userId = sessionStorage.getItem('userId'); // Get userId from sessionStorage
 
       // Update the existing entry in the database
-      await fetch(`${import.meta.env.VITE_API_URL}/api/prior-experience-ai`, {
+      await fetch(`https://human-ai-9bp5.onrender.com/api/prior-experience-ai`, {
         method: 'PUT', // Changed from POST to PUT
         headers: {
           'Content-Type': 'application/json',

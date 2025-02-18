@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/UserContext";
-import "./complete.css";
+import "./Complete.css";
 import { use } from "react";
 
 const Complete = ({changeTheme, changePersonality}) => {

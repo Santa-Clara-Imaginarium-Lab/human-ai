@@ -16,9 +16,20 @@ import demographic from "./models/demographic.js";
 const port = 3000;
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173", // Allow local development
+  "https://human-ai.netlify.app" // Allow Netlify production site
+];
+
 app.use(cors({
-  origin:process.env.CLIENT_URL,
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS policy does not allow this origin!"));
+    }
+  },
+  credentials: true
 }));
 
 app.use(express.json());

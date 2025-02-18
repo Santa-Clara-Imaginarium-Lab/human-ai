@@ -1,4 +1,4 @@
-import './chatbotArchetype.css';
+import './ChatbotArchetype.css';
 import formattedPersonalities from '../../constants/formattedPersonalities';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';

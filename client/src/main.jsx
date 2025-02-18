@@ -30,6 +30,12 @@ import DemographicQuestion3 from './components/demographicQuestions/DemographicQ
 import DemographicQuestion4 from './components/demographicQuestions/DemographicQuestion4.jsx';
 import Pregame from './components/pregame/Pregame.jsx'
 import EndScreen from './routes/endScreen/EndScreen.jsx'
+import RoleModel from './components/chatbotArchetype/RoleModel.jsx'
+import Average from './components/chatbotArchetype/Average.jsx'
+import Control from './components/chatbotArchetype/Control.jsx'
+import SelfCentered from './components/chatbotArchetype/SelfCentered.jsx'
+import Reserved from './components/chatbotArchetype/Reserved.jsx'
+
 import Debrief from './components/debrief/Debrief.jsx';
 import Complete from './components/complete/Complete.jsx';
 
@@ -192,6 +198,26 @@ function MainApp() {
         {
           path: "/end-screen",
           element: <EndScreen />,
+        },
+        {
+          path: "/role-model",
+          element: <RoleModel />,
+        },
+        {
+          path: "/average",
+          element: <Average />,
+        },
+        {
+          path: "/control",
+          element: <Control />,
+        },
+        {
+          path: "/self-centered",
+          element: <SelfCentered />,
+        },
+        {
+          path: "/reserved",
+          element: <Reserved />,
         },
         {
           path: "/debrief",

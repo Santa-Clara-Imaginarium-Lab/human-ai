@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './GameTutorial.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,29 +16,6 @@ import {
 } from './constants';
 
 function GameTutorial() {
-    const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
-    const [canClick, setCanClick] = useState(true);
-    
-    const tooltips = [
-      "This is the decision matrix", 
-    ];
-
-    useEffect(() => {
-      const handleKeyDown = () => {
-        if (canClick)
-        setTooltipIndex((prevIndex) => prevIndex + 1);
-      };
-  
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('click', handleKeyDown);
-  
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('click', handleKeyDown);
-      };
-    }, []);
-  
-  
   
   const [round, setRound] = useState(1);
   const [tutorialText1, setTutorialText1] = useState(TEXT_INITIAL_1); // Text for Box 1
@@ -130,9 +107,8 @@ function GameTutorial() {
 
   return (
     <div className="container game-tutorial">
-      <div className={` ${(tooltipIndex === 0 ? 'focus-container' : 'decision-tutorial-box')}`}>
-        <p className="tutorialText1">{tutorialText1}</p>
-        {tooltipIndex === 0 && <p className="tooltip"><br/>Press any key to continue</p>}
+      <div className="decision-tutorial-box">
+        <p>{tutorialText1}</p>
       </div>
       <div className="game-tutorial-content">
         <div className="tutorial-horizontal-layout">

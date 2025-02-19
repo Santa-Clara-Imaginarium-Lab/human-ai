@@ -24,54 +24,8 @@
   text-align: center; /* Center-align the text */
   line-height: 1.5; /* Improve readability */
   width: 80%; /* Match the width of the container */
-  height: 20%; /* Match the height of the container */
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
   margin-bottom: 90px;
-  animation: changeWidth 2s ease-in-out;
-  animation: changeHeight 2s ease-in-out;
-}
-
-.tutorialtext1 {
-  vertical-align: middle;
-}
-
-/* need to fix this! */
-
-@keyframes changeWidth {
-  0% {
-    width: 75%;
-  }
-  100% {
-    width: 80%;
-  }
-}
-
-@keyframes changeHeight {
-  0% {
-    height: 75%;
-  }
-  50% {
-    height: 80%;
-  }
-  100% {
-    height: 100%;
-  }
-}
-
-.focus-container {
-  z-index: 1000;
-  background-color: white;
-  border-radius: 3em;
-  box-shadow: 10px 10px 0 0 var(--accent-one);
-  display: flex;
-  flex-direction: column;
-  align-items: center;  /* Center align content horizontally */
-  justify-content: center;  /* Center align content vertically */
-  padding: 40px 20px; /* Add padding for spacing */
-  position: absolute; /* Position context for the shadow */
-  width: 75%;
-  height: 75%;
-  font-size: 2em;
 }
 
 
@@ -352,94 +306,5 @@ font-weight: bold;
   right: 0px;
   top: 0px;
   transform-origin: top right;
-}
-
-/* MIGRATED FROM DEMOCHAT.CSS */
-/* Tooltip styles */
-[data-tooltip] {
-  position: relative;
-}
-
-[data-tooltip]::after { /* Tooltip text */
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 50%;
-  background-color: white;
-  color: var(--accent-three);
-  font-size: 0.9em;
-  font-family: var(--universal-font);
-  padding: 0.5em;
-  border-radius: 5px;
-  white-space: nowrap;
-  pointer-events: none; 
-  z-index: 100;
-  opacity: 1;
-  box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
-  /* animation: bob 1s infinite; */
-}
-
-[data-tooltip]::before { /* Tooltip arrow */
-  content: '';
-  position: absolute;
-  left: 50%;
-  border-width: 5px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent; 
-  z-index: 100;
-  /* animation: bob 1s infinite; */
-}
-
-/* Fading effects */
-[data-tooltip].show::after { /* Tooltip text */
-  animation: fade-in 1.0s, bob 1s infinite;
-  animation-fill-mode: forwards;
-}
-
-[data-tooltip].show::before { /* Tooltip arrow */
-  animation: fade-in 1.0s, bob 1s infinite;
-  animation-fill-mode: forwards;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes bob {
-  0%, 100% {
-    transform: translate(-50%, 0);
-  }
-  50% {
-    transform: translate(-50%, -0.5em);
-  }
-}
-
-.bubble[data-tooltip]::before {
-  top: -0.25em;
-}
-
-.bubble[data-tooltip]::after {
-  top: -3em;
-}
-
-.send-button[data-tooltip]::before {
-  top: -0.2em;
-}
-
-.send-button[data-tooltip]::after {
-  top: -2.95em;
 }
 

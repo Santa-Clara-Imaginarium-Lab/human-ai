@@ -20,21 +20,34 @@ function GameTutorial() {
     const [canClick, setCanClick] = useState(true);
     
     const tooltips = [
+      '',
       "This is the decision matrix", 
+      "It shows how much Caboodle each player gets, depending on what options are chosen.",
+      "Triangles pointing left indicate Caboodle for the AI.",
+      "Triangles pointing right indicate Caboodle for you.",
+      "This is how much Caboodle\nthe AI has...",
+      "And this is how much you have.",
     ];
 
     useEffect(() => {
-      const handleKeyDown = () => {
-        if (canClick)
-        setTooltipIndex((prevIndex) => prevIndex + 1);
+      const handleKeyDown = (event) => {
+        if (!(event.key === ' ')) return;
+        if (canClick) {
+          console.log("tooltipIndex:", tooltipIndex);
+          setCanClick(false);
+          setTooltipIndex((prevIndex) => prevIndex + 1);
+          setTimeout(() => {
+            setCanClick(true);
+          }, 1500)
+        }
       };
   
       document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('click', handleKeyDown);
+      // document.addEventListener('click', handleKeyDown);
   
       return () => {
         document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('click', handleKeyDown);
+        // document.removeEventListener('click', handleKeyDown);
       };
     }, []);
   
@@ -130,13 +143,16 @@ function GameTutorial() {
 
   return (
     <div className="container game-tutorial">
-      <div className={` ${(tooltipIndex === 0 ? 'focus-container' : 'decision-tutorial-box')}`}>
+      <div className={` ${(tooltipIndex === 0 ? 'focus-container' : 'decision-tutorial-box1')}`}>
         <p className="tutorialText1">{tutorialText1}</p>
-        {tooltipIndex === 0 && <p className="tooltip"><br/>Press any key to continue</p>}
       </div>
+      <div className={` ${(tooltipIndex < 7 ? 'hide' : tooltipIndex === 7 ? 'focus-container' : 'decision-tutorial-box2')}`}>
+        <p className="tutorialText2">{tutorialText2}</p>
+      </div>
+
       <div className="game-tutorial-content">
-        <div className="tutorial-horizontal-layout">
-          <div className="tutorial-ai-score">
+        <div className={`tutorial-horizontal-layout ${(tooltipIndex >= 1 && tooltipIndex <= 4 ? ' show' : '')}`} data-tooltip={tooltipIndex >= 1 && tooltipIndex <= 4 ? tooltips[tooltipIndex] : null}>
+          <div className={`tutorial-ai-score ${(tooltipIndex === 5 ? ' show' : '')}`} data-tooltip={tooltipIndex === 5 ? tooltips[tooltipIndex] : null}>
             <h2>AI's Score: <span className="tutorial-score-value">{aiScore}</span></h2>
           </div>
           <div className="tutorial-column-1">
@@ -175,12 +191,9 @@ function GameTutorial() {
               {highlightedTriangles.t8.number != null && <span className="triangle-number-right-up">{highlightedTriangles.t8.number}</span>}
             </div>
           </div>
-          <div className="tutorial-user-score">
+          <div className={`tutorial-user-score ${(tooltipIndex === 6 ? ' show' : '')}`} data-tooltip={tooltipIndex === 6 ? tooltips[tooltipIndex] : null}>
             <h2>Your Score: <span className="tutorial-score-value">{userScore}</span></h2>
           </div>
-        </div>
-        <div className="decision-tutorial-box2">
-          <p>{tutorialText2}</p>
         </div>
 
         <div className="tutorial-action">
@@ -206,6 +219,7 @@ function GameTutorial() {
           )}
         </div>
       </div>
+      <h className={canClick ? 'bottom-info-can' : 'bottom-info-wait'}>{canClick ? 'Press SPACEBAR to continue' : '...'}</h>
     </div>
   );
 }

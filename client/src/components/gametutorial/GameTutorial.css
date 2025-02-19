@@ -1,5 +1,5 @@
 /* GameTutorial.css */
-.tutorial-action{
+.tutorial-action {
   padding: 0px;
   margin-top: 0px;
 }
@@ -8,89 +8,152 @@
   background-color: var(--background-two);
 }
 
+.focus-container {
+  position: fixed;
+  
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 10px 10px 0 0 var(--accent-one);
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Center align content horizontally */
+  justify-content: center;  /* Center align content vertically */
+  padding: 40px; /* Add padding for spacing */
 
+  /* STYLES TO ANIMATE */
+  top: 25%;
+  width: 75%;
+  height: 50%;
+  font-size: 2em;
+  border-radius: 3em;
+}
 
+.decision-tutorial-box1 {
+  display: grid;
+  place-items: center;
 
-.decision-tutorial-box {
   position: relative;
   padding: 15px; /* Add padding for better readability */
   z-index: 1; /* Ensure it is above the shadow */
   background-color: white; /* Match the button's background */
   color: var(--accent-three); /* Match the text color */
   border: 0px; /* Border to define the box */
-  border-radius: 10px; /* Rounded corners */
-  font-size: 1.2em; /* Match the button font size */
   font-family: var(--universal-font);
   text-align: center; /* Center-align the text */
   line-height: 1.5; /* Improve readability */
-  width: 80%; /* Match the width of the container */
-  height: 20%; /* Match the height of the container */
+
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
-  margin-bottom: 90px;
-  animation: changeWidth 2s ease-in-out;
-  animation: changeHeight 2s ease-in-out;
+
+  /* STYLES TO ANIMATE */
+  top: -5%;
+  width: 80%;
+  height: fit-content; 
+  font-size: 1.2em;
+  border-radius: 20px;
+
+    /* APPLY ANIMATION */
+  animation: focusTransition1 1s ease-in-out;
+
+  /* transition: height 5s ease-in-out; */
 }
 
-.tutorialtext1 {
-  vertical-align: middle;
-}
-
-/* need to fix this! */
-
-@keyframes changeWidth {
+@keyframes focusTransition1 {
   0% {
+    position: absolute;
+    top: 25%;
     width: 75%;
+    height: 50%;
+    font-size: 2em;
+    border-radius: 3em;
   }
-  100% {
+  90% {
+    opacity: 0;
+    top: 5%;
     width: 80%;
+    height: 15%; 
+    /* font-size: 1.2em; */
+    border-radius: 20px;
   }
+  91% {
+    height: fit-content; 
+  }
+  95% {
+    opacity: 0;
+  }
+  100% { 
+    position: absolute;
+    opacity: 1;
+    top: 5%;
+    width: 80%;
+    height: fit-content; 
+    /* font-size: 1.2em; */
+    border-radius: 20px;
+    }
 }
-
-@keyframes changeHeight {
-  0% {
-    height: 75%;
-  }
-  50% {
-    height: 80%;
-  }
-  100% {
-    height: 100%;
-  }
-}
-
-.focus-container {
-  z-index: 1000;
-  background-color: white;
-  border-radius: 3em;
-  box-shadow: 10px 10px 0 0 var(--accent-one);
-  display: flex;
-  flex-direction: column;
-  align-items: center;  /* Center align content horizontally */
-  justify-content: center;  /* Center align content vertically */
-  padding: 40px 20px; /* Add padding for spacing */
-  position: absolute; /* Position context for the shadow */
-  width: 75%;
-  height: 75%;
-  font-size: 2em;
-}
-
 
 .decision-tutorial-box2 {
+  display: grid;
+  place-items: center;
+
+  position: relative;
+  margin: 20px;
+  padding: 15px; /* Add padding for better readability */
+  z-index: 1; /* Ensure it is above the shadow */
   background-color: white; /* Match the button's background */
   color: var(--accent-three); /* Match the text color */
   border: 0px; /* Border to define the box */
-  border-radius: 10px; /* Rounded corners */
-  padding: 15px; /* Add padding for better readability */
-  margin-top: 70px; /* Same margin as the original button */
-  font-size: 1.2em; /* Match the button font size */
   font-family: var(--universal-font);
   text-align: center; /* Center-align the text */
   line-height: 1.5; /* Improve readability */
-  width: 80%; /* Restrict width to fit neatly in the layout */
-  margin-bottom: 20px;
+
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
+
+  /* STYLES TO ANIMATE */
+  top: -5%;
+  width: 60%;
+  height: fit-content; 
+  font-size: 1.2em;
+  border-radius: 20px;
+
+    /* APPLY ANIMATION */
+  animation: focusTransition2 1s ease-in-out;
+
+  /* transition: height 5s ease-in-out; */
 }
 
+@keyframes focusTransition2 {
+  0% {
+    position: absolute;
+    top: 25%;
+    width: 75%;
+    height: 50%;
+    font-size: 2em;
+    border-radius: 3em;
+  }
+  90% {
+    opacity: 0;
+    top: 5%;
+    width: 60%;
+    height: 15%; 
+    /* font-size: 1.2em; */
+    border-radius: 20px;
+  }
+  91% {
+    height: fit-content; 
+  }
+  95% {
+    opacity: 0;
+  }
+  100% { 
+    position: absolute;
+    opacity: 1;
+    top: 15%;
+    width: 60%;
+    height: fit-content; 
+    /* font-size: 1.2em; */
+    border-radius: 20px;
+    }
+}
 
   .decision-tutorial-button {
     padding: 0.5em 2em;
@@ -114,6 +177,7 @@
     align-items: center; /* Vertically align the elements */
     justify-content: space-around; /* Add some space between the elements */
     width: 100%; /* Make sure it spans the entire width */
+    margin-top: 10%;
   }
 
   .tutorial-ai-score, .tutorial-user-score {
@@ -354,10 +418,77 @@ font-weight: bold;
   transform-origin: top right;
 }
 
+.bottom-info-can {
+  position: absolute;
+  bottom: 1%;
+  font-size: 2em;
+  animation: fade-flash 1.0s, mini-bob 0.5s infinite 2s;
+  animation-fill-mode: forwards; 
+}
+
+.bottom-info-wait {
+  position: absolute;
+  bottom: 1%;
+  font-size: 2em;
+  animation: fade-flash2 1.0s;
+}
+
+@keyframes fade-flash {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    transform: rotate(5deg);
+  }
+  50% {
+    bottom: 2%;
+  }
+  66% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    opacity: 1;
+    bottom: 1%;
+  }
+}
+
+@keyframes fade-flash2 {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    transform: rotate(5deg);
+  }
+  50% {
+    bottom: 2%;
+  }
+  66% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    opacity: 1;
+    bottom: 1%;
+  }
+}
+
+@keyframes mini-bob {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -0.25em);
+  }
+}
+
+
+
+
 /* MIGRATED FROM DEMOCHAT.CSS */
 /* Tooltip styles */
 [data-tooltip] {
   position: relative;
+  font-size: 1.2em; /* Tooltip font size here */
+  transition: width 1s ease-in-out;
 }
 
 [data-tooltip]::after { /* Tooltip text */
@@ -366,7 +497,6 @@ font-weight: bold;
   left: 50%;
   background-color: white;
   color: var(--accent-three);
-  font-size: 0.9em;
   font-family: var(--universal-font);
   padding: 0.5em;
   border-radius: 5px;
@@ -376,6 +506,8 @@ font-weight: bold;
   opacity: 1;
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
   /* animation: bob 1s infinite; */
+  min-width: 0;
+  transition: min-width 1s;
 }
 
 [data-tooltip]::before { /* Tooltip arrow */
@@ -427,19 +559,35 @@ font-weight: bold;
   }
 }
 
-.bubble[data-tooltip]::before {
-  top: -0.25em;
+/* POP UP POSITIONS */
+
+.tutorial-horizontal-layout[data-tooltip]::before {
+  top: calc(-30% + 2.5em);
+  left: 50.75%;
 }
 
-.bubble[data-tooltip]::after {
-  top: -3em;
+.tutorial-horizontal-layout[data-tooltip]::after {
+  top: -30%;
+  left: 50.75%;
 }
 
-.send-button[data-tooltip]::before {
-  top: -0.2em;
+.tutorial-ai-score[data-tooltip]::before  {
+  top: -0em;
+  left: 121px;
 }
 
-.send-button[data-tooltip]::after {
-  top: -2.95em;
+.tutorial-ai-score[data-tooltip]::after {
+  top: -2.75em;
+  left: 121px;
+}
+
+.tutorial-user-score[data-tooltip]::before {
+  top: -0em;
+  left: 135px;
+}
+
+.tutorial-user-score[data-tooltip]::after   {
+  top: -2.75em;
+  left: 50px;
 }
 

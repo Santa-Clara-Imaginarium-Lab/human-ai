@@ -3,7 +3,8 @@ import './GameTutorial.css';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  TEXT_INITIAL_1,
+  TEXT_INITIAL_1a,
+  TEXT_INITIAL_1b,
   TEXT_INITIAL_2,
   TEXT_COOPERATE_1,
   TEXT_COOPERATE_2,
@@ -54,7 +55,8 @@ function GameTutorial() {
   
   
   const [round, setRound] = useState(1);
-  const [tutorialText1, setTutorialText1] = useState(TEXT_INITIAL_1); // Text for Box 1
+  const [tutorialText1a, setTutorialText1a] = useState(TEXT_INITIAL_1a); // Text for Box 1
+  const [tutorialText1b, setTutorialText1b] = useState(TEXT_INITIAL_1b); // Text for Box 1
   const [tutorialText2, setTutorialText2] = useState(TEXT_INITIAL_2); // Text for Box 2
   const [highlightedTriangles, setHighlightedTriangles] = useState({
     t4: { highlight: false, number: null },
@@ -78,7 +80,7 @@ function GameTutorial() {
   const handleCooperate = () => {
     if (round === 1) {
       highlightRound1();
-      setTutorialText1(TEXT_COOPERATE_1);
+      setTutorialText1b(TEXT_COOPERATE_1);
       setTutorialText2(TEXT_COOPERATE_2);
       setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 0); // Increase user score
@@ -86,7 +88,7 @@ function GameTutorial() {
       setRound(2); // Move to Round 2
     } else if (round === 2) {
       highlightRound2();
-      setTutorialText1(TEXT_COOPERATE_AGAIN_1);
+      setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
       setTutorialText2(TEXT_COOPERATE_AGAIN_2);
       setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 3); // Increase user score
@@ -98,7 +100,7 @@ function GameTutorial() {
   const handleDefect = () => {
     if (round === 1) {
       highlightRound1();
-      setTutorialText1(TEXT_DEFECT_1);
+      setTutorialText1b(TEXT_DEFECT_1);
       setTutorialText2(TEXT_DEFECT_2);
       setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 1); // Increase user score
@@ -106,7 +108,7 @@ function GameTutorial() {
       setRound(2); // Move to Round 2
     } else if (round === 2) {
       highlightRound2();
-      setTutorialText1(TEXT_DEFECT_AGAIN_1);
+      setTutorialText1b(TEXT_DEFECT_AGAIN_1);
       setTutorialText2(TEXT_DEFECT_AGAIN_2);
       setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 5); // Increase user score
@@ -144,7 +146,7 @@ function GameTutorial() {
   return (
     <div className="container game-tutorial">
       <div className={` ${(tooltipIndex === 0 ? 'focus-container' : 'decision-tutorial-box1')}`}>
-        <p className="tutorialText1">{tutorialText1}</p>
+        <p className="tutorialText1">{tutorialText1a}<br/><br/> {tutorialText1b}</p>
       </div>
       <div className={` ${(tooltipIndex < 7 ? 'hide' : tooltipIndex === 7 ? 'focus-container' : 'decision-tutorial-box2')}`}>
         <p className="tutorialText2">{tutorialText2}</p>
@@ -219,7 +221,7 @@ function GameTutorial() {
           )}
         </div>
       </div>
-      <h className={canClick ? 'bottom-info-can' : 'bottom-info-wait'}>{canClick ? 'Press SPACEBAR to continue' : '...'}</h>
+      <h className={canClick ? 'bottom-info-can' : 'bottom-info-wait'}>{canClick ? 'Press SPACEBAR to continue' : '. . .'}</h>
     </div>
   );
 }

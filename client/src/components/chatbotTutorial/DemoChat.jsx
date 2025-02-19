@@ -3,7 +3,9 @@ import './DemoChat.css'; // Create a corresponding CSS file
 import {useNavigate } from 'react-router-dom';
 
 function DemoChat() {
-  const [tooltipIndex, setTooltipIndex] = useState(-1); // Index of tooltip array
+    const [canClick, setCanClick] = useState(true);
+    let canClickLogic = true;
+  const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
 
   const navigate = useNavigate();
 
@@ -21,19 +23,32 @@ function DemoChat() {
   }, [tooltipIndex]);
 
   useEffect(() => {
-    const handleKeyDown = () => {
-      setTooltipIndex((prevIndex) => prevIndex + 1);
+    const handleKeyDown = (event) => {
+      if (!(event.key === ' ')) return;
+      if (canClickLogic) {
+        console.log("tooltipIndex:", tooltipIndex);
+        setCanClick(false);
+        canClickLogic = false;
+        console.log(canClick);
+        setTooltipIndex((prevIndex) => prevIndex + 1);
+        setTimeout(() => {
+          console.log("fire");
+          setCanClick(true);
+          canClickLogic = true;
+          console.log(canClick);
+        }, 1500)
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('click', handleKeyDown);
+    // document.addEventListener('click', handleKeyDown);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('click', handleKeyDown);
+      // document.removeEventListener('click', handleKeyDown);
     };
   }, []);
-
+  
   return (
     <div className="chat-tutorial-page-container">
       <div className="demo-chat-container">
@@ -55,9 +70,7 @@ function DemoChat() {
           </div>
         </div>
 
-        <div className="chat-tutorial-instruction">
-          <p>Press any key to continue</p>
-        </div>
+        <h className={canClick ? 'instruction-can' : 'instruction-wait'}>{canClick ? 'Press SPACEBAR to continue' : '. . .'}</h>
 
         {/* Input Area */}
         <div className="input-area">

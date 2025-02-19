@@ -1,10 +1,11 @@
 // Initial Texts
-export const TEXT_INITIAL_1 = `
-  Let's get familiar with the rules of your job. Each day, you and the AI Agent choose to SHARE data or WITHHOLD data. 
-  The diagram will update with Caboodle currency based on what you and the AI Agent decide to do.
+export const TEXT_INITIAL_1a = `
+  Let's get familiar with the rules of your job. Each day, you and the AI Agent choose to SHARE data or WITHHOLD data.
+`;
+export const TEXT_INITIAL_1b = `The diagram will update with Caboodle currency based on what you and the AI Agent do.
 `;
 export const TEXT_INITIAL_2 = `
-  Let's say the AI Agent withhold data. What will you do?
+  Let's say the AI Agent withholds data. What will you do?
 `;
 
 // Round 1 Outcomes
@@ -25,7 +26,7 @@ export const TEXT_DEFECT_1 = `
 `;
 export const TEXT_DEFECT_2 = `
   Let's say the AI Agent shares data. 
-  What will you do now?
+  What will you do?
 `;
 
 // Round 2 Outcomes

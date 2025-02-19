@@ -162,11 +162,11 @@ function GameTutorial() {
         <div className="tutorial-action">
           {!isComplete && (
             <>
-              <button className="tutorial-button cooperate" onClick={handleCooperate}>
+              <button className="tutorial-button" onClick={handleCooperate}>
                 SHARE
                 <div>(cooperate)</div>
               </button>
-              <button className="tutorial-button defect" onClick={handleDefect}>
+              <button className="tutorial-button" onClick={handleDefect}>
                 WITHHOLD
                 <div>(defect)</div>
               </button>

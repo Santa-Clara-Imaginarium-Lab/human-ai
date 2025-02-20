@@ -3,8 +3,7 @@ import './DemoChat.css'; // Create a corresponding CSS file
 import {useNavigate } from 'react-router-dom';
 
 function DemoChat() {
-    const [canClick, setCanClick] = useState(true);
-    let canClickLogic = true;
+  const [canClick, setCanClick] = useState(true);
   const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
 
   const navigate = useNavigate();
@@ -22,23 +21,25 @@ function DemoChat() {
     }
   }, [tooltipIndex]);
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (!(event.key === ' ')) return;
-      if (canClickLogic) {
-        console.log("tooltipIndex:", tooltipIndex);
-        setCanClick(false);
-        canClickLogic = false;
+  const WAIT_TIME = 1500;
+
+  const handleKeyDown = (event) => {
+    if (!(event.key === ' ')) return;
+    if (canClickLogic) {
+      console.log("tooltipIndex:", tooltipIndex);
+      setCanClick(false);
+      console.log(canClick);
+      setTooltipIndex((prevIndex) => prevIndex + 1);
+      setTimeout(() => {
+        console.log("fire");
+        setCanClick(true);
         console.log(canClick);
-        setTooltipIndex((prevIndex) => prevIndex + 1);
-        setTimeout(() => {
-          console.log("fire");
-          setCanClick(true);
-          canClickLogic = true;
-          console.log(canClick);
-        }, 1500)
-      }
-    };
+      }, WAIT_TIME)
+    }
+  };
+
+
+  useEffect(() => {
 
     document.addEventListener('keydown', handleKeyDown);
     // document.addEventListener('click', handleKeyDown);

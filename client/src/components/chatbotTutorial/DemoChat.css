@@ -217,7 +217,7 @@
   font-size: 2em;
   color: black;
   bottom: 1%;
-  animation: fade-flash 1.0s, mini-bob 0.5s infinite 2s;
+  animation: fade-flash-chat 1.0s, mini-bob-chat 0.5s infinite 2s;
   animation-fill-mode: forwards; 
 }
 
@@ -228,10 +228,10 @@
   font-size: 2em;
   color: black;
   bottom: 1%;
-  animation: fade-flash2 1.0s;
+  animation: fade-flash2-chat 1.0s;
 }
 
-@keyframes fade-flash {
+@keyframes fade-flash-chat {
   0% {
     opacity: 0;
   }
@@ -250,7 +250,7 @@
   }
 }
 
-@keyframes fade-flash2 {
+@keyframes fade-flash2-chat {
   0% {
     opacity: 0;
   }
@@ -269,7 +269,7 @@
   }
 }
 
-@keyframes mini-bob {
+@keyframes mini-bob-chat {
   0%, 100% {
     transform: translate(0, 0);
   }

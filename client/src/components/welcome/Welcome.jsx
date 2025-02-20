@@ -15,6 +15,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
     const [settingsHidden, setSettingsHidden] = useState(true);
     const [isAdmin, setAdmin] = useState(false); 
+    const [isCheckingGuest, setIsCheckingGuest] = useState(false);
 
     // Handlers for navigation
     const handlePlayClick = async () => { // NOTE: now skips login! TODO: turn data collecting off.
@@ -23,6 +24,8 @@ const Welcome = ({changeTheme, changePersonality}) => {
         // random number between 0 and 10 million
         const randomNumber = Math.floor(Math.random() * 10000000);
         const guestID = "guest" + String(randomNumber);
+
+        setIsCheckingGuest(true);
 
         // Check if userId exists in the chats collection
         const response = await fetch(`https://human-ai-9bp5.onrender.com/api/chats?userId=${guestID}`);
@@ -273,6 +276,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
 
                 </div>
             </div>
+            <h className={isCheckingGuest ? 'welcome-info-can' : 'welcome-info-hide'}>{isCheckingGuest ? 'Generating Guest ID...' : ' '}</h>
         </div>
     );
 };

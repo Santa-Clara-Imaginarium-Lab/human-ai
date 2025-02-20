@@ -8,6 +8,10 @@
   background-color: var(--background-two);
 }
 
+.hide {
+  display: none;
+}
+
 .focus-container {
   position: fixed;
   
@@ -348,17 +352,25 @@
   }
 
   .ai-defect-desc {
-    position: absolute;
-    left: -100px; 
-    bottom: 20px;
-    color: var(--accent-three);
-    font-size: 14px;
-    white-space: nowrap;
-    transform: rotate(225deg);
+    position: relative;
+    left: -120px; 
+    bottom: 50px;
     font-weight: bold;
-}
+    display: inline-block; 
+    transform: rotate(225deg);  
+    transform-origin: center; 
+  }
 
 .ai-cooperate-desc {
+  position: relative;
+  left: -90px; 
+  bottom: 40px;
+  font-weight: bold;
+  display: inline-block; 
+  transform: rotate(225deg);  
+  transform-origin: center; 
+
+  /* OLD!!! 
   position: absolute;
   left: -116px; 
   bottom: 25px;
@@ -366,21 +378,39 @@
   font-size: 14px;
   white-space: nowrap;
   transform: rotate(225deg);
-  font-weight: bold;
+  font-weight: bold; */
 }
 
 .user-defect-desc {
+  position: relative;
+  left: -110px; 
+  bottom: -5px;
+  font-weight: bold;
+  display: inline-block; 
+  transform: rotate(315deg);  
+  transform-origin: center; 
+
+/*   OLD!!!
   position: absolute;
   left: -110px; 
   top: 30px;
   color: var(--accent-three);
   font-size: 14px;
   white-space: nowrap;
-  transform: rotate(316deg);
-  font-weight: bold;
+  transform: rotate(315deg);
+  font-weight: bold; */
 }
 
 .user-cooperate-desc {
+  position: relative;
+  left: -90px; 
+  bottom: -1px;
+  font-weight: bold;
+  display: inline-block; 
+  transform: rotate(315deg);  
+  transform-origin: center; 
+
+  /* OLD!!! 
 position: absolute;
 left: -120px; 
 top: 30px;
@@ -388,7 +418,7 @@ color: var(--accent-three);
 font-size: 14px;
 white-space: nowrap;
 transform: rotate(315deg);
-font-weight: bold;
+font-weight: bold; */
 }
 
 .highlight {
@@ -417,7 +447,7 @@ font-weight: bold;
   position: absolute;
   bottom: 1%;
   font-size: 2em;
-  animation: fade-flash 1.0s, mini-bob 0.5s infinite 2s;
+  animation: fade-flash 1s, mini-bob 0.5s infinite 2s;
   animation-fill-mode: forwards; 
 }
 
@@ -436,13 +466,13 @@ font-weight: bold;
     transform: rotate(5deg);
   }
   50% {
-    bottom: 2%;
+    opacity: 1;
+    bottom: 2%;  
   }
   66% {
     transform: rotate(-5deg);
   }
   100% {
-    opacity: 1;
     bottom: 1%;
   }
 }
@@ -455,6 +485,7 @@ font-weight: bold;
     transform: rotate(5deg);
   }
   50% {
+    opacity: 1;
     bottom: 2%;
   }
   66% {
@@ -497,7 +528,8 @@ font-weight: bold;
   border-radius: 5px;
   white-space: nowrap;
   pointer-events: none; 
-  z-index: 100;
+  font-weight: normal;
+  z-index: 1000;
   opacity: 1;
   box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
   /* animation: bob 1s infinite; */
@@ -564,6 +596,26 @@ font-weight: bold;
 .tutorial-horizontal-layout[data-tooltip]::after {
   top: -30%;
   left: 50.75%;
+}
+
+.ai-defect-desc[data-tooltip]::before {
+  top: 4em;
+  left: 0%;
+}
+
+.ai-defect-desc[data-tooltip]::after {
+  top: 1.25em;
+  left: 0%;
+}
+
+.user-defect-desc[data-tooltip]::before {
+  top: 3.25em;
+  left: 75%;
+}
+
+.user-defect-desc[data-tooltip]::after {
+  top: 0.5em;
+  left: 75%;
 }
 
 .tutorial-ai-score[data-tooltip]::before  {

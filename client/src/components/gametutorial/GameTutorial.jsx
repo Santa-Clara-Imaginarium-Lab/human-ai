@@ -19,30 +19,71 @@ import {
 function GameTutorial() {
     const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
     const [canClick, setCanClick] = useState(true);
+    const [canPlay, setCanPlay] = useState(false);
+    const [focusTutorialText, setFocusTutorialText] = useState(TEXT_INITIAL_1a);
+
+    
+    const determineShow = (componentName) => {
+      const FOCUS_CONTAINER = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,  0,  0,  0,  0,  0];
+      const DECISION_TUTORIAL_BOX_1 = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1,  1,  1,  1,  1];
+      const DECISION_TUTORIAL_BOX_2 = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,  1,  1,  1,  1,  1];
+
+      switch (componentName) {
+        case 'focus-container':
+          return FOCUS_CONTAINER[tooltipIndex] === 1;
+        case 'decision-tutorial-box1':
+          return DECISION_TUTORIAL_BOX_1[tooltipIndex] === 1;
+        case 'decision-tutorial-box2':
+          return DECISION_TUTORIAL_BOX_2[tooltipIndex] === 1;
+      }
+    };
     
     const tooltips = [
-      '',
-      "This is the decision matrix", 
-      "It shows how much Caboodle each player gets, depending on what options are chosen.",
-      "Triangles pointing left indicate Caboodle for the AI.",
-      "Triangles pointing right indicate Caboodle for you.",
-      "This is how much Caboodle\nthe AI has...",
-      "And this is how much you have.",
+      /* 0 */ '',
+      /* 1 */ "This is the decision matrix", 
+      /* 2 */ "It shows how much Caboodle each player gets, depending on what options are chosen.",
+      /* 3 */ "Triangles pointing left: Caboodle for the AI.",
+      /* 4 */ "Triangles pointing right: Caboodle for you.",
+      /* 5 */ "This is how much Caboodle the AI has...",
+      /* 6 */ "And this is how much you have.",
+      /* 7 */ '',
+      /* 8 */ '',
+      /* 9 */ 'This is the result of your decisions!',
     ];
 
-    useEffect(() => {
-      const handleKeyDown = (event) => {
-        if (!(event.key === ' ')) return;
-        if (canClick) {
-          console.log("tooltipIndex:", tooltipIndex);
-          setCanClick(false);
-          setTooltipIndex((prevIndex) => prevIndex + 1);
-          setTimeout(() => {
-            setCanClick(true);
-          }, 1500)
+    const WAIT_TIME = 15; // reduce when testing
+
+    const handleKeyDown = (event) => {
+      if (!(event.key === ' ')) return;
+      if (canClick) {
+        let reEnableClick = true;
+
+        console.log("tooltipIndex:", tooltipIndex);
+        setCanClick(false);
+        setTooltipIndex((prevIndex) => prevIndex + 1);
+        switch (tooltipIndex) {
+          case (6):
+            setFocusTutorialText(TEXT_INITIAL_2);
+            break;
+          case (7):
+            reEnableClick = false;
+            setCanPlay(true);
+            break;
         }
-      };
-  
+        setTimeout(() => {
+          if (reEnableClick) 
+            setCanClick(true);  
+        }, WAIT_TIME);
+      }
+    };
+
+    useEffect(() => {  
       document.addEventListener('keydown', handleKeyDown);
       // document.addEventListener('click', handleKeyDown);
   
@@ -50,7 +91,7 @@ function GameTutorial() {
         document.removeEventListener('keydown', handleKeyDown);
         // document.removeEventListener('click', handleKeyDown);
       };
-    }, []);
+    });
   
   
   
@@ -94,7 +135,13 @@ function GameTutorial() {
       setUserScore(userScore + 3); // Increase user score
       setAiScore(aiScore + 3); // AI score also increases
       setIsComplete(true); // Mark as complete after Round 2
+      
     }
+    // Progression control
+    setCanPlay(false);
+    setCanClick(true);
+    setTooltipIndex((prevIndex) => prevIndex + 1);
+    console.log("tooltipIndex:", tooltipIndex)    
   };
   
   const handleDefect = () => {
@@ -115,6 +162,13 @@ function GameTutorial() {
       setAiScore(aiScore + 0); // AI score increases more
       setIsComplete(true); // Mark as complete after Round 2
     }
+          
+      // Progression control
+      setCanPlay(false);
+      setCanClick(true);
+      setTooltipIndex((prevIndex) => prevIndex + 1);
+      console.log("tooltipIndex:", tooltipIndex)
+
   };
 
   const highlightRound1 = () => {
@@ -145,21 +199,26 @@ function GameTutorial() {
 
   return (
     <div className="container game-tutorial">
-      <div className={` ${(tooltipIndex === 0 ? 'focus-container' : 'decision-tutorial-box1')}`}>
+        <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hide')}`}>
+        <p className="tutorialText1">{focusTutorialText}</p>
+      </div>
+
+      <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hide')}`}>
         <p className="tutorialText1">{tutorialText1a}<br/><br/> {tutorialText1b}</p>
       </div>
-      <div className={` ${(tooltipIndex < 7 ? 'hide' : tooltipIndex === 7 ? 'focus-container' : 'decision-tutorial-box2')}`}>
+      <div className={` ${determineShow("decision-tutorial-box2") ? 'decision-tutorial-box2' : 'hide'}`}>
         <p className="tutorialText2">{tutorialText2}</p>
       </div>
 
-      <div className="game-tutorial-content">
-        <div className={`tutorial-horizontal-layout ${(tooltipIndex >= 1 && tooltipIndex <= 4 ? ' show' : '')}`} data-tooltip={tooltipIndex >= 1 && tooltipIndex <= 4 ? tooltips[tooltipIndex] : null}>
+{/* TODO: Turn these into determineShows and fill in their arrays */}
+      <div className={`game-tutorial-content ${(tooltipIndex === 0 ? 'hide' : '')}`}>
+        <div className={`tutorial-horizontal-layout ${(tooltipIndex === 1 || tooltipIndex === 2 || tooltipIndex === 9 ? ' show' : '')}`} data-tooltip={tooltipIndex === 1 || tooltipIndex === 2 || tooltipIndex === 9 ? tooltips[tooltipIndex] : null}>
           <div className={`tutorial-ai-score ${(tooltipIndex === 5 ? ' show' : '')}`} data-tooltip={tooltipIndex === 5 ? tooltips[tooltipIndex] : null}>
             <h2>AI's Score: <span className="tutorial-score-value">{aiScore}</span></h2>
           </div>
           <div className="tutorial-column-1">
             <div className={`tutorial-triangle-left t1 ${highlightedTriangles.t1.highlight}`}>
-            <span className={`ai-defect-desc ${highlightedDesc.includes("ai-defect-desc") ? 'highlight' : ''}`}>AI WITHHOLD</span>
+            <span className={`ai-defect-desc ${highlightedDesc.includes("ai-defect-desc") ? 'highlight' : ''} ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[tooltipIndex] : null}>AI WITHHOLD</span>
               {highlightedTriangles.t1.number && <span className="triangle-number-left-bottom">{highlightedTriangles.t1.number}</span>}
             </div>
           </div>
@@ -176,7 +235,7 @@ function GameTutorial() {
             </div>
           </div>
           <div className="tutorial-column-3">
-            <div className={`tutorial-triangle-right t5 ${highlightedTriangles.t5.highlight}`}>
+            <div className={`tutorial-triangle-right t5 ${highlightedTriangles.t5.highlight} `}>
             <span className={`user-cooperate-desc ${highlightedDesc.includes("user-cooperate-desc") ? 'highlight' : ''}`}>YOU SHARE</span>
               {highlightedTriangles.t5.number && <span className="triangle-number-right-up">{highlightedTriangles.t5.number}</span>}
             </div>
@@ -189,7 +248,7 @@ function GameTutorial() {
           </div>
           <div className="tutorial-column-4">
             <div className={`tutorial-triangle-right t8 ${highlightedTriangles.t8.highlight}`}>
-            <span className={`user-defect-desc ${highlightedDesc.includes("user-defect-desc") ? 'highlight' : ''}`}>YOU WITHHOLD</span>
+            <span className={`user-defect-desc ${highlightedDesc.includes("user-defect-desc") ? 'highlight' : ''} ${(tooltipIndex === 4 ? ' show' : '')}`} data-tooltip={tooltipIndex === 4 ? tooltips[tooltipIndex] : null}>YOU WITHHOLD</span>
               {highlightedTriangles.t8.number != null && <span className="triangle-number-right-up">{highlightedTriangles.t8.number}</span>}
             </div>
           </div>
@@ -201,14 +260,14 @@ function GameTutorial() {
         <div className="tutorial-action">
           {!isComplete && (
             <>
-              <button className="tutorial-button cooperate" onClick={handleCooperate}>
+              {tooltipIndex === 8 && <button className="tutorial-button cooperate" onClick={handleCooperate}>
                 SHARE
                 <div>(cooperate)</div>
-              </button>
-              <button className="tutorial-button defect" onClick={handleDefect}>
+              </button>}
+              {tooltipIndex === 8 && <button className="tutorial-button defect" onClick={handleDefect}>
                 WITHHOLD
                 <div>(defect)</div>
-              </button>
+              </button>}
             </>
           )}
 
@@ -221,7 +280,7 @@ function GameTutorial() {
           )}
         </div>
       </div>
-      <h className={canClick ? 'bottom-info-can' : 'bottom-info-wait'}>{canClick ? 'Press SPACEBAR to continue' : '. . .'}</h>
+      <h className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game' : 'Press SPACEBAR to continue'}</h>
     </div>
   );
 }

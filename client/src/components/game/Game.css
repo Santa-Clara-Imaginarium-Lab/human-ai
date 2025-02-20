@@ -12,7 +12,7 @@
     align-items: center;
   }
   
-  .ai-cooperate-desc {
+  .ai-cooperate-label {
     position: relative;
     top: -45px;
     margin-left: 25px;
@@ -20,7 +20,7 @@
     transform: rotate(-135deg);  
     transform-origin: center; 
   }
-  .user-cooperate-desc {
+  .user-cooperate-label {
     position: relative;
     top: 20px;
     margin-left: 25px;

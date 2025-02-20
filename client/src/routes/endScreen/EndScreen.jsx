@@ -35,7 +35,7 @@ const EndScreen = () => {
                 navigate('/average');
             }
     
-            else if (personality == "role model") {
+            else if (personality == "role-model") {
                 navigate('/role-model');
             }
     

@@ -7,6 +7,7 @@ const statements = [
   "I can use AI applications to make my everyday life easier.",
   "I can use artificial intelligence meaningfully to achieve my everyday goals.",
   "In everyday life, I can interact with AI in a way that makes my tasks easier.",
+  ""
 ];
 
 const options = [
@@ -31,7 +32,9 @@ function PreApply() {
   };
 
   const handleSubmit = async () => {
-    if (Object.keys(responses).length < statements.length) {
+    // Count non-empty statements
+    const requiredResponses = statements.filter(statement => statement !== "").length;
+    if (Object.keys(responses).length < requiredResponses) {
       setError("Please select an option for each statement.");
       return;
     }
@@ -41,7 +44,9 @@ function PreApply() {
     const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
     const data = {
       userId,
-      responses: Object.entries(responses).map(([questionNumber, selectedOption]) => ({
+      responses: Object.entries(responses)
+      .filter(([index]) => statements[index] !== "")
+      .map(([questionNumber, selectedOption]) => ({
         questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
         selectedOption,
       })),
@@ -71,7 +76,7 @@ function PreApply() {
   return (
     <div className="container tutorial-container">
       <div className="qualtrix-container">
-        <h1 className="title">AI Literacy Survey</h1>
+        
         <p className="description">
           Please indicate the extent to which you agree or disagree with the following statements.
         </p>
@@ -96,7 +101,7 @@ function PreApply() {
                     checked={responses[statementIndex] === option}
                     onChange={() => handleOptionChange(statementIndex, option)}
                   />
-                  <span className="circle"></span>
+                  <span className={`circle ${statement === "" ? 'hidden' : ''}`}></span>
                 </label>
               ))}
             </div>

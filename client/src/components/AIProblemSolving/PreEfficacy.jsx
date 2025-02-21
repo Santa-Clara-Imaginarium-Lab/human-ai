@@ -5,6 +5,8 @@ const statements = [
   "I can rely on my skills in difficult situations when using AI.",
   "I can handle most problems in dealing with AI on my own.",
   "I can usually solve strenuous and complicated tasks when working with AI well.",
+  "",
+  ""
 ];
 
 const options = [
@@ -29,20 +31,25 @@ function PreEfficacy() {
   };
 
   const handleSubmit = async () => {
-    if (Object.keys(responses).length < statements.length) {
+    // Count non-empty statements
+    const requiredResponses = statements.filter(statement => statement !== "").length;
+    
+    if (Object.keys(responses).length < requiredResponses) {
       setError("Please select an option for each statement.");
       return;
     }
     setError('');
 
     // Prepare data to send
-    const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
+    const userId = sessionStorage.getItem('userId');
     const data = {
       userId,
-      responses: Object.entries(responses).map(([questionNumber, selectedOption]) => ({
-        questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
-        selectedOption,
-      })),
+      responses: Object.entries(responses)
+        .filter(([index]) => statements[index] !== "") // Only include responses for non-empty statements
+        .map(([questionNumber, selectedOption]) => ({
+          questionNumber: parseInt(questionNumber) + 1,
+          selectedOption,
+        })),
     };    
 
     try {
@@ -69,7 +76,7 @@ function PreEfficacy() {
   return (
     <div className="container tutorial-container">
     <div className="qualtrix-container">
-      <h1 className="title">AI Problem Solving Survey</h1>
+
       <p className="description">
         Please indicate the extent to which you agree or disagree with the following statements.
       </p>
@@ -94,7 +101,7 @@ function PreEfficacy() {
                   checked={responses[statementIndex] === option}
                   onChange={() => handleOptionChange(statementIndex, option)}
                 />
-                <span className="circle"></span>
+                <span className={`circle ${statement === "" ? 'hidden' : ''}`}></span>
               </label>
             ))}
           </div>

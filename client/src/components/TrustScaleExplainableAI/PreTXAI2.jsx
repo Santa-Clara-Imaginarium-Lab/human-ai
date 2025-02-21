@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 const statements = [
   "AI is efficient in that it works very quickly.",
   "AI can perform a task better than a novice human user.",
-  "I like using AI for decision making."
+  "I like using AI for decision making.",
+  "",
+  ""
 ];
 
 const options = [
@@ -29,7 +31,9 @@ function PreTXAI2() {
   };
 
   const handleSubmit = async () => {
-    if (Object.keys(responses).length < statements.length) {
+    // Count non-empty statements
+    const requiredResponses = statements.filter(statement => statement !== "").length;
+    if (Object.keys(responses).length < requiredResponses) {
       setError("Please select an option for each statement.");
       return;
     }
@@ -72,7 +76,7 @@ function PreTXAI2() {
   return (
     <div className="container tutorial-container">
     <div className="qualtrix-container">
-      <h1 className="title">Trust Scale for Explainable AI Survey</h1>
+      
       <p className="description">
         Please indicate the extent to which you agree or disagree with the following statements.
       </p>
@@ -97,7 +101,7 @@ function PreTXAI2() {
                   checked={responses[statementIndex] === option}
                   onChange={() => handleOptionChange(statementIndex, option)}
                 />
-                <span className="circle"></span>
+                <span className={`circle ${statement === "" ? 'hidden' : ''}`}></span>
               </label>
             ))}
           </div>

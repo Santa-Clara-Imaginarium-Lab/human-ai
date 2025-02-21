@@ -7,6 +7,7 @@ const statements = [
     "I can assess what the limitations and opportunities of using an AI are.",
     "I can assess what advantages and disadvantages of using AI entails.",
     "I can imagine possible future uses of AI.",
+    ""
 ];
 
 const options = [
@@ -31,7 +32,9 @@ function PreUnderstanding() {
   };
 
   const handleSubmit = async () => {
-    if (Object.keys(responses).length < statements.length) {
+    // Count non-empty statements
+    const requiredResponses = statements.filter(statement => statement !== "").length;
+    if (Object.keys(responses).length < requiredResponses) {
         setError("Please select an option for each statement.");
         return;
     }
@@ -41,7 +44,9 @@ function PreUnderstanding() {
     const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
     const data = {
         userId,
-        responses: Object.entries(responses).map(([statementIndex, selectedOption]) => ({
+        responses: Object.entries(responses)
+        .filter(([index]) => statements[index] !== "")
+        .map(([statementIndex, selectedOption]) => ({
             questionNumber: parseInt(statementIndex) + 5, // Convert to 1-based index
             selectedOption, // This should be a string
         })),
@@ -74,7 +79,7 @@ function PreUnderstanding() {
   return (
     <div className="container tutorial-container">
     <div className="qualtrix-container">
-      <h1 className="title">AI Literacy Survey</h1>
+      
       <p className="description">
         Please indicate the extent to which you agree or disagree with the following statements.
       </p>
@@ -99,7 +104,7 @@ function PreUnderstanding() {
                   checked={responses[statementIndex] === option}
                   onChange={() => handleOptionChange(statementIndex, option)}
                 />
-                <span className="circle"></span>
+                <span className={`circle ${statement === "" ? 'hidden' : ''}`}></span>
               </label>
             ))}
           </div>

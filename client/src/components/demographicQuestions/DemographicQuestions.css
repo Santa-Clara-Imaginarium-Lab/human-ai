@@ -13,7 +13,13 @@ Tutorial.css
     justify-content: center;  /* Center align content vertically */
     padding: 40px 20px; /* Add padding for spacing */
     position: relative; /* Position context for the shadow */
-    width: 50%;
+    width: 60%;
+    min-height: 500px;  /* Set a minimum height */
+    height: 550px;      /* Set a fixed height */
+    width: 60%;
+    min-width: 500px;   /* Set a minimum width to prevent container from becoming too narrow */
+    margin: 20px auto;  /* Center the container and add vertical spacing */
+    overflow-y: auto;
   }
   
   .brief-subtitle {

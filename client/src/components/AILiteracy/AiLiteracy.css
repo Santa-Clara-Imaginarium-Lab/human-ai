@@ -14,30 +14,21 @@
     justify-content: center;  /* Center align content vertically */
     padding: 40px 20px; /* Add padding for spacing */
     position: relative; /* Position context for the shadow */
-    width: 80%;
+    width: 90%;
   }
 
-  @media (min-width: 2000px) {
+  @media (max-width: 1580px) {
     .qualtrix-container {
-        width: 65%; /* Adjust width for smaller screens */
-        padding: 20px; /* Reduce padding for smaller screens */
-    }
-  }
-
-  @media (max-width: 1250px) {
-    .qualtrix-container {
-        width: 90%; /* Adjust width for smaller screens */
-        padding: 20px; /* Reduce padding for smaller screens */
-    }
-  }
-
-  @media (max-width: 883px) {
-    .qualtrix-container {
-        width: 98%; /* Adjust width for smaller screens */
-        padding: 20px; /* Reduce padding for smaller screens */
+      transform: scale(0.9);
     }
   }
     
+  @media (max-width: 1280px) {
+    .qualtrix-container {
+      transform: scale(0.8);
+    }
+  }
+
     .title {
       font-size: 2em;
       color: #333;
@@ -98,10 +89,10 @@
     
     .statement {
       text-align: left;
-      padding: 20px; /* Increase padding to make the box larger */
+      padding: 10px; /* Increase padding to make the box larger */
       font-size: large;
       border-bottom: 1px solid #ddd;
-      min-height: 80px; /* Ensure a minimum height for vertical alignment */
+      min-height: 90px; /* Ensure a minimum height for vertical alignment */
       display: flex; /* Flex layout for better alignment */
       align-items: center; /* Vertically align text */
     }
@@ -113,3 +104,6 @@
     /* Add any other existing styles here */
 }
   
+.circle.hidden {
+  display: none;
+}

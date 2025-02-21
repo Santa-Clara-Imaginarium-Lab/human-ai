@@ -5,6 +5,8 @@ const statements = [
   "I don't let AI influence me in my everyday decisions.",
   "I can prevent an AI from influencing me in my everyday decisions.",
   "I realize if an AI is influencing me in my everyday decisions.",
+  "",
+  ""
 ];
 
 const options = [
@@ -29,7 +31,9 @@ function PrePersuassion() {
   };
 
   const handleSubmit = async () => {
-    if (Object.keys(responses).length < statements.length) {
+    // Count non-empty statements
+    const requiredResponses = statements.filter(statement => statement !== "").length;
+    if (Object.keys(responses).length < requiredResponses) {
       setError("Please select an option for each statement.");
       return;
     }
@@ -39,7 +43,9 @@ function PrePersuassion() {
     const userId = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
     const data = {
       userId,
-      responses: Object.entries(responses).map(([questionNumber, selectedOption]) => ({
+      responses: Object.entries(responses)
+      .filter(([index]) => statements[index] !== "") // Only include responses for non-empty statements
+      .map(([questionNumber, selectedOption]) => ({
         questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
         selectedOption,
       })),
@@ -69,7 +75,7 @@ function PrePersuassion() {
   return (
     <div className="container tutorial-container">
     <div className="qualtrix-container">
-      <h1 className="title">AI Self Competency Survey</h1>
+      
       <p className="description">
         Please indicate the extent to which you agree or disagree with the following statements.
       </p>
@@ -94,7 +100,7 @@ function PrePersuassion() {
                   checked={responses[statementIndex] === option}
                   onChange={() => handleOptionChange(statementIndex, option)}
                 />
-                <span className="circle"></span>
+                <span className={`circle ${statement === "" ? 'hidden' : ''}`}></span>
               </label>
             ))}
           </div>

@@ -74,7 +74,7 @@ function PreTPA2() {
   return (
     <div className="container tutorial-container">
     <div className="qualtrix-container">
-      <h1 className="title">Trust Between People and Automation Survey</h1>
+      
       <p className="description">
         Please indicate the extent to which you agree or disagree with the following statements.
       </p>

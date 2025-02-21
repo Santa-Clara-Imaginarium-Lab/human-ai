@@ -14,7 +14,7 @@ function Game() {
   
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
-  const textWall = "You and the AI analyze market trends and decide each day (round) whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
+  const textWall = "You and the AI analyze market trends and decide each day whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
     "1. If you withhold data and the AI chooses to share data, you will gain a boost in profit. You will earn +5 Caboodle, while the AI will earn +0 Caboodle.<br/><br/>" +
     "2. If the AI withholds data and you choose to share data, the AI will gain a boost in profit. The AI will gain +5 Caboodle, while you earn +0 Caboodle.<br/><br/>" +
     "3. If you both share data, investments are optimized, and profits increase steadily. You both earn +3 Caboodle.<br/><br/>" +
@@ -447,7 +447,7 @@ function Game() {
       <div className="game-content">
 
         {showRt && <div className={`round-transitioner ${rtGo ? 'round-go' : ''}`}>
-            <h1 className="round-transitioner-text"> Round {currentRound} </h1>
+            <h1 className="round-transitioner-text"> Day {currentRound} </h1>
             <div className={`round-transitioner-underline ${rtuGo ? 'round-underline-go' : ''}`}/>
           </div>
         }

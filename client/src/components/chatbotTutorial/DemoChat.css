@@ -217,6 +217,7 @@
   font-size: 2em;
   color: black;
   bottom: 1%;
+  font-weight: bold;
   animation: fade-flash-chat 1.0s, mini-bob-chat 2s infinite 2s;
   animation-fill-mode: forwards; 
 }
@@ -229,6 +230,7 @@
   color: black;
   bottom: 1%;
   animation: fade-flash2-chat 1.0s;
+  font-weight: bold;
 }
 
 @keyframes fade-flash-chat {

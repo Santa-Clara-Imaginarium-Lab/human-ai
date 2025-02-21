@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './GameTutorial.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -202,58 +202,78 @@ function GameTutorial() {
   const [userScore, setUserScore] = useState(0);
   const [aiScore, setAiScore] = useState(0);
 
-  const handleCooperate = () => {
-    if (round === 1) {
-      highlightRound1();
-      setTutorialText1b(TEXT_COOPERATE_1);
-      setTutorialText2(TEXT_INITIAL_3);
-      setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
-      setUserScore(userScore + 0); // Increase user score
-      setAiScore(aiScore + 5); // AI score doesn't change in this case
-      setRound(2); // Move to Round 2
-    } else if (round === 2) {
-      highlightRound2();
-      setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
-      setTutorialText2(TEXT_INITIAL_4);
-      setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
-      setUserScore(userScore + 3); // Increase user score
-      setAiScore(aiScore + 3); // AI score also increases
-      setIsComplete(true); // Mark as complete after Round 2
-      
+    const coopButtonRef = useRef(null);
+    const defectButtonRef = useRef(null);
+
+  const [userDecision, setUserDecision] = useState(''); // User's decision
+
+  const handleUserDecision = (decision) => {
+    // Update user's decision    
+    setUserDecision(decision);
+
+    switch (decision) {
+      case 'Cooperate':
+        coopButtonRef.current.classList.add('selected');
+        defectButtonRef.current.classList.remove('selected');
+        break;
+      case 'Defect':
+        coopButtonRef.current.classList.remove('selected');
+        defectButtonRef.current.classList.add('selected');
+        break;
     }
+  }
+
+  const handleLockIn = () => {
     // Progression control
     setCanPlay(false);
     setCanClick(true);
     setTooltipIndex((prevIndex) => prevIndex + 1);
-    console.log("tooltipIndex:", tooltipIndex)    
-  };
-  
-  const handleDefect = () => {
-    if (round === 1) {
-      highlightRound1();
-      setTutorialText1b(TEXT_DEFECT_1);
-      setTutorialText2(TEXT_INITIAL_3);
-      setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
-      setUserScore(userScore + 1); // Increase user score
-      setAiScore(aiScore + 1); // AI score also increases
-      setRound(2); // Move to Round 2
-    } else if (round === 2) {
-      highlightRound2();
-      setTutorialText1b(TEXT_DEFECT_AGAIN_1);
-      setTutorialText2(  TEXT_INITIAL_4);
-      setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
-      setUserScore(userScore + 5); // Increase user score
-      setAiScore(aiScore + 0); // AI score increases more
-      setIsComplete(true); // Mark as complete after Round 2
+    console.log("progression! tooltipIndex:", tooltipIndex)
+            
+    if (userDecision === 'Cooperate') {
+      if (round === 1) {
+        highlightRound1();
+        setTutorialText1b(TEXT_COOPERATE_1);
+        setTutorialText2(TEXT_INITIAL_3);
+        setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
+        setUserScore(userScore + 0); // Increase user score
+        setAiScore(aiScore + 5); // AI score doesn't change in this case
+        setRound(2); // Move to Round 2
+      } else if (round === 2) {
+        highlightRound2();
+        setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
+        setTutorialText2(TEXT_INITIAL_4);
+        setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
+        setUserScore(userScore + 3); // Increase user score
+        setAiScore(aiScore + 3); // AI score also increases
+        setIsComplete(true); // Mark as complete after Round 2
+        console.log("isComplete:");
+      }
     }
-          
-      // Progression control
-      setCanPlay(false);
-      setCanClick(true);
-      setTooltipIndex((prevIndex) => prevIndex + 1);
-      console.log("tooltipIndex:", tooltipIndex)
+    else {
+      if (round === 1) {
+        highlightRound1();
+        setTutorialText1b(TEXT_DEFECT_1);
+        setTutorialText2(TEXT_INITIAL_3);
+        setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
+        setUserScore(userScore + 1); // Increase user score
+        setAiScore(aiScore + 1); // AI score also increases
+        setRound(2); // Move to Round 2
+      } else if (round === 2) {
+        highlightRound2();
+        setTutorialText1b(TEXT_DEFECT_AGAIN_1);
+        setTutorialText2(  TEXT_INITIAL_4);
+        setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
+        setUserScore(userScore + 5); // Increase user score
+        setAiScore(aiScore + 0); // AI score increases more
+        setIsComplete(true); // Mark as complete after Round 2
+        console.log("isComplete:");
+    }
 
   };
+}
+  
+  
 
   const highlightRound1 = () => {
     setHighlightedTriangles({
@@ -343,13 +363,17 @@ function GameTutorial() {
 
         <div className="tutorial-action">
             <>
-              {!isComplete && determineShow("tutorial-action") && <button className="tutorial-button cooperate" onClick={handleCooperate}>
+              {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className="tutorial-button cooperate" onClick={() => handleUserDecision('Cooperate')}>
                 SHARE
                 <div>(cooperate)</div>
               </button>}
-              {!isComplete && determineShow("tutorial-action") && <button className="tutorial-button defect" onClick={handleDefect}>
+              {!isComplete && determineShow("tutorial-action") && <button ref={defectButtonRef} className="tutorial-button defect" onClick={() => handleUserDecision('Defect')}>
                 WITHHOLD
                 <div>(defect)</div>
+              </button>}
+              <br></br>
+              {!isComplete && determineShow("tutorial-action") && <button className="lockin-button" onClick={handleLockIn}>
+                Lock In
               </button>}
             </>
 

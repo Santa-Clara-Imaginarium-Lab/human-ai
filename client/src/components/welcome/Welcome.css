@@ -330,7 +330,7 @@ main {
   position: absolute;
   bottom: 1%;
   font-size: 2em;
-  animation: fade-flash-welcome 0.5s, mini-bob-welcome 0.5s infinite 2s;
+  animation: fade-flash-welcome 2s, mini-bob-welcome 0.5s infinite 3s;
   animation-fill-mode: forwards; 
 }
 
@@ -344,14 +344,16 @@ main {
   }
   50% {
     opacity: 0;
+    bottom: 1%;
+    transform: rotate(0deg);
   }
-  62.5% {
+  66% {
     transform: rotate(5deg);
   }
   75% {
     bottom: 2%;
   }
-  87.5% {
+  83% {
     transform: rotate(-5deg);
   }
   100% {

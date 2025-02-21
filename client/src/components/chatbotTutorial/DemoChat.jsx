@@ -11,7 +11,7 @@ function DemoChat() {
   const tooltips = [
     "This is one of the AI's responses", 
     "This is one of your messages", 
-    "Send message", 
+    "Send message (or press ENTER)", 
     "Start the decision phase"
   ];
 
@@ -25,16 +25,25 @@ function DemoChat() {
 
   const handleKeyDown = (event) => {
     if (!(event.key === ' ')) return;
-    if (canClickLogic) {
-      console.log("tooltipIndex:", tooltipIndex);
-      setCanClick(false);
-      console.log(canClick);
-      setTooltipIndex((prevIndex) => prevIndex + 1);
-      setTimeout(() => {
-        console.log("fire");
-        setCanClick(true);
+    if (canClick) {
+        // doesn't update in time!
+        console.log("prior Index:", tooltipIndex);
+
+        // let reEnableClick = true;
+
+        setCanClick(false);
+        setTooltipIndex((prevIndex) => prevIndex + 1);
         console.log(canClick);
-      }, WAIT_TIME)
+
+        setTimeout(() => {
+          console.log("pre", canClick);
+          console.log("fire");
+          setCanClick(true);
+          console.log("post", canClick);
+        }, WAIT_TIME)
+      }
+    else {
+      console.warn("can't click");
     }
   };
 
@@ -48,7 +57,10 @@ function DemoChat() {
       document.removeEventListener('keydown', handleKeyDown);
       // document.removeEventListener('click', handleKeyDown);
     };
-  }, []);
+  });
+  // [!] DO NOT PUT A DEPENDENCY ARRAY IN THIS USEEFFECT [!]
+  // [!] IT WILL BREAK THE FUNCTION! [!]  
+
   
   return (
     <div className="chat-tutorial-page-container">
@@ -78,8 +90,8 @@ function DemoChat() {
           <input
             type="text"
             placeholder="Enter message"
-            className="chat-input"
             disabled
+            className="chat-input"
           />
           <button className={`send-button ${(tooltipIndex === 2 ? ' show' : '')}`} data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
           <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Go to Game</button>

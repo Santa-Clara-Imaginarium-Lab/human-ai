@@ -106,10 +106,10 @@ function GameTutorial() {
       /* 6 */ "And this is how much you have.",
       /* 7 */ '',
       /* 8 */ '',
-      /* 9 */ 'This is the result of your decisions! The AI defected.',
+      /* 9 */ 'This is the result of your decisions! The AI defected. See the scoring explanation above.',
       /* 10 */ '',
       /* 11 */ '',
-      /* 12 */ 'This is the result of your decisions! The AI cooperated.',
+      /* 12 */ 'This is the result of your decisions! The AI cooperated. See the scoring explanation above.',
       /* 13 */ '',
       /* 14 */ 'You can chat with the AI using this button.',
       /* 15 */ 'It is always available on the game page. Press it now!',
@@ -127,8 +127,7 @@ function GameTutorial() {
 
         setCanClick(false);
         setTooltipIndex((prevIndex) => prevIndex + 1);
-
-
+        
         switch (tooltipIndex) { // USES "PRIOR INDEX!"
           case (6):
             setFocusTutorialText(TEXT_INITIAL_2);
@@ -157,9 +156,13 @@ function GameTutorial() {
             break;
         }
         setTimeout(() => {
+          console.log("timeout done, reenable click?", reEnableClick);
           if (reEnableClick) 
             setCanClick(true);  
         }, WAIT_TIME);
+      }
+      else {
+        console.warn("can't click");
       }
     };
 
@@ -168,12 +171,13 @@ function GameTutorial() {
       // document.addEventListener('click', handleKeyDown);
   
       return () => {
+        console.log("unmounting");
         document.removeEventListener('keydown', handleKeyDown);
         // document.removeEventListener('click', handleKeyDown);
       };
-    });
-  
-  
+    }); 
+    // [!] DO NOT PUT A DEPENDENCY ARRAY IN THIS USEEFFECT [!]
+    // [!] IT WILL BREAK THE FUNCTION! [!]  
   
   const [round, setRound] = useState(1);
   const [tutorialText1a, setTutorialText1a] = useState(TEXT_INITIAL_1a); // Text for Box 1
@@ -358,7 +362,7 @@ function GameTutorial() {
           )}
         </div>
       </div>
-      <h className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game' : 'Press SPACEBAR to continue'}</h>
+      <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game' : 'Press SPACEBAR to continue'}</h1>
     </div>
   );
 }

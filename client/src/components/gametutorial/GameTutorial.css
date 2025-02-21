@@ -147,7 +147,7 @@
   }
 
   .top {
-    border-top: 100px solid #fee868; /* Red for top-pointing triangles */
+    border-top: 100px solid #00ADFD; /* Red for top-pointing triangles */
   }
 
   /* .tutorial-triangle-left:hover {
@@ -166,7 +166,7 @@
   }
 
   .bottom {
-    border-bottom: 100px solid #fee868; /* Red for bottom-pointing triangles */
+    border-bottom: 100px solid #00ADFD; /* Red for bottom-pointing triangles */
   }
 
   /* .tutorial-triangle-right:hover {
@@ -294,7 +294,7 @@ font-weight: bold;
 /* differenciate from Game.css proceed-chat styling */
 .proceed-chat1 {
   margin: 100px;
-  background-color: #fee868; /*dark: #ba9f01, middle: #fdd700, light: #fee868*/
+  background-color: #00ADFD; /*dark: #0088c6a9, middle: #00ADFD, light: 46c4ff*/
   color: black;
   border: none;
   border-radius: 20px;

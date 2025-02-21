@@ -8,7 +8,7 @@
   content: attr(data-tooltip);
   position: absolute;
   left: 50%;
-  background-color: #ba9f01; /*dark: #ba9f01, middle: #fdd700, light: #fee868*/
+  background-color: #58caff; /*dark: #0088c6a9, middle: #00ADFD, light: #58caff*/
   color: var(--accent-three);
   font-size: 0.9em;
   font-family: var(--universal-font);
@@ -214,7 +214,7 @@
   text-align: center;
   font-family: var(--universal-font);
   font-size: 2em;
-  color: #fee868;
+  color: #58caff;
   animation: pulse 1s infinite;
 }
 

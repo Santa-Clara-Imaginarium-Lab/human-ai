@@ -6,14 +6,12 @@ import {
   TEXT_INITIAL_1a,
   TEXT_INITIAL_1b,
   TEXT_INITIAL_2,
+  TEXT_INITIAL_3,
+  TEXT_INITIAL_4,
   TEXT_COOPERATE_1,
-  TEXT_COOPERATE_2,
   TEXT_DEFECT_1,
-  TEXT_DEFECT_2,
   TEXT_COOPERATE_AGAIN_1,
-  TEXT_COOPERATE_AGAIN_2,
   TEXT_DEFECT_AGAIN_1,
-  TEXT_DEFECT_AGAIN_2,
 } from './constants';
 
 function GameTutorial() {
@@ -24,15 +22,49 @@ function GameTutorial() {
 
     
     const determineShow = (componentName) => {
+      // CONTROLS CONTAINER VISIBILITY
       const FOCUS_CONTAINER = 
         // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,  0,  0,  0,  0,  0];
+        [  1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,  0,  0,  1,  0,  0];
       const DECISION_TUTORIAL_BOX_1 = 
         // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1,  1,  1,  1,  1];
+        [  0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,  1,  1,  0,  1,  1];
       const DECISION_TUTORIAL_BOX_2 = 
         // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,  1,  1,  1,  1,  1];
+        [  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,  1,  0,  0,  1,  1];
+      const GAME_TUTORIAL_CONTENT = // INVERTED! 1 = HIDE
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,  0,  0,  1,  0,  0];
+
+      // CONTROLS TOOLTIPS
+      const TUTORIAL_HORIZONTAL_LAYOUT = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0,  0,  1,  0,  0,  0];
+      const AI_DEFECT_DESC = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+      const USER_DEFECT_DESC =
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+      const TUTORIAL_AI_SCORE = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+      const TUTORIAL_USER_SCORE = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+
+      // CONTROLS BUTTONS
+      const TUTORIAL_ACTION = 
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,  1,  0,  0,  0,  0];
+      const PROCEED_CHAT_TUTORIAL = // also a tooltip
+        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        [  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  1,  1];
+
+      // CONTROLS NAVIGATION
+      const NAVIGATE_CHAT_TUTORIAL =
+      // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+      [  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  1];
 
       switch (componentName) {
         case 'focus-container':
@@ -41,6 +73,26 @@ function GameTutorial() {
           return DECISION_TUTORIAL_BOX_1[tooltipIndex] === 1;
         case 'decision-tutorial-box2':
           return DECISION_TUTORIAL_BOX_2[tooltipIndex] === 1;
+        case 'game-tutorial-content':
+          return GAME_TUTORIAL_CONTENT[tooltipIndex] === 1;
+        case 'tutorial-horizontal-layout':
+          return TUTORIAL_HORIZONTAL_LAYOUT[tooltipIndex] === 1;
+        case 'ai-defect-desc':
+          return AI_DEFECT_DESC[tooltipIndex] === 1;
+        case 'user-defect-desc':
+          return USER_DEFECT_DESC[tooltipIndex] === 1;
+        case 'tutorial-ai-score':
+          return TUTORIAL_AI_SCORE[tooltipIndex] === 1;
+        case 'tutorial-user-score':
+          return TUTORIAL_USER_SCORE[tooltipIndex] === 1;
+        case 'tutorial-action':
+          return TUTORIAL_ACTION[tooltipIndex] === 1;
+        case 'proceed-chat-tutorial':
+          return PROCEED_CHAT_TUTORIAL[tooltipIndex] === 1;
+        case 'navigate-chat-tutorial':
+          return NAVIGATE_CHAT_TUTORIAL[tooltipIndex] === 1;
+        default:
+          return false;
       }
     };
     
@@ -54,7 +106,13 @@ function GameTutorial() {
       /* 6 */ "And this is how much you have.",
       /* 7 */ '',
       /* 8 */ '',
-      /* 9 */ 'This is the result of your decisions!',
+      /* 9 */ 'This is the result of your decisions! The AI defected.',
+      /* 10 */ '',
+      /* 11 */ '',
+      /* 12 */ 'This is the result of your decisions! The AI cooperated.',
+      /* 13 */ '',
+      /* 14 */ 'You can chat with the AI using this button.',
+      /* 15 */ 'It is always available on the game page. Press it now!',
     ];
 
     const WAIT_TIME = 15; // reduce when testing
@@ -62,16 +120,38 @@ function GameTutorial() {
     const handleKeyDown = (event) => {
       if (!(event.key === ' ')) return;
       if (canClick) {
+        // doesn't update in time!
+        console.log("prior Index:", tooltipIndex);
+
         let reEnableClick = true;
 
-        console.log("tooltipIndex:", tooltipIndex);
         setCanClick(false);
         setTooltipIndex((prevIndex) => prevIndex + 1);
-        switch (tooltipIndex) {
+
+
+        switch (tooltipIndex) { // USES "PRIOR INDEX!"
           case (6):
             setFocusTutorialText(TEXT_INITIAL_2);
             break;
           case (7):
+            reEnableClick = false;
+            setCanPlay(true);
+            break;
+          case (9):
+            setFocusTutorialText(TEXT_INITIAL_3);
+            setTutorialText2(TEXT_INITIAL_3);
+            setTutorialText1b(TEXT_INITIAL_1b);
+            break;
+          case (10):
+            reEnableClick = false;
+            setCanPlay(true);
+            break;
+          case (12): 
+            setFocusTutorialText(TEXT_INITIAL_4);
+            setTutorialText2(TEXT_INITIAL_4);
+            setTutorialText1b(TEXT_INITIAL_1b);
+            break;
+          case (14):
             reEnableClick = false;
             setCanPlay(true);
             break;
@@ -122,7 +202,7 @@ function GameTutorial() {
     if (round === 1) {
       highlightRound1();
       setTutorialText1b(TEXT_COOPERATE_1);
-      setTutorialText2(TEXT_COOPERATE_2);
+      setTutorialText2(TEXT_INITIAL_3);
       setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 0); // Increase user score
       setAiScore(aiScore + 5); // AI score doesn't change in this case
@@ -130,7 +210,7 @@ function GameTutorial() {
     } else if (round === 2) {
       highlightRound2();
       setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
-      setTutorialText2(TEXT_COOPERATE_AGAIN_2);
+      setTutorialText2(TEXT_INITIAL_4);
       setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 3); // Increase user score
       setAiScore(aiScore + 3); // AI score also increases
@@ -148,7 +228,7 @@ function GameTutorial() {
     if (round === 1) {
       highlightRound1();
       setTutorialText1b(TEXT_DEFECT_1);
-      setTutorialText2(TEXT_DEFECT_2);
+      setTutorialText2(TEXT_INITIAL_3);
       setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 1); // Increase user score
       setAiScore(aiScore + 1); // AI score also increases
@@ -156,7 +236,7 @@ function GameTutorial() {
     } else if (round === 2) {
       highlightRound2();
       setTutorialText1b(TEXT_DEFECT_AGAIN_1);
-      setTutorialText2(TEXT_DEFECT_AGAIN_2);
+      setTutorialText2(  TEXT_INITIAL_4);
       setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
       setUserScore(userScore + 5); // Increase user score
       setAiScore(aiScore + 0); // AI score increases more
@@ -211,14 +291,14 @@ function GameTutorial() {
       </div>
 
 {/* TODO: Turn these into determineShows and fill in their arrays */}
-      <div className={`game-tutorial-content ${(tooltipIndex === 0 ? 'hide' : '')}`}>
-        <div className={`tutorial-horizontal-layout ${(tooltipIndex === 1 || tooltipIndex === 2 || tooltipIndex === 9 ? ' show' : '')}`} data-tooltip={tooltipIndex === 1 || tooltipIndex === 2 || tooltipIndex === 9 ? tooltips[tooltipIndex] : null}>
-          <div className={`tutorial-ai-score ${(tooltipIndex === 5 ? ' show' : '')}`} data-tooltip={tooltipIndex === 5 ? tooltips[tooltipIndex] : null}>
+      <div className={`game-tutorial-content ${( determineShow("game-tutorial-content") ? 'hide' : '')}`}>
+        <div className={`tutorial-horizontal-layout ${( determineShow("tutorial-horizontal-layout") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-horizontal-layout") ? tooltips[tooltipIndex] : null}>
+          <div className={`tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null}>
             <h2>AI's Score: <span className="tutorial-score-value">{aiScore}</span></h2>
           </div>
           <div className="tutorial-column-1">
             <div className={`tutorial-triangle-left t1 ${highlightedTriangles.t1.highlight}`}>
-            <span className={`ai-defect-desc ${highlightedDesc.includes("ai-defect-desc") ? 'highlight' : ''} ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[tooltipIndex] : null}>AI WITHHOLD</span>
+            <span className={`ai-defect-desc ${highlightedDesc.includes("ai-defect-desc") ? 'highlight' : ''} ${(determineShow("ai-defect-desc") ? ' show' : '')}`} data-tooltip={determineShow("ai-defect-desc") ? tooltips[tooltipIndex] : null}>AI WITHHOLD</span>
               {highlightedTriangles.t1.number && <span className="triangle-number-left-bottom">{highlightedTriangles.t1.number}</span>}
             </div>
           </div>
@@ -248,32 +328,30 @@ function GameTutorial() {
           </div>
           <div className="tutorial-column-4">
             <div className={`tutorial-triangle-right t8 ${highlightedTriangles.t8.highlight}`}>
-            <span className={`user-defect-desc ${highlightedDesc.includes("user-defect-desc") ? 'highlight' : ''} ${(tooltipIndex === 4 ? ' show' : '')}`} data-tooltip={tooltipIndex === 4 ? tooltips[tooltipIndex] : null}>YOU WITHHOLD</span>
+            <span className={`user-defect-desc ${highlightedDesc.includes("user-defect-desc") ? 'highlight' : ''} ${(determineShow("user-defect-desc") ? ' show' : '')}`} data-tooltip={determineShow("user-defect-desc") ? tooltips[tooltipIndex] : null}>YOU WITHHOLD</span>
               {highlightedTriangles.t8.number != null && <span className="triangle-number-right-up">{highlightedTriangles.t8.number}</span>}
             </div>
           </div>
-          <div className={`tutorial-user-score ${(tooltipIndex === 6 ? ' show' : '')}`} data-tooltip={tooltipIndex === 6 ? tooltips[tooltipIndex] : null}>
+          <div className={`tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null}>
             <h2>Your Score: <span className="tutorial-score-value">{userScore}</span></h2>
           </div>
         </div>
 
         <div className="tutorial-action">
-          {!isComplete && (
             <>
-              {tooltipIndex === 8 && <button className="tutorial-button cooperate" onClick={handleCooperate}>
+              {!isComplete && determineShow("tutorial-action") && <button className="tutorial-button cooperate" onClick={handleCooperate}>
                 SHARE
                 <div>(cooperate)</div>
               </button>}
-              {tooltipIndex === 8 && <button className="tutorial-button defect" onClick={handleDefect}>
+              {!isComplete && determineShow("tutorial-action") && <button className="tutorial-button defect" onClick={handleDefect}>
                 WITHHOLD
                 <div>(defect)</div>
               </button>}
             </>
-          )}
 
-          {isComplete && (
+          {determineShow("proceed-chat-tutorial") && (
           <div>
-            <button className="proceed-chat" onClick={() => navigate('/chatbot-tutorial')}>
+            <button className={`proceed-chat-tutorial ${(determineShow("navigate-chat-tutorial") ? '' : 'proceed-chat-tutorial-disabled')} ${(determineShow("proceed-chat-tutorial") ? ' show' : '')}`} data-tooltip={determineShow("proceed-chat-tutorial") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/chatbot-tutorial') : null }}>
             Go to Chat
             </button>
           </div>

@@ -8,9 +8,13 @@ function Login({changeTheme, changePersonality}) {
   const navigate = useNavigate();
   const { login } = useUser();
 
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (userId.trim()) {
+      setIsLoggingIn(true);
+
       // Check if userId exists in the chats collection
       const response = await fetch(`https://human-ai-9bp5.onrender.com/api/chats?userId=${userId}`);
       if (!response.ok) {
@@ -62,6 +66,9 @@ function Login({changeTheme, changePersonality}) {
           </div>
         </div>
       </div>
+      {/* Using dupe css */}
+      <h className={isLoggingIn ? 'welcome-info-can' : 'welcome-info-hide'}>{isLoggingIn ? 'Server is booting up... Please Wait!' : ' '}</h>
+
     </div>
   );
 }

@@ -342,13 +342,16 @@ main {
   0% {
     opacity: 0;
   }
-  33% {
+  50% {
+    opacity: 0;
+  }
+  62.5% {
     transform: rotate(5deg);
   }
-  50% {
+  75% {
     bottom: 2%;
   }
-  66% {
+  87.5% {
     transform: rotate(-5deg);
   }
   100% {
@@ -361,11 +364,7 @@ main {
   0%, 100% {
     transform: translate(0, 0);
   }
-  33% {
-    transform: translate(0, 0.25em);
-  }
-  66% {
+  50% {
     transform: translate(0, -0.25em);
   }
 }
-

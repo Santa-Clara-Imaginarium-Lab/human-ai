@@ -175,7 +175,7 @@ function GameTutorial() {
 
           {isComplete && (
           <div>
-            <button className="proceed-chat" onClick={() => navigate('/chatbot-tutorial')}>
+            <button className="proceed-chat1" onClick={() => navigate('/chatbot-tutorial')}>
             Go to Chat
             </button>
           </div>

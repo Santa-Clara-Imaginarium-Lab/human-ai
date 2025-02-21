@@ -147,7 +147,7 @@
   }
 
   .top {
-    border-top: 100px solid var(--button-two); /* Red for top-pointing triangles */
+    border-top: 100px solid #fee868; /* Red for top-pointing triangles */
   }
 
   /* .tutorial-triangle-left:hover {
@@ -166,7 +166,7 @@
   }
 
   .bottom {
-    border-bottom: 100px solid var(--button-two); /* Red for bottom-pointing triangles */
+    border-bottom: 100px solid #fee868; /* Red for bottom-pointing triangles */
   }
 
   /* .tutorial-triangle-right:hover {
@@ -197,7 +197,7 @@
     transform: rotate(270deg);
     font-size: 14px;
     font-weight: bold;
-    color: var(--score); /* Adjust for visibility */
+    color: black; /* Adjust for visibility */
     text-align: center;
     pointer-events: none; /* Prevent interaction with numbers */
     font-size: 26px;
@@ -223,7 +223,7 @@
     transform: rotate(270deg);
     font-size: 14px;
     font-weight: bold;
-    color: var(--score); /* Adjust for visibility */
+    color: black; /* Adjust for visibility */
     text-align: center;
     font-size: 26px;
     pointer-events: none; /* Prevent interaction with numbers */
@@ -291,10 +291,11 @@ font-weight: bold;
   color: white; /* Yellow */
 }
 
-.proceed-chat {
+/* differenciate from Game.css proceed-chat styling */
+.proceed-chat1 {
   margin: 100px;
-  background-color: var(--accent-three);
-  color: white;
+  background-color: #fee868; /*dark: #ba9f01, middle: #fdd700, light: #fee868*/
+  color: black;
   border: none;
   border-radius: 20px;
   padding: 0.5em 1.5em;
@@ -303,8 +304,8 @@ font-weight: bold;
   box-shadow: 0.3em 0.3em 0 0 var(--button-two);
   font-family: var(--universal-font);
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 10px;
+  top: 10px;
   transform-origin: top right;
 }
 

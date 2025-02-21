@@ -318,7 +318,7 @@ font-weight: bold; */
     border-bottom: 100px solid var(--med-accent);
   }
 
-  .highlight {
+  .highlight-game {
     font-weight: bold;
     color: white; /* Yellow */
   }

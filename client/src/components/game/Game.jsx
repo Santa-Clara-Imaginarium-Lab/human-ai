@@ -509,7 +509,7 @@ function Game() {
           <div className="column-4">
             <div className={`triangle-right ${highlightedTriangles.includes('t8') ? 'highlight' : ''}`}>
               {highlightedTriangles.includes('t8') && <span className="triangle-number-right-up">{triangleNumbers.t8}</span>}
-              <span className={`user-defect-desc ${highlightedDesc.userDefect ? 'highlight' : ''}`}>YOU WITHHOLD</span>
+              <span className={`user-defect-label ${highlightedDesc.userDefect ? 'highlight' : ''}`}>YOU WITHHOLD</span>
             </div>
           </div>
           <div className="column-5">

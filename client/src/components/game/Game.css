@@ -11,8 +11,78 @@
     flex-direction: column;
     align-items: center;
   }
+
+.ai-defect-label {
+    position: relative;
+    left: -120px; 
+    bottom: 50px;
+    font-weight: bold;
+    display: inline-block; 
+    transform: rotate(225deg);  
+    transform-origin: center; 
+  }
+
+.ai-cooperate-label {
+  position: relative;
+  left: -90px; 
+  bottom: 40px;
+  font-weight: bold;
+  display: inline-block; 
+  transform: rotate(225deg);  
+  transform-origin: center; 
+
+  /* OLD!!! 
+  position: absolute;
+  left: -116px; 
+  bottom: 25px;
+  color: var(--accent-three);
+  font-size: 14px;
+  white-space: nowrap;
+  transform: rotate(225deg);
+  font-weight: bold; */
+}
+
+.user-defect-label {
+  position: relative;
+  left: -105px; 
+  bottom: 0px;
+  font-weight: bold;
+  display: inline-block; 
+  transform: rotate(315deg);  
+  transform-origin: center; 
+
+/*   OLD!!!
+  position: absolute;
+  left: -110px; 
+  top: 30px;
+  color: var(--accent-three);
+  font-size: 14px;
+  white-space: nowrap;
+  transform: rotate(315deg);
+  font-weight: bold; */
+}
+
+.user-cooperate-label {
+  position: relative;
+  left: -85px; 
+  bottom: 5px;
+  font-weight: bold;
+  display: inline-block; 
+  transform: rotate(315deg);  
+  transform-origin: center; 
+
+  /* OLD!!! 
+position: absolute;
+left: -120px; 
+top: 30px;
+color: var(--accent-three);
+font-size: 14px;
+white-space: nowrap;
+transform: rotate(315deg);
+font-weight: bold; */
+}
   
-  .ai-cooperate-label {
+  /* .ai-cooperate-label {
     position: relative;
     top: -45px;
     margin-left: 25px;
@@ -27,7 +97,7 @@
     display: inline-block;  
     transform: rotate(-45deg);  
     transform-origin: center;  
-  }
+  } */
   
   /* Horizontal layout for AI score, triangle grid, and User score */
   .horizontal-layout {

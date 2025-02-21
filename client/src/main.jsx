@@ -22,6 +22,7 @@ import Game from './components/game/Game.jsx'
 import Login from './components/login/Login.jsx'
 import Brief from './components/brief/Brief.jsx'
 import ConsentForm from './components/consentForm/ConsentForm.jsx'
+import BadEnding from './components/badEnding/BadEnding.jsx';
 
 import PersonalityQuestions from './components/personalityQuestions/PersonalityQuestions.jsx'
 import DemographicQuestion1 from './components/demographicQuestions/DemographicQuestion1.jsx'
@@ -226,6 +227,10 @@ function MainApp() {
         {
           path: "/complete",
           element: <Complete />,
+        },
+        {
+          path: "/badEnding",
+          element: <BadEnding />,
         },
       ],
     },

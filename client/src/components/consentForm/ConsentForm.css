@@ -1,27 +1,38 @@
 Tutorial.css
+
+html, body {
+  overflow: auto; /* Allows scrolling */
+  height: 100%; /* Ensures the page respects content height */
+}
+
+
 .tutorial-container {
     background-color: var(--background-one);
   }
 
-  .survey-shadow-container {
+  .con-shadow-container {
+    margin-top: 100px;
     background-color: white;
     border-radius: 3em;
     box-shadow: 10px 10px 0 0 var(--accent-one);
-    display: flex;
-    flex-direction: column;
     align-items: center;  /* Center align content horizontally */
-    justify-content: center;  /* Center align content vertically */
     padding: 40px 20px; /* Add padding for spacing */
     position: relative; /* Position context for the shadow */
-    width: 65%;
+    white-space: pre-line;
+    text-align: justify;
+    width: 80%;
+    overflow-y: auto;
+    height: 50%
   }
   
-  .brief-subtitle {
+  .con-subtitle {
+    top: 0;
     margin: 20px;
     margin-bottom: 1em;
     color: var(--accent-three);
     font-size: 30px;
     font-family: var(--universal-font);
+    font-size: 80px;
   }
   
   .brief-options {
@@ -30,8 +41,23 @@ Tutorial.css
     font-family: var(--universal-font);
   }
   
+  #yes-button {
+    margin-top: 25px;
+    margin-left:55vh;
+    padding: 0.5em 1.5em;
+    background-color: var(--button-one);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 black;
+  }
+
   #no-button {
     margin-top: 25px;
+    margin-left:0;
     padding: 0.5em 1.5em;
     background-color: var(--button-one);
     color: white;
@@ -44,6 +70,7 @@ Tutorial.css
   }
 
   #no-button:active {
+    align-items: center;  /* Center align content horizontally */
     /* Simulate the button being pressed */
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */

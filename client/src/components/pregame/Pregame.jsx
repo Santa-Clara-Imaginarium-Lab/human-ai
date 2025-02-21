@@ -13,9 +13,9 @@ function Pregame() {
 
     const terms =[
         "We have finished the tutorial.",
-        "The goal of this job is for you to make the best investment decision with the AI Agent.",
+        "You will now experience up to 5 days at Caboodle with the AI.",
         "You have the option to chat with the AI Agent if you would like to understand their strategy, but it is not required.",
-        "Please go through your job with intent, we are excited to see your results!"
+        "Please go through your job with intent. We are excited to see your results!"
     ];
 
     useEffect(() => {

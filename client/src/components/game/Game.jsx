@@ -208,6 +208,7 @@ function Game() {
   const defectButtonRef = useRef(null);
   const [isFirstDecision, setisFirstDecision] = useState(true);
   const [hoveredTriangles, setHoveredTriangles] = useState([]); // New state for hovered triangles
+  const [selectedDecisionTriangles, setSelectedDecisionTriangles] = useState([]); // New state for selected decision triangles
 
   const addChoices = (aiChoice, userChoice) => {
     let aiChoices = JSON.parse(sessionStorage.getItem('aiChoices')) || [];
@@ -248,7 +249,15 @@ function Game() {
         setisFirstDecision(false);
         break;
     }
-  };  
+  };
+
+  const handleShareClick = () => {
+    setSelectedDecisionTriangles(['t1', 't2', 't3', 't5']); 
+  };
+
+  const handleWithholdClick = () => {
+    setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
+  };
 
   const handleLockIn = async () => {
     if (isRoundOver) return; // Prevent further gameplay if the game is over
@@ -363,7 +372,7 @@ function Game() {
     setHighlightedTriangles(highlightTriangles);
     setTriangleNumbers(numbers);
     setHighlightedDesc(newDescHighlight);
-
+    setSelectedDecisionTriangles([]);
     setIsRoundOver(true);
 
     // Move to the next round or end the game
@@ -456,46 +465,54 @@ function Game() {
           </div>
           <div className="column-1">
             <div 
-              className={`triangle-left ${highlightedTriangles.includes('t1') || hoveredTriangles.includes('t1') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} onMouseLeave={() => setHoveredTriangles([])}>
+              className={`triangle-left ${highlightedTriangles.includes('t1') || hoveredTriangles.includes('t1') || selectedDecisionTriangles.includes('t1') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t1') && <span className="triangle-number-left-bottom">{triangleNumbers.t1}</span>}
               {hoveredTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
+              {selectedDecisionTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
               <span className={`ai-defect-desc ${highlightedDesc.aiDefect ? 'highlight' : ''}`}>AI WITHHOLD</span>
             </div>
           </div>
           <div className="column-2">
-            <div className={`triangle-left ${highlightedTriangles.includes('t2') || hoveredTriangles.includes('t2') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} onMouseLeave={() => setHoveredTriangles([])}>
+            <div className={`triangle-left ${highlightedTriangles.includes('t2') || hoveredTriangles.includes('t2') || selectedDecisionTriangles.includes('t2') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t2') && <span className="triangle-number-left-up">{triangleNumbers.t2}</span>}
               {hoveredTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
+              {selectedDecisionTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
               <span className={`ai-cooperate-desc ${highlightedDesc.aiCooperate ? 'highlight' : ''}`}>AI SHARE</span>
             </div>
-            <div className={`triangle-right ${highlightedTriangles.includes('t3') || hoveredTriangles.includes('t3') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} onMouseLeave={() => setHoveredTriangles([])}>
+            <div className={`triangle-right ${highlightedTriangles.includes('t3') || hoveredTriangles.includes('t3') || selectedDecisionTriangles.includes('t3') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t3') && <span className="triangle-number-right-bottom">{triangleNumbers.t3}</span>}
-              {hoveredTriangles.includes('t1') && <span className="triangle-number-right-bottom">+0</span>}
+              {hoveredTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
+              {selectedDecisionTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
             </div>
-            <div className={`triangle-left ${highlightedTriangles.includes('t4') || hoveredTriangles.includes('t4') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} onMouseLeave={() => setHoveredTriangles([])}>
+            <div className={`triangle-left ${highlightedTriangles.includes('t4') || hoveredTriangles.includes('t4')  || selectedDecisionTriangles.includes('t4')? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t4') && <span className="triangle-number-left-bottom">{triangleNumbers.t4}</span>}
               {hoveredTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
+              {selectedDecisionTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
             </div>
           </div>
           <div className="column-3">
-            <div className={`triangle-right ${highlightedTriangles.includes('t5') || hoveredTriangles.includes('t5') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} onMouseLeave={() => setHoveredTriangles([])}>
+            <div className={`triangle-right ${highlightedTriangles.includes('t5') || hoveredTriangles.includes('t5') || selectedDecisionTriangles.includes('t5') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t5') && <span className="triangle-number-right-up">{triangleNumbers.t5}</span>}
               {hoveredTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
+              {selectedDecisionTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
               <span className={`user-cooperate-desc ${highlightedDesc.userCooperate ? 'highlight' : ''}`}>YOU SHARE</span>
             </div>
-            <div className={`triangle-left ${highlightedTriangles.includes('t6') || hoveredTriangles.includes('t6') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} onMouseLeave={() => setHoveredTriangles([])}>
+            <div className={`triangle-left ${highlightedTriangles.includes('t6') || hoveredTriangles.includes('t6') || selectedDecisionTriangles.includes('t6') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t6') && <span className="triangle-number-left-up">{triangleNumbers.t6}</span>}
               {hoveredTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
+              {selectedDecisionTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
             </div>
-            <div className={`triangle-right ${highlightedTriangles.includes('t7') || hoveredTriangles.includes('t7') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} onMouseLeave={() => setHoveredTriangles([])}>
+            <div className={`triangle-right ${highlightedTriangles.includes('t7') || hoveredTriangles.includes('t7') || selectedDecisionTriangles.includes('t7') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t7') && <span className="triangle-number-right-bottom">{triangleNumbers.t7}</span>}
               {hoveredTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
+              {selectedDecisionTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
             </div>
           </div>
           <div className="column-4">
-            <div className={`triangle-right ${highlightedTriangles.includes('t8') || hoveredTriangles.includes('t8') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} onMouseLeave={() => setHoveredTriangles([])}>
+            <div className={`triangle-right ${highlightedTriangles.includes('t8') || hoveredTriangles.includes('t8') || selectedDecisionTriangles.includes('t8') ? 'highlight' : ''}`} onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} onMouseLeave={() => setHoveredTriangles([])}>
               {highlightedTriangles.includes('t8') && <span className="triangle-number-right-up">{triangleNumbers.t8}</span>}
               {hoveredTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
+              {selectedDecisionTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
               <span className={`user-defect-desc ${highlightedDesc.userDefect ? 'highlight' : ''}`}>YOU WITHHOLD</span>
             </div>
           </div>
@@ -515,11 +532,11 @@ function Game() {
         <div className="action">
           {!isRoundOver ? (
             <>
-              <button className="proceed-button" ref={coopButtonRef} onClick={() => handleUserDecision('Cooperate')}>
+              <button className="proceed-button" ref={coopButtonRef} onClick={() => { handleUserDecision('Cooperate'); handleShareClick(); }}>
                 SHARE
                 <div>(cooperate)</div>
               </button>
-              <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
+              <button className="proceed-button" ref={defectButtonRef} onClick={() => { handleUserDecision('Defect'); handleWithholdClick();}}>
                 WITHHOLD
                 <div>(defect)</div>
               </button>

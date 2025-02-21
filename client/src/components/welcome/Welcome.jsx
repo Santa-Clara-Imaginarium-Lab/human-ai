@@ -276,7 +276,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
 
                 </div>
             </div>
-            <h className={isCheckingGuest ? 'welcome-info-can' : 'welcome-info-hide'}>{isCheckingGuest ? 'Generating Guest ID...' : ' '}</h>
+            <h className={isCheckingGuest ? 'welcome-info-can' : 'welcome-info-hide'}>{isCheckingGuest ? 'Server is booting up... Please Wait!' : ' '}</h>
         </div>
     );
 };

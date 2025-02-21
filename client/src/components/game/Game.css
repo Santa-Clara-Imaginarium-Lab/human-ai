@@ -226,12 +226,28 @@
     margin-top: 30px;
   }
   
-  .triangle-left.highlight {
-    border-top: 100px solid var(--button-two);
+  .triangle-left.highlight1 {
+    border-top: 100px solid var(--dark-accent);
   }
   
-  .triangle-right.highlight {
-    border-bottom: 100px solid var(--button-two);
+  .triangle-left.highlight2 {
+    border-top: 100px solid var(--light-accent);
+  }
+
+  .triangle-left.highlight3 {
+    border-top: 100px solid var(--med-accent);
+  }
+
+  .triangle-right.highlight1 {
+    border-bottom: 100px solid var(--dark-accent);
+  }
+
+  .triangle-right.highlight2 {
+    border-bottom: 100px solid var(--light-accent);
+  }
+
+  .triangle-right.highlight3 {
+    border-bottom: 100px solid var(--med-accent);
   }
 
   .highlight {

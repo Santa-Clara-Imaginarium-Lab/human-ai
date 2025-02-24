@@ -1,5 +1,6 @@
 :root {
   --universal-font: 'Jockey One';
+  --secondary-font: 'DM Sans';
 }
 
 /* better approach: update global c1 and c2 variables

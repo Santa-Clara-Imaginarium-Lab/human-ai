@@ -134,9 +134,9 @@ main {
   z-index: 2;
 }
 
-.button-menu {
+.button-menu-complete {
   position: absolute;
-  top: 50vh;
+  top: 65vh;
   left: 10vw;
   display: flex;
   flex-direction: column;

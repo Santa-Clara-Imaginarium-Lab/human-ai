@@ -65,13 +65,14 @@ const Complete = ({changeTheme, changePersonality}) => {
             <div className="polygon"></div>
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Complete!</h1>
-            <div className="button-menu">
+            <div className="button-menu-complete">
                 <div
                     className={`menu-arrow ${isArrowVisible ? "visible" : "hidden"}`}
                     ref={arrowRef}
                 >
                     &gt;
                 </div>
+                {sessionStorage.getItem("isResearchMode")  === "false" && 
                 <button
                     className="play-button"
                     onClick={handlePlayClick}
@@ -79,7 +80,9 @@ const Complete = ({changeTheme, changePersonality}) => {
                     onMouseLeave={hideArrow}
                 >
                     Play Again!
-                </button>
+                </button>}
+                {/* WE GETTING CLOSE TO PRODUCTION 
+                SORRY RICKROLL YOU GOTTA GO
                 <button
                     className={`play-button ${sessionStorage.getItem("isResearchMode")  === "true" ? "hidden" : "visible"}`}
                     onClick={handleSecretsClick}
@@ -87,9 +90,18 @@ const Complete = ({changeTheme, changePersonality}) => {
                     onMouseLeave={hideArrow}
                 >
                     Secrets
-                </button>
+                </button> */}
                 {console.log("Button class:", sessionStorage.getItem("isResearchMode") === "true" ? "hidden" : "visible")}
             </div>
+            {sessionStorage.getItem("isResearchMode") === "true" && 
+                <div className="announce-text">
+                <p>
+                    Thank you for playing our game and participating in our study!
+                </p>
+                <p>
+                    You are done. You may now close this window.
+                </p>
+            </div>}
         </div>
     );
 };

@@ -229,7 +229,7 @@ function MainApp() {
           element: <Complete />,
         },
         {
-          path: "/badEnding",
+          path: "/bad-ending",
           element: <BadEnding />,
         },
       ],

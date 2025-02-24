@@ -15,6 +15,21 @@ const RoleModel = () => {
 
     const navigate = useNavigate();
 
+    const [showBt, setShowBt] = useState(true);
+    const [briefGo, setBriefGo] = useState(false);
+    const [btuGo, setBtuGo] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setBtuGo(true); // Show the underline
+        }, 500)
+        setTimeout(() => {
+            setBriefGo(true); // Hide the brief transitioner
+            setShowBt(false); // Hide the header
+        }, 2000)
+    }, []);
+
+
     // Fill in missing rounds with X's
     for (let i = MAX_ROUNDS; i < MAX_POSSIBLE_ROUNDS; i++) {
         aiChoices.push('X');
@@ -31,6 +46,12 @@ const RoleModel = () => {
 
     return (
         <div className="container end-screen-container1">
+            {showBt && <div className={`brief-transitioner ${briefGo ? 'brief-go' : ''}`}>
+                    <h1 className="brief-transitioner-text">Chatbot Archetype</h1>
+                    <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
+                </div>
+            }
+
             <div className="results-container">
                 <div className="win-banner1">
                     <div className="win-text">Chatbot Archetype</div>
@@ -55,7 +76,7 @@ const RoleModel = () => {
                                             <span>
                                                 {aiChoices[index] === 'Cooperate' ? '✔' : ''}
                                             </span>
-                                            <span>Round {index + 1}</span>
+                                            <span>Day {index + 1}</span>
                                             <span>
                                                 {aiChoices[index] === 'Defect' ? '✔' : ''}
                                             </span>

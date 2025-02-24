@@ -30,7 +30,7 @@ const EndScreen = () => {
     const navigate = useNavigate();
     
     const handleClick = () => {
-        if(sessionStorage.getItem("isResearchMode") === "true"){
+        // if(sessionStorage.getItem("isResearchMode") === "true"){
             if (personality == "average") {
                 navigate('/average');
             }
@@ -51,9 +51,9 @@ const EndScreen = () => {
                 navigate('/self-centered')
             }
 
-        } else {
-            navigate('/complete');
-        }
+        // } else {
+        //     navigate('/complete');
+        // }
     }
 
     useEffect(() => {

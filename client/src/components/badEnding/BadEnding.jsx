@@ -65,18 +65,14 @@ const Complete = ({changeTheme, changePersonality}) => {
             <div className="polygon"></div>
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Canceled!</h1>
-            <div className="button-menu">
-                <div
-                    className={`menu-arrow ${isArrowVisible ? "visible" : "hidden"}`}
-                    ref={arrowRef}
-                >
-                    &gt;
-                </div>
+            <div className="announce-text">
                 <p>
                     Experiment terminated. 
                     Your user ID has been locked.
                 </p>
-                {console.log("Button class:", sessionStorage.getItem("isResearchMode") === "true" ? "hidden" : "visible")}
+                <p>
+                    Please contact the researchers if this was done in error.
+                </p>
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import './ConsentForm.css';
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect, useRef } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
 // todo: change font on these screens
@@ -13,6 +13,9 @@ function ConsentForm() {
 
     const [briefGo, setBriefGo] = useState(false);
     const [btuGo, setBtuGo] = useState(false);
+
+    const [confirnNo, setConfirnNo] = useState(false);
+    const noRef = useRef(null);
 
     const terms = [
         "OPTIMIZING TRUST IN HUMAN-AI INTERACTIONS INFORMED CONSENT FORM \n\n 1. David C. Jeong, Assistant Professor and Erin Schmidt, Research Assistant at Santa Clara University, have requested your participation in a research study at this institution. \n\n2. The purpose of the research is to study human-AI interaction (HAX). Participants will engage in a Prisoner’s DIlemma-style trust game, interacting with AI chatbots designed to reflect distinct personalities. These chatbots will demonstrate unique language patterns and decision-making strategies, offering a dynamic approach to studying trust-building." 
@@ -37,7 +40,11 @@ function ConsentForm() {
     };
 
     const handleClickNo = () => {
-        navigate('/BadEnding'); 
+        if (!confirnNo) {
+            setConfirnNo(true);
+            noRef.current.textContent = "Are you sure?";
+        } else
+            navigate('/bad-ending'); 
     };
 
     useEffect(() => {
@@ -54,9 +61,9 @@ function ConsentForm() {
     return (
         <div className="container tutorial-container">
             <div className={`brief-transitioner ${briefGo ? 'brief-go' : ''}`}>
-                <h1 className="con-subtitle"> Consent Form </h1>
+                <h1 className="brief-transitioner-text con-subtitle"> Consent Form </h1>
                 <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
-                </div>
+            </div>
                 <div className='con-shadow-container'>
                 <h2><p>{terms}</p></h2>
                 <div className="brief-options">
@@ -66,7 +73,7 @@ function ConsentForm() {
                 </button>
                 <button id="no-button" onClick={handleClickNo} disabled={isDisabled}>
                     {isDisabled && <span>Wait</span>}
-                    {!isDisabled && <span>I do not consent</span>}
+                    {!isDisabled && <span ref={noRef}>I do not consent</span>}
                 </button>
                 </div>
             </div>

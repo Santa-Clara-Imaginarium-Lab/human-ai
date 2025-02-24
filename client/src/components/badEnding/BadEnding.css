@@ -329,3 +329,18 @@ button.hidden {
   outline: none;
   background-color: white; /* override disabled input background */
 }
+
+.announce-text {
+  position: absolute;
+  bottom: 0px;
+  left: 0%;
+  width: 100%;
+  margin: 0px;
+  margin-bottom: 1em;
+  color: var(--accent-three);
+  font-size: 40px;
+  font-family: var(--universal-font);
+  text-align: center;
+  overflow-wrap: break-word;
+}
+  

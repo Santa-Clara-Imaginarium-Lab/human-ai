@@ -150,7 +150,7 @@
 }
 
 .login-tip p {
-  font-family: var(--universal-font);
+  font-family: var(--secondary-font);
   color: var(--accent-three);
 }
 

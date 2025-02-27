@@ -154,6 +154,7 @@
     padding: 5%;
     border: 8px solid var(--c2);
     border-radius: 25px;
+    font-family: var(--secondary-font);
 }
 
 .personality::after { /* Sticker note tail */
@@ -182,7 +183,7 @@
     gap: 0.5em;
     flex: 1.5;
     height: 100%;
-
+    font-family: var(--secondary-font);
     border: 8px solid var(--c2);
     border-radius: 25px;
 }

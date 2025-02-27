@@ -268,6 +268,8 @@
     font-size: 1.7em;
     color: var(--accent-five);
     text-align: left;
+    font-family: var(--secondary-font);
+    font-weight: bold;
 }
 
 .vertical-divider1 {

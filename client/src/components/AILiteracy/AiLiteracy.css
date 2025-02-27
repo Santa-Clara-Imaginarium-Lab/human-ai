@@ -3,7 +3,7 @@
 }
 
 .qualtrix-container {
-    font-family: var(--universal-font);
+    font-family: var(--secondary-font);
     text-align: center;
     background-color: white;
     border-radius: 3em;
@@ -36,11 +36,12 @@
     }
     
     .description {
-      font-size: large;
+      font-size: 2em;
       color: #666;
       margin-bottom: 20px;
       text-align: left;
       margin-left: 10px; /* Aligns with the statements */
+      font-weight: bold;
     }
     
     .qualtrix-grid {

@@ -34,7 +34,6 @@ Tutorial.css
     display: flex;
     flex-direction: column;
     gap: 1em;
-    font-family: var(--universal-font);
   }
 
   .demographic-option {
@@ -47,7 +46,7 @@ Tutorial.css
     margin-left: 20px;
     font-size: large;
     font-weight: bold;
-    font-family: var(--universal-font);
+    font-family: var(--secondary-font);
     color: var(--accent-two);
   }
   

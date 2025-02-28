@@ -452,6 +452,11 @@ function Game() {
     <div className="container game">
       <div className="game-content">
 
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
+        <p>FREE PLAY Active. Your data is not being recorded.</p>
+      </div>
+
+
         {showRt && <div className={`round-transitioner ${rtGo ? 'round-go' : ''}`}>
             <h1 className="round-transitioner-text"> Day {currentRound} </h1>
             <div className={`round-transitioner-underline ${rtuGo ? 'round-underline-go' : ''}`}/>

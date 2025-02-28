@@ -65,6 +65,10 @@ function PostGameFreeResponse() {
 
   return (
     <div className="container survey-question">
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
+        <p>FREE PLAY Active. Your data is not being recorded.</p>
+      </div>
+
       <div className="question-container">
         <h2 className="fr-question-subtitle">{questions[currentQuestionIndex]}</h2>
         <textarea

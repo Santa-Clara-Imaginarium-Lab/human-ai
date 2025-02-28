@@ -48,8 +48,9 @@ function Question() {
         }
 
         console.log('Survey responses saved successfully');
-        navigate('/end-screen'); // Simply navigate to end screen after all questions
-        
+        //navigate('/end-screen'); // Simply navigate to end screen after all questions
+        navigate('/postgamefreeresponse');
+
       } catch (error) {
         console.error('Error saving responses:', error);
       }

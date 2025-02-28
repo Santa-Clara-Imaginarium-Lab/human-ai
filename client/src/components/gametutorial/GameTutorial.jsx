@@ -3,8 +3,25 @@ import './GameTutorial.css';
 import { useNavigate } from 'react-router-dom';
 
 import {
+  // Starting text
   TEXT_INITIAL_1a,
   TEXT_INITIAL_1b,
+  // Four scenarios explanation
+  TEXT_INITIAL_CCa,
+  TEXT_INITIAL_CCb,
+  TEXT_INITIAL_WCa,
+  TEXT_INITIAL_WCb,
+  TEXT_INITIAL_CWa,
+  TEXT_INITIAL_CWb,
+  TEXT_INITIAL_WWa,
+  TEXT_INITIAL_WWb,
+  // Transition before showing matrix
+  TEXT_TRANSITIONa,
+  TEXT_TRANSITIONb,
+  // Transition before free play
+  TEXT_FREEPLAY_INTROa,
+  TEXT_FREEPLAY_INTROb,
+
   TEXT_INITIAL_2,
   TEXT_INITIAL_3,
   TEXT_INITIAL_4,
@@ -18,53 +35,103 @@ function GameTutorial() {
     const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
     const [canClick, setCanClick] = useState(true);
     const [canPlay, setCanPlay] = useState(false);
-    const [focusTutorialText, setFocusTutorialText] = useState(TEXT_INITIAL_1a);
-
+    const [focusTutorialTextA, setFocusTutorialTextA] = useState(TEXT_INITIAL_1a);
+    const [focusTutorialTextB, setFocusTutorialTextB] = useState(TEXT_INITIAL_1b);
+    const [tutorialText1a, setTutorialText1a] = useState(TEXT_INITIAL_1a);
+    const [tutorialText1b, setTutorialText1b] = useState(TEXT_INITIAL_1b); 
+    const [tutorialText2, setTutorialText2] = useState(TEXT_INITIAL_2); 
     
     const determineShow = (componentName) => {
+      // TURN CYCLES (vertically aligns with numbers in arrays)
+        //  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 
+        // 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29.
+      
       // CONTROLS CONTAINER VISIBILITY
       const FOCUS_CONTAINER = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,  0,  0,  1,  0,  0];
+        [   1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
       const DECISION_TUTORIAL_BOX_1 = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,  1,  1,  0,  1,  1];
+        [   0,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+            0,  1,  1,  1,  1,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  
+            1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
       const DECISION_TUTORIAL_BOX_2 = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,  1,  0,  0,  1,  1];
-      const GAME_TUTORIAL_CONTENT = // INVERTED! 1 = HIDE
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,  0,  0,  1,  0,  0];
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  
+            1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
+      const GAME_TUTORIAL_CONTENT = // NOTE: INVERTED! 1 = hidden
+        [   1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
 
       // CONTROLS TOOLTIPS
       const TUTORIAL_HORIZONTAL_LAYOUT = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0,  0,  1,  0,  0,  0];
+        [   0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0, 
+            0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
       const AI_DEFECT_DESC = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0, 
+            0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
       const USER_DEFECT_DESC =
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0, 
+            0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
       const TUTORIAL_AI_SCORE = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0, 
+            0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
       const TUTORIAL_USER_SCORE = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,  0,  0,  0,  0,  0];
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0, 
+            0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
 
       // CONTROLS BUTTONS
-      const TUTORIAL_ACTION = 
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,  1,  0,  0,  0,  0];
-      const PROCEED_CHAT_TUTORIAL = // also a tooltip
-        // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        [  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  1,  1];
+      const TUTORIAL_ACTION =
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 
+            1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
+      const TUTORIAL_BUTTON_TOOLTIP =
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
+      const CHAT_TUTORIAL_BUTTON =
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0, 
+            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  
+            1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
+      const CHAT_TUTORIAL_TOOLTIP =
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0, 
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
 
-      // CONTROLS NAVIGATION
+      // CONTROLS ALLOW/DENY BUTTONS
+      const NAVIGATE_LOCK_IN =
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
       const NAVIGATE_CHAT_TUTORIAL =
-      // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-      [  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  1];
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
+      const END_TUTORIAL =
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+            0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        ];
 
       switch (componentName) {
         case 'focus-container':
@@ -87,10 +154,20 @@ function GameTutorial() {
           return TUTORIAL_USER_SCORE[tooltipIndex] === 1;
         case 'tutorial-action':
           return TUTORIAL_ACTION[tooltipIndex] === 1;
-        case 'proceed-chat-tutorial':
-          return PROCEED_CHAT_TUTORIAL[tooltipIndex] === 1;
+        case 'tutorial-proceed':
+          return TUTORIAL_PROCEED[tooltipIndex] === 1;
+        case 'tutorial-button-tooltip':
+          return TUTORIAL_BUTTON_TOOLTIP[tooltipIndex] === 1;
+        case 'chat-tutorial-button':
+          return CHAT_TUTORIAL_BUTTON[tooltipIndex] === 1;
+        case 'chat-tutorial-tooltip':
+          return CHAT_TUTORIAL_TOOLTIP[tooltipIndex] === 1;
+        case 'navigate-lock-in':
+          return NAVIGATE_LOCK_IN[tooltipIndex] === 1;
         case 'navigate-chat-tutorial':
           return NAVIGATE_CHAT_TUTORIAL[tooltipIndex] === 1;
+        case 'end-tutorial':
+          return END_TUTORIAL[tooltipIndex] === 1;
         default:
           return false;
       }
@@ -98,7 +175,29 @@ function GameTutorial() {
     
     const tooltips = [
       /* 0 */ '',
-      /* 1 */ "This is the decision matrix", 
+      /* 1 */ '',
+      /* 2 */ '',
+      /* 3 */ '',
+      /* 4 */ '',
+      /* 5 */ '',
+      /* 6 */ "This is the decision matrix!", 
+      /* 7 */ "It shows how much Caboodle each player gets, depending on what options are chosen.",
+      /* 8 */ "You can also hover over the triangles to see the results of certain scenarios.",
+      /* 9 */ "Triangles pointing left: Caboodle for the AI.",
+      /* 10 */ "Triangles pointing right: Caboodle for you.",
+      /* 11 */ "This is how much Caboodle the AI has...",
+      /* 12 */ "And this is how much you have.",
+      /* 13 */ 'During the day, you can chat as much as you want with the AI.',
+      /* 14 */ "When you're ready, you lock in your decision for the day.",
+      /* 15 */ '',
+      /* 16 */ '',
+      /* 17 */ 'This is the result of your decisions!',
+
+
+
+
+      /* old */
+      /* 1 */ "This is the Caboodle Decision Matrix!", 
       /* 2 */ "It shows how much Caboodle each player gets, depending on what options are chosen.",
       /* 3 */ "Triangles pointing left: Caboodle for the AI.",
       /* 4 */ "Triangles pointing right: Caboodle for you.",
@@ -129,28 +228,61 @@ function GameTutorial() {
         setTooltipIndex((prevIndex) => prevIndex + 1);
         
         switch (tooltipIndex) { // USES "PRIOR INDEX!"
-          case (6):
-            setFocusTutorialText(TEXT_INITIAL_2);
+          case (0):
+            setFocusTutorialTextA(TEXT_INITIAL_CCa);
+            setFocusTutorialTextB(TEXT_INITIAL_CCb);
             break;
-          case (7):
+          case (1):
+            setFocusTutorialTextA(TEXT_INITIAL_WCa);
+            setFocusTutorialTextB(TEXT_INITIAL_WCb);
+            break;
+          case (2):
+            setFocusTutorialTextA(TEXT_INITIAL_CWa);
+            setFocusTutorialTextB(TEXT_INITIAL_CWb);
+            break;
+          case (3):
+            setFocusTutorialTextA(TEXT_INITIAL_WWa);
+            setFocusTutorialTextB(TEXT_INITIAL_WWb);
+            break;
+          case (4):
+            setFocusTutorialTextA(TEXT_TRANSITIONa);
+            setFocusTutorialTextB(TEXT_TRANSITIONb);
+            break;
+          case (5):
+            setTutorialText1a(TEXT_TRANSITIONa);
+            setTutorialText1b(TEXT_TRANSITIONb);
+            break;
+          case (14):            
+            setFocusTutorialTextA(TEXT_FREEPLAY_INTROa);
+            setFocusTutorialTextB(TEXT_FREEPLAY_INTROb);
+            setTutorialText1a(TEXT_FREEPLAY_INTROa);
+            setTutorialText1b(TEXT_FREEPLAY_INTROb);
+            break;
+          case (15):
             reEnableClick = false;
             setCanPlay(true);
             break;
-          case (9):
+          case (17):
+            reEnableClick = false;
+            setCanPlay(true);
+            setTooltipIndex(16);
+            break;
+          case (91):
             setFocusTutorialText(TEXT_INITIAL_3);
             setTutorialText2(TEXT_INITIAL_3);
             setTutorialText1b(TEXT_INITIAL_1b);
             break;
-          case (10):
+          case (92):
             reEnableClick = false;
             setCanPlay(true);
+            setTooltipIndex(14);
             break;
-          case (12): 
+          case (93): 
             setFocusTutorialText(TEXT_INITIAL_4);
             setTutorialText2(TEXT_INITIAL_4);
             setTutorialText1b(TEXT_INITIAL_1b);
             break;
-          case (14):
+          case (94):
             reEnableClick = false;
             setCanPlay(true);
             break;
@@ -179,10 +311,6 @@ function GameTutorial() {
     // [!] DO NOT PUT A DEPENDENCY ARRAY IN THIS USEEFFECT [!]
     // [!] IT WILL BREAK THE FUNCTION! [!]  
   
-  const [round, setRound] = useState(1);
-  const [tutorialText1a, setTutorialText1a] = useState(TEXT_INITIAL_1a); // Text for Box 1
-  const [tutorialText1b, setTutorialText1b] = useState(TEXT_INITIAL_1b); // Text for Box 1
-  const [tutorialText2, setTutorialText2] = useState(TEXT_INITIAL_2); // Text for Box 2
   const [highlightedTriangles, setHighlightedTriangles] = useState({
     t4: { highlight: false, number: null },
     t6: { highlight: false, number: null },
@@ -231,47 +359,19 @@ function GameTutorial() {
     console.log("progression! tooltipIndex:", tooltipIndex)
             
     if (userDecision === 'Cooperate') {
-      if (round === 1) {
-        highlightRound1();
-        setTutorialText1b(TEXT_COOPERATE_1);
+        // setTutorialText1b(TEXT_COOPERATE_1);
         setTutorialText2(TEXT_INITIAL_3);
         setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 0); // Increase user score
         setAiScore(aiScore + 5); // AI score doesn't change in this case
-        setRound(2); // Move to Round 2
-      } else if (round === 2) {
-        highlightRound2();
-        setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
+      } else if (userDecision === 'Defect') {
+        // setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
         setTutorialText2(TEXT_INITIAL_4);
         setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 3); // Increase user score
         setAiScore(aiScore + 3); // AI score also increases
-        setIsComplete(true); // Mark as complete after Round 2
-        console.log("isComplete:");
       }
-    }
-    else {
-      if (round === 1) {
-        highlightRound1();
-        setTutorialText1b(TEXT_DEFECT_1);
-        setTutorialText2(TEXT_INITIAL_3);
-        setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
-        setUserScore(userScore + 1); // Increase user score
-        setAiScore(aiScore + 1); // AI score also increases
-        setRound(2); // Move to Round 2
-      } else if (round === 2) {
-        highlightRound2();
-        setTutorialText1b(TEXT_DEFECT_AGAIN_1);
-        setTutorialText2(  TEXT_INITIAL_4);
-        setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
-        setUserScore(userScore + 5); // Increase user score
-        setAiScore(aiScore + 0); // AI score increases more
-        setIsComplete(true); // Mark as complete after Round 2
-        console.log("isComplete:");
-    }
-
   };
-}
   
   
 
@@ -303,11 +403,18 @@ function GameTutorial() {
 
   return (
     <div className="container game-tutorial">
-        <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hide')}`}>
-        <p className="tutorialText1">{focusTutorialText}</p>
+
+      <div className="tutorial-disclaimer"> 
+        <p>TUTORIAL SECTION. Results are not being saved.</p>
       </div>
 
-      <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hide')}`}>
+
+        <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')}`}>
+        <p className="tutorialText1">{focusTutorialTextA}</p>
+        {(focusTutorialTextB === null) ? null : (<p className="tutorialText2"><br/>{focusTutorialTextB}</p>)}
+      </div>
+
+      <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hidden')}`}>
         <p className="tutorialText1">{tutorialText1a}<br/><br/> {tutorialText1b}</p>
       </div>
       <div className={` ${determineShow("decision-tutorial-box2") ? 'decision-tutorial-box2' : 'hide'}`}>
@@ -315,7 +422,7 @@ function GameTutorial() {
       </div>
 
 {/* TODO: Turn these into determineShows and fill in their arrays */}
-      <div className={`game-tutorial-content ${( determineShow("game-tutorial-content") ? 'hide' : '')}`}>
+      <div className={`game-tutorial-content ${( determineShow("game-tutorial-content") ? 'hidden' : '')}`}>
         <div className={`tutorial-horizontal-layout ${( determineShow("tutorial-horizontal-layout") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-horizontal-layout") ? tooltips[tooltipIndex] : null}>
           <div className={`tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null}>
             <h2>AI's Score: <span className="tutorial-score-value">{aiScore}</span></h2>
@@ -372,18 +479,23 @@ function GameTutorial() {
                 <div>(defect)</div>
               </button>}
               <br></br>
-              {!isComplete && determineShow("tutorial-action") && <button className="lockin-button" onClick={handleLockIn}>
+              {!isComplete && determineShow("tutorial-action") && <button className={`lockin-button ${(determineShow("navigate-lock-in") ? '' : 'lockin-disabled')} ${(determineShow("tutorial-button-tooltip") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-tooltip") ? tooltips[tooltipIndex] : null} onClick={handleLockIn}>
                 Lock In
               </button>}
             </>
 
-          {determineShow("proceed-chat-tutorial") && (
           <div>
-            <button className={`proceed-chat-tutorial ${(determineShow("navigate-chat-tutorial") ? '' : 'proceed-chat-tutorial-disabled')} ${(determineShow("proceed-chat-tutorial") ? ' show' : '')}`} data-tooltip={determineShow("proceed-chat-tutorial") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/chatbot-tutorial') : null }}>
+            <button className={`chat-tutorial-proceed ${(determineShow("navigate-chat-tutorial") ? '' : 'chat-tutorial-proceed-disabled')} ${(determineShow("chat-tutorial-button") ? ' show' : 'hide')}`} data-tooltip={determineShow("chat-tutorial-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/chatbot-tutorial') : null }}>
             Go to Chat
             </button>
           </div>
-          )}
+          
+
+          <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { navigate('/pregame')}}>
+            Finish Tutorial
+          </button>
+
+
         </div>
       </div>
       <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game' : 'Press SPACEBAR to continue'}</h1>

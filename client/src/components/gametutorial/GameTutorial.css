@@ -8,8 +8,30 @@
   background-color: var(--background-two);
 }
 
-.hide {
-  display: none;
+.hidden {
+  opacity: 0;
+  /* display: block; */
+}
+
+.tutorial-disclaimer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 3vh;
+  width: 100vw;
+  /* Stripes credit: https://css-tricks.com/stripes-css/ */
+  background: repeating-linear-gradient(
+    45deg,
+    var(--accent-one),
+    var(--accent-one) 10px,
+    var(--accent-five) 10px,
+    var(--accent-five) 20px
+  );
+  padding: 0px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.25em;
+  color: white;
 }
 
 .focus-container {
@@ -428,8 +450,8 @@ font-weight: bold; */
   color: white; /* Yellow */
 }
 
-.proceed-chat-tutorial {
-  margin: 100px;
+.chat-tutorial-proceed {
+  margin: 0px;
   background-color: var(--accent-three);
   color: white;
   border: none;
@@ -441,13 +463,36 @@ font-weight: bold; */
   font-family: var(--universal-font);
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 40%;
   transform-origin: bottom right;
 }
 
-.proceed-chat-tutorial-disabled {
+.end-tutorial {
+  margin: 0px;
+  background-color: var(--accent-three);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5em 1.5em;
+  font-size: 1.2em;
+  cursor: pointer;
+  box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+  font-family: var(--universal-font);
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform-origin: bottom right;
+}
+
+
+.chat-tutorial-proceed-disabled {
   cursor: not-allowed;
 }
+
+.lockin-disabled {
+  cursor: not-allowed !important;
+}
+
 
 .bottom-info-can {
   position: absolute;
@@ -518,10 +563,11 @@ font-weight: bold; */
 /* MIGRATED FROM DEMOCHAT.CSS */
 /* Tooltip styles */
 [data-tooltip] {
-  position: relative;
   font-size: 1.2em; /* Tooltip font size here */
   transition: width 1s ease-in-out;
 }
+
+/* might need to add !impt so it stays where it should be in new layout */
 
 [data-tooltip]::after { /* Tooltip text */
   content: attr(data-tooltip);
@@ -644,12 +690,22 @@ font-weight: bold; */
   left: 50px;
 }
 
-.proceed-chat-tutorial[data-tooltip]::before {
+.chat-tutorial-proceed[data-tooltip]::before {
   top: -0.25em;
   left: 65px;
 }
 
-.proceed-chat-tutorial[data-tooltip]::after {
+.chat-tutorial-proceed[data-tooltip]::after {
   top: -3em;
   left: 0px;
+}
+
+.lockin-button[data-tooltip]::before {
+  top: -0.5em;
+  left: 55px;
+}
+
+.lockin-button[data-tooltip]::after {
+  top: -3.25em;
+  left: 55px;
 }

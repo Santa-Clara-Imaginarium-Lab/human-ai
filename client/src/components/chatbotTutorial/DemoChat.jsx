@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './DemoChat.css'; // Create a corresponding CSS file
-import {useNavigate } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
 
 function DemoChat() {
   const [canClick, setCanClick] = useState(true);
   const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const speedFlag = location.state.speedFlag;
+  const userScore = location.state.userScore;
+  const aiScore = location.state.aiScore;
 
   const tooltips = [
     "This is one of the AI's responses", 
@@ -17,11 +22,11 @@ function DemoChat() {
 
   useEffect(() => { // Navigate to dashboard after last tooltip
     if (tooltipIndex >= tooltips.length) {
-      navigate('/game-tutorial');
+      navigate('/game-tutorial', { state: { speedFlag: true, userScore, aiScore }});
     }
   }, [tooltipIndex]);
 
-  const WAIT_TIME = 1500;
+  const WAIT_TIME = 15;
 
   const handleKeyDown = (event) => {
     if (!(event.key === ' ')) return;
@@ -64,6 +69,15 @@ function DemoChat() {
   
   return (
     <div className="chat-tutorial-page-container">
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') ? 'show' : 'hide'}`}> 
+        <p>FREE PLAY Active. Your data is not being recorded.</p>
+      </div>
+
+      <div className={`tutorial-disclaimer`}> 
+        <p>TUTORIAL SECTION. You cannot interact with the chatbot yet.</p>
+      </div>
+
+
       <div className="demo-chat-container">
         <button className="chatbot-button">
           Chatbot Tutorial

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './GameTutorial.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import {
   // Starting text
@@ -40,6 +40,11 @@ function GameTutorial() {
     const [tutorialText1a, setTutorialText1a] = useState(TEXT_INITIAL_1a);
     const [tutorialText1b, setTutorialText1b] = useState(TEXT_INITIAL_1b); 
     const [tutorialText2, setTutorialText2] = useState(TEXT_INITIAL_2); 
+
+      const location = useLocation();
+      const speedFlag = location.state.speedFlag;
+      const userScoreArchived = location.state.userScore;
+      const aiScoreArchived = location.state.aiScore;
     
     const determineShow = (componentName) => {
       // TURN CYCLES (vertically aligns with numbers in arrays)
@@ -298,6 +303,18 @@ function GameTutorial() {
       }
     };
 
+    useEffect(() => {
+      if (speedFlag) {
+        setTooltipIndex(15);
+        setFocusTutorialTextA(TEXT_FREEPLAY_INTROa);
+        setFocusTutorialTextB(TEXT_FREEPLAY_INTROb);
+        setTutorialText1a(TEXT_FREEPLAY_INTROa);
+        setTutorialText1b(TEXT_FREEPLAY_INTROb);
+        setAiScore(aiScoreArchived);
+        setUserScore(userScoreArchived);
+      }
+    }, []); // run ONCE
+
     useEffect(() => {  
       document.addEventListener('keydown', handleKeyDown);
       // document.addEventListener('click', handleKeyDown);
@@ -403,10 +420,13 @@ function GameTutorial() {
 
   return (
     <div className="container game-tutorial">
-
-      <div className="tutorial-disclaimer"> 
-        <p>TUTORIAL SECTION. Results are not being saved.</p>
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') ? 'show' : 'hide'}`}> 
+        <p>FREE PLAY Active. Your data is not being recorded.</p>
       </div>
+
+      {tooltipIndex > 15 && <div className={`tutorial-disclaimer`}> 
+        <p>TUTORIAL SECTION. Caboodle here is not final.</p>
+      </div>}
 
 
         <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')}`}>
@@ -485,7 +505,7 @@ function GameTutorial() {
             </>
 
           <div>
-            <button className={`chat-tutorial-proceed ${(determineShow("navigate-chat-tutorial") ? '' : 'chat-tutorial-proceed-disabled')} ${(determineShow("chat-tutorial-button") ? ' show' : 'hide')}`} data-tooltip={determineShow("chat-tutorial-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/chatbot-tutorial') : null }}>
+            <button className={`chat-tutorial-proceed ${(determineShow("navigate-chat-tutorial") ? '' : 'chat-tutorial-proceed-disabled')} ${(determineShow("chat-tutorial-button") ? ' show' : 'hide')}`} data-tooltip={determineShow("chat-tutorial-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/chatbot-tutorial',  { state: { speedFlag: true, userScore, aiScore } }) : null }}>
             Go to Chat
             </button>
           </div>

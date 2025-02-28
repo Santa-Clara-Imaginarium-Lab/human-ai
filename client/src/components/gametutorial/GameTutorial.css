@@ -13,6 +13,29 @@
   /* display: block; */
 }
 
+.free-play-disclaimer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 3vh;
+  width: 100vw;
+  /* Stripes credit: https://css-tricks.com/stripes-css/ */
+  background: repeating-linear-gradient(
+    45deg,
+    var(--accent-one),
+    var(--accent-one) 10px,
+    var(--accent-two) 10px,
+    var(--accent-two) 20px
+  );
+  padding: 0px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.25em;
+  color: white;
+  text-shadow: 2px 2px 0 var(--accent-two);
+  border: 1px solid var(--accent-one);
+}
+
 .tutorial-disclaimer {
   position: absolute;
   top: 0px;
@@ -32,7 +55,13 @@
   vertical-align: middle;
   font-size: 1.25em;
   color: white;
+  z-index: 1;
 }
+
+.free-play-shift {
+  margin-top: 3vh;
+}
+
 
 .focus-container {
   position: fixed;

@@ -420,12 +420,13 @@ function GameTutorial() {
 
   return (
     <div className="container game-tutorial">
-      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') ? 'hide' : 'show'}`}> 
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
         <p>FREE PLAY Active. Your data is not being recorded.</p>
       </div>
 
       {tooltipIndex > 15 && <div className={`tutorial-disclaimer`}> 
         <p>TUTORIAL SECTION. Caboodle here is not final.</p>
+      <div className="tutorial-disclaimer-logo"/>
       </div>}
 
 

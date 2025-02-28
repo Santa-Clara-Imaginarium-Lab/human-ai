@@ -36,12 +36,41 @@
   border: 1px solid var(--accent-one);
 }
 
+
 .tutorial-disclaimer {
   position: absolute;
   top: 0px;
   left: 0px;
   height: 4vh;
   width: 100vw;
+  /* Stripes credit: https://css-tricks.com/stripes-css/ */
+  /* background: repeating-linear-gradient(
+    45deg,
+    var(--accent-one),
+    var(--accent-one) 10px,
+    var(--accent-five) 10px,
+    var(--accent-five) 20px
+  ); */
+  padding: 0px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.25em;
+  color: white;
+}
+
+.tutorial-disclaimer p {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+}
+
+.tutorial-disclaimer-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4vh;
+  width: 300vw;
   /* Stripes credit: https://css-tricks.com/stripes-css/ */
   background: repeating-linear-gradient(
     45deg,
@@ -50,16 +79,19 @@
     var(--accent-five) 10px,
     var(--accent-five) 20px
   );
-  padding: 0px;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1.25em;
-  color: white;
+  animation: forStripes 30s linear infinite; 
   z-index: 1;
-}
+}  
 
-.free-play-shift {
-  margin-top: 3vh;
+@keyframes forStripes {
+  0% {
+    transform: translateX(-100vw);
+    z-index: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    z-index: 0;
+  }
 }
 
 

@@ -83,7 +83,7 @@ function DemoChat() {
           </div>
         </div>
 
-        <h className={canClick ? 'instruction-can' : 'instruction-wait'}>{canClick ? 'Press SPACEBAR to continue' : '. . .'}</h>
+        <h1 className={canClick ? 'instruction-can' : 'instruction-wait'}>{canClick ? 'Press SPACEBAR to continue' : '. . .'}</h1>
 
         {/* Input Area */}
         <div className="input-area">

@@ -8,7 +8,7 @@
   content: attr(demo-data-tooltip);
   position: absolute;
   left: 50%;
-  background-color: white;
+  background-color: rgb(178, 225, 244);
   color: var(--accent-three);
   font-size: 0.9em;
   font-family: var(--universal-font);
@@ -18,7 +18,7 @@
   pointer-events: none; 
   z-index: 100;
   opacity: 1;
-  box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
+  box-shadow: 0.3em 0.3em 0 0 rgb(0, 119, 167);
   /* animation: bob 1s infinite; */
 }
 

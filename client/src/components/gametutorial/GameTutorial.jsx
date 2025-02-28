@@ -509,9 +509,8 @@ function GameTutorial() {
             Go to Chat
             </button>
           </div>
-          
 
-          <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { navigate('/pregame')}}>
+          <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { sessionStorage.getItem("currentRound") === 1 ? navigate('/pregame') : navigate('/dashboard')}}>
             Finish Tutorial
           </button>
 

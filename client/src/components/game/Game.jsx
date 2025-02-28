@@ -14,11 +14,23 @@ function Game() {
   
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
-  const textWall = "You and the AI analyze market trends and decide each day whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
-    "1. If you withhold data and the AI chooses to share data, you will gain a boost in profit. You will earn +5 Caboodle, while the AI will earn +0 Caboodle.<br/><br/>" +
-    "2. If the AI withholds data and you choose to share data, the AI will gain a boost in profit. The AI will gain +5 Caboodle, while you earn +0 Caboodle.<br/><br/>" +
-    "3. If you both share data, investments are optimized, and profits increase steadily. You both earn +3 Caboodle.<br/><br/>" +
-    "4. If you both withhold data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn +1 Caboodle."
+  const [textWallIndex, setTextWallIndex] = useState(0);
+  const [helpText, setHelpText] = useState('Click a scenario to learn more about it.<br/>The button format is {Your Action}/{AI Action}');
+
+  const textWallOptions = {
+    "SS": 'If you <mark style="background-color: white; color: green;">both share</mark> data, investments are optimized, and profits increase steadily. You both earn <mark style="background-color: white; color: green;">+3</mark> Caboodle.<br/><br/>',
+
+    "SW": 'If the <mark style="background-color: white; color: red;">AI withholds</mark> data and you choose to share data, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: red;">+5</mark> Caboodle, while you earn +0 Caboodle.<br/><br/>',
+
+    "WS": 'If you <mark style="background-color: white; color: green;">withhold data</mark> and the AI chooses to share data, you will gain a boost in profit. You will earn <mark style="background-color: white; color: green;">+5</mark> Caboodle, while the AI will earn +0 Caboodle.<br/><br/>',
+
+    "WW": 'If you <mark style="background-color: white; color: green;">both withhold data</mark>, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: green;">+1</mark> Caboodle.'
+  };
+
+
+  const editHelpText = (target) => {
+    setHelpText(textWallOptions[target]);
+  };
 
   const location = useLocation();
   const data = location.state.data;
@@ -461,7 +473,20 @@ function Game() {
         {showCustomAlert && <div className="custom-alert">
             <div className="custom-alert-content">
                 <span className="close" onClick={closeHelp}>&times;</span>
-                <p id="alertMessage" dangerouslySetInnerHTML={{ __html: textWall }}></p>
+                <p id="alertMessage">Each day, you and the AI analyze market trends and decide whether to Share Data (Cooperate) or Withhold Data (Defect) for your investment decisions.</p>
+                <br/>
+                <div className="help-case-buttons">
+                  <button className="help-case" onClick={() => editHelpText("SS")}>You Share <br/> AI Shares</button>
+                  <button className="help-case" onClick={() => editHelpText("SW")}>You Share <br/> AI Withholds</button>
+                  <button className="help-case" onClick={() => editHelpText("WS")}>You Withhold <br/> AI Shares</button>
+                  <button className="help-case" onClick={() => editHelpText("WW")}>You Withhold <br/> AI Withholds</button>
+                </div>
+                <br/>
+                <p id="helpText" dangerouslySetInnerHTML={{ __html: helpText }}></p>
+                <br/>
+                <p>If you need more help, you can replay the tutorial. Your current day and Caboodle will be saved.</p>
+                
+                <button className="replay-tutorial" onClick={() => navigate("/game-tutorial", { state: { speedFlag: false, userScore: 0, aiScore: 0 } })}>Replay Tutorial</button>
             </div>
           </div>
         }

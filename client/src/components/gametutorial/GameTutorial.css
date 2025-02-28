@@ -8,9 +8,92 @@
   background-color: var(--background-two);
 }
 
-.hide {
-  display: none;
+.hidden {
+  opacity: 0;
+  /* display: block; */
 }
+
+.free-play-disclaimer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 4vh;
+  width: 100vw;
+  /* Stripes credit: https://css-tricks.com/stripes-css/ */
+  background: repeating-linear-gradient(
+    45deg,
+    var(--accent-one),
+    var(--accent-one) 10px,
+    var(--accent-two) 10px,
+    var(--accent-two) 20px
+  );
+  padding: 0px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.25em;
+  color: white;
+  text-shadow: 2px 2px 0 var(--accent-two);
+  border: 1px solid var(--accent-one);
+}
+
+
+.tutorial-disclaimer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 4vh;
+  width: 100vw;
+  /* Stripes credit: https://css-tricks.com/stripes-css/ */
+  /* background: repeating-linear-gradient(
+    45deg,
+    var(--accent-one),
+    var(--accent-one) 10px,
+    var(--accent-five) 10px,
+    var(--accent-five) 20px
+  ); */
+  padding: 0px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.25em;
+  color: white;
+}
+
+.tutorial-disclaimer p {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+}
+
+.tutorial-disclaimer-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4vh;
+  width: 300vw;
+  /* Stripes credit: https://css-tricks.com/stripes-css/ */
+  background: repeating-linear-gradient(
+    45deg,
+    var(--accent-one),
+    var(--accent-one) 10px,
+    var(--accent-five) 10px,
+    var(--accent-five) 20px
+  );
+  animation: forStripes 30s linear infinite; 
+  z-index: 1;
+}  
+
+@keyframes forStripes {
+  0% {
+    transform: translateX(-100vw);
+    z-index: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    z-index: 0;
+  }
+}
+
 
 .focus-container {
   position: fixed;
@@ -23,6 +106,9 @@
   align-items: center;  /* Center align content horizontally */
   justify-content: center;  /* Center align content vertically */
   padding: 40px; /* Add padding for spacing */
+  font-family: var(--secondary-font);
+  font-weight: bold;
+
 
   /* STYLES TO ANIMATE */
   top: 30%;
@@ -37,13 +123,14 @@
   place-items: center;
 
   position: relative;
-  margin-bottom: 27px;
+  margin-bottom: 20px;
   padding: 15px; /* Add padding for better readability */
   z-index: 1; /* Ensure it is above the shadow */
   background-color: white; /* Match the button's background */
   color: var(--accent-three); /* Match the text color */
   border: 0px; /* Border to define the box */
-  font-family: var(--universal-font);
+  font-family: var(--secondary-font);
+  font-weight: bold;
   text-align: center; /* Center-align the text */
   line-height: 1.5; /* Improve readability */
 
@@ -51,9 +138,9 @@
 
   /* STYLES TO ANIMATE */
   top: -10%;
-  width: 80%;
+  width: 75%;
   height: fit-content; 
-  font-size: 1.2em;
+  font-size: 1.5em;
   border-radius: 20px;
 
     /* APPLY ANIMATION */
@@ -75,7 +162,7 @@
   90% {
     opacity: 0;
     top: 5%;
-    width: 80%;
+    width: 75%;
     height: 15%; 
     /* font-size: 1.2em; */
     border-radius: 20px;
@@ -87,7 +174,7 @@
     position: absolute;
     opacity: 1;
     top: 5%;
-    width: 80%;
+    width: 75%;
     height: fit-content; 
     /* font-size: 1.2em; */
     border-radius: 20px;
@@ -458,9 +545,8 @@ font-weight: bold; */
 }
 
 
-.proceed-chat-tutorial {
-  margin: 100px;
-  margin-bottom: 70px;
+.chat-tutorial-proceed {
+  margin: 0px;
   background-color: var(--accent-three);
   color: white;
   border: none;
@@ -472,18 +558,36 @@ font-weight: bold; */
   font-family: var(--universal-font);
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 40%;
   transform-origin: bottom right;
 }
 
-.proceed-chat-tutorial:active {
-  transform: translate(0.3em, 0.3em); /* Move the button down */
-  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+.end-tutorial {
+  margin: 0px;
+  background-color: var(--accent-three);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5em 1.5em;
+  font-size: 1.2em;
+  cursor: pointer;
+  box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+  font-family: var(--universal-font);
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform-origin: bottom right;
 }
 
-.proceed-chat-tutorial-disabled {
+
+.chat-tutorial-proceed-disabled {
   cursor: not-allowed;
 }
+
+.lockin-disabled {
+  cursor: not-allowed !important;
+}
+
 
 .bottom-info-can {
   position: absolute;
@@ -554,10 +658,11 @@ font-weight: bold; */
 /* MIGRATED FROM DEMOCHAT.CSS */
 /* Tooltip styles */
 [data-tooltip] {
-  position: relative;
   font-size: 1.2em; /* Tooltip font size here */
   transition: width 1s ease-in-out;
 }
+
+/* might need to add !impt so it stays where it should be in new layout */
 
 [data-tooltip]::after { /* Tooltip text */
   content: attr(data-tooltip);
@@ -565,7 +670,8 @@ font-weight: bold; */
   left: 50%;
   background-color: white;
   color: var(--accent-three);
-  font-family: var(--universal-font);
+  font-family: var(--secondary-font);
+  font-weight: bold;
   padding: 0.5em;
   border-radius: 5px;
   white-space: nowrap;
@@ -680,12 +786,22 @@ font-weight: bold; */
   left: 50px;
 }
 
-.proceed-chat-tutorial[data-tooltip]::before {
+.chat-tutorial-proceed[data-tooltip]::before {
   top: -0.25em;
   left: 65px;
 }
 
-.proceed-chat-tutorial[data-tooltip]::after {
+.chat-tutorial-proceed[data-tooltip]::after {
   top: -3em;
   left: 0px;
+}
+
+.lockin-button[data-tooltip]::before {
+  top: -0.5em;
+  left: 55px;
+}
+
+.lockin-button[data-tooltip]::after {
+  top: -3.25em;
+  left: 55px;
 }

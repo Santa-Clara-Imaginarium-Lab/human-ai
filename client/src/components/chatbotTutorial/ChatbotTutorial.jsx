@@ -1,15 +1,20 @@
 import { React, useState, useEffect } from 'react';
 import './ChatbotTutorial.css'; // Make sure to create this CSS file for styling
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function ChatbotTutorial() {
     const navigate = useNavigate();
+
+      const location = useLocation();
+      const speedFlag = location.state.speedFlag;
+      const userScore = location.state.userScore;
+      const aiScore = location.state.aiScore;
 
     const [briefGo, setBriefGo] = useState(false);
     const [btuGo, setBtuGo] = useState(false);
 
     const handleClick = () => {
-      navigate('/demo-chat'); // Navigate to the GameTutorial page
+      navigate('/demo-chat', { state: { speedFlag: true, userScore, aiScore } }); // Navigate to the GameTutorial page
     };
 
     useEffect(() => {

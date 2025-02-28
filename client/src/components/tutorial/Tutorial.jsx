@@ -23,7 +23,7 @@ function Tutorial() {
     sessionStorage.setItem('numChangeDescisions', 0);
     sessionStorage.setItem('aiChoices', JSON.stringify([]));
     sessionStorage.setItem('userChoices', JSON.stringify([]));
-    navigate('/game-tutorial'); // Navigate to the GameTutorial page
+    navigate('/game-tutorial', { state: { speedFlag: false, userScore: 0, aiScore: 0 }}); // Navigate to the GameTutorial page
   };
 
       useEffect(() => {

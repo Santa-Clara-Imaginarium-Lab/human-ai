@@ -17,7 +17,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  height: 3vh;
+  height: 4vh;
   width: 100vw;
   /* Stripes credit: https://css-tricks.com/stripes-css/ */
   background: repeating-linear-gradient(
@@ -40,7 +40,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  height: 3vh;
+  height: 4vh;
   width: 100vw;
   /* Stripes credit: https://css-tricks.com/stripes-css/ */
   background: repeating-linear-gradient(

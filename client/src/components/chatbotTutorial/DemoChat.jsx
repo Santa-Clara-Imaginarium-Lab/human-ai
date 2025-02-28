@@ -87,12 +87,12 @@ function DemoChat() {
           {/* AI Response */}
           <div className="chat-bubble ai-response">
             <div className="avatar">AI</div>
-            <div className={`bubble ${(tooltipIndex === 0 ? ' show' : '')}`} data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
+            <div className={`bubble ${(tooltipIndex === 0 ? ' show' : '')}`} demo-data-tooltip={tooltipIndex === 0 ? tooltips[0] : null}>Chatbot responses here</div>
           </div>
 
           {/* User Response */}
           <div className="chat-bubble user-response">
-            <div className={`bubble ${(tooltipIndex === 1 ? ' show' : '')}`} data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
+            <div className={`bubble ${(tooltipIndex === 1 ? ' show' : '')}`} demo-data-tooltip={tooltipIndex === 1 ? tooltips[1] : null}>Participant responses here</div>
             <div className="avatar">You</div>
           </div>
         </div>
@@ -107,8 +107,8 @@ function DemoChat() {
             disabled
             className="chat-input"
           />
-          <button className={`send-button ${(tooltipIndex === 2 ? ' show' : '')}`} data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
-          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Go to Game</button>
+          <button className={`send-button ${(tooltipIndex === 2 ? ' show' : '')}`} demo-data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
+          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} demo-data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Go to Game</button>
         </div>
       </div>
     </div>

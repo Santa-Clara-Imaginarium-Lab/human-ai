@@ -592,6 +592,7 @@ font-weight: bold; */
 /* MIGRATED FROM DEMOCHAT.CSS */
 /* Tooltip styles */
 [data-tooltip] {
+  position: relative;
   font-size: 1.2em; /* Tooltip font size here */
   transition: width 1s ease-in-out;
 }
@@ -602,8 +603,8 @@ font-weight: bold; */
   content: attr(data-tooltip);
   position: absolute;
   left: 50%;
-  background-color: white;
-  color: var(--accent-three);
+  background-color: rgb(174, 151, 1); /*light yellow: rgb(244, 235, 178), mid: rgb(255, 221, 0), dark: rgb(174, 151, 1)*/
+  color: white;
   font-family: var(--universal-font);
   padding: 0.5em;
   border-radius: 5px;
@@ -612,7 +613,7 @@ font-weight: bold; */
   font-weight: normal;
   z-index: 1000;
   opacity: 1;
-  box-shadow: 0.3em 0.3em 0 0 var(--accent-one);
+  box-shadow: 0.3em 0.3em 0 0 rgb(244, 235, 178); /*light blue: rgb(178, 225, 244), dark blue: rgb(0, 119, 167)*/
   /* animation: bob 1s infinite; */
   min-width: 0;
   transition: min-width 1s;

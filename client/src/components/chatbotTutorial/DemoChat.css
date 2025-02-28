@@ -1,11 +1,11 @@
 /* DemoChat.css */
 /* Tooltip styles */
-[data-tooltip] {
+[demo-data-tooltip] {
   position: relative;
 }
 
-[data-tooltip]::after { /* Tooltip text */
-  content: attr(data-tooltip);
+[demo-data-tooltip]::after { /* Tooltip text */
+  content: attr(demo-data-tooltip);
   position: absolute;
   left: 50%;
   background-color: white;
@@ -22,7 +22,7 @@
   /* animation: bob 1s infinite; */
 }
 
-[data-tooltip]::before { /* Tooltip arrow */
+[demo-data-tooltip]::before { /* Tooltip arrow */
   content: '';
   position: absolute;
   left: 50%;
@@ -34,12 +34,12 @@
 }
 
 /* Fading effects */
-[data-tooltip].show::after { /* Tooltip text */
+[demo-data-tooltip].show::after { /* Tooltip text */
   animation: fade-in 1.0s, bob 1s infinite;
   animation-fill-mode: forwards;
 }
 
-[data-tooltip].show::before { /* Tooltip arrow */
+[demo-data-tooltip].show::before { /* Tooltip arrow */
   animation: fade-in 1.0s, bob 1s infinite;
   animation-fill-mode: forwards;
 }
@@ -71,19 +71,19 @@
   }
 }
 
-.bubble[data-tooltip]::before {
+.bubble[demo-data-tooltip]::before {
   top: -0.25em;
 }
 
-.bubble[data-tooltip]::after {
+.bubble[demo-data-tooltip]::after {
   top: -3em;
 }
 
-.send-button[data-tooltip]::before {
+.send-button[demo-data-tooltip]::before {
   top: -0.2em;
 }
 
-.send-button[data-tooltip]::after {
+.send-button[demo-data-tooltip]::after {
   top: -2.95em;
 }
 

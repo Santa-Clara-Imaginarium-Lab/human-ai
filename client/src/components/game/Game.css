@@ -356,8 +356,9 @@ font-weight: bold; */
     cursor: pointer;
 }
 
-#alertMessage {
-    color: black;
+.custom-alert-content p {
+    font-family: var(--secondary-font);
+    font-weight: bold;
 }
 
 .round-transitioner {

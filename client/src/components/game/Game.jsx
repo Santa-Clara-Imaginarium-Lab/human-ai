@@ -14,7 +14,7 @@ function Game() {
   
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
-  const [helpText, setHelpText] = useState('Click a scenario to learn more about it.');
+  const [helpText, setHelpText] = useState('<i>Click a scenario to learn more about it.</i>');
   const [helpTextActive, setHelpTextActive] = useState("XX");
 
   const textWallOptions = {
@@ -474,7 +474,7 @@ function Game() {
         {showCustomAlert && <div className="custom-alert">
             <div className="custom-alert-content">
                 <span className="close" onClick={closeHelp}>&times;</span>
-                <p id="alertMessage">Each day, you and the AI analyze market trends and decide whether to Share Data (Cooperate) or Withhold Data (Defect) for your investment decisions.</p>
+                <p id="alertMessage">Possible Earnings</p>
                 <br/>
                 <div className="help-case-buttons">
                   <button className={`help-case ${helpTextActive === "SS" ? "help-active" : ""}`} onClick={() => editHelpText("SS")}>You Share <br/> AI Shares</button>

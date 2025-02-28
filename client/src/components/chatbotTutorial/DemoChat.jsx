@@ -69,12 +69,13 @@ function DemoChat() {
   
   return (
     <div className="chat-tutorial-page-container">
-      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') ? 'show' : 'hide'}`}> 
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
         <p>FREE PLAY Active. Your data is not being recorded.</p>
       </div>
 
       <div className={`tutorial-disclaimer`}> 
-        <p>TUTORIAL SECTION. You cannot interact with the chatbot yet.</p>
+        <p>TUTORIAL SECTION. You cannot chat yet - just get familiar with the layout.</p>
+      <div className="tutorial-disclaimer-logo"/>
       </div>
 
 

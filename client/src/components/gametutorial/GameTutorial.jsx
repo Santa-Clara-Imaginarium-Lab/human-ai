@@ -355,10 +355,16 @@ function GameTutorial() {
       case 'Cooperate':
         coopButtonRef.current.classList.add('selected');
         defectButtonRef.current.classList.remove('selected');
+        setSelectedDecisionTriangles(['t1', 't3', 't2', 't5']); 
+        setHighlightedDesc("");
+        setHighlightedDesc("user-cooperate-desc");  
         break;
       case 'Defect':
         coopButtonRef.current.classList.remove('selected');
         defectButtonRef.current.classList.add('selected');
+        setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
+        setHighlightedDesc("");
+        setHighlightedDesc("user-defect-desc");  
         break;
     }
   }
@@ -366,6 +372,7 @@ function GameTutorial() {
   let highlightTriangles = [];
   
   const handleShareClick = () => {
+    return;
     setDecisionMade('True');
     if (round === 1) {
       setSelectedDecisionTriangles(['t1', 't3']); 
@@ -382,6 +389,7 @@ function GameTutorial() {
   };
 
   const handleWithholdClick = () => {
+    return;
     setDecisionMade('True');
     if (round === 1) {
       setSelectedDecisionTriangles(['t4', 't7']); 
@@ -415,91 +423,64 @@ function GameTutorial() {
     console.log("progression! tooltipIndex:", tooltipIndex)
     setHighlightedDesc("");
 
+    const choices = ['Cooperate', 'Defect'];
+    const rng = () => choices[Math.floor(Math.random() * choices.length)];
+    const rngResult = rng();
+    setAiDecision(rngResult); // Update AI's decision();
+
+    console.log(userDecision)
+    console.log(aiDecision);
+
+    console.log(userScore);
+    console.log(aiScore)
+
     if (userDecision === 'Cooperate') {
+      if (rngResult === 'Cooperate') {
         // setTutorialText1b(TEXT_COOPERATE_1);
       // if (round === 1) {
+        highlightTriangles = ['t2', 't5'];
+        setHighlightedTriangles(highlightTriangles);
+        setSelectedDecisionTriangles(highlightTriangles);
+        setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
+        setUserScore(userScore + 0); // Increase user score
+        setAiScore(aiScore + 5); // AI score doesn't change in this case
+      } else if (rngResult === 'Defect') {
         highlightTriangles = ['t1', 't3'];
         setHighlightedTriangles(highlightTriangles);
-        setTutorialText1b(TEXT_COOPERATE_1);
-        setTutorialText2(TEXT_INITIAL_3);
+        setSelectedDecisionTriangles(highlightTriangles);
         setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 0); // Increase user score
         setAiScore(aiScore + 5); // AI score doesn't change in this case
-      } else if (userDecision === 'Defect') {
-        // setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
-        setAiMessage('+5');
-        setUserMessage('+0');
-        setRound(2); // Move to Round 2
-      // } else if (round === 2) {
-        highlightTriangles = ['t2', 't5'];
+      } 
+    }
+    else if (userDecision === 'Defect') {
+      if (rngResult === 'Cooperate') {
+        // setTutorialText1b(TEXT_COOPERATE_1);
+      // if (round === 1) {
+        highlightTriangles = ['t6', 't8'];
         setHighlightedTriangles(highlightTriangles);
-        setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
-        setTutorialText2(TEXT_INITIAL_4);
-        setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
-        setUserScore(userScore + 3); // Increase user score
-        setAiScore(aiScore + 3); // AI score also increases
-      // }
-  };
-  
-  
-
-  const highlightRound1 = () => {
-    setHighlightedTriangles({
-      t4: { highlight: 'top', number: "+1" },
-      t6: { highlight: false, number: null },
-      t7: { highlight: 'bottom', number: "+1" },
-      t8: { highlight: false, number: null },
-      t2: { highlight: false, number: null },
-      t5: { highlight: false, number: null },
-      t1: { highlight: 'top', number: "+5" },
-      t3: { highlight: 'bottom', number: "+0" },
-    });
-  };
-
-  const highlightRound2 = () => {
-    setHighlightedTriangles({
-      t4: { highlight: false, number: null },
-      t6: { highlight: "top", number: "+0" },
-      t7: { highlight: false, number: null },
-      t8: { highlight: "bottom", number: "+5" },
-      t1: { highlight: false, number: null },
-      t2: { highlight: 'top', number: "+3" },
-      t3: { highlight: false, number: null },
-      t5: { highlight: 'bottom', number: "+3" },
-    });
-
-    return;
-        setAiMessage('+3');
-        setUserMessage('+3');
-        setIsComplete(true); // Mark as complete after Round 2
-        console.log("isComplete:");
-
-      if (round === 1) {
+        setSelectedDecisionTriangles(highlightTriangles);
+        setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
+        setUserScore(userScore + 5); // Increase user score
+        setAiScore(aiScore + 0); // AI score doesn't change in this case
+      } else if (rngResult === 'Defect') {
         highlightTriangles = ['t4', 't7'];
         setHighlightedTriangles(highlightTriangles);
-        setTutorialText1b(TEXT_DEFECT_1);
-        setTutorialText2(TEXT_INITIAL_3);
+        setSelectedDecisionTriangles(highlightTriangles);
+        setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
+        setTutorialText2(TEXT_INITIAL_4);
         setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 1); // Increase user score
         setAiScore(aiScore + 1); // AI score also increases
-        setAiMessage('+1');
-        setUserMessage('+1');
-        setRound(2); // Move to Round 2
-      } else if (round === 2) {
-        highlightTriangles = ['t6', 't8'];
-        setHighlightedTriangles(highlightTriangles);
-        setTutorialText1b(TEXT_DEFECT_AGAIN_1);
-        setTutorialText2(  TEXT_INITIAL_4);
-        setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
-        setUserScore(userScore + 5); // Increase user score
-        setAiScore(aiScore + 0); // AI score increases more
-        setAiMessage('+0');
-        setUserMessage('+5');
-        setIsComplete(true); // Mark as complete after Round 2
-        console.log("isComplete:");
-    }
+
+      }
+      console.log(userScore);
+      console.log(aiScore)
+    };
   };
-};
+  
+  
+
 
 
   return (

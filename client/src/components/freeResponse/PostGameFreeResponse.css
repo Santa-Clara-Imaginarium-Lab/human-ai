@@ -1,27 +1,10 @@
 /* PostGameFreeResponse.css */
-
-.survey-question {
-    background-color: var(--background-two);
-  }
-  
-  .question-container {
-    background-color: white;
-    border-radius: 3em;
-    box-shadow: 10px 10px 0 0 var(--accent-two);
-    display: flex;
-    flex-direction: column;
-    align-items: center;  /* Center align content horizontally */
-    justify-content: center;  /* Center align content vertically */
-    padding: 40px 20px;
-    width: 75%;
-  }
-  
-  .question-subtitle {
-    font-size: 1.8em;
+  .fr-question-subtitle {
+    font-size: 35px;
     margin-bottom: 20px;
+    text-align: center;
     color: var(--accent-three);
     font-family: var(--secondary-font);
-    text-align: center;
   }
   
   .text-input {
@@ -33,23 +16,3 @@
     font-family: var(--secondary-font);
     outline: none;
   }
-  
-  .submit-button {
-    font-weight: bold;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: var(--button-one);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-size: 1.2em;
-    cursor: pointer;
-    font-family: var(--universal-font);
-    box-shadow: 0.3em 0.3em 0 0 black;
-  }
-  
-  .submit-button:active {
-    transform: translate(0.3em, 0.3em);
-    box-shadow: 0em 0em 0 0;
-  }
-  

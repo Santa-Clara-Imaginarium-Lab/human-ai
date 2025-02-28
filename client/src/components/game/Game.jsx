@@ -453,7 +453,7 @@ function Game() {
         }
     
         <div>
-          <button className="help-button" onClick={getHelp}>
+          <button id="help-button" onClick={getHelp}>
             ?
           </button>
         </div>
@@ -469,12 +469,16 @@ function Game() {
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">
           <div className="ai-score">
-            <div className="ai-message" >
+            {/* <div className="ai-message" >
               {aiMessage}
             </div>
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
-            <p>AI chose: <span>{aiDecision}</span></p>
+            <p>AI chose: <span>{aiDecision}</span></p> */}
+            <button className="proceed-button" ref={coopButtonRef} onClick={() => handleUserDecision('Cooperate')}>
+              SHARE
+              <div>(cooperate)</div>
+            </button>
           </div>
           <div className="column-1">
             <div className={`triangle-left ${highlightedTriangles.includes('t1') ? 'highlight' : ''}`}>
@@ -517,42 +521,50 @@ function Game() {
           </div>
 
           <div className="user-score">
-            <div className="user-message">
+            {/* <div className="user-message">
               {userMessage}
             </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
-            <p className="ai-decision">You chose: {userDecision}</p>
+            <p className="ai-decision">You chose: {userDecision}</p> */}
+            <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
+              WITHHOLD
+              <div>(defect)</div>
+            </button>
           </div>
         </div>
 
         <div className="action">
-          {!isRoundOver ? (
-            <>
-              <button className="proceed-button" ref={coopButtonRef} onClick={() => handleUserDecision('Cooperate')}>
-                SHARE
-                <div>(cooperate)</div>
-              </button>
-              <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
-                WITHHOLD
-                <div>(defect)</div>
-              </button>
-              <br></br>
-              <button className="lockin-button" onClick={() => handleLockIn()}>
-                Lock In
-              </button>
-            </>
-          ) : (
-            <button className="next-round-button" onClick={() => handleNavigation()}> {/* round up */ }
-              Proceed
-            </button>
-          )}
         </div>
       </div>
-      { !isRoundOver && <div>
-        <button className="proceed-chat" onClick={() => handleChatNavigation()}>
-        Go to Chat
-        </button>
-      </div>}
+      <div id="actions">
+        <div>
+          <button 
+            id="proceed-chat" 
+            onClick={() => handleChatNavigation()}
+            style={isRoundOver ? { visibility: 'hidden' } : {}}
+          >
+            Go to Chat
+          </button>
+        </div>
+        <div id="scoreboard">
+          <div className="trapezoid ai-trapezoid">AI</div>
+          <div className="score" id="ai-score">{aiScore}</div>
+          <div className="score" id="user-score">{userScore}</div>
+          <div className="trapezoid user-trapezoid">You</div>
+        </div>
+        {!isRoundOver ? (
+          <>
+            <br></br>
+            <button className="next-buttons" id="lockin-button" onClick={() => handleLockIn()}>
+              Lock In
+            </button>
+          </>
+        ) : (
+          <button className="next-buttons" id="next-round-button" onClick={() => handleNavigation()}> {/* round up */}
+            Proceed
+          </button>
+        )}
+      </div>
     </div>
   );
 }

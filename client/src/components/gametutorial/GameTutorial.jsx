@@ -372,7 +372,7 @@ function GameTutorial() {
                 <div>(defect)</div>
               </button>}
               <br></br>
-              {!isComplete && determineShow("tutorial-action") && <button className="lockin-button" onClick={handleLockIn}>
+              {!isComplete && determineShow("tutorial-action") && <button id="lockin-button" onClick={handleLockIn}>
                 Lock In
               </button>}
             </>

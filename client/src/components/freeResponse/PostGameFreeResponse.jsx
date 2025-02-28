@@ -66,7 +66,7 @@ function PostGameFreeResponse() {
   return (
     <div className="container survey-question">
       <div className="question-container">
-        <h2 className="question-subtitle">{questions[currentQuestionIndex]}</h2>
+        <h2 className="fr-question-subtitle">{questions[currentQuestionIndex]}</h2>
         <textarea
           className="text-input"
           value={responses[currentQuestionIndex]}

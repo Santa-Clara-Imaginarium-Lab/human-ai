@@ -415,6 +415,39 @@ border-bottom: 100px solid var(--med-accent);
 }
 
 
+
+.tutorial-triangle-left.t1.highlight1 {
+  border-top: 100px solid var(--dark-accent); /* Change to desired hover color */
+}
+
+.tutorial-triangle-right.t3.highlight1 {
+  border-bottom: 100px solid var(--dark-accent); /* Change to desired hover color */
+}
+
+.tutorial-triangle-left.t2.highlight1 {
+  border-top: 100px solid var(--dark-accent); /* Change to desired hover color */
+}
+
+.tutorial-triangle-right.t5.highlight1 {
+border-bottom: 100px solid var(--dark-accent); /* Change to desired hover color */
+}
+.tutorial-triangle-left.t4.highlight1 {
+  border-top: 100px solid var(--dark-accent); /* Change to desired hover color */
+}
+
+.tutorial-triangle-right.t7.highlight1 {
+border-bottom: 100px solid var(--dark-accent); /* Change to desired hover color */
+}
+.tutorial-triangle-left.highlight1 {
+  border-top: 100px solid var(--dark-accent); 
+}
+
+.tutorial-triangle-right.t8.highlight1 {
+border-bottom: 100px solid var(--dark-accent);
+}
+
+
+
   .ai-defect-desc {
     position: relative;
     left: -120px; 

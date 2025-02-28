@@ -14,8 +14,8 @@ function Game() {
   
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
-  const [textWallIndex, setTextWallIndex] = useState(0);
   const [helpText, setHelpText] = useState('Click a scenario to learn more about it.');
+  const [helpTextActive, setHelpTextActive] = useState("XX");
 
   const textWallOptions = {
     "SS": 'If you <mark style="background-color: white; color: green;">both share</mark> data, investments are optimized, and profits increase steadily. You both earn <mark style="background-color: white; color: green;">+3</mark> Caboodle.<br/><br/>',
@@ -30,6 +30,7 @@ function Game() {
 
   const editHelpText = (target) => {
     setHelpText(textWallOptions[target]);
+    setHelpTextActive(target);
   };
 
   const location = useLocation();
@@ -476,15 +477,15 @@ function Game() {
                 <p id="alertMessage">Each day, you and the AI analyze market trends and decide whether to Share Data (Cooperate) or Withhold Data (Defect) for your investment decisions.</p>
                 <br/>
                 <div className="help-case-buttons">
-                  <button className="help-case" onClick={() => editHelpText("SS")}>You Share <br/> AI Shares</button>
-                  <button className="help-case" onClick={() => editHelpText("SW")}>You Share <br/> AI Withholds</button>
-                  <button className="help-case" onClick={() => editHelpText("WS")}>You Withhold <br/> AI Shares</button>
-                  <button className="help-case" onClick={() => editHelpText("WW")}>You Withhold <br/> AI Withholds</button>
+                  <button className={`help-case ${helpTextActive === "SS" ? "help-active" : ""}`} onClick={() => editHelpText("SS")}>You Share <br/> AI Shares</button>
+                  <button className={`help-case ${helpTextActive === "SW" ? "help-active" : ""}`} onClick={() => editHelpText("SW")}>You Share <br/> AI Withholds</button>
+                  <button className={`help-case ${helpTextActive === "WS" ? "help-active" : ""}`} onClick={() => editHelpText("WS")}>You Withhold <br/> AI Shares</button>
+                  <button className={`help-case ${helpTextActive === "WW" ? "help-active" : ""}`} onClick={() => editHelpText("WW")}>You Withhold <br/> AI Withholds</button>
                 </div>
                 <br/>
                 <p id="helpText" dangerouslySetInnerHTML={{ __html: helpText }}></p>
                 <br/>
-                <p>If you need more help, you can replay the tutorial. Your current day and Caboodle will be saved.</p>
+                <p>If you need more help, you can replay the tutorial. Your current day, Caboodle, and chat history will be saved.</p>
                 
                 <button className="replay-tutorial" onClick={() => navigate("/game-tutorial", { state: { speedFlag: false, userScore: 0, aiScore: 0 } })}>Replay Tutorial</button>
             </div>

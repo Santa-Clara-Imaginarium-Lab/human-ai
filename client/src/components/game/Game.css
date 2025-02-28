@@ -496,6 +496,10 @@ font-weight: bold; */
   box-shadow: 0em 0em 0 0; /* Reduce shadow size */
 }
 
+.help-active {
+  background-color: var(--accent-five);
+}
+
 .replay-tutorial {
   width: 100%;
   height: 100%;

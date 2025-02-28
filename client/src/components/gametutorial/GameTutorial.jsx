@@ -140,6 +140,10 @@ function GameTutorial() {
             highlightTriangles = [];
             setHighlightedTriangles(highlightTriangles);
             setHighlightedDesc("");
+            setAiMessage('');
+            setUserMessage('');
+            setAiDecision("");
+            setUserDecision("");
             setFocusTutorialText(TEXT_INITIAL_3);
             setTutorialText2(TEXT_INITIAL_3);
             setTutorialText1b(TEXT_INITIAL_1b);
@@ -152,6 +156,10 @@ function GameTutorial() {
             highlightTriangles = [];
             setHighlightedTriangles(highlightTriangles);
             setHighlightedDesc("");
+            setAiMessage('');
+            setUserMessage('');
+            setAiDecision("");
+            setUserDecision("");
             setFocusTutorialText(TEXT_INITIAL_4);
             setTutorialText2(TEXT_INITIAL_4);
             setTutorialText1b(TEXT_INITIAL_1b);
@@ -192,6 +200,10 @@ function GameTutorial() {
   const [hoveredTriangles, setHoveredTriangles] = useState([]); 
   const [selectedDecisionTriangles, setSelectedDecisionTriangles] = useState([]); 
   const [highlightedTriangles, setHighlightedTriangles] = useState([]); // Track highlighted triangles
+  const [aiDecision, setAiDecision] = useState(''); // AI's decision
+  const [userDecision, setUserDecision] = useState(''); // User's decision
+  const [aiMessage, setAiMessage] = useState(''); // Show points gained by AI
+  const [userMessage, setUserMessage] = useState(''); // Show points gained by User
 
   const navigate = useNavigate();
   const [isComplete, setIsComplete] = useState(false); // Track if both rounds are complete
@@ -203,8 +215,6 @@ function GameTutorial() {
 
     const coopButtonRef = useRef(null);
     const defectButtonRef = useRef(null);
-
-  const [userDecision, setUserDecision] = useState(''); // User's decision
 
   const handleUserDecision = (decision) => {
     // Update user's decision    
@@ -229,11 +239,13 @@ function GameTutorial() {
       setSelectedDecisionTriangles(['t1', 't3']); 
       setHighlightedDesc("");
       setHighlightedDesc("user-cooperate-desc ai-defect-desc");
+      setAiDecision("Defect");
     }
     else {
       setSelectedDecisionTriangles(['t2', 't5']); 
       setHighlightedDesc("");
       setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); 
+      setAiDecision("Cooperate");
     }
   };
 
@@ -242,10 +254,12 @@ function GameTutorial() {
       setSelectedDecisionTriangles(['t4', 't7']); 
       setHighlightedDesc("");
       setHighlightedDesc("user-defect-desc ai-defect-desc");
+      setAiDecision("Defect");
     }
     else {
       setSelectedDecisionTriangles(['t6', 't8']); 
       setHighlightedDesc("");
+      setAiDecision("Cooperate");
       setHighlightedDesc("user-defect-desc ai-cooperate-desc"); 
     }
   };
@@ -269,6 +283,8 @@ function GameTutorial() {
         setHighlightedDesc("user-cooperate-desc ai-defect-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 0); // Increase user score
         setAiScore(aiScore + 5); // AI score doesn't change in this case
+        setAiMessage('+5');
+        setUserMessage('+0');
         setRound(2); // Move to Round 2
       } else if (round === 2) {
         highlightTriangles = ['t2', 't5'];
@@ -278,6 +294,8 @@ function GameTutorial() {
         setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 3); // Increase user score
         setAiScore(aiScore + 3); // AI score also increases
+        setAiMessage('+3');
+        setUserMessage('+3');
         setIsComplete(true); // Mark as complete after Round 2
         console.log("isComplete:");
       }
@@ -291,6 +309,8 @@ function GameTutorial() {
         setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 1); // Increase user score
         setAiScore(aiScore + 1); // AI score also increases
+        setAiMessage('+1');
+        setUserMessage('+1');
         setRound(2); // Move to Round 2
       } else if (round === 2) {
         highlightTriangles = ['t6', 't8'];
@@ -300,6 +320,8 @@ function GameTutorial() {
         setHighlightedDesc("user-defect-desc ai-cooperate-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 5); // Increase user score
         setAiScore(aiScore + 0); // AI score increases more
+        setAiMessage('+0');
+        setUserMessage('+5');
         setIsComplete(true); // Mark as complete after Round 2
         console.log("isComplete:");
     }
@@ -323,7 +345,11 @@ function GameTutorial() {
       <div className={`game-tutorial-content ${( determineShow("game-tutorial-content") ? 'hide' : '')}`}>
         <div className={`tutorial-horizontal-layout ${( determineShow("tutorial-horizontal-layout") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-horizontal-layout") ? tooltips[tooltipIndex] : null}>
           <div className={`tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null}>
+            <div className="ai-message" >
+              {aiMessage}
+            </div>
             <h2>AI's Score: <span className="tutorial-score-value">{aiScore}</span></h2>
+            <p>AI chose: <span>{aiDecision}</span></p>
           </div>
           <div className="tutorial-column-1">
             <div className={`tutorial-triangle-left ${highlightedTriangles.includes('t1') ? 'highlight1' :
@@ -417,7 +443,11 @@ function GameTutorial() {
             </div>
           </div>
           <div className={`tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null}>
+            <div className="user-message">
+              {userMessage}
+            </div>
             <h2>Your Score: <span className="tutorial-score-value">{userScore}</span></h2>
+            <p className="ai-decision">You chose: {userDecision}</p>
           </div>
         </div>
 

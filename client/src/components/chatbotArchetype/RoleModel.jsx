@@ -95,7 +95,7 @@ const RoleModel = () => {
                     </div>
                 </div>
 
-                <button className="next-button" onClick={handleClick}>Next</button>
+                <button className="submit-button" onClick={handleClick}>Next</button>
             </div>
         </div>
     );

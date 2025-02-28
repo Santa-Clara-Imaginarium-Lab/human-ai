@@ -256,7 +256,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: -50px;
+    margin: -55px;
   }
     
     /* Horizontal layout for AI score, triangle grid, and User score */
@@ -321,10 +321,16 @@
     border-radius: 20px;
     padding: 0.5em 1.5em;
     margin: 50px;
+    margin-bottom: 25px;
     font-size: 1.2em;
     cursor: pointer;
     font-family: var(--universal-font);
     box-shadow: 0.3em 0.3em 0 0 var(--c1);
+  }
+
+  .tutorial-button.defect.selected, .tutorial-button.cooperate.selected {
+    background-color: var(--med-accent);
+    box-shadow: 0.3em 0.3em 0 0 black;
   }
 
   .tutorial-proceed-button:active, .tutorial-button:active {
@@ -440,6 +446,30 @@
     pointer-events: none; /* Prevent interaction with numbers */
   }
 
+  .tutorial-triangle-left.highlight1 {
+    border-top: 100px solid var(--dark-accent);
+  }
+  
+  .tutorial-triangle-left.highlight2 {
+    border-top: 100px solid var(--light-accent);
+  }
+
+  .tutorial-triangle-left.highlight3 {
+    border-top: 100px solid var(--med-accent);
+  }
+
+  .tutorial-triangle-right.highlight1 {
+    border-bottom: 100px solid var(--dark-accent);
+  }
+
+  .tutorial-triangle-right.highlight2 {
+    border-bottom: 100px solid var(--light-accent);
+  }
+
+  .tutorial-triangle-right.highlight3 {
+    border-bottom: 100px solid var(--med-accent);
+  }
+
   .ai-defect-desc {
     position: relative;
     left: -120px; 
@@ -468,6 +498,10 @@
   white-space: nowrap;
   transform: rotate(225deg);
   font-weight: bold; */
+}
+
+.ai-defect-desc.highlight, .ai-cooperate-desc.highlight, .user-defect-desc.highlight, .user-cooperate-desc.highlight{
+  color: white;
 }
 
 .user-defect-desc {
@@ -510,10 +544,6 @@ transform: rotate(315deg);
 font-weight: bold; */
 }
 
-.highlight {
-  font-weight: bold;
-  color: white; /* Yellow */
-}
 
 .chat-tutorial-proceed {
   margin: 0px;

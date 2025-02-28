@@ -12,6 +12,9 @@ import aiSelfCompetency from "./models/aiSelfCompetency.js";
 import trustScaleExplainableAI from "./models/trustScaleExplainableAI";
 import trustPeopleAutomation from "./models/trustPeopleAutomation";
 import demographic from "./models/demographic.js";
+import postGameFreeResponse from "./models/postGameFreeResponse.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const port = 3000;
 const app = express();
@@ -471,6 +474,37 @@ app.get("/api/chats", async (req, res) => {
         res.status(500).json({ error: "Failed to fetch chats." });
     }
 });
+
+app.post("/api/postgamefreeresponse", async (req, res) => {
+  try {
+    const { userId, responses } = req.body;
+
+    // Validate userId and responses array
+    if (!userId || !responses || !Array.isArray(responses)) {
+      return res.status(400).json({ error: "Invalid request format" });
+    }
+
+    // Validate that we have exactly 7 responses and none are empty
+    if (responses.length !== 7 || responses.some(r => !r.responseText || !r.responseText.trim())) {
+      return res.status(400).json({ error: "All 7 responses are required and must not be empty" });
+    }
+
+    const newResponse = new postGameFreeResponse({
+      userId,
+      responses: responses.map(r => ({
+        ...r,
+        responseText: r.responseText.trim()
+      }))
+    });
+
+    await newResponse.save();
+    res.status(201).json({ message: "Post-game responses saved successfully!" });
+  } catch (error) {
+    console.error("Error saving post-game responses:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

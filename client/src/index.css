@@ -527,6 +527,9 @@
   --option-circles: black;
   --score: white;
   --button-shadow: var(--c2);
+  --light-accent:#b1afb4;
+  --med-accent:#878589;
+  --dark-accent:#484749;
 }
 
 :root.black-white-theme-4-3 {

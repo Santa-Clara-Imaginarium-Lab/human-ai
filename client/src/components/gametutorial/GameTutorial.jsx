@@ -420,7 +420,7 @@ function GameTutorial() {
 
   return (
     <div className="container game-tutorial">
-      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') ? 'show' : 'hide'}`}> 
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') ? 'hide' : 'show'}`}> 
         <p>FREE PLAY Active. Your data is not being recorded.</p>
       </div>
 

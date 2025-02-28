@@ -166,6 +166,7 @@ font-weight: bold; */
 
   .lockin-button {
     margin: 0px;
+    margin-bottom: 30px;
     background-color: var(--accent-three);
     color: white;
     border: none;

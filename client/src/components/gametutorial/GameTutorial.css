@@ -37,7 +37,7 @@
   place-items: center;
 
   position: relative;
-  margin-bottom: 60px;
+  margin-bottom: 27px;
   padding: 15px; /* Add padding for better readability */
   z-index: 1; /* Ensure it is above the shadow */
   background-color: white; /* Match the button's background */
@@ -169,7 +169,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: -50px;
+    margin: -55px;
   }
     
     /* Horizontal layout for AI score, triangle grid, and User score */
@@ -234,6 +234,7 @@
     border-radius: 20px;
     padding: 0.5em 1.5em;
     margin: 50px;
+    margin-bottom: 25px;
     font-size: 1.2em;
     cursor: pointer;
     font-family: var(--universal-font);
@@ -454,6 +455,7 @@ font-weight: bold; */
 
 .proceed-chat-tutorial {
   margin: 100px;
+  margin-bottom: 70px;
   background-color: var(--accent-three);
   color: white;
   border: none;

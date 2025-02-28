@@ -15,7 +15,7 @@ function Game() {
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
   const [textWallIndex, setTextWallIndex] = useState(0);
-  const [helpText, setHelpText] = useState('Click a scenario to learn more about it.<br/>The button format is {Your Action}/{AI Action}');
+  const [helpText, setHelpText] = useState('Click a scenario to learn more about it.');
 
   const textWallOptions = {
     "SS": 'If you <mark style="background-color: white; color: green;">both share</mark> data, investments are optimized, and profits increase steadily. You both earn <mark style="background-color: white; color: green;">+3</mark> Caboodle.<br/><br/>',

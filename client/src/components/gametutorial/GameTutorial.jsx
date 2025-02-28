@@ -240,6 +240,7 @@ function GameTutorial() {
           case (17):
             reEnableClick = false;
             setCanPlay(true);
+            setDecisionMade('');
             setTooltipIndex(16);
             break;
           case (91):
@@ -350,6 +351,7 @@ function GameTutorial() {
   const handleUserDecision = (decision) => {
     // Update user's decision    
     setUserDecision(decision);
+    setDecisionMade('True');
 
     switch (decision) {
       case 'Cooperate':
@@ -628,6 +630,7 @@ function GameTutorial() {
                 <div>(defect)</div>
               </button>}
               <br></br>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
               {!isComplete && determineShow("tutorial-action") && <button className={`lockin-button ${(determineShow("navigate-lock-in") ? '' : 'lockin-disabled')} ${(determineShow("tutorial-button-tooltip") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => canPlay ?  handleLockIn() : null}>
                 Lock In
               </button>}

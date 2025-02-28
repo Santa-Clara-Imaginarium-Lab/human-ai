@@ -41,10 +41,10 @@ function GameTutorial() {
     const [tutorialText1b, setTutorialText1b] = useState(TEXT_INITIAL_1b); 
     const [tutorialText2, setTutorialText2] = useState(TEXT_INITIAL_2); 
 
-      const location = useLocation();
-      const speedFlag = location.state.speedFlag;
-      const userScoreArchived = location.state.userScore;
-      const aiScoreArchived = location.state.aiScore;
+    const location = useLocation();
+    const speedFlag = location.state.speedFlag;
+    const userScoreArchived = location.state.userScore;
+    const aiScoreArchived = location.state.aiScore;
     
     const determineShow = (componentName) => {
       // TURN CYCLES (vertically aligns with numbers in arrays)
@@ -85,57 +85,47 @@ function GameTutorial() {
         ];
       const USER_DEFECT_DESC =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0, 
-            0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const TUTORIAL_AI_SCORE = 
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0, 
-            0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const TUTORIAL_USER_SCORE = 
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0, 
-            0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
 
       // CONTROLS BUTTONS
       const TUTORIAL_ACTION =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 
-            1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const TUTORIAL_BUTTON_TOOLTIP =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 
             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const CHAT_TUTORIAL_BUTTON =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0, 
-            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  
-            1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
         ];
       const CHAT_TUTORIAL_TOOLTIP =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0, 
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
 
       // CONTROLS ALLOW/DENY BUTTONS
       const NAVIGATE_LOCK_IN =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
             0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const NAVIGATE_CHAT_TUTORIAL =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-            0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
             0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const END_TUTORIAL =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-            0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
 
       switch (componentName) {
@@ -196,27 +186,7 @@ function GameTutorial() {
       /* 14 */ "When you're ready, you lock in your decision for the day.",
       /* 15 */ '',
       /* 16 */ '',
-      /* 17 */ 'This is the result of your decisions!',
-
-
-
-
-      /* old */
-      /* 1 */ "This is the Caboodle Decision Matrix!", 
-      /* 2 */ "It shows how much Caboodle each player gets, depending on what options are chosen.",
-      /* 3 */ "Triangles pointing left: Caboodle for the AI.",
-      /* 4 */ "Triangles pointing right: Caboodle for you.",
-      /* 5 */ "This is how much Caboodle the AI has...",
-      /* 6 */ "And this is how much you have.",
-      /* 7 */ '',
-      /* 8 */ '',
-      /* 9 */ 'This is the result of your decisions! The AI defected. See the scoring explanation above.',
-      /* 10 */ '',
-      /* 11 */ '',
-      /* 12 */ 'This is the result of your decisions! The AI cooperated. See the scoring explanation above.',
-      /* 13 */ '',
-      /* 14 */ 'You can chat with the AI using this button.',
-      /* 15 */ 'It is always available on the game page. Press it now!',
+      /* 17 */ 'This is the result of your decisions! Press SPACE to play again.',
     ];
 
     const WAIT_TIME = 15; // reduce when testing
@@ -511,7 +481,7 @@ function GameTutorial() {
             </button>
           </div>
 
-          <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { sessionStorage.getItem("currentRound") === 1 ? navigate('/pregame') : navigate('/dashboard')}}>
+          <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { sessionStorage.getItem("currentRound") === "1" ? navigate('/pregame') : navigate('/dashboard')}}>
             Finish Tutorial
           </button>
 

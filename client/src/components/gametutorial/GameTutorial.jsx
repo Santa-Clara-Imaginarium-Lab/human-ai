@@ -144,6 +144,7 @@ function GameTutorial() {
             setUserMessage('');
             setAiDecision("");
             setUserDecision("");
+            setDecisionMade('');
             setFocusTutorialText(TEXT_INITIAL_3);
             setTutorialText2(TEXT_INITIAL_3);
             setTutorialText1b(TEXT_INITIAL_1b);
@@ -204,7 +205,8 @@ function GameTutorial() {
   const [userDecision, setUserDecision] = useState(''); // User's decision
   const [aiMessage, setAiMessage] = useState(''); // Show points gained by AI
   const [userMessage, setUserMessage] = useState(''); // Show points gained by User
-
+  const [decisionMade, setDecisionMade] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const [isComplete, setIsComplete] = useState(false); // Track if both rounds are complete
 
@@ -235,6 +237,7 @@ function GameTutorial() {
   let highlightTriangles = [];
   
   const handleShareClick = () => {
+    setDecisionMade('True');
     if (round === 1) {
       setSelectedDecisionTriangles(['t1', 't3']); 
       setHighlightedDesc("");
@@ -250,6 +253,7 @@ function GameTutorial() {
   };
 
   const handleWithholdClick = () => {
+    setDecisionMade('True');
     if (round === 1) {
       setSelectedDecisionTriangles(['t4', 't7']); 
       setHighlightedDesc("");
@@ -266,6 +270,14 @@ function GameTutorial() {
 
   const handleLockIn = () => {
     // Progression control
+    if (decisionMade === '') {
+      setErrorMessage('Please select SHARE or WITHHOLD');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+      return;
+    }
+
     setSelectedDecisionTriangles([]);
     setCanPlay(false);
     setCanClick(true);
@@ -462,6 +474,7 @@ function GameTutorial() {
                 <div>(defect)</div>
               </button>}
               <br></br>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
               {!isComplete && determineShow("tutorial-action") && <button className="lockin-button" onClick={handleLockIn}>
                 Lock In
               </button>}

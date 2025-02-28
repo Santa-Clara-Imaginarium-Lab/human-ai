@@ -11,7 +11,7 @@ function Game() {
   const [showRt, setShowRt] = useState(true);
   const [rtGo, setRtGo] = useState(false);
   const [rtuGo, setRtuGo] = useState(false);
-  
+  const [errorMessage, setErrorMessage] = useState('');
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
   const textWall = "You and the AI analyze market trends and decide each day whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
@@ -263,7 +263,13 @@ function Game() {
     setSelectedDecisionTriangles([]);
     if (isRoundOver) return; // Prevent further gameplay if the game is over
 
-    if (userDecision === '') return; // Do nothing if user hasn't made a decision
+    if (userDecision === '') {
+      setErrorMessage('Please select SHARE or WITHHOLD');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+      return;
+    }
 
     const aiChoice = await getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
@@ -587,6 +593,7 @@ function Game() {
                 <div>(defect)</div>
               </button>
               <br></br>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
               <button className="lockin-button" onClick={() => handleLockIn()}>
                 Lock In
               </button>

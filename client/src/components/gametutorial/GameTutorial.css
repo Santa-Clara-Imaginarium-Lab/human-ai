@@ -241,6 +241,11 @@
     box-shadow: 0.3em 0.3em 0 0 var(--c1);
   }
 
+  .tutorial-button.defect.selected, .tutorial-button.cooperate.selected {
+    background-color: var(--med-accent);
+    box-shadow: 0.3em 0.3em 0 0 black;
+  }
+
   .tutorial-proceed-button:active, .tutorial-button:active {
     /* Simulate the button being pressed */
     transform: translate(0.3em, 0.3em); /* Move the button down */
@@ -469,6 +474,11 @@ font-weight: bold; */
   right: 0px;
   top: 0px;
   transform-origin: bottom right;
+}
+
+.proceed-chat-tutorial:active {
+  transform: translate(0.3em, 0.3em); /* Move the button down */
+  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
 }
 
 .proceed-chat-tutorial-disabled {

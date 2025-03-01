@@ -11,7 +11,8 @@
   background-color: rgb(178, 225, 244);
   color: var(--accent-three);
   font-size: 0.9em;
-  font-family: var(--universal-font);
+  font-family: var(--secondary-font);
+  font-weight: bold;
   padding: 0.5em;
   border-radius: 5px;
   white-space: nowrap;

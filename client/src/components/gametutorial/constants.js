@@ -1,6 +1,6 @@
 // Initial Texts
 export const TEXT_INITIAL_1a = `
-  Each day at at Caboodle, you and the AI Agent choose to SHARE data or WITHHOLD data.
+  Each day at Caboodle, you and the AI Agent choose to SHARE data or WITHHOLD data.
 `;
 export const TEXT_INITIAL_1b = `There are four possibilities per day.
 `;

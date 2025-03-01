@@ -278,7 +278,7 @@
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
-  @media (max-height: 925px) {
+  @media (max-height: 950px) {
     .results-container {
         transform: scale(0.9); /* Scale down the results container */
     }
@@ -289,5 +289,35 @@
     .win-banner {
         transform: scale(0.95); 
         top: -21%;
+    }
+}
+
+@media (max-height: 879px) {
+    .results-container {
+        transform: scale(0.85); /* Scale down the results container */
+    }
+}
+
+@media (max-height: 840px) {
+    .results-container {
+        transform: scale(0.8); /* Scale down the results container */
+    }
+}
+
+@media (max-height: 796px) {
+    .results-container {
+        transform: scale(0.75); /* Scale down the results container */
+    }
+    .cell {
+        font-size: 18px;
+    }
+}
+
+@media (max-height: 743px) {
+    .results-container {
+        transform: scale(0.7); /* Scale down the results container */
+    }
+    .cell {
+        font-size: 16px;
     }
 }

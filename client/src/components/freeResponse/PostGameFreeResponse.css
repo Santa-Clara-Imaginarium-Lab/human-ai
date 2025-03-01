@@ -1,0 +1,18 @@
+/* PostGameFreeResponse.css */
+  .fr-question-subtitle {
+    font-size: 35px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--accent-three);
+    font-family: var(--secondary-font);
+  }
+  
+  .text-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 2px solid var(--accent-one);
+    border-radius: 10px;
+    font-family: var(--secondary-font);
+    outline: none;
+  }

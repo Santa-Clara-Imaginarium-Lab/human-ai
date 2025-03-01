@@ -48,8 +48,9 @@ function Question() {
         }
 
         console.log('Survey responses saved successfully');
-        navigate('/end-screen'); // Simply navigate to end screen after all questions
-        
+        //navigate('/end-screen'); // Simply navigate to end screen after all questions
+        navigate('/postgamefreeresponse');
+
       } catch (error) {
         console.error('Error saving responses:', error);
       }
@@ -63,6 +64,10 @@ function Question() {
 
   return (
     <div className="container survey-question">
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
+        <p>FREE PLAY Active. Your data is not being recorded.</p>
+      </div>
+
       <div className="question-container">
 
       <button className="question-button">

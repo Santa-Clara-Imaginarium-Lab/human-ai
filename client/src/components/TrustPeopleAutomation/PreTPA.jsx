@@ -48,7 +48,7 @@ function PreTPA() {
     };
 
     try {
-      const response = await fetch(`https://human-ai-9bp5.onrender.com/api/trustpeopleautomation`, {
+      const response = await fetch(`https://human-ai.up.railway.app/api/trustpeopleautomation`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

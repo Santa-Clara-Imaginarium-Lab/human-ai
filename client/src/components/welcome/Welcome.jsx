@@ -28,7 +28,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
         setIsCheckingGuest(true);
 
         // Check if userId exists in the chats collection
-        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/chats?userId=${guestID}`);
+        const response = await fetch(`https://human-ai.up.railway.app/api/chats?userId=${guestID}`);
         if (!response.ok) {
             alert('Critical error: Unable to check user ID. Please try again later.');
             return;

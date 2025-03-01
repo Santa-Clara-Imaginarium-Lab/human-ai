@@ -25,7 +25,7 @@ function DemographicQuestion4() {
       }
 
       try {
-        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/demographics`, {
+        const response = await fetch(`https://human-ai.up.railway.app/api/demographics`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

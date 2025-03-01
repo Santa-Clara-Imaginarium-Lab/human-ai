@@ -52,7 +52,7 @@ function PreTXAI2() {
     console.log("Data being sent:", data); // Log the data being sent
 
     try {
-        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/trustscaleexplainableai`, {
+        const response = await fetch(`https://human-ai.up.railway.app/api/trustscaleexplainableai`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

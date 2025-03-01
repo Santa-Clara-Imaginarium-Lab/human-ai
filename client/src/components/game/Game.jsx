@@ -11,14 +11,27 @@ function Game() {
   const [showRt, setShowRt] = useState(true);
   const [rtGo, setRtGo] = useState(false);
   const [rtuGo, setRtuGo] = useState(false);
-  
+  const [errorMessage, setErrorMessage] = useState('');
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
-  const textWall = "You and the AI analyze market trends and decide each day whether to Share Data (Cooperate) or Withhold Data (Defect) when making investment decisions.<br/><br/>" +
-    "1. If you withhold data and the AI chooses to share data, you will gain a boost in profit. You will earn +5 Caboodle, while the AI will earn +0 Caboodle.<br/><br/>" +
-    "2. If the AI withholds data and you choose to share data, the AI will gain a boost in profit. The AI will gain +5 Caboodle, while you earn +0 Caboodle.<br/><br/>" +
-    "3. If you both share data, investments are optimized, and profits increase steadily. You both earn +3 Caboodle.<br/><br/>" +
-    "4. If you both withhold data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn +1 Caboodle."
+  const [helpText, setHelpText] = useState('<i>Click a scenario to learn more about it.</i>');
+  const [helpTextActive, setHelpTextActive] = useState("XX");
+
+  const textWallOptions = {
+    "SS": 'If you <mark style="background-color: white; color: green;">both share</mark> data, investments are optimized, and profits increase steadily. You both earn <mark style="background-color: white; color: green;">+3</mark> Caboodle.<br/><br/>',
+
+    "SW": 'If the <mark style="background-color: white; color: red;">AI withholds</mark> data and you choose to share data, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: red;">+5</mark> Caboodle, while you earn +0 Caboodle.<br/><br/>',
+
+    "WS": 'If you <mark style="background-color: white; color: green;">withhold data</mark> and the AI chooses to share data, you will gain a boost in profit. You will earn <mark style="background-color: white; color: green;">+5</mark> Caboodle, while the AI will earn +0 Caboodle.<br/><br/>',
+
+    "WW": 'If you <mark style="background-color: white; color: green;">both withhold data</mark>, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: green;">+1</mark> Caboodle.'
+  };
+
+
+  const editHelpText = (target) => {
+    setHelpText(textWallOptions[target]);
+    setHelpTextActive(target);
+  };
 
   const location = useLocation();
   const data = location.state.data;
@@ -194,6 +207,8 @@ function Game() {
   const [userMessage, setUserMessage] = useState(''); // Show points gained by User
   const [gameLog, setGameLog] = useState([]); // Log of decisions and outcomes
   const [highlightedTriangles, setHighlightedTriangles] = useState([]); // Track highlighted triangles
+  const [hoveredTriangles, setHoveredTriangles] = useState([]); // New state for hovered triangles
+  const [selectedDecisionTriangles, setSelectedDecisionTriangles] = useState([]); 
   const [triangleNumbers, setTriangleNumbers] = useState({}); // Store numbers for triangles
   const [highlightedDesc, setHighlightedDesc] = useState({
     userCooperate: false,
@@ -249,10 +264,25 @@ function Game() {
     }
   };  
 
+  const handleShareClick = () => {
+    setSelectedDecisionTriangles(['t1', 't2', 't3', 't5']); 
+  };
+
+  const handleWithholdClick = () => {
+    setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
+  };
+
   const handleLockIn = async () => {
+    setSelectedDecisionTriangles([]);
     if (isRoundOver) return; // Prevent further gameplay if the game is over
 
-    if (userDecision === '') return; // Do nothing if user hasn't made a decision
+    if (userDecision === '') {
+      setErrorMessage('Please select SHARE or WITHHOLD');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+      return;
+    }
 
     const aiChoice = await getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
@@ -357,30 +387,6 @@ function Game() {
       appendGameLog(`{${logString}}`, botNum, false);
     }
 
-
-    // const storage = sessionStorage.getItem('gameLog');
-    // const currGameLog = JSON.parse(storage);
-    // const builtLog = (JSON.stringify(`${personality}: ` + gameLog + `,`));
-    // console.log(builtLog);
-    // sessionStorage.setItem('gameLog', builtLog);
-
-    // console.log(userScore);
-    // console.log(aiScore);
-    
-    // let personality = sessionStorage.getItem('personality');
-    // console.log(gameLog);
-    // let result = `Round${currentRound}: { You: ${userPoints}, AI: ${aiPoints}}`;
-    // let combined = gameLog.concat(result);
-    // console.log(combined);
-    // setGameLog(combined);
-    // // setGameLog()
-    // // setGameLog((prev) => { console.log(prev); return prev.concat(
-    // //   `Round${currentRound}: { You: ${userPoints}, AI: ${aiPoints}}`
-    // //   //`Round ${currentRound}: You chose ${userDecision}, AI chose ${aiChoice}.`,
-    // // )});
-
-    // console.log(gameLog)
-
     // Set highlighted triangles and numbers, then reset them after 5 seconds
     setHighlightedTriangles(highlightTriangles);
     setTriangleNumbers(numbers);
@@ -446,6 +452,11 @@ function Game() {
     <div className="container game">
       <div className="game-content">
 
+      <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
+        <p>FREE PLAY Active. Your data is not being recorded.</p>
+      </div>
+
+
         {showRt && <div className={`round-transitioner ${rtGo ? 'round-go' : ''}`}>
             <h1 className="round-transitioner-text"> Day {currentRound} </h1>
             <div className={`round-transitioner-underline ${rtuGo ? 'round-underline-go' : ''}`}/>
@@ -461,7 +472,20 @@ function Game() {
         {showCustomAlert && <div className="custom-alert">
             <div className="custom-alert-content">
                 <span className="close" onClick={closeHelp}>&times;</span>
-                <p id="alertMessage" dangerouslySetInnerHTML={{ __html: textWall }}></p>
+                <p id="alertMessage">Possible Earnings</p>
+                <br/>
+                <div className="help-case-buttons">
+                  <button className={`help-case ${helpTextActive === "SS" ? "help-active" : ""}`} onClick={() => editHelpText("SS")}>You Share <br/> AI Shares</button>
+                  <button className={`help-case ${helpTextActive === "SW" ? "help-active" : ""}`} onClick={() => editHelpText("SW")}>You Share <br/> AI Withholds</button>
+                  <button className={`help-case ${helpTextActive === "WS" ? "help-active" : ""}`} onClick={() => editHelpText("WS")}>You Withhold <br/> AI Shares</button>
+                  <button className={`help-case ${helpTextActive === "WW" ? "help-active" : ""}`} onClick={() => editHelpText("WW")}>You Withhold <br/> AI Withholds</button>
+                </div>
+                <br/>
+                <p id="helpText" dangerouslySetInnerHTML={{ __html: helpText }}></p>
+                <br/>
+                <p>If you need more help, you can replay the tutorial. Your current day, Caboodle, and chat history will be saved.</p>
+                
+                <button className="replay-tutorial" onClick={() => navigate("/game-tutorial", { state: { speedFlag: false, userScore: 0, aiScore: 0 } })}>Replay Tutorial</button>
             </div>
           </div>
         }
@@ -475,45 +499,108 @@ function Game() {
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
             <p>AI chose: <span>{aiDecision}</span></p> */}
-            <button className="proceed-button" ref={coopButtonRef} onClick={() => handleUserDecision('Cooperate')}>
+            <button className="proceed-button" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
               SHARE
               <div>(cooperate)</div>
             </button>
           </div>
           <div className="column-1">
-            <div className={`triangle-left ${highlightedTriangles.includes('t1') ? 'highlight' : ''}`}>
+            <div className={`triangle-left ${highlightedTriangles.includes('t1') ? 'highlight' : 
+              hoveredTriangles.includes('t1') ? 'highlight2' :
+              selectedDecisionTriangles.includes('t1') ? 'highlight3' : ''}`}
+              onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t1') && <span className="triangle-number-left-bottom">{triangleNumbers.t1}</span>}
-              <span className={`ai-defect-label ${highlightedDesc.aiDefect ? 'highlight' : ''}`}>AI WITHHOLD</span>
+              {hoveredTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
+              {selectedDecisionTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
+              <span className={`ai-defect-label ${highlightedDesc.aiDefect ? 'highlight-game' : ''}`}>AI WITHHOLD</span>
             </div>
           </div>
           <div className="column-2">
-            <div className={`triangle-left ${highlightedTriangles.includes('t2') ? 'highlight' : ''}`}>
+          <div 
+              className={`triangle-left ${highlightedTriangles.includes('t2') ? 'highlight' : 
+              hoveredTriangles.includes('t2') ? 'highlight2' : 
+              selectedDecisionTriangles.includes('t2') ? 'highlight3' : ''}`} 
+              onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t2') && <span className="triangle-number-left-up">{triangleNumbers.t2}</span>}
-              <span className={`ai-cooperate-label ${highlightedDesc.aiCooperate ? 'highlight' : ''}`}>AI SHARE</span>
+              {hoveredTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
+              {selectedDecisionTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
+              <span className={`ai-cooperate-label ${highlightedDesc.aiCooperate ? 'highlight-game' : ''}`}>AI SHARE</span>
             </div>
-            <div className={`triangle-right ${highlightedTriangles.includes('t3') ? 'highlight' : ''}`}>
+            <div 
+              className={`triangle-right ${highlightedTriangles.includes('t3') ? 'highlight' : 
+              hoveredTriangles.includes('t3') ? 'highlight2' : 
+              selectedDecisionTriangles.includes('t3') ? 'highlight3' : ''}`} 
+              onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t3') && <span className="triangle-number-right-bottom">{triangleNumbers.t3}</span>}
+              {hoveredTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
+              {selectedDecisionTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
             </div>
-            <div className={`triangle-left ${highlightedTriangles.includes('t4') ? 'highlight' : ''}`}>
+            <div 
+              className={`triangle-left ${highlightedTriangles.includes('t4') ? 'highlight' : 
+              hoveredTriangles.includes('t4') ? 'highlight2' : 
+              selectedDecisionTriangles.includes('t4') ? 'highlight3' : ''}`} 
+              onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t4') && <span className="triangle-number-left-bottom">{triangleNumbers.t4}</span>}
+              {hoveredTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
+              {selectedDecisionTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
             </div>
           </div>
           <div className="column-3">
-            <div className={`triangle-right ${highlightedTriangles.includes('t5') ? 'highlight' : ''}`}>
+          <div 
+              className={`triangle-right ${highlightedTriangles.includes('t5') ? 'highlight' : 
+              hoveredTriangles.includes('t5') ? 'highlight2' : 
+              selectedDecisionTriangles.includes('t5') ? 'highlight3' : ''}`} 
+              onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t5') && <span className="triangle-number-right-up">{triangleNumbers.t5}</span>}
-              <span className={`user-cooperate-label ${highlightedDesc.userCooperate ? 'highlight' : ''}`}>YOU SHARE</span>
+              {hoveredTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
+              {selectedDecisionTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
+              <span className={`user-cooperate-label ${highlightedDesc.userCooperate ? 'highlight-game' : ''}`}>YOU SHARE</span>
             </div>
-            <div className={`triangle-left ${highlightedTriangles.includes('t6') ? 'highlight' : ''}`}>
+            <div 
+              className={`triangle-left ${highlightedTriangles.includes('t6') ? 'highlight' : 
+              hoveredTriangles.includes('t6') ? 'highlight2' : 
+              selectedDecisionTriangles.includes('t6') ? 'highlight3' : ''}`} 
+              onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t6') && <span className="triangle-number-left-up">{triangleNumbers.t6}</span>}
+              {hoveredTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
+              {selectedDecisionTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
             </div>
-            <div className={`triangle-right ${highlightedTriangles.includes('t7') ? 'highlight' : ''}`}>
+            <div 
+              className={`triangle-right ${highlightedTriangles.includes('t7') ? 'highlight' : 
+              hoveredTriangles.includes('t7') ? 'highlight2' : 
+              selectedDecisionTriangles.includes('t7') ? 'highlight3' : ''}`} 
+              onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t7') && <span className="triangle-number-right-bottom">{triangleNumbers.t7}</span>}
+              {hoveredTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
+              {selectedDecisionTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
             </div>
           </div>
           <div className="column-4">
-            <div className={`triangle-right ${highlightedTriangles.includes('t8') ? 'highlight' : ''}`}>
+          <div 
+              className={`triangle-right ${highlightedTriangles.includes('t8') ? 'highlight' : 
+              hoveredTriangles.includes('t8') ? 'highlight2' : 
+              selectedDecisionTriangles.includes('t8') ? 'highlight3' : ''}`} 
+              onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} // Set hovered triangles on mouse enter
+              onMouseLeave={() => setHoveredTriangles([])} // Clear hovered triangles on mouse leave
+            >
               {highlightedTriangles.includes('t8') && <span className="triangle-number-right-up">{triangleNumbers.t8}</span>}
-              <span className={`user-defect-label ${highlightedDesc.userDefect ? 'highlight' : ''}`}>YOU WITHHOLD</span>
+              {hoveredTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
+              {selectedDecisionTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
+              <span className={`user-defect-label ${highlightedDesc.userDefect ? 'highlight-game' : ''}`}>YOU WITHHOLD</span>
             </div>
           </div>
           <div className="column-5">
@@ -526,44 +613,42 @@ function Game() {
             </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p> */}
-            <button className="proceed-button" ref={defectButtonRef} onClick={() => handleUserDecision('Defect')}>
+            <button className="proceed-button" ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
               WITHHOLD
               <div>(defect)</div>
             </button>
           </div>
         </div>
-
-        <div className="action">
-        </div>
-      </div>
-      <div id="actions">
-        <div>
-          <button 
-            id="proceed-chat" 
-            onClick={() => handleChatNavigation()}
-            style={isRoundOver ? { visibility: 'hidden' } : {}}
-          >
-            Go to Chat
-          </button>
-        </div>
-        <div id="scoreboard">
-          <div className="trapezoid ai-trapezoid">AI</div>
-          <div className="score" id="ai-score">{aiScore}</div>
-          <div className="score" id="user-score">{userScore}</div>
-          <div className="trapezoid user-trapezoid">You</div>
-        </div>
-        {!isRoundOver ? (
-          <>
-            <br></br>
-            <button className="next-buttons" id="lockin-button" onClick={() => handleLockIn()}>
-              Lock In
+        <div className="actions">
+          <div>
+            <button 
+              id="proceed-chat" 
+              onClick={() => handleChatNavigation()}
+              style={isRoundOver ? { visibility: 'hidden' } : {}}
+            >
+              Go to Chat
             </button>
-          </>
-        ) : (
-          <button className="next-buttons" id="next-round-button" onClick={() => handleNavigation()}> {/* round up */}
-            Proceed
-          </button>
-        )}
+          </div>
+          <div id="scoreboard">
+            <div className="trapezoid ai-trapezoid">AI</div>
+            <div className="score" id="ai-score">{aiScore}</div>
+            <div className="score" id="user-score">{userScore}</div>
+            <div className="trapezoid user-trapezoid">You</div>
+          </div>
+          {!isRoundOver ? (
+            <>
+              <br></br>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
+              <button className="next-buttons" id="lockin-button" onClick={() => handleLockIn()}>
+                Lock In
+              </button>
+            </>
+          ) : (
+            <button className="next-buttons" id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
+              Proceed
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

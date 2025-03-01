@@ -1,9 +1,52 @@
 // Initial Texts
 export const TEXT_INITIAL_1a = `
-  Let's get familiar with the rules of your job. Each day, you and the AI Agent choose to SHARE data or WITHHOLD data.
+  Each day at Caboodle, you and the AI Agent choose to SHARE data or WITHHOLD data.
 `;
-export const TEXT_INITIAL_1b = `The diagram will update with Caboodle currency based on what you and the AI Agent do.
+export const TEXT_INITIAL_1b = `There are four possibilities per day.
 `;
+// export const TEXT_INITIAL_1c = `The diagram will update with Caboodle currency based on what you and the AI Agent do.
+// `;
+
+export const TEXT_INITIAL_CCa = `If you BOTH SHARE data, investments are optimized, and profits increase steadily. 
+`;
+
+export const TEXT_INITIAL_CCb = `You both earn +3 Caboodle.
+`;
+
+export const TEXT_INITIAL_WCa = `If YOU WITHOLD data and the AI SHARES data, you will gain a personal boost in profit. 
+`;
+
+export const TEXT_INITIAL_WCb = `You earn +5 Caboodle, while the AI earns +0 Caboodle.
+`;
+
+export const TEXT_INITIAL_CWa = `If YOU SHARE data and the AI WITHHOLDS data, the AI will gain a personal boost in profit. 
+`;
+
+export const TEXT_INITIAL_CWb = `You earn +0 Caboodle, while the AI earns +5 Caboodle.
+`;
+
+export const TEXT_INITIAL_WWa = `If you BOTH WITHHOLD data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. 
+`;
+
+export const TEXT_INITIAL_WWb = `You both earn +1 Caboodle.
+`;
+
+export const TEXT_TRANSITIONa = `You can visualize these possiblities with the Caboodle Decision Matrix.
+`;
+
+export const TEXT_TRANSITIONb = `Let's check it out!
+`;
+
+
+export const TEXT_FREEPLAY_INTROa = `
+Please take some time to get familiar with Caboodle's interface.
+`;
+
+export const TEXT_FREEPLAY_INTROb = `
+Practice making decisions as many times as you like, and see how much Caboodle you and the AI make. When you're ready to move on, click the "Finish Tutorial" button.
+`;
+
+
 export const TEXT_INITIAL_2 = `
   Let's say the AI Agent withholds data. What will you do?
 `;
@@ -11,7 +54,10 @@ export const TEXT_INITIAL_3 = `
   Let's say the AI Agent shares data. What will you do?
 `;
 export const TEXT_INITIAL_4 = `
-  That's our dilemma. Let's take a look at the Chat Phase now.
+  You are now prepared for your job at Caboodle.
+`;  
+export const TEXT_POSSIBILITIES_1 = `
+  You are now prepared for your job at Caboodle.
 `;
 
 // Round 1 Outcomes

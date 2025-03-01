@@ -634,13 +634,13 @@ function Game() {
             <div className="trapezoid user-trapezoid">You</div>
           </div>
           {!isRoundOver ? (
-            <>
+            <div className="next-buttons-container">
               <br></br>
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
+              {errorMessage && <div className="error-message2">{errorMessage}</div>}
               <button className="next-buttons" id="lockin-button" onClick={() => handleLockIn()}>
                 Lock In
               </button>
-            </>
+            </div>
           ) : (
             <button className="next-buttons" id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
               Proceed

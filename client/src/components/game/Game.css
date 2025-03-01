@@ -164,6 +164,10 @@ font-weight: bold; */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
+  .next-buttons-container {
+    position: relative;
+  }
+
   .next-buttons {
     margin: 0px 0px 20px 100px;
     background-color: var(--accent-three);
@@ -614,4 +618,14 @@ font-weight: bold; */
 
 #user-score {
   border-left: 2px solid black;
+}
+
+.error-message2 {
+  position: absolute;
+  bottom: 80%;
+  right: 0;
+  color: red;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }

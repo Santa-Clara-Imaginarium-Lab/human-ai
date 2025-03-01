@@ -67,7 +67,7 @@ function Login({changeTheme, changePersonality}) {
         </div>
       </div>
       {/* Using dupe css */}
-      <h className={isLoggingIn ? 'welcome-info-can' : 'welcome-info-hide'}>{isLoggingIn ? 'Server is booting up... Please Wait!' : ' '}</h>
+      <h1 className={isLoggingIn ? 'welcome-info-can' : 'welcome-info-hide'}>{isLoggingIn ? 'Server is booting up... Please Wait!' : ' '}</h1>
 
     </div>
   );

@@ -32,7 +32,9 @@ app.use(cors({
       callback(new Error("CORS policy does not allow this origin!"));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 app.use(express.json());

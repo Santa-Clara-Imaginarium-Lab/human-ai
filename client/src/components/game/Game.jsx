@@ -619,7 +619,7 @@ function Game() {
             </button>
           </div>
         </div>
-        <div className="actions">
+        <div id="actions">
           <div>
             <button 
               id="proceed-chat" 

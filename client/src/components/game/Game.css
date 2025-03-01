@@ -165,7 +165,7 @@ font-weight: bold; */
   }
 
   .next-buttons {
-    margin: 100px 100px 20px 100px;
+    margin: 0px 0px 20px 100px;
     background-color: var(--accent-three);
     color: white;
     border: none;
@@ -208,7 +208,7 @@ font-weight: bold; */
   }
 
   #proceed-chat {
-    margin: 100px 100px 20px 100px;
+    margin: 0px 100px 20px 0px;
     background-color: var(--accent-three);
     color: white;
     border: none;
@@ -556,7 +556,8 @@ font-weight: bold; */
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
-  margin-top: 20px;
+  margin-top: 120px;
+  width: 100%;
 }
 
 #scoreboard {

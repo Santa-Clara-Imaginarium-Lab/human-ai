@@ -620,15 +620,13 @@ function Game() {
           </div>
         </div>
         <div id="actions">
-          <div>
-            <button 
-              id="proceed-chat" 
-              onClick={() => handleChatNavigation()}
-              style={isRoundOver ? { visibility: 'hidden' } : {}}
-            >
-              Go to Chat
-            </button>
-          </div>
+          <button 
+            id="proceed-chat" 
+            onClick={() => handleChatNavigation()}
+            style={isRoundOver ? { visibility: 'hidden' } : {}}
+          >
+            Go to Chat
+          </button>
           <div id="scoreboard">
             <div className="trapezoid ai-trapezoid">AI</div>
             <div className="score" id="ai-score">{aiScore}</div>

@@ -6,6 +6,7 @@ import {
   // Starting text
   TEXT_INITIAL_1a,
   TEXT_INITIAL_1b,
+  TEXT_INITIAL_1c,
   // Four scenarios explanation
   TEXT_INITIAL_CCa,
   TEXT_INITIAL_CCb,
@@ -57,7 +58,7 @@ function GameTutorial() {
             1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const DECISION_TUTORIAL_BOX_1 = 
-        [   0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+        [   0,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,
             0,  1,  1,  1,  1,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  
             1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
@@ -98,7 +99,7 @@ function GameTutorial() {
 
       // CONTROLS BUTTONS
       const TUTORIAL_ACTION =
-        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1, 
             1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const TUTORIAL_BUTTON_TOOLTIP =
@@ -106,7 +107,7 @@ function GameTutorial() {
             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const CHAT_TUTORIAL_BUTTON =
-        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0, 
+        [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1, 
             0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
         ];
       const CHAT_TUTORIAL_TOOLTIP =
@@ -204,6 +205,8 @@ function GameTutorial() {
         
         switch (tooltipIndex) { // USES "PRIOR INDEX!"
           case (0):
+            setTutorialText1a(null);
+            setTutorialText1b(TEXT_INITIAL_1b);
             setFocusTutorialTextA(TEXT_INITIAL_CCa);
             setFocusTutorialTextB(TEXT_INITIAL_CCb);
             break;
@@ -431,7 +434,8 @@ function GameTutorial() {
     setAiDecision(rngResult); // Update AI's decision();
 
     console.log(userDecision)
-    console.log(aiDecision);
+    console.log("state", aiDecision);
+    console.log("rng", rngResult)
 
     console.log(userScore);
     console.log(aiScore)
@@ -440,13 +444,15 @@ function GameTutorial() {
       if (rngResult === 'Cooperate') {
         // setTutorialText1b(TEXT_COOPERATE_1);
       // if (round === 1) {
+      console.log("cooperate cooperate");
         highlightTriangles = ['t2', 't5'];
         setHighlightedTriangles(highlightTriangles);
         setSelectedDecisionTriangles(highlightTriangles);
         setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); // Highlight both descriptions as a string
-        setUserScore(userScore + 0); // Increase user score
-        setAiScore(aiScore + 5); // AI score doesn't change in this case
+        setUserScore(userScore + 3); // Increase user score
+        setAiScore(aiScore + 3); // AI score doesn't change in this case
       } else if (rngResult === 'Defect') {
+        console.log("cooperate defect");
         highlightTriangles = ['t1', 't3'];
         setHighlightedTriangles(highlightTriangles);
         setSelectedDecisionTriangles(highlightTriangles);
@@ -459,6 +465,7 @@ function GameTutorial() {
       if (rngResult === 'Cooperate') {
         // setTutorialText1b(TEXT_COOPERATE_1);
       // if (round === 1) {
+        console.log("defect cooperate");
         highlightTriangles = ['t6', 't8'];
         setHighlightedTriangles(highlightTriangles);
         setSelectedDecisionTriangles(highlightTriangles);
@@ -466,11 +473,10 @@ function GameTutorial() {
         setUserScore(userScore + 5); // Increase user score
         setAiScore(aiScore + 0); // AI score doesn't change in this case
       } else if (rngResult === 'Defect') {
+        console.log("defect defect");
         highlightTriangles = ['t4', 't7'];
         setHighlightedTriangles(highlightTriangles);
         setSelectedDecisionTriangles(highlightTriangles);
-        setTutorialText1b(TEXT_COOPERATE_AGAIN_1);
-        setTutorialText2(TEXT_INITIAL_4);
         setHighlightedDesc("user-defect-desc ai-defect-desc"); // Highlight both descriptions as a string
         setUserScore(userScore + 1); // Increase user score
         setAiScore(aiScore + 1); // AI score also increases
@@ -503,22 +509,43 @@ function GameTutorial() {
       </div>
 
       <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hidden')}`}>
-        <p className="tutorialText1">{tutorialText1a}<br/><br/> {tutorialText1b}</p>
+        <p className="tutorialText1">{tutorialText1a ? tutorialText1a : null} {tutorialText1a ? <br/> : null}{tutorialText1a ? <br/> : null} {tutorialText1b}</p>
       </div>
       <div className={` ${determineShow("decision-tutorial-box2") ? 'decision-tutorial-box2' : 'hide'}`}>
         <p className="tutorialText2">{tutorialText2}</p>
       </div>
+      <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { sessionStorage.getItem("currentRound") === "1" ? navigate('/pregame') : navigate('/dashboard')}}>
+            Finish Tutorial
+        </button>
 
-{/* TODO: Turn these into determineShows and fill in their arrays */}
+
       <div className={`game-tutorial-content ${( determineShow("game-tutorial-content") ? 'hidden' : '')}`}>
         <div className={`tutorial-horizontal-layout ${( determineShow("tutorial-horizontal-layout") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-horizontal-layout") ? tooltips[tooltipIndex] : null}>
-          <div className={`tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null}>
+        {/* <div className="ai-score">
+            { <div className="ai-message" >
+              {aiMessage}
+            </div>
+            <p className="score-change ai-change"></p>
+            <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
+            <p>AI chose: <span>{aiDecision}</span></p> 
+            <button className="proceed-button" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+              SHARE
+              <div>(cooperate)</div>
+            </button>
+          </div> */}
+          {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className="tutorial-button cooperate" onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+                SHARE
+                <div>(cooperate)</div>
+              </button>}
+
+
+          {/* <div className={`tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null}>
             <div className="ai-message" >
               {aiMessage}
             </div>
             <h2>AI's Score: <span className="tutorial-score-value">{aiScore}</span></h2>
             <p>AI chose: <span>{aiDecision}</span></p>
-          </div>
+          </div> */}
           <div className="tutorial-column-1">
             <div className={`tutorial-triangle-left ${highlightTriangles.includes('t1') ? 'highlight1' :
             hoveredTriangles.includes('t1') ? 'highlight2' : 
@@ -610,44 +637,71 @@ function GameTutorial() {
               {selectedDecisionTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
             </div>
           </div>
-          <div className={`tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null}>
+          <div className="column-5">
+            <div className="triangle-left-fake"></div> {/* Fake triangle for spacing */}
+          </div>
+
+          {/* <div className={`tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null}>
             <div className="user-message">
               {userMessage}
             </div>
             <h2>Your Score: <span className="tutorial-score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p>
-          </div>
-        </div>
-
-        <div className="tutorial-action">
-            <>
-              {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className="tutorial-button cooperate" onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
-                SHARE
-                <div>(cooperate)</div>
-              </button>}
+          </div> */}
               {!isComplete && determineShow("tutorial-action") && <button ref={defectButtonRef} className="tutorial-button defect" onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
                 WITHHOLD
                 <div>(defect)</div>
               </button>}
-              <br></br>
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
-              {!isComplete && determineShow("tutorial-action") && <button className={`lockin-button ${(determineShow("navigate-lock-in") ? '' : 'lockin-disabled')} ${(determineShow("tutorial-button-tooltip") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => canPlay ?  handleLockIn() : null}>
-                Lock In
-              </button>}
-            </>
-
-          <div>
-            <button className={`chat-tutorial-proceed ${(determineShow("navigate-chat-tutorial") ? '' : 'chat-tutorial-proceed-disabled')} ${(determineShow("chat-tutorial-button") ? ' show' : 'hide')}`} data-tooltip={determineShow("chat-tutorial-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/chatbot-tutorial',  { state: { speedFlag: true, userScore, aiScore } }) : null }}>
-            Go to Chat
-            </button>
-          </div>
-
-          <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { sessionStorage.getItem("currentRound") === "1" ? navigate('/pregame') : navigate('/dashboard')}}>
-            Finish Tutorial
-          </button>
-
 
         </div>
+
+        <div className="tutorial-action">
+            <>
+              {/* {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className="tutorial-button cooperate" onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+                SHARE
+                <div>(cooperate)</div>
+              </button>} */}
+              {/* {!isComplete && determineShow("tutorial-action") && <button ref={defectButtonRef} className="tutorial-button defect" onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+                WITHHOLD
+                <div>(defect)</div>
+              </button>} */}
+              <br></br>
+              {/* {errorMessage && <div className="error-message">{errorMessage}</div>}
+              {!isComplete && (determineShow("tutorial-action") && <button id="lockin-button" className={`next-buttons ${errorMessage ? 'error-shake' : ''} ${(determineShow("navigate-lock-in") ? '' : 'lockin-disabled')} ${(determineShow("tutorial-button-tooltip") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => canPlay ?  handleLockIn() : null}>
+                Lock In
+              </button>)}              */}
+            </>
+
+          {/* <div id="actions"> */}
+            <button className={`chat-tutorial-proceed ${(determineShow("navigate-chat-tutorial") ? '' : 'chat-tutorial-proceed-disabled')} ${(determineShow("chat-tutorial-button") ? ' show' : 'hide')}`} data-tooltip={determineShow("chat-tutorial-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/chatbot-tutorial',  { state: { speedFlag: true, userScore, aiScore } }) : null }}>
+              Go to Chat
+              </button>
+          <div id="scoreboard">
+            <div className="trapezoid ai-trapezoid">AI</div>
+            <div className={`score tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null} id="ai-score">{aiScore}</div>
+            <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score">{userScore}</div>
+            <div className="trapezoid user-trapezoid">You</div>
+          </div>
+          {!isComplete ? (
+            <div className="next-buttons-container">
+              <br></br>
+              {errorMessage && <div className="error-message2">{errorMessage}</div>}
+              {!isComplete && (determineShow("tutorial-action") && <button id="lockin-button" className={`next-buttons ${errorMessage ? 'error-shake' : ''} ${(determineShow("navigate-lock-in") ? '' : 'lockin-disabled')} ${(determineShow("tutorial-button-tooltip") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => canPlay ?  handleLockIn() : null}>
+                Lock In
+              </button>)}             
+            </div>
+          ) : (
+            <button className="next-buttons" id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
+              Proceed
+            </button>
+          )}
+
+
+        {/* </div> */}
+        </div>
+
+
+        
       </div>
       <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game or click "Finish Tutorial"' : 'Press SPACEBAR to continue'}</h1>
     </div>

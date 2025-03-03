@@ -464,7 +464,7 @@ function Game() {
         }
     
         <div>
-          <button className="help-button" onClick={getHelp}>
+          <button id="help-button" onClick={getHelp}>
             ?
           </button>
         </div>
@@ -472,7 +472,7 @@ function Game() {
         {showCustomAlert && <div className="custom-alert">
             <div className="custom-alert-content">
                 <span className="close" onClick={closeHelp}>&times;</span>
-                <p id="alertMessage">Possible Earnings</p>
+                <p id="alertMessage">Possible Earnings at Caboodle</p>
                 <br/>
                 <div className="help-case-buttons">
                   <button className={`help-case ${helpTextActive === "SS" ? "help-active" : ""}`} onClick={() => editHelpText("SS")}>You Share <br/> AI Shares</button>
@@ -493,12 +493,16 @@ function Game() {
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">
           <div className="ai-score">
-            <div className="ai-message" >
+            {/* <div className="ai-message" >
               {aiMessage}
             </div>
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
-            <p>AI chose: <span>{aiDecision}</span></p>
+            <p>AI chose: <span>{aiDecision}</span></p> */}
+            <button className="proceed-button" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+              SHARE
+              <div>(cooperate)</div>
+            </button>
           </div>
           <div className="column-1">
             <div className={`triangle-left ${highlightedTriangles.includes('t1') ? 'highlight' : 
@@ -604,43 +608,46 @@ function Game() {
           </div>
 
           <div className="user-score">
-            <div className="user-message">
+            {/* <div className="user-message">
               {userMessage}
             </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
-            <p className="ai-decision">You chose: {userDecision}</p>
+            <p className="ai-decision">You chose: {userDecision}</p> */}
+            <button className="proceed-button" ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+              WITHHOLD
+              <div>(defect)</div>
+            </button>
           </div>
         </div>
-
-        <div className="action">
+        <div id="actions">
+          <button 
+            id="proceed-chat" 
+            onClick={() => handleChatNavigation()}
+            style={isRoundOver ? { visibility: 'hidden' } : {}}
+          >
+            Go to Chat
+          </button>
+          <div id="scoreboard">
+            <div className="trapezoid ai-trapezoid">AI</div>
+            <div className="score" id="ai-score">{aiScore}</div>
+            <div className="score" id="user-score">{userScore}</div>
+            <div className="trapezoid user-trapezoid">You</div>
+          </div>
           {!isRoundOver ? (
-            <>
-              <button className="proceed-button" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
-                SHARE
-                <div>(cooperate)</div>
-              </button>
-              <button className="proceed-button" ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
-                WITHHOLD
-                <div>(defect)</div>
-              </button>
+            <div className="next-buttons-container">
               <br></br>
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
-              <button className="lockin-button" onClick={() => handleLockIn()}>
+              {errorMessage && <div className="error-message2">{errorMessage}</div>}
+              <button className={`next-buttons ${errorMessage ? 'error-shake2' : ''}`} id="lockin-button" onClick={() => handleLockIn()}>
                 Lock In
               </button>
-            </>
+            </div>
           ) : (
-            <button className="next-round-button" onClick={() => handleNavigation()}> {/* round up */ }
+            <button className="next-buttons" id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
               Proceed
             </button>
           )}
         </div>
       </div>
-      { !isRoundOver && <div>
-        <button className="proceed-chat" onClick={() => handleChatNavigation()}>
-        Go to Chat
-        </button>
-      </div>}
     </div>
   );
 }

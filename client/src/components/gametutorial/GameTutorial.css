@@ -674,7 +674,6 @@ font-weight: bold; */
   border-radius: 5px;
   white-space: nowrap;
   pointer-events: none; 
-  font-weight: normal;
   z-index: 1000;
   opacity: 1;
   box-shadow: 0.3em 0.3em 0 0 rgb(0, 119, 167); 
@@ -810,12 +809,11 @@ font-weight: bold; */
 }
 
 .chat-tutorial-proceed[data-tooltip]::after {
-  top: -3em;
+  top: -3.25em;
   left: 75%;
   font-size: 20px;
 }
 
-/* for some reason this one needs 3em offset */
 #lockin-button[data-tooltip]::before {
   top: -0.25em;
   left: 50%;

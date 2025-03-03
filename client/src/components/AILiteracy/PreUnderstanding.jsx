@@ -55,7 +55,7 @@ function PreUnderstanding() {
     console.log("Data being sent:", data); // Log the data being sent
 
     try {
-        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/ailiteracy`, {
+        const response = await fetch(`https://human-ai.up.railway.app/api/ailiteracy`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const ChatPage = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: () =>
-      fetch(`https://human-ai-9bp5.onrender.com/api/chats/${chatId}`, {
+      fetch(`https://human-ai.up.railway.app/api/chats/${chatId}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

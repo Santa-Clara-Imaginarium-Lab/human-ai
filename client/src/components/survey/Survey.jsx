@@ -44,7 +44,7 @@ function Survey() {
 
             console.log('Attempting to save to MongoDB:', gameScoreData);
 
-            const response = await fetch(`https://human-ai-9bp5.onrender.com/api/gamescores`, {
+            const response = await fetch(`https://human-ai.up.railway.app/api/gamescores`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

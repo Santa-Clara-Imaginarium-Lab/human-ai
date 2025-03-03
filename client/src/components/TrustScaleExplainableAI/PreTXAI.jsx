@@ -52,7 +52,7 @@ function PreTXAI() {
     };
 
     try {
-      const response = await fetch(`https://human-ai-9bp5.onrender.com/api/trustscaleexplainableai`, {
+      const response = await fetch(`https://human-ai.up.railway.app/api/trustscaleexplainableai`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

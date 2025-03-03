@@ -32,7 +32,7 @@ function Question() {
 
     if (currentQuestionIndex === questions.length - 1) {
       try {
-        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/surveyresponses`, {
+        const response = await fetch(`https://human-ai.up.railway.app/api/surveyresponses`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -12,7 +12,7 @@ const ChatList = () => {
         queryKey: ["userChats", userId],
         queryFn: () => {
             if (!userId) return [];
-            return fetch(`https://human-ai-9bp5.onrender.com/api/userchats?userId=${userId}`)
+            return fetch(`https://human-ai.up.railway.app/api/userchats?userId=${userId}`)
                 .then((res) => {
                     if (!res.ok) {
                         throw new Error('Network response was not ok');

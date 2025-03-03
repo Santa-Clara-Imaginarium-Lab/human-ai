@@ -53,7 +53,7 @@ function PreApply() {
     };
 
     try {
-      const response = await fetch(`https://human-ai-9bp5.onrender.com/api/ailiteracy`, {
+      const response = await fetch(`https://human-ai.up.railway.app/api/ailiteracy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

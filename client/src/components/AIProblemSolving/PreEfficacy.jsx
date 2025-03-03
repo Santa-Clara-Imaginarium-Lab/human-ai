@@ -53,7 +53,7 @@ function PreEfficacy() {
     };    
 
     try {
-      const response = await fetch(`https://human-ai-9bp5.onrender.com/api/aiproblemsolving`, {
+      const response = await fetch(`https://human-ai.up.railway.app/api/aiproblemsolving`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

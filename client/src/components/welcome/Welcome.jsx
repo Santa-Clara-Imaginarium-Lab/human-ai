@@ -25,10 +25,8 @@ const Welcome = ({changeTheme, changePersonality}) => {
         const randomNumber = Math.floor(Math.random() * 10000000);
         const guestID = "guest" + String(randomNumber);
 
-        setIsCheckingGuest(true);
-
         // Check if userId exists in the chats collection
-        const response = await fetch(`https://human-ai-9bp5.onrender.com/api/chats?userId=${guestID}`);
+        const response = await fetch(`https://human-ai.up.railway.app/api/chats?userId=${guestID}`);
         if (!response.ok) {
             alert('Critical error: Unable to check user ID. Please try again later.');
             return;
@@ -39,6 +37,9 @@ const Welcome = ({changeTheme, changePersonality}) => {
             alert('Critical error: This user ID has already been used. Press Play again.');
             return;
         }
+
+        setIsCheckingGuest(true);
+        
         login(guestID);
         navigate('/tutorial');
 

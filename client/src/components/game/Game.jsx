@@ -472,7 +472,7 @@ function Game() {
         {showCustomAlert && <div className="custom-alert">
             <div className="custom-alert-content">
                 <span className="close" onClick={closeHelp}>&times;</span>
-                <p id="alertMessage">Possible Earnings</p>
+                <p id="alertMessage">Possible Earnings at Caboodle</p>
                 <br/>
                 <div className="help-case-buttons">
                   <button className={`help-case ${helpTextActive === "SS" ? "help-active" : ""}`} onClick={() => editHelpText("SS")}>You Share <br/> AI Shares</button>
@@ -637,7 +637,7 @@ function Game() {
             <div className="next-buttons-container">
               <br></br>
               {errorMessage && <div className="error-message2">{errorMessage}</div>}
-              <button className="next-buttons" id="lockin-button" onClick={() => handleLockIn()}>
+              <button className={`next-buttons ${errorMessage ? 'error-shake2' : ''}`} id="lockin-button" onClick={() => handleLockIn()}>
                 Lock In
               </button>
             </div>

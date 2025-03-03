@@ -4,6 +4,8 @@ export const TEXT_INITIAL_1a = `
 `;
 export const TEXT_INITIAL_1b = `There are four possibilities per day.
 `;
+export const TEXT_INITIAL_1c = `Here are the possible scenarios at Caboodle.
+`;
 // export const TEXT_INITIAL_1c = `The diagram will update with Caboodle currency based on what you and the AI Agent do.
 // `;
 

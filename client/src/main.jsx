@@ -68,6 +68,10 @@ function MainApp() {
     sessionStorage.setItem('forcedPersonality', personality); // Persist theme in sessionStorage
   }, [personality]);
 
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });  
+
   const router = createBrowserRouter([
     {
       element: <RootLayout />,

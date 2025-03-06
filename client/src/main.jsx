@@ -68,9 +68,14 @@ function MainApp() {
     sessionStorage.setItem('forcedPersonality', personality); // Persist theme in sessionStorage
   }, [personality]);
 
-  // =================== //
-  // SECURITY MEASURE    //
-  // DISABLE RIGHT CLICK //
+  // ===================================== //
+  // SECURITY MEASURE                      //
+  // DISABLE RIGHT CLICK                   //
+  // ------------------------------------- //
+  // KEEP COMMENTED OUT DURING DEVELOPMENT //
+  // SO YOU CAN ACCESS ELEMENTS IN INSPECT //
+  // ===================================== //
+
   // =================== //
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();

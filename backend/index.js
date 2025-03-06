@@ -52,8 +52,8 @@ app.post("/api/gamescores", async (req, res) => {
     const { user_id, personality, rounds } = req.body;
   
     // Ensure all required fields are present
-    if (!user_id || !personality || !rounds || rounds.length !== 5) {
-      return res.status(400).json({ error: "Invalid data. Ensure 5 rounds are included." });
+    if (!user_id || !personality || !rounds || !Array.isArray(rounds)) {
+      return res.status(400).json({ error: "Invalid data." });
     }
   
     try {

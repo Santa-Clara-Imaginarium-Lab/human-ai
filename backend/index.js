@@ -1,20 +1,28 @@
 import express from "express";
 import cors from "cors";
+import { GoogleSpreadsheet } from "google-spreadsheet";
 import mongoose from "mongoose";
 import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
-import GameScore from "./models/gameScores.js";
-import SurveyResponse from "./models/surveyQuestions.js";
-import PriorExperienceAI from "./models/PriorExperienceAI.js";
-import AILiteracy from "./models/ailiteracy.js";
-import aiProblemSolving from "./models/aiProblemSolving.js";
-import aiSelfCompetency from "./models/aiSelfCompetency.js";
-import trustScaleExplainableAI from "./models/trustScaleExplainableAI";
-import trustPeopleAutomation from "./models/trustPeopleAutomation";
-import demographic from "./models/demographic.js";
-import postGameFreeResponse from "./models/postGameFreeResponse.js";
 import dotenv from "dotenv";
 dotenv.config();
+
+const creds = {
+  type: "service_account",
+  project_id: process.env.GOOGLE_PROJECT_ID,
+  private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+  private_key: process.env.GOOGLE_PRIVATE_KEY,
+  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+  client_id: process.env.GOOGLE_CLIENT_ID,
+  auth_uri: process.env.GOOGLE_AUTH_URI,
+  token_uri: process.env.GOOGLE_TOKEN_URI,
+  auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_CERT_URL,
+  client_x509_cert_url: process.env.GOOGLE_CLIENT_CERT_URL,
+  universe_domain: process.env.UNIVERSE_DOMAIN
+};
+
+const SHEET_ID = "16ZLSeQUycIZVQbul00eCHuk4iX6fQTMK2-l9fTVJPOU"; 
+const doc = new GoogleSpreadsheet(SHEET_ID);
 
 const port = 3000;
 const app = express();
@@ -48,45 +56,64 @@ const connect = async () => {
   }
 }
 
+async function getGoogleSheet(sheetTitle, headerValues) {
+  await doc.useServiceAccountAuth({
+    client_email: creds.client_email,
+    private_key: creds.private_key,
+  });
+  await doc.loadInfo();
+
+  let sheet = doc.sheetsByTitle[sheetTitle];
+
+  if (!sheet) {
+    sheet = await doc.addSheet({
+      title: sheetTitle,
+      headerValues: headerValues,
+    });
+    console.log(`Created new sheet: ${sheetTitle}`);
+  } else {
+    const existingHeaders = sheet.headerValues || [];
+    const missingHeaders = headerValues.filter(header => !existingHeaders.includes(header));
+
+    if (missingHeaders.length > 0) {
+      const updatedHeaders = [...existingHeaders, ...missingHeaders];
+
+      await sheet.setHeaderRow(updatedHeaders);
+    }
+  }
+  
+  return sheet;
+}
+
 app.post("/api/gamescores", async (req, res) => {
     const { user_id, personality, rounds } = req.body;
-  
-    // Ensure all required fields are present
-    if (!user_id || !personality || !rounds || !Array.isArray(rounds)) {
-      return res.status(400).json({ error: "Invalid data." });
-    }
-  
+    const round1 = rounds.find(round => round.round_number === 1);
+    const round2 = rounds.find(round => round.round_number === 2);
+    const round3 = rounds.find(round => round.round_number === 3);
+    const round4 = rounds.find(round => round.round_number === 4);
+    const round5 = rounds.find(round => round.round_number === 5);
+
     try {
-      const newGameScore = new GameScore({
-        user_id,
-        personality,
-        rounds,
-      });
-  
-      await newGameScore.save();
-      res.status(201).json({ message: "Game scores saved successfully!" });
+      const sheet = await getGoogleSheet("Game Scores", ["User ID", "Timestamp", "Personality", "Round 1 [User Score, AI Score]", "Round 2 [User Score, AI Score]", "Round 3 [User Score, AI Score]", "Round 4 [User Score, AI Score]", "Round 5 [User Score, AI Score]"]);
+      const rowData = {
+        "User ID": user_id,
+        "Timestamp": new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+        "Personality": personality,
+        "Round 1 [User Score, AI Score]": round1 ? `${round1.user_score},${round1.ai_score}` : "",
+        "Round 2 [User Score, AI Score]": round2 ? `${round2.user_score},${round2.ai_score}` : "",
+        "Round 3 [User Score, AI Score]": round3 ? `${round3.user_score},${round3.ai_score}` : "",
+        "Round 4 [User Score, AI Score]": round4 ? `${round4.user_score},${round4.ai_score}` : "",
+        "Round 5 [User Score, AI Score]": round5 ? `${round5.user_score},${round5.ai_score}` : "",
+      };
+      await sheet.addRow(rowData);
+      console.log("Successfully stored Game Scores Data:", rowData);
+      res.status(200).send(' Game Scores recorded successfully');
     } catch (error) {
-      console.error("Error saving game scores:", error);
-      res.status(500).json({ error: "Failed to save game scores." });
+      console.error('Error writing to Google Sheets:', error);
+      res.status(500).send('Error recording Game Scores');
     }
   });
 
-  app.get("/api/gamescores/:userId", async (req, res) => {
-    const { userId } = req.params;
-  
-    try {
-      const gameScores = await GameScore.find({ user_id: userId });
-  
-      if (!gameScores.length) {
-        return res.status(404).json({ error: "No game scores found for this user." });
-      }
-  
-      res.status(200).json(gameScores);
-    } catch (error) {
-      console.error("Error fetching game scores:", error);
-      res.status(500).json({ error: "Failed to fetch game scores." });
-    }
-  });
   
 app.post("/api/chats", async (req,res) =>{
     const {text, userId} = req.body
@@ -179,67 +206,87 @@ app.put("/api/chats/:id", async (req, res) => {
 });
 
 app.post("/api/surveyresponses", async (req, res) => {
-  try {
-    const { userId, responses } = req.body;
-    
-    const surveyResponse = new SurveyResponse({
-      userId,
-      responses
-    });
-    
-    await surveyResponse.save();
-    res.status(201).json({ message: "Survey responses saved successfully!" });
-  } catch (error) {
-    console.error("Error saving survey responses:", error);
-    res.status(500).json({ error: "Failed to save survey responses." });
-  }
+    try {
+      const { userId, responses } = req.body;
+  
+      const extractedResponses = responses.map(response => response.selectedOption);
+      
+      if (!userId || !extractedResponses || !Array.isArray(extractedResponses) || extractedResponses.length === 0) {
+        console.error("Invalid request format. Received:", req.body);
+        return res.status(400).json({ success: false, error: "Invalid request format" });
+      }
+  
+      const sheet = await getGoogleSheet("Post Game Survey", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7", "Statement 8", "Statement 9", "Statement 10", "Statement 11", "Statement 12", "Statement 13"]);
+  
+      const rowData = {
+        "User ID": userId,
+        Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+        "Statement 1": extractedResponses[0],
+        "Statement 2": extractedResponses[1],
+        "Statement 3": extractedResponses[2],
+        "Statement 4": extractedResponses[3],
+        "Statement 5": extractedResponses[4],
+        "Statement 6": extractedResponses[5],
+        "Statement 7": extractedResponses[6],
+        "Statement 8": extractedResponses[7],
+        "Statement 9": extractedResponses[8],
+        "Statement 10": extractedResponses[9],
+        "Statement 11": extractedResponses[10],
+        "Statement 12": extractedResponses[11],
+        "Statement 13": extractedResponses[12]
+      };
+  
+      await sheet.addRow(rowData);
+      console.log("Successfully stored Post Game Survey Data:", rowData);
+      res.status(200).json({ success: true, message: "Post Game Survey submitted!" });
+  
+    } catch (error) {
+      console.error("Internal Server Error:", error);
+      res.status(500).json({ success: false, error: error.message });
+    }
 });
 
-app.post("/api/prior-experience-ai", async (req, res) => {
+
+app.post('/api/prior-experience-ai', async (req, res) => {
+  const { userId, selectedOption } = req.body;
+
   try {
-    const { userId, selectedOption } = req.body;
-
-    // Ensure required fields are present
-    if (!userId || !selectedOption) {
-      return res.status(400).json({ error: "userId and selectedOption are required." });
-    }
-
-    const priorExperienceAI = new PriorExperienceAI({
-      userId,
-      selectedOption,
-    });
-
-    await priorExperienceAI.save();
-    res.status(201).json({ message: "Prior experience data saved successfully!" });
+    const sheet = await getGoogleSheet("Prior Experience", ["User ID", "Timestamp", "Prior Experience", "Times Per Day"]);
+    const rowData = {
+      "User ID": userId,
+      "Timestamp": new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Prior Experience": selectedOption,
+    };
+    await sheet.addRow(rowData);
+    console.log("Successfully stored PriorExperience Data:", rowData);
+    res.status(200).send('Prior Experience recorded successfully');
   } catch (error) {
-    console.error("Error saving prior experience data:", error);
-    res.status(500).json({ error: "Failed to save prior experience data." });
+    console.error('Error writing to Google Sheets:', error);
+    res.status(500).send('Error recording Prior Experience');
   }
 });
 
 app.put("/api/prior-experience-ai", async (req, res) => {
   const { userId, freeResponse } = req.body;
 
-  // Ensure required fields are present
-  if (!userId) {
-    return res.status(400).json({ error: "userId is required." });
-  }
-
   try {
-    const updatedEntry = await PriorExperienceAI.findOneAndUpdate(
-      { userId }, // Find the entry by userId
-      { freeResponse }, // Update the freeResponse field
-      { new: true } // Return the updated document
-    );
+    const sheet = await getGoogleSheet("Prior Experience", ["User ID", "Timestamp", "Prior Experience", "Times Per Day"]);
+    const rows = await sheet.getRows();
+    const existingRows = rows.filter(row => row["User ID"] === userId);
+    const latestRow = existingRows.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp))[0]; 
 
-    if (!updatedEntry) {
-      return res.status(404).json({ error: "No entry found for this userId." });
+    if (latestRow) {
+      latestRow["Times Per Day"] = freeResponse;
+      await latestRow.save();
+      console.log("PriorExperience updated successfully. Times Per Day: ", freeResponse);
+      res.status(200).json({ success: true, message: "Times Per Day updated successfully." });
+    } else {
+        console.error("No existing row found for userId:", userId);
+        res.status(404).json({ success: false, error: "No existing row found for userId." });
     }
-
-    res.status(200).json({ message: "Prior experience data updated successfully!", updatedEntry });
   } catch (error) {
-    console.error("Error updating prior experience data:", error);
-    res.status(500).json({ error: "Failed to update prior experience data." });
+    console.error('Error writing to Google Sheets:', error);
+    res.status(500).send('Error recording Prior Experience');
   }
 });
 
@@ -247,43 +294,59 @@ app.post("/api/ailiteracy", async (req, res) => {
   try {
     const { userId, responses } = req.body;
 
-    const aiLiteracyResponse = new AILiteracy({
-      userId,
-      responses
-    });
+    const extractedResponses = responses.map(response => response.selectedOption);
+    
+    if (!userId || !extractedResponses || !Array.isArray(extractedResponses) || extractedResponses.length === 0) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
 
-    await aiLiteracyResponse.save();
-    res.status(201).json({ message: "AI Literacy responses saved successfully!" });
+    const sheet = await getGoogleSheet("AI Literacy", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7", "Statement 8"]);
+
+    const rowData = {
+      "User ID": userId,
+      Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Statement 1": extractedResponses[0],
+      "Statement 2": extractedResponses[1],
+      "Statement 3": extractedResponses[2],
+      "Statement 4": extractedResponses[3]
+    };
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored AI Literacy Data:", rowData);
+    res.status(200).json({ success: true, message: "AI Literacy Survey submitted!" });
+
   } catch (error) {
-    console.error("Error saving AI Literacy responses:", error);
-    res.status(500).json({ error: "Failed to save AI Literacy responses." });
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 app.put("/api/ailiteracy", async (req, res) => {
   const { userId, responses } = req.body;
-
-  // Ensure required fields are present
-  if (!userId || !responses) {
-    return res.status(400).json({ error: "userId and responses are required." });
-  }
+  const extractedResponses = responses.map(response => response.selectedOption);
 
   try {
-    // Find the existing entry by userId
-    const existingEntry = await AILiteracy.findOne({ userId });
+    const sheet = await getGoogleSheet("AI Literacy", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7", "Statement 8"]);
+    const rows = await sheet.getRows();
+    const existingRows = rows.filter(row => row["User ID"] === userId);
+    const latestRow = existingRows.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp))[0]; 
 
-    if (!existingEntry) {
-      return res.status(404).json({ error: "No entry found for this userId." });
+    if (latestRow) {
+      latestRow["Statement 5"] = extractedResponses[0];
+      latestRow["Statement 6"] = extractedResponses[1];
+      latestRow["Statement 7"] = extractedResponses[2];
+      latestRow["Statement 8"] = extractedResponses[3];
+      await latestRow.save();
+      console.log("AI Literacy updated successfully.", responses);
+      res.status(200).json({ success: true, message: "AI Literacy updated successfully." });
+    } else {
+        console.error("No existing row found for userId:", userId);
+        res.status(404).json({ success: false, error: "No existing row found for userId." });
     }
-
-    // Append new responses to the existing responses array
-    existingEntry.responses.push(...responses); // Directly append the new responses
-    await existingEntry.save(); // Save the updated entry
-
-    res.status(200).json({ message: "AI Literacy responses updated successfully!" });
   } catch (error) {
-    console.error("Error updating AI Literacy responses:", error);
-    res.status(500).json({ error: "Failed to update AI Literacy responses." });
+    console.error('Error writing to Google Sheets:', error);
+    res.status(500).send('Error recording AI Literacy');
   }
 });
 
@@ -291,16 +354,30 @@ app.post("/api/aiproblemsolving", async (req, res) => {
   try {
     const { userId, responses } = req.body;
 
-    const aiProblemSolvingResponse = new aiProblemSolving({
-      userId,
-      responses
-    });
+    const extractedResponses = responses.map(response => response.selectedOption);
+    
+    if (!userId || !extractedResponses || !Array.isArray(extractedResponses) || extractedResponses.length === 0) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
 
-    await aiProblemSolvingResponse.save();
-    res.status(201).json({ message: "AI Problem Solving responses saved successfully!" });
+    const sheet = await getGoogleSheet("AI Problem Solving", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3"]);
+
+    const rowData = {
+      "User ID": userId,
+      Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Statement 1": extractedResponses[0],
+      "Statement 2": extractedResponses[1],
+      "Statement 3": extractedResponses[2]
+    };
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored AI Problem Solving Data:", rowData);
+    res.status(200).json({ success: true, message: "AI Problem Solving Survey submitted!" });
+
   } catch (error) {
-    console.error("Error saving AI Problem Solving responses:", error);
-    res.status(500).json({ error: "Failed to save AI Problem Solving responses." });
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -308,16 +385,30 @@ app.post("/api/aiselfcompetency", async (req, res) => {
   try {
     const { userId, responses } = req.body;
 
-    const aiSelfCompetencyResponse = new aiSelfCompetency({
-      userId,
-      responses
-    });
+    const extractedResponses = responses.map(response => response.selectedOption);
+    
+    if (!userId || !extractedResponses || !Array.isArray(extractedResponses) || extractedResponses.length === 0) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
 
-    await aiSelfCompetencyResponse.save();
-    res.status(201).json({ message: "AI Self Competency responses saved successfully!" });
+    const sheet = await getGoogleSheet("AI Self Competency", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3"]);
+
+    const rowData = {
+      "User ID": userId,
+      Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Statement 1": extractedResponses[0],
+      "Statement 2": extractedResponses[1],
+      "Statement 3": extractedResponses[2]
+    };
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored AI Self Competency Data:", rowData);
+    res.status(200).json({ success: true, message: "AI Self Competency Survey submitted!" });
+
   } catch (error) {
-    console.error("Error saving AI Self Competency responses:", error);
-    res.status(500).json({ error: "Failed to save AI Self Competency responses." });
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -325,43 +416,58 @@ app.post("/api/trustscaleexplainableai", async (req, res) => {
   try {
     const { userId, responses } = req.body;
 
-    const trustScaleExplainableAIResponse = new trustScaleExplainableAI({
-      userId,
-      responses
-    });
+    const extractedResponses = responses.map(response => response.selectedOption);
+    
+    if (!userId || !extractedResponses || !Array.isArray(extractedResponses) || extractedResponses.length === 0) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
 
-    await trustScaleExplainableAIResponse.save();
-    res.status(201).json({ message: "Trust Scale for Explainable AI responses saved successfully!" });
+    const sheet = await getGoogleSheet("Trust Scale Explainable AI", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7"]);
+
+    const rowData = {
+      "User ID": userId,
+      Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Statement 1": extractedResponses[0],
+      "Statement 2": extractedResponses[1],
+      "Statement 3": extractedResponses[2],
+      "Statement 4": extractedResponses[3]
+    };
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored Trust Scale Explainable AI Data:", rowData);
+    res.status(200).json({ success: true, message: "Trust Scale Explainable AI Survey submitted!" });
+
   } catch (error) {
-    console.error("Error saving Trust Scale for Explainable AI responses:", error);
-    res.status(500).json({ error: "Failed to save Trust Scale for Explainable AI responses." });
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 app.put("/api/trustscaleexplainableai", async (req, res) => {
   const { userId, responses } = req.body;
-
-  // Ensure required fields are present
-  if (!userId || !responses) {
-    return res.status(400).json({ error: "userId and responses are required." });
-  }
+  const extractedResponses = responses.map(response => response.selectedOption);
 
   try {
-    // Find the existing entry by userId
-    const existingEntry = await trustScaleExplainableAI.findOne({ userId });
+    const sheet = await getGoogleSheet("Trust Scale Explainable AI", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7"]);
+    const rows = await sheet.getRows();
+    const existingRows = rows.filter(row => row["User ID"] === userId);
+    const latestRow = existingRows.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp))[0]; 
 
-    if (!existingEntry) {
-      return res.status(404).json({ error: "No entry found for this userId." });
+    if (latestRow) {
+      latestRow["Statement 5"] = extractedResponses[0];
+      latestRow["Statement 6"] = extractedResponses[1];
+      latestRow["Statement 7"] = extractedResponses[2];
+      await latestRow.save();
+      console.log("Trust Scale Explainable AI updated successfully.", responses);
+      res.status(200).json({ success: true, message: "Trust Scale Explainable AI updated successfully." });
+    } else {
+        console.error("No existing row found for userId:", userId);
+        res.status(404).json({ success: false, error: "No existing row found for userId." });
     }
-
-    // Append new responses to the existing responses array
-    existingEntry.responses.push(...responses); // Directly append the new responses
-    await existingEntry.save(); // Save the updated entry
-
-    res.status(200).json({ message: "Trust Scale for Explainable AI responses updated successfully!" });
   } catch (error) {
-    console.error("Error updating Trust Scale for Explainable AI responses:", error);
-    res.status(500).json({ error: "Failed to update Trust Scale for Explainable AI responses." });
+    console.error('Error writing to Google Sheets:', error);
+    res.status(500).send('Error recording Trust Scale Explainable AI');
   }
 });
 
@@ -369,99 +475,112 @@ app.post("/api/trustpeopleautomation", async (req, res) => {
   try {
     const { userId, responses } = req.body;
 
-    const trustPeopleAutomationResponse = new trustPeopleAutomation({
-      userId,
-      responses
-    });
+    const extractedResponses = responses.map(response => response.selectedOption);
+    
+    if (!userId || !extractedResponses || !Array.isArray(extractedResponses) || extractedResponses.length === 0) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
 
-    await trustPeopleAutomationResponse.save();
-    res.status(201).json({ message: "Trust between People and Automation responses saved successfully!" });
+    const sheet = await getGoogleSheet("Trust People Automation", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7", "Statement 8", "Statement 9", "Statement 10"]);
+
+    const rowData = {
+      "User ID": userId,
+      Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Statement 1": extractedResponses[0],
+      "Statement 2": extractedResponses[1],
+      "Statement 3": extractedResponses[2],
+      "Statement 4": extractedResponses[3],
+      "Statement 5": extractedResponses[4]
+    };
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored Trust People Automation Data:", rowData);
+    res.status(200).json({ success: true, message: "Trust People Automation Survey submitted!" });
+
   } catch (error) {
-    console.error("Error saving Trust between People and Automation responses:", error);
-    res.status(500).json({ error: "Failed to save Trust between People and Automation responses." });
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 app.put("/api/trustpeopleautomation", async (req, res) => {
   const { userId, responses } = req.body;
-
-  // Ensure required fields are present
-  if (!userId || !responses) {
-    return res.status(400).json({ error: "userId and responses are required." });
-  }
+  const extractedResponses = responses.map(response => response.selectedOption);
 
   try {
-    // Find the existing entry by userId
-    const existingEntry = await trustPeopleAutomation.findOne({ userId });
+    const sheet = await getGoogleSheet("Trust People Automation", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7", "Statement 8", "Statement 9", "Statement 10"]);
+    const rows = await sheet.getRows();
+    const existingRows = rows.filter(row => row["User ID"] === userId);
+    const latestRow = existingRows.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp))[0]; 
 
-    if (!existingEntry) {
-      return res.status(404).json({ error: "No entry found for this userId." });
+    if (latestRow) {
+      latestRow["Statement 6"] = extractedResponses[0];
+      latestRow["Statement 7"] = extractedResponses[1];
+      latestRow["Statement 8"] = extractedResponses[2];
+      latestRow["Statement 9"] = extractedResponses[3];
+      latestRow["Statement 10"] = extractedResponses[4];
+      await latestRow.save();
+      console.log("Trust People Automation updated successfully.", responses);
+      res.status(200).json({ success: true, message: "Trust People Automation updated successfully." });
+    } else {
+        console.error("No existing row found for userId:", userId);
+        res.status(404).json({ success: false, error: "No existing row found for userId." });
     }
-
-    // Append new responses to the existing responses array
-    existingEntry.responses.push(...responses); // Directly append the new responses
-    await existingEntry.save(); // Save the updated entry
-
-    res.status(200).json({ message: "Trust between People and Automation responses updated successfully!" });
   } catch (error) {
-    console.error("Error updating Trust between People and Automation responses:", error);
-    res.status(500).json({ error: "Failed to update Trust between People and Automation responses." });
+    console.error('Error writing to Google Sheets:', error);
+    res.status(500).send('Error recording Trust People Automation');
   }
 });
 
 app.post("/api/demographics", async (req, res) => {
-  try {
-    const { userId, gender, transgenderInfo, age, ethnicity } = req.body;
+    const { userId, gender} = req.body;
 
-    const newDemographic = new demographic({
-      userId,
-      gender,
-      transgenderInfo,
-      age,
-      ethnicity
-    });
-
-    await newDemographic.save();
-    res.status(201).json(newDemographic);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+    try {
+      const sheet = await getGoogleSheet("Demographics", ["User ID", "Timestamp", "Gender", "Transgender Info", "Age", "Ethnicity"]);
+      const rowData = {
+        "User ID": userId,
+        "Timestamp": new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+        "Gender": gender,
+      };
+      await sheet.addRow(rowData);
+      console.log("Successfully stored Demographics Data:", rowData);
+      res.status(200).send(' Demographics recorded successfully');
+    } catch (error) {
+      console.error('Error writing to Google Sheets:', error);
+      res.status(500).send('Error recording Demographics');
+    }
 });
 
 app.put("/api/demographics", async (req, res) => {
   const { userId, transgenderInfo, age, ethnicity } = req.body;
 
-  // Ensure required fields are present
-  if (!userId) {
-    return res.status(400).json({ error: "userId is required." });
-  }
-
   try {
-    // Find the existing demographic entry by userId
-    const existingDemographic = await demographic.findOne({ userId });
+    const sheet = await getGoogleSheet("Demographics", ["User ID", "Timestamp", "Gender", "Transgender Info", "Age", "Ethnicity"]);
+    const rows = await sheet.getRows();
+    const existingRows = rows.filter(row => row["User ID"] === userId);
+    const latestRow = existingRows.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp))[0]; 
 
-    if (!existingDemographic) {
-      return res.status(404).json({ error: "No demographic entry found for this userId." });
+    if (latestRow) {
+      if (transgenderInfo !== undefined) {
+        latestRow["Transgender Info"] = transgenderInfo;
+      }
+      if (age !== undefined) {
+        latestRow["Age"] = age;
+      }
+      if (ethnicity !== undefined) {
+        latestRow["Ethnicity"] = ethnicity.join(", "); 
+      }
+      await latestRow.save();
+      console.log("Demographics updated successfully.");
+      res.status(200).json({ success: true, message: "Demographics updated successfully." });
+    } else {
+        console.error("No existing row found for userId:", userId);
+        res.status(404).json({ success: false, error: "No existing row found for userId." });
     }
-
-    // Update the fields if provided
-    if (transgenderInfo !== undefined) {
-      existingDemographic.transgenderInfo = transgenderInfo;
-    }
-    if (age !== undefined) {
-      existingDemographic.age = age;
-    }
-    if (ethnicity !== undefined) {
-      existingDemographic.ethnicity = ethnicity;
-    }
-
-    // Save the updated entry
-    await existingDemographic.save();
-
-    res.status(200).json({ message: "Demographic data updated successfully!", updatedEntry: existingDemographic });
   } catch (error) {
-    console.error("Error updating demographic data:", error);
-    res.status(500).json({ error: "Failed to update demographic data." });
+    console.error('Error writing to Google Sheets:', error);
+    res.status(500).send('Error recording Demographics');
   }
 });
 
@@ -481,29 +600,34 @@ app.post("/api/postgamefreeresponse", async (req, res) => {
   try {
     const { userId, responses } = req.body;
 
-    // Validate userId and responses array
-    if (!userId || !responses || !Array.isArray(responses)) {
-      return res.status(400).json({ error: "Invalid request format" });
+    const extractedResponses = responses.map(response => response.responseText);
+    
+    if (!userId || !extractedResponses || !Array.isArray(extractedResponses) || extractedResponses.length === 0) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
     }
 
-    // Validate that we have exactly 7 responses and none are empty
-    if (responses.length !== 7 || responses.some(r => !r.responseText || !r.responseText.trim())) {
-      return res.status(400).json({ error: "All 7 responses are required and must not be empty" });
-    }
+    const sheet = await getGoogleSheet("Post Game Free Response", ["User ID", "Timestamp", "Question 1", "Question 2", "Question 3", "Question 4", "Question 5", "Question 6", "Question 7"]);
 
-    const newResponse = new postGameFreeResponse({
-      userId,
-      responses: responses.map(r => ({
-        ...r,
-        responseText: r.responseText.trim()
-      }))
-    });
+    const rowData = {
+      "User ID": userId,
+      Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Question 1": extractedResponses[0],
+      "Question 2": extractedResponses[1],
+      "Question 3": extractedResponses[2],
+      "Question 4": extractedResponses[3],
+      "Question 5": extractedResponses[4],
+      "Question 6": extractedResponses[5],
+      "Question 7": extractedResponses[6]
+    };
 
-    await newResponse.save();
-    res.status(201).json({ message: "Post-game responses saved successfully!" });
+    await sheet.addRow(rowData);
+    console.log("Successfully stored Free Response Data:", rowData);
+    res.status(200).json({ success: true, message: "Free Response Survey submitted!" });
+
   } catch (error) {
-    console.error("Error saving post-game responses:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

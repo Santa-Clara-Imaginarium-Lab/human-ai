@@ -326,6 +326,18 @@ main {
   background-color: white; /* override disabled input background */
 }
 
+.admin-show-password {
+  position: relative;
+  width: 50px;
+  transform: translate(-50px, 0%);
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--universal-font);
+  text-align: center;
+}
+
 .welcome-info-can {
   position: absolute;
   bottom: 1%;

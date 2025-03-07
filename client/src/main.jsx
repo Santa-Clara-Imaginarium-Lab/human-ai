@@ -76,10 +76,9 @@ function MainApp() {
   // SO YOU CAN ACCESS ELEMENTS IN INSPECT //
   // ===================================== //
 
-  // =================== //
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-  });  
+  // document.addEventListener('contextmenu', function(e) {
+  //   e.preventDefault();
+  // });  
 
   // ===================================== //
   // SECURITY MEASURE                      //

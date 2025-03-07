@@ -68,6 +68,32 @@ function MainApp() {
     sessionStorage.setItem('forcedPersonality', personality); // Persist theme in sessionStorage
   }, [personality]);
 
+  // ===================================== //
+  // SECURITY MEASURE                      //
+  // DISABLE RIGHT CLICK                   //
+  // ------------------------------------- //
+  // KEEP COMMENTED OUT DURING DEVELOPMENT //
+  // SO YOU CAN ACCESS ELEMENTS IN INSPECT //
+  // ===================================== //
+
+  // document.addEventListener('contextmenu', function(e) {
+  //   e.preventDefault();
+  // });  
+
+  // ===================================== //
+  // SECURITY MEASURE                      //
+  // PREVENT CTRL+SHIFT+I                  //
+  // ------------------------------------- //
+  // KEEP COMMENTED OUT DURING DEVELOPMENT //
+  // SO YOU CAN ACCESS CONSOLE             //
+  // ===================================== //
+
+  // document.onkeydown = (e) => {
+  //   if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+  //       e.preventDefault();
+  //   }
+  // }
+
   const router = createBrowserRouter([
     {
       element: <RootLayout />,

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import "./Welcome.css";
 import { use } from "react";
+import { verifyPassword } from '../../crypto/crypto.jsx';
 
 const Welcome = ({changeTheme, changePersonality}) => {
     const navigate = useNavigate();
@@ -14,9 +15,19 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const arrowRef = useRef(null); // Reference for the ">" arrow
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
     const [settingsHidden, setSettingsHidden] = useState(true);
+    const [password, setPassword] = useState('');
     const [isAdmin, setAdmin] = useState(false); 
     const [isCheckingGuest, setIsCheckingGuest] = useState(false);
 
+    const pwShowRef = useRef(null);
+
+    const togglePWVisibility = () => {
+        const passwordInput = pwShowRef.current.parentElement.querySelector('.admin-password-input');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        pwShowRef.current.textContent = type === 'password' ? 'Show' : 'Hide';
+      }
+    
     // Handlers for navigation
     const handlePlayClick = async () => { // NOTE: now skips login! TODO: turn data collecting off.
         sessionStorage.setItem('isResearchMode', false);
@@ -56,9 +67,15 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const handleSettingsClose = () => {
         setSettingsHidden(true);
     }
-    const handleAdminEnter = (e) => {
+    const handleAdminEnter = async (e) => {
         if (e.key === 'Enter') {
-            setAdmin(true);
+            let result = await verifyPassword(password, "adminPanel");
+            if (result) {
+                setAdmin(true);
+            }
+            else {
+                alert('Incorrect admin password.');
+            }
         }
     }
 
@@ -272,7 +289,10 @@ const Welcome = ({changeTheme, changePersonality}) => {
                         className="admin-password-input" 
                         onKeyDown={handleAdminEnter} 
                         placeholder="Enter Admin Password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}          
                     />
+                    <button className="admin-show-password" type="button" ref={pwShowRef} onClick={togglePWVisibility} >Show</button>
                     </div>
 
                 </div>

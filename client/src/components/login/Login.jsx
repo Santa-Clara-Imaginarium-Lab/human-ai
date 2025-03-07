@@ -1,18 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import './Login.css';
+import { verifyPassword } from '../../crypto/crypto.jsx';
 
 function Login({changeTheme, changePersonality}) {
   const [userId, setuserId] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { login } = useUser();
+
+  const pwShowRef = useRef(null);
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (userId.trim()) {
+    if (!userId.trim()) {
+      alert('Please enter a valid ID');
+      return;
+    }
+    // Check if correct password is entered
+    let result = await verifyPassword(password, "login");
+      if (!(result)) {
+        alert('Incorrect password. Please try again or notify a researcher.');
+        return;
+      }
+
       // Check if userId exists in the chats collection
       const response = await fetch(`https://human-ai.up.railway.app/api/chats?userId=${userId}`);
       if (!response.ok) {
@@ -31,15 +45,14 @@ function Login({changeTheme, changePersonality}) {
       login(userId); // Store userId in context
       sessionStorage.setItem('isResearchMode', true); // Enable data logging in future files
       navigate('/brief');
-    } else {
-      alert('Please enter a valid ID');
-    }
   };
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };  
+  const togglePWVisibility = () => {
+    const passwordInput = pwShowRef.current.parentElement.querySelector('.password-input');
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    pwShowRef.current.textContent = type === 'password' ? 'Show' : 'Hide';
+  }
 
   return (
     <div className="login-page-container">
@@ -55,7 +68,15 @@ function Login({changeTheme, changePersonality}) {
               value={userId}
               onChange={(e) => setuserId(e.target.value)}
             />
-            <button className="login-button" type="submit">Login</button>
+            <input
+              className="password-input"
+              type="password"
+              placeholder="Enter study password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          <button className="show-password" type="button" ref={pwShowRef} onClick={togglePWVisibility} >Show</button>
+          <button className="login-button" type="submit">Login</button>
           </form>
           <div className="login-tip">
             <p>

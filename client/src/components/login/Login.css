@@ -102,6 +102,7 @@
 
 .login-form {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   /* align-items: baseline; */
   gap: 1em;
@@ -114,13 +115,41 @@
   border: 1px solid #ccc;
   outline: none;
   font-family: var(--universal-font);
-  width: 250px;
+  width: 300px;
   transition: border-color 0.3s ease;
 }
   
-.userid-input[type="text"]:focus {
+.userid-input[type="password"]:focus {
   border-color: var(--background-two);
 }
+
+.password-input {
+  padding: 0.4em 1em;
+  font-size: 1.2em;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-family: var(--universal-font);
+  width: 300px;
+  transition: border-color 0.3s ease;
+}
+  
+.password-input:focus {
+  border-color: var(--background-two);
+}
+
+.show-password {
+  position: relative;
+  width: 50px;
+  transform: translate(250px, -250%);
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--universal-font);
+  text-align: center;
+}
+
 
 .login-button {
   padding: 0.3em 1.5em;

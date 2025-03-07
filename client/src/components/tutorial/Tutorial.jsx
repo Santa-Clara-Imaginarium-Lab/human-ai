@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import './Tutorial.css'; // Assuming you have a CSS file for this component
 import { useNavigate } from 'react-router-dom';
 import personalities from '../../constants/personalities';
+import Typewriter from '../Typewriter/typewriter';
 
 function Tutorial() {
   const navigate = useNavigate();
@@ -45,7 +46,9 @@ function Tutorial() {
             <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
           </div>
       <div className='survey-shadow-container'>
-      <h2 className="tutorial-subtitle">Learn about your job at Caboodle, a job based on sharing and withholding data.</h2>
+      <h2 className="tutorial-subtitle">
+        <Typewriter text="Learn about your job at Caboodle, a job based on sharing and withholding data." speed={75} />
+      </h2>
       <div className="tutorial-options">
         <button className="no-button" onClick={handleNoClick}>Proceed</button>
       </div>

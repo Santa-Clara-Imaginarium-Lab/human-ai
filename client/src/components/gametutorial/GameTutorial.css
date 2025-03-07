@@ -246,6 +246,15 @@
     }
 }
 
+.finalizing-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  top: -10%;
+  transform-origin: center center;
+}
+
   .decision-tutorial-button {
     padding: 0.5em 2em;
     background-color: white;
@@ -574,6 +583,25 @@ font-weight: bold; */
   position: relative;
   top: -10%;
   transform-origin: center center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.reset-tutorial {
+  background-color: var(--accent-three);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5em 1.5em;
+  font-size: 1.2em;
+  cursor: pointer;
+  box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+  font-family: var(--universal-font);
+  position: relative;
+  top: -10%;
+  transform-origin: center center;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 

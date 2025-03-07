@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './GameTutorial.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -195,108 +195,100 @@ function GameTutorial() {
     const WAIT_TIME = 15; // reduce when testing
 
     const handleKeyDown = (event) => {
-      if (!(event.key === ' ')) return;
+      requestAnimationFrame(() => {
+        // Your callback function here
+        // States should be up to date at this point
+      // all other keys except SPACE and "B" are bad
+      if (!(event.key === ' ') && !(event.key === 'b')) return;
+
+      console.log(tooltipIndex);
+      console.log(canClick);
       if (canClick) {
-        // doesn't update in time!
-        console.log("prior Index:", tooltipIndex);
-
-        let reEnableClick = true;
-
-        setCanClick(false);
-        setTooltipIndex((prevIndex) => prevIndex + 1);
-        
-        switch (tooltipIndex) { // USES "PRIOR INDEX!"
-          case (0):
-            setTutorialText1a(null);
-            setTutorialText1b(TEXT_INITIAL_1b);
-            setFocusTutorialTextA(TEXT_INITIAL_CCa);
-            setFocusTutorialTextB(TEXT_INITIAL_CCb);
-            break;
-          case (1):
-            setFocusTutorialTextA(TEXT_INITIAL_WCa);
-            setFocusTutorialTextB(TEXT_INITIAL_WCb);
-            break;
-          case (2):
-            setFocusTutorialTextA(TEXT_INITIAL_CWa);
-            setFocusTutorialTextB(TEXT_INITIAL_CWb);
-            break;
-          case (3):
-            setFocusTutorialTextA(TEXT_INITIAL_WWa);
-            setFocusTutorialTextB(TEXT_INITIAL_WWb);
-            break;
-          case (4):
-            setFocusTutorialTextA(TEXT_TRANSITIONa);
-            setFocusTutorialTextB(TEXT_TRANSITIONb);
-            break;
-          case (5):
-            setTutorialText1a(TEXT_TRANSITIONa);
-            setTutorialText1b(TEXT_TRANSITIONb);
-            break;
-          case (15):       
-            setDecisionMade('');       
-            setFocusTutorialTextA(TEXT_FREEPLAY_INTROa);
-            setFocusTutorialTextB(TEXT_FREEPLAY_INTROb);
-            setTutorialText1a(TEXT_FREEPLAY_INTROa);
-            setTutorialText1b(TEXT_FREEPLAY_INTROb);
-            break;
-          case (16):
-            reEnableClick = false;
-            setCanPlay(true);
-            break;
-          case (18):
-            reEnableClick = false;
-            setCanPlay(true);
-            setDecisionMade('');
-            setTooltipIndex(17);
-            break;
-          case (91):
-          // case (9):
-          //   highlightTriangles = [];
-          //   setHighlightedTriangles(highlightTriangles);
-          //   setHighlightedDesc("");
-          //   setAiMessage('');
-          //   setUserMessage('');
-          //   setAiDecision("");
-          //   setUserDecision("");
-          //   setDecisionMade('');
-          //   setFocusTutorialText(TEXT_INITIAL_3);
-          //   setTutorialText2(TEXT_INITIAL_3);
-          //   setTutorialText1b(TEXT_INITIAL_1b);
-          //   break;
-          case (92):
-            reEnableClick = false;
-            setCanPlay(true);
-            setTooltipIndex(14);
-            break;
-          case (93): 
-            break;
-          // case (12): 
-          //   highlightTriangles = [];
-          //   setHighlightedTriangles(highlightTriangles);
-          //   setHighlightedDesc("");
-          //   setAiMessage('');
-          //   setUserMessage('');
-          //   setAiDecision("");
-          //   setUserDecision("");
-          //   setFocusTutorialText(TEXT_INITIAL_4);
-          //   setTutorialText2(TEXT_INITIAL_4);
-          //   setTutorialText1b(TEXT_INITIAL_1b);
-          //   break;
-          case (94):
-            reEnableClick = false;
-            setCanPlay(true);
-            break;
+        if (event.key === 'b') { // "B" for "back"
+          if (!(tooltipIndex <= 16)) {
+            console.warn("can't go back");
+            return;
+          }
+          setTooltipIndex((prevIndex) => prevIndex - 1);
         }
-        setTimeout(() => {
-          console.log("timeout done, reenable click?", reEnableClick);
-          if (reEnableClick) 
-            setCanClick(true);  
-        }, WAIT_TIME);
+        else 
+          setTooltipIndex((prevIndex) => prevIndex + 1);
       }
-      else {
+      else
         console.warn("can't click");
-      }
+
+      });
+    
     };
+
+    useEffect(() => { // navigate to dashboard after last tooltip
+      if (tooltipIndex < 0) {
+        setTooltipIndex(0);
+        return;
+    }
+      setCanClick(false);
+
+      console.log("tooltipIndex:", tooltipIndex);
+      let reEnableClick = true;
+      // setCanClick(false);
+
+      switch (tooltipIndex) { // USES NEW, LIVE, UP-TO-DATE INDEX
+        case (0):
+          setFocusTutorialTextA(TEXT_INITIAL_1a);
+          setFocusTutorialTextB(TEXT_INITIAL_1b);
+          break;
+        case (1):
+          setTutorialText1a(null);
+          setTutorialText1b(TEXT_INITIAL_1b);
+          setFocusTutorialTextA(TEXT_INITIAL_CCa);
+          setFocusTutorialTextB(TEXT_INITIAL_CCb);
+          break;
+        case (2):
+          setFocusTutorialTextA(TEXT_INITIAL_WCa);
+          setFocusTutorialTextB(TEXT_INITIAL_WCb);
+          break;
+        case (3):
+          setFocusTutorialTextA(TEXT_INITIAL_CWa);
+          setFocusTutorialTextB(TEXT_INITIAL_CWb);
+          break;
+        case (4):
+          setFocusTutorialTextA(TEXT_INITIAL_WWa);
+          setFocusTutorialTextB(TEXT_INITIAL_WWb);
+          break;
+        case (5):
+          setFocusTutorialTextA(TEXT_TRANSITIONa);
+          setFocusTutorialTextB(TEXT_TRANSITIONb);
+          break;
+        case (6):
+          setTutorialText1a(TEXT_TRANSITIONa);
+          setTutorialText1b(TEXT_TRANSITIONb);
+          break;
+        case (16):       
+          setDecisionMade('');       
+          setFocusTutorialTextA(TEXT_FREEPLAY_INTROa);
+          setFocusTutorialTextB(TEXT_FREEPLAY_INTROb);
+          setTutorialText1a(TEXT_FREEPLAY_INTROa);
+          setTutorialText1b(TEXT_FREEPLAY_INTROb);
+          break;
+        case (17):
+          reEnableClick = false;
+          setCanPlay(true);
+          break;
+        case (19):
+          reEnableClick = false;
+          setCanPlay(true);
+          setDecisionMade('');
+          setTooltipIndex(17);
+          break;
+      }
+
+      // re-enable click after time (TODO: after typewriter done)
+      setTimeout(() => {
+        console.log("timeout done, reenable click?", reEnableClick);
+        if (reEnableClick) 
+          setCanClick(true);  
+      }, WAIT_TIME);
+    }, [tooltipIndex]);
 
     useEffect(() => {
       if (speedFlag) {
@@ -321,7 +313,7 @@ function GameTutorial() {
         document.removeEventListener('keydown', handleKeyDown);
         // document.removeEventListener('click', handleKeyDown);
       };
-    }); 
+    });   
     // [!] DO NOT PUT A DEPENDENCY ARRAY IN THIS USEEFFECT [!]
     // [!] IT WILL BREAK THE FUNCTION! [!]  
   
@@ -519,9 +511,16 @@ function GameTutorial() {
       <div className={` ${determineShow("decision-tutorial-box2") ? 'decision-tutorial-box2' : 'hide'}`}>
         <p className="tutorialText2">{tutorialText2}</p>
       </div>
+      <div className="finalizing-buttons">
+      <button className={`reset-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { setTooltipIndex(0); setCanClick(true); setCanPlay(false); }}>
+            Reset Tutorial
+        </button>
+
       <button className={`end-tutorial ${(determineShow("end-tutorial") ? ' show' : 'hide')}`} onClick={() => { sessionStorage.getItem("currentRound") === "1" ? navigate('/pregame') : navigate('/dashboard')}}>
             Finish Tutorial
         </button>
+      </div>
+
 
 
       <div className={`game-tutorial-content ${( determineShow("game-tutorial-content") ? 'hidden' : '')}`}>
@@ -708,7 +707,7 @@ function GameTutorial() {
 
         
       </div>
-      <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game or click "Finish Tutorial"' : 'Press SPACEBAR to continue'}</h1>
+      <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game or click "Finish Tutorial"' : (tooltipIndex != 18 ? 'Press SPACEBAR to continue, or "B" to step back' : 'Press SPACEBAR to continue' )}</h1>
     </div>
   );
 }

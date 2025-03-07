@@ -18,13 +18,14 @@ function Game() {
   const [helpTextActive, setHelpTextActive] = useState("XX");
 
   const textWallOptions = {
-    "SS": 'If you <mark style="background-color: white; color: green;">both share</mark> data, investments are optimized, and profits increase steadily. You both earn <mark style="background-color: white; color: green;">+3</mark> Caboodle.<br/><br/>',
+    
+    "SS": "If you <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>both share</strong></mark> data, investments are optimized, and profits increase steadily. You both earn <mark style='background-color: white; color: rgb(178, 225, 244;)><strong>+3</strong></mark> Caboodle.<br/><br/>",
+  
+    "SW": 'If the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI withholds</strong></mark> data and you choose to share data, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while you earn +0 Caboodle.<br/><br/>',
 
-    "SW": 'If the <mark style="background-color: white; color: red;">AI withholds</mark> data and you choose to share data, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: red;">+5</mark> Caboodle, while you earn +0 Caboodle.<br/><br/>',
+    "WS": 'If you <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>withhold data</strong></mark> and the AI chooses to share data, you will gain a boost in profit. You will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while the AI will earn +0 Caboodle.<br/><br/>',
 
-    "WS": 'If you <mark style="background-color: white; color: green;">withhold data</mark> and the AI chooses to share data, you will gain a boost in profit. You will earn <mark style="background-color: white; color: green;">+5</mark> Caboodle, while the AI will earn +0 Caboodle.<br/><br/>',
-
-    "WW": 'If you <mark style="background-color: white; color: green;">both withhold data</mark>, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: green;">+1</mark> Caboodle.'
+    "WW": 'If you <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>both withhold data</strong></mark>, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+1</strong></mark> Caboodle.'
   };
 
 

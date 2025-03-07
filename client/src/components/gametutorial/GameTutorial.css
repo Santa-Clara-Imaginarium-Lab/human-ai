@@ -826,28 +826,26 @@ font-weight: bold; */
 }
 
 .tutorial-button-cooperate[data-tooltip]::after   {
-  top: -3.1em;
-  left: 100%;
+  top: -3.75em;
+  left: 50%;
   font-size: 20px;
 }
 
 .tutorial-button-cooperate[data-tooltip]::before {
-  top: 50%;
-  left: 110%;
-  rotate: 90deg;
+  top: -0.5em;
+  left: 50%;
 }
 
 
 .tutorial-button-defect[data-tooltip]::after   {
-  top: calc(100% + 2em);
-  left: -10%;
+  top: -3.75em;
+  left: 50%;
   font-size: 20px;
 }
 
 .tutorial-button-defect[data-tooltip]::before {
-  top: 50%;
-  left: -10%;
-  rotate: 270deg;
+  top: -0.5em;
+  left: 50%;
 }
 
 .tutorial-user-score[data-tooltip]::after   {
@@ -874,6 +872,6 @@ font-weight: bold; */
 
 #lockin-button[data-tooltip]::after {
   top: -3.25em;
-  left: 25%;
+  left: 0%;
   font-size: 20px;
 }

@@ -39,7 +39,7 @@ const ChatPage = () => {
       </div>
 
       <div className='wrapper'>
-        <div className="debug-personality-display">{sessionStorage.getItem('personality')}</div>
+        {/* <div className="debug-personality-display">{sessionStorage.getItem('personality')}</div> */}
 
         <div className='chat'>
           {data?.history?.map((message, i) => (

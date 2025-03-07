@@ -328,3 +328,62 @@
   background-color: var(--accent-three);
   color: var(--button-two);
 }
+
+.demo-transitioner {
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background-one);
+  display: none;
+  transition: left 0.4s ease-in-out;
+  z-index: 1000;
+}
+
+.demo-transitioner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 5em;
+  text-align: center;
+}
+
+.demo-go {
+  left: 0;
+  display: block;
+  transition: left 0.25s ease-in-out;
+}
+
+.demo-col {
+  background-color: var(--background-two);
+  animation: demo-colorChange 1s ease-out;
+}
+
+@keyframes demo-colorChange {
+  0% {
+    background-color: var(--background-one);
+  }
+  100% {
+    background-color: var(--background-two);
+  }
+}
+
+.demo-fade {
+    /* left: -100%; */
+    /* transition: left 0.5s ease-in-out; */
+    opacity: 0;
+    animation: fadeOut 0.5s ease-in;
+    /* top: -100%; */
+    /* transition: top 0.5s ease-in; */
+  }
+  
+  @keyframes demo-fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  } 

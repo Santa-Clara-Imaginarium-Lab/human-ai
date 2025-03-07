@@ -412,7 +412,7 @@ function Game() {
     const moveToSurvey = isGameOver; // Go to survey if game over
 
     const path = moveToSurvey 
-      ? `/survey`
+      ? (sessionStorage.getItem('isResearchMode') === 'true' ? `/survey` : `/end-screen`) 
       : `/dashboard/chats/${chatId}`;
 
     const speedFlag = true;

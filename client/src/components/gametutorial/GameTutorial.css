@@ -246,6 +246,15 @@
     }
 }
 
+.finalizing-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  top: -10%;
+  transform-origin: center center;
+}
+
   .decision-tutorial-button {
     padding: 0.5em 2em;
     background-color: white;
@@ -332,7 +341,7 @@
     box-shadow: 0.3em 0.3em 0 0 black;
   }
 
-  .tutorial-proceed-button:active, .tutorial-button:active {
+  .tutorial-proceed-button:active, .tutorial-button:active, .chat-tutorial-proceed:active, .end-tutorial:active {
     /* Simulate the button being pressed */
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
@@ -574,6 +583,25 @@ font-weight: bold; */
   position: relative;
   top: -10%;
   transform-origin: center center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.reset-tutorial {
+  background-color: var(--accent-three);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5em 1.5em;
+  font-size: 1.2em;
+  cursor: pointer;
+  box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+  font-family: var(--universal-font);
+  position: relative;
+  top: -10%;
+  transform-origin: center center;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 
@@ -795,6 +823,31 @@ font-weight: bold; */
 .tutorial-user-score[data-tooltip]::before {
   top: -0em;
   left: 50%;
+}
+
+.tutorial-button-cooperate[data-tooltip]::after   {
+  top: -3.1em;
+  left: 100%;
+  font-size: 20px;
+}
+
+.tutorial-button-cooperate[data-tooltip]::before {
+  top: 50%;
+  left: 110%;
+  rotate: 90deg;
+}
+
+
+.tutorial-button-defect[data-tooltip]::after   {
+  top: calc(100% + 2em);
+  left: -10%;
+  font-size: 20px;
+}
+
+.tutorial-button-defect[data-tooltip]::before {
+  top: 50%;
+  left: -10%;
+  rotate: 270deg;
 }
 
 .tutorial-user-score[data-tooltip]::after   {

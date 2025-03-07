@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './DemoChat.css'; // Create a corresponding CSS file
 import {useNavigate, useLocation } from 'react-router-dom';
 
@@ -51,6 +51,7 @@ function DemoChat() {
       console.warn("can't click");
     }
   };
+  
 
 
   useEffect(() => {
@@ -66,9 +67,34 @@ function DemoChat() {
   // [!] DO NOT PUT A DEPENDENCY ARRAY IN THIS USEEFFECT [!]
   // [!] IT WILL BREAK THE FUNCTION! [!]  
 
-  
+  const transitionRef = useRef(null);
+
+  // const [hasRun, setHasRun] = useState(false);
+
+  useEffect(() => {
+    // if (hasRun) return;  
+    // if (!hasRun) setHasRun(true);
+
+    transitionRef.current.classList.add('demo-go');
+
+    setTimeout(() => {
+      transitionRef.current.classList.add('demo-col');
+        setTimeout(() => {
+          transitionRef.current.classList.add('demo-fade');
+          setTimeout(() => {
+            transitionRef.current.classList.remove('demo-go');
+          }, 1000)
+        }, 1000)
+      }, 1000);
+    }, []);
+
   return (
     <div className="chat-tutorial-page-container">
+
+        <div className="demo-transitioner" ref={transitionRef}>
+          <h1 className="demo-transitioner-text"> Entering Chatbot Tutorial... </h1>
+        </div>
+
       <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
         <p>FREE PLAY Active. Your data is not being recorded.</p>
       </div>

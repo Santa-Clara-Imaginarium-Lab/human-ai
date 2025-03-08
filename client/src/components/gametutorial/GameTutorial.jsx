@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './GameTutorial.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Typewriter from '../Typewriter/typewriter';
 
 import {
   // Starting text
@@ -508,13 +509,16 @@ function GameTutorial() {
 
 
         <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')}`}>
-        <p className="tutorialText1">{focusTutorialTextA}</p>
-        {(focusTutorialTextB === null) ? null : (<p className="tutorialText2"><br/>{focusTutorialTextB}</p>)}
+        <p className="tutorialText1">
+          <Typewriter text={focusTutorialTextA} speed={50} delay={0}/>
+        </p>
+        {(focusTutorialTextB === null ) ? null : (<p className="tutorialText2"><br/><Typewriter text={focusTutorialTextB} speed={50} delay={focusTutorialTextA.length * 60}/></p>)}
       </div>
 
       <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hidden')}`}>
-        <p className="tutorialText1">{tutorialText1a ? tutorialText1a : null} {tutorialText1a ? <br/> : null}{tutorialText1a ? <br/> : null} {tutorialText1b}</p>
-      </div>
+        <p className="tutorialText1">
+          {tutorialText1a ? tutorialText1a : null} {tutorialText1a ? <br/> : null}{tutorialText1a ? <br/> : null}{tutorialText1b}</p>
+      </div> 
       <div className={` ${determineShow("decision-tutorial-box2") ? 'decision-tutorial-box2' : 'hide'}`}>
         <p className="tutorialText2">{tutorialText2}</p>
       </div>

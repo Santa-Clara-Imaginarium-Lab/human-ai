@@ -487,10 +487,6 @@ function GameTutorial() {
       console.log(aiScore)
     };
   };
-  
-  
-
-
 
   return (
     <div className="container game-tutorial">
@@ -506,9 +502,9 @@ function GameTutorial() {
 
         <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')}`}>
         <p className="tutorialText1">
-          <Typewriter text={focusTutorialTextA} speed={50} delay={0}/>
+          <Typewriter text={focusTutorialTextA} speed={30} delay={0}/>
         </p>
-        {(focusTutorialTextB === null ) ? null : (<p className="tutorialText2"><br/><Typewriter text={focusTutorialTextB} speed={50} delay={focusTutorialTextA.length * 60}/></p>)}
+        {(focusTutorialTextB === null ) ? null : (<p className="tutorialText2"><br/><Typewriter text={focusTutorialTextB} speed={30} delay={focusTutorialTextA.length * 40}/></p>)}
       </div>
 
       <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hidden')}`}>

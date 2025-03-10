@@ -47,7 +47,7 @@ function Tutorial() {
           </div>
       <div className='survey-shadow-container'>
       <h2 className="tutorial-subtitle">
-        <Typewriter text="Learn about your job at Caboodle, a job based on sharing and withholding data." speed={75} />
+        <Typewriter text="Learn about your job at Caboodle, a job based on sharing and withholding investment data." speed={30} delay={2000}/>
       </h2>
       <div className="tutorial-options">
         <button className="no-button" onClick={handleNoClick}>Proceed</button>

@@ -38,8 +38,8 @@
   }
 
  .survey-subtitle {
-    font-size: 60px;
+    font-size: 40px;
     margin: 0.1em;
     color: var(--accent-three);
-    font-family: var(--universal-font);
+    font-family: var(--secondary-font);
   }

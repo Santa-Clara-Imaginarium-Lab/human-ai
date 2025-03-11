@@ -2,6 +2,7 @@ import React from 'react';
 import './Pregame.css'; 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Typewriter from '../Typewriter/typewriter';
 
 function Pregame() {
     const navigate = useNavigate();
@@ -47,7 +48,9 @@ function Pregame() {
             <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
           </div>
           <div className='survey-shadow-container'>
-          <h2 className="brief-subtitle">{terms[termsIndex]}</h2>
+          <h2 className="brief-subtitle">
+            <Typewriter key={termsIndex} className="brief-subtitle" text={terms[termsIndex]} speed={30} delay={termsIndex === 0 ? 2000 : 0}/>
+          </h2>
           <div className="brief-options">
             <button className="no-button" onClick={handleClick}>Proceed</button>
           </div>

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './Survey.css';
+import Typewriter from '../Typewriter/typewriter';
 
 function Survey() {
   const navigate = useNavigate();
@@ -100,7 +101,9 @@ function Survey() {
             <div className={`brief-transitioner-underline ${btuGo ? 'brief-underline-go' : ''}`}/>
         </div>
       <div className="survey-shadow-container">
-      <h2 className="survey-subtitle">Please reflect on the chatbot you just finished interacting with.</h2>
+      <h2 className="survey-subtitle">
+        <Typewriter text={"Please reflect on the chatbot you just finished interacting with."} speed={30} delay={2000}/>
+      </h2>
       </div>
       <button className="survey-button" onClick={handleSurveyClick}>Proceed</button>
     </div>

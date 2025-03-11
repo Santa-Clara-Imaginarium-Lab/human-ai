@@ -4,7 +4,7 @@ import questions from './PostGameFreeResponseConstants';
 import { useNavigate } from 'react-router-dom';
 
 function PostGameFreeResponse() {
-  const [responses, setResponses] = useState(Array(7).fill("")); // Store responses for 7 questions
+  const [responses, setResponses] = useState(Array(8).fill("")); // Store responses for 8 questions
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showError, setShowError] = useState(false);
   const userId = sessionStorage.getItem('userId');

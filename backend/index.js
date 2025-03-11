@@ -216,7 +216,7 @@ app.post("/api/surveyresponses", async (req, res) => {
         return res.status(400).json({ success: false, error: "Invalid request format" });
       }
   
-      const sheet = await getGoogleSheet("Post Game Survey", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7", "Statement 8", "Statement 9", "Statement 10", "Statement 11", "Statement 12", "Statement 13"]);
+      const sheet = await getGoogleSheet("Post Game Survey", ["User ID", "Timestamp", "Statement 1", "Statement 2", "Statement 3", "Statement 4", "Statement 5", "Statement 6", "Statement 7", "Statement 8", "Statement 9", "Statement 10", "Statement 11", "Statement 12", "Statement 13", "Statement 14"]);
   
       const rowData = {
         "User ID": userId,
@@ -233,7 +233,8 @@ app.post("/api/surveyresponses", async (req, res) => {
         "Statement 10": extractedResponses[9],
         "Statement 11": extractedResponses[10],
         "Statement 12": extractedResponses[11],
-        "Statement 13": extractedResponses[12]
+        "Statement 13": extractedResponses[12],
+        "Statement 14": extractedResponses[13],
       };
   
       await sheet.addRow(rowData);
@@ -607,7 +608,7 @@ app.post("/api/postgamefreeresponse", async (req, res) => {
       return res.status(400).json({ success: false, error: "Invalid request format" });
     }
 
-    const sheet = await getGoogleSheet("Post Game Free Response", ["User ID", "Timestamp", "Question 1", "Question 2", "Question 3", "Question 4", "Question 5", "Question 6", "Question 7"]);
+    const sheet = await getGoogleSheet("Post Game Free Response", ["User ID", "Timestamp", "Question 1", "Question 2", "Question 3", "Question 4", "Question 5", "Question 6", "Question 7", "Question 8"]);
 
     const rowData = {
       "User ID": userId,
@@ -618,7 +619,8 @@ app.post("/api/postgamefreeresponse", async (req, res) => {
       "Question 4": extractedResponses[3],
       "Question 5": extractedResponses[4],
       "Question 6": extractedResponses[5],
-      "Question 7": extractedResponses[6]
+      "Question 7": extractedResponses[6],
+      "Question 8": extractedResponses[7]
     };
 
     await sheet.addRow(rowData);
@@ -631,6 +633,32 @@ app.post("/api/postgamefreeresponse", async (req, res) => {
   }
 });
 
+app.post("/api/postarchetypefreeresponse", async (req, res) => {
+  try {
+    const { userId, response } = req.body;
+    
+    if (!userId || response.length === 0) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
+
+    const sheet = await getGoogleSheet("Post Archetype Free Response", ["User ID", "Timestamp", "Question 1"]);
+
+    const rowData = {
+      "User ID": userId,
+      Timestamp: new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Question 1": response,
+    };
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored Archetype Free Response Data:", rowData);
+    res.status(200).json({ success: true, message: "Free Response Survey submitted!" });
+
+  } catch (error) {
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

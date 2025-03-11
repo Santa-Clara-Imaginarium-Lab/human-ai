@@ -48,7 +48,6 @@ function Question() {
         }
 
         console.log('Survey responses saved successfully');
-        //navigate('/end-screen'); // Simply navigate to end screen after all questions
         navigate('/postgamefreeresponse');
 
       } catch (error) {
@@ -73,6 +72,15 @@ function Question() {
       <button className="question-button">
         {currentQuestionIndex + 1}/{questions.length} {/* Display the question number */}
       </button>
+      <p className="question-description">
+        {currentQuestionIndex < 8 
+          ? "Please indicate the extent to which you agree or disagree with the following statement."
+          : <>
+              Consider the moments when you were strategizing with the AI, particularly when you were asking it questions. <br />
+              Indicate the extent to which you agree or disagree with the following statement.
+            </>
+        }
+      </p>
       <h2 className="question-subtitle">{questions[currentQuestionIndex]}</h2> {/* Display the current question */}
       <div className="options-container">
         <label className="option">

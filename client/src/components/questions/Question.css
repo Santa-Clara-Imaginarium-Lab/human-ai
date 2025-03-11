@@ -38,10 +38,18 @@
     padding: 0.5em 1em;
     font-size: 1.2em;
     font-weight: bold;
-    margin-bottom: 1em;
     font-family: var(--secondary-font);
   }
   
+  .question-description {
+    font-family: var(--secondary-font);
+    font-size: 20px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
   .question-subtitle {
     font-size: 60px;
     margin: 0px 50px;

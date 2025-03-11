@@ -39,7 +39,7 @@ const Average = () => {
 
     const handleClick = () => {
         if(sessionStorage.getItem("isResearchMode") === "true"){
-            navigate('/debrief'); 
+            navigate('/postarchetyperesponse'); 
         } else {
             navigate('/complete');
         }

@@ -52,6 +52,7 @@ import PreSurveys from './components/priorExperienceAI/PreSurveys.jsx';
 import PreHumanAI1 from './components/priorExperienceAI/PreHumanAI1.jsx';
 import PreHumanAI2 from './components/priorExperienceAI/PreHumanAI2.jsx';
 import PostGameFreeResponse from './components/freeResponse/PostGameFreeResponse.jsx';
+import PostArchetypeFreeResponse from './components/freeResponse/PostArchetypeFreeResponse.jsx';
 
 function MainApp() {
   const [theme, setTheme] = useState(sessionStorage.getItem('theme') || 'black-white-theme-4-2');
@@ -206,7 +207,11 @@ function MainApp() {
         {
           path: "/postgamefreeresponse",
           element: <PostGameFreeResponse />
-        },       
+        },      
+        {
+          path: "/postarchetyperesponse",
+          element: <PostArchetypeFreeResponse />
+        },   
         {
           path: "/tutorial",
           element: <Tutorial />,

@@ -687,7 +687,7 @@ function GameTutorial() {
             <button className={`chat-tutorial-proceed ${(determineShow("navigate-chat-tutorial") ? '' : 'chat-tutorial-proceed-disabled')} ${(determineShow("chat-tutorial-button") ? ' show' : 'hide')}`} data-tooltip={determineShow("chat-tutorial-tooltip") ? tooltips[tooltipIndex] : null} onClick={() => { determineShow("navigate-chat-tutorial") ? navigate('/demo-chat',  { state: { speedFlag: true, userScore, aiScore } }) : null }}>
               Go to Chat
               </button>
-          <div id="scoreboard">
+          <div id="scoreboard" className='scoreboard'>
             <div className="trapezoid ai-trapezoid">AI</div>
             <div className={`score tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null} id="ai-score">{aiScore}</div>
             <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score">{userScore}</div>

@@ -284,7 +284,7 @@
     }
 
     .cell {
-    font-size: 22px;}
+    font-size: 20px;}
 
     .win-banner {
         transform: scale(0.95); 
@@ -292,15 +292,27 @@
     }
 }
 
+@media (max-height: 900px) {
+    .results-container {
+        transform: scale(0.88); /* Scale down the results container */
+    }
+    .cell {
+        font-size: 19px;
+    }
+}
+
 @media (max-height: 879px) {
     .results-container {
         transform: scale(0.85); /* Scale down the results container */
+    }
+    .cell {
+        font-size: 17px;
     }
 }
 
 @media (max-height: 840px) {
     .results-container {
-        transform: scale(0.8); /* Scale down the results container */
+        transform: scale(0.82); /* Scale down the results container */
     }
 }
 
@@ -309,7 +321,7 @@
         transform: scale(0.75); /* Scale down the results container */
     }
     .cell {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
 
@@ -317,7 +329,13 @@
     .results-container {
         transform: scale(0.7); /* Scale down the results container */
     }
+}
+
+@media (max-height: 690px) {
+    .results-container {
+        transform: scale(0.65); /* Scale down the results container */
+    }
     .cell {
-        font-size: 16px;
+        font-size: 15px;
     }
 }

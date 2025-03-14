@@ -68,7 +68,7 @@ const Average = () => {
                             <div className="choices">
                                 <div className="choice-header">
                                     <p>Cooperate</p>
-                                    <div className="vertical-divider1" style={{ left: "18.5%" }}></div>
+                                    <div className="vertical-divider1"></div>
                                     <p>Defect</p>
                                 </div>
                                 <div className="rounds">

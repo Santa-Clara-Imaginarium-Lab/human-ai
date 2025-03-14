@@ -55,6 +55,13 @@ html, body {
     box-shadow: 0.3em 0.3em 0 0 black;
   }
 
+  #yes-button:active {
+    align-items: center;  /* Center align content horizontally */
+    /* Simulate the button being pressed */
+    transform: translate(0.3em, 0.3em); /* Move the button down */
+    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+  }
+
   #no-button {
     margin-top: 25px;
     margin-left:0;

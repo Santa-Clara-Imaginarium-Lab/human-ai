@@ -51,7 +51,7 @@ function DemographicQuestion4() {
     return (
         <div className="container tutorial-container">
           <div className='demographic-container'>
-          <h2 className="brief-subtitle">Choose one or more races you consider yourself to be</h2>
+          <h2 className="demo-brief-subtitle">Choose one or more races you consider yourself to be</h2>
           <div className="demographic-options">
             <label className="demographic-option">
               <input

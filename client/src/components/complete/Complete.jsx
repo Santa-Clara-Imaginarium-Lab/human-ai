@@ -63,7 +63,7 @@ const Complete = ({changeTheme, changePersonality}) => {
     return (
         <div className="container welcome">
             <div className="polygon"></div>
-            <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
+            <h1 className="welcome-title top-text"><span className="welcome-text">Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Complete!</h1>
             <div className="button-menu-complete">
                 <div

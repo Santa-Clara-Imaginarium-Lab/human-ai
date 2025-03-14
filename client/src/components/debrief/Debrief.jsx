@@ -31,7 +31,7 @@ function Debrief() {
           </div>
 
           <div className='survey-shadow-container'>
-          <h2 className="brief-subtitle">This was a study about human-AI interactions. Specifically, aiming to explore how AI chatbot personalities can be optimized to enhance trust and cooperation between humans and AI during a Prisoner’s Dilemma trust game. Each of the chatbots you played against was designed according to a specific personality archetype. We were interested in how these personalities affected your trust and overall interactions.</h2>
+          <h2 className="debrief-subtitle">This was a study about human-AI interactions. Specifically, aiming to explore how AI chatbot personalities can be optimized to enhance trust and cooperation between humans and AI during a Prisoner’s Dilemma trust game. Each of the chatbots you played against was designed according to a specific personality archetype. We were interested in how these personalities affected your trust and overall interactions.</h2>
           <div className="brief-options">
             <button className="no-button" onClick={handleClick}>Finish</button>
           </div>

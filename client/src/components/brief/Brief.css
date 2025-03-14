@@ -16,7 +16,7 @@ Tutorial.css
     width: 65%;
   }
   
-  .brief-subtitle {
+  .brief1-subtitle {
     margin: 20px;
     margin-bottom: 1em;
     color: var(--accent-three);
@@ -120,4 +120,18 @@ Tutorial.css
   .brief-txt {
     font-size: 5em;
     transition: font-size 0.5s ease-in-out;
+  }
+
+  @media (max-width: 1380px) {
+    .survey-shadow-container {
+      transform: scale(0.9);
+    }
+
+  }
+
+
+  @media (max-width: 1280px) {
+    .survey-shadow-container {
+      transform: scale(0.8);
+    }
   }

@@ -22,9 +22,8 @@ Tutorial.css
     overflow-y: auto;
   }
   
-  .brief-subtitle {
+  .demo-brief-subtitle {
     margin: 20px;
-    margin-bottom: 1em;
     color: var(--accent-three);
     font-size: 40px;
     font-family: var(--secondary-font);
@@ -88,4 +87,22 @@ Tutorial.css
   
   .demographic-option input[type="checkbox"]:checked {
     accent-color: var(--accent-one); 
+}
+
+@media (max-width: 1580px) {
+
+  .demographic-container {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .demo-brief-subtitle {
+    font-size: 35px;
+  }
+  .demographic-option {
+    transform: scale(0.9);
+  }
 }

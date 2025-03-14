@@ -11,7 +11,7 @@
 .game-tutorial {
   background-color: var(--background-two);
 }
-
+  
 .hidden {
   opacity: 0;
   /* display: block; */
@@ -127,7 +127,7 @@
   place-items: center;
 
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   padding: 15px; /* Add padding for better readability */
   z-index: 1; /* Ensure it is above the shadow */
   background-color: white; /* Match the button's background */
@@ -152,6 +152,11 @@
 
   /* transition: height 5s ease-in-out; */
 }
+
+.tutorialText1 {
+  line-height: 1; 
+}
+
 
 @keyframes focusTransition1 {
   0% {
@@ -255,15 +260,6 @@
   transform-origin: center center;
 }
 
-  .decision-tutorial-button {
-    padding: 0.5em 2em;
-    background-color: white;
-    color: var(--accent-three);
-    border: none;
-    border-radius: 20px;
-    margin-top: 70px;
-    font-size: 1.2em;
-  }
     
   .game-tutorial-content {
     display: flex;
@@ -313,17 +309,8 @@
     align-items: center;
   }
   
-  .tutorial-decision-button {
-    background-color: #4c4b4b;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5em 1.5em;
-    font-size: 1.2em;
-    cursor: pointer;
-  }
   
-  .tutorial-proceed-button, .tutorial-button {
+  .tutorial-button {
     margin: 70px;
     background-color: var(--accent-three);
     color: white;
@@ -341,12 +328,12 @@
     box-shadow: 0.3em 0.3em 0 0 black;
   }
 
-  .tutorial-proceed-button:active, .tutorial-button:active, .chat-tutorial-proceed:active, .end-tutorial:active {
-    /* Simulate the button being pressed */
+  .tutorial-button.defect:active, .tutorial-button.cooperate:active {
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+    background-color: var(--med-accent);
   }
-  
+
   .tutorial-triangle-left {
     position: relative;
     width: 0;
@@ -570,6 +557,12 @@ font-weight: bold; */
   transform-origin: top right;
 }
 
+
+.chat-tutorial-proceed:active {
+  transform: translate(0.3em, 0.3em); /* Move the button down */
+  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+}
+
 .end-tutorial {
   background-color: var(--accent-three);
   color: white;
@@ -585,6 +578,11 @@ font-weight: bold; */
   transform-origin: center center;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.end-tutorial:active {
+  transform: translate(0.3em, 0.3em); /* Move the button down */
+  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
 }
 
 .reset-tutorial {
@@ -604,6 +602,10 @@ font-weight: bold; */
   margin-right: 10px;
 }
 
+.reset-tutorial:active {
+  transform: translate(0.3em, 0.3em); /* Move the button down */
+  box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+}
 
 .chat-tutorial-proceed-disabled {
   cursor: not-allowed;
@@ -874,4 +876,90 @@ font-weight: bold; */
   top: -3.25em;
   left: 0%;
   font-size: 20px;
+}
+
+
+
+
+@media (max-height: 829px) {
+  .game-tutorial-content {
+    transform: scale(0.95);
+  }
+
+  .tutorial-button {
+    transform: scale(0.85);
+  }
+
+  .tutorial-button.defect:active, .tutorial-button.cooperate:active {
+    transform: scale(0.85) translate(calc(0.3em * 0.85), calc(0.3em * 0.85));
+}
+
+  .chat-tutorial-proceed {
+    transform: scale(0.9);
+  }
+
+  .next-buttons {
+    transform: scale(0.9);
+
+  }
+
+  .chat-tutorial-proceed:active, #lockin-button.next-buttons:active {
+    transform: scale(0.9) translate(calc(0.3em * 0.9), calc(0.3em * 0.9));
+}
+
+  .scoreboard {
+    transform: scale(0.85);
+
+  }
+
+  .bottom-info-can {
+    font-size: 1.6em;
+  }
+
+  .tutorial-action {
+    margin-top: 40px;
+  }
+
+  .decision-tutorial-box1 {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    transform: scale(0.9);
+  }
+}
+
+@media (max-height: 800px) {
+  .game-tutorial-content {
+    transform: scale(0.92);
+  }
+  
+  .decision-tutorial-box1 {
+    margin-bottom: 15px;
+    transform: scale(0.8);
+  }
+
+  .bottom-info-can {
+    font-size: 1.4em;
+  }
+
+  .tutorial-button {
+    transform: scale(0.8);
+  }
+
+  .tutorial-button.defect:active, .tutorial-button.cooperate:active {
+    transform: scale(0.8) translate(calc(0.3em * 0.8), calc(0.3em * 0.8));
+}
+
+
+  .chat-tutorial-proceed {
+    transform: scale(0.85);
+  }
+
+  .next-buttons {
+    transform: scale(0.85);
+
+  }
+
+  .chat-tutorial-proceed:active, #lockin-button.next-buttons:active {
+    transform: scale(0.85) translate(calc(0.3em * 0.85), calc(0.3em * 0.85));
+}
 }

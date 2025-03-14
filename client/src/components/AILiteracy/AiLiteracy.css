@@ -25,7 +25,18 @@
     
   @media (max-width: 1280px) {
     .qualtrix-container {
+      transform: scale(0.9);
+    }
+  }
+  @media (max-width: 1180px) {
+    .qualtrix-container {
       transform: scale(0.8);
+    }
+  }
+      
+  @media (max-width: 1080px) {
+    .qualtrix-container {
+      transform: scale(0.7);
     }
   }
 
@@ -39,7 +50,7 @@
       font-size: 2em;
       color: #666;
       margin-bottom: 20px;
-      text-align: left;
+      text-align: center;
       margin-left: 10px; /* Aligns with the statements */
       font-weight: bold;
     }

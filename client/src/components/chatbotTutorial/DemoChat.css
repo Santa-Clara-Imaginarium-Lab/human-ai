@@ -324,10 +324,6 @@
   box-shadow: 0em 0em 0 0; 
 }
 
-.send-button:hover {
-  background-color: var(--accent-three);
-  color: var(--button-two);
-}
 
 .demo-transitioner {
   position: fixed;

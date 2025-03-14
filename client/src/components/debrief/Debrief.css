@@ -16,11 +16,11 @@
     width: 65%;
   }
   
-  .brief-subtitle {
+  .debrief-subtitle {
     margin: 20px;
     margin-bottom: 1em;
     color: var(--accent-three);
-    font-size: 40px;
+    font-size: 35px;
     font-family: var(--secondary-font);
   }
   
@@ -48,4 +48,16 @@
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
   
-  
+  .brief-transitioner-text {
+    margin-top: 10px;
+  }
+
+  @media (max-width: 1280px) {
+    .brief-transitioner-text {
+      margin-top: 40px;
+    }
+
+    .debrief-subtitle {
+      font-size: 30px;
+    }
+  }

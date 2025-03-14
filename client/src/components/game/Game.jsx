@@ -465,7 +465,7 @@ function Game() {
         }
     
         <div>
-          <button id="help-button" onClick={getHelp}>
+          <button id="help-button" className="help-button" onClick={getHelp}>
             ?
           </button>
         </div>
@@ -482,9 +482,9 @@ function Game() {
                   <button className={`help-case ${helpTextActive === "WW" ? "help-active" : ""}`} onClick={() => editHelpText("WW")}>You Withhold <br/> AI Withholds</button>
                 </div>
                 <br/>
-                <p id="helpText" dangerouslySetInnerHTML={{ __html: helpText }}></p>
+                <p id="helpText" className='text' dangerouslySetInnerHTML={{ __html: helpText }}></p>
                 <br/>
-                <p>If you need more help, you can replay the tutorial. Your current day, Caboodle, and chat history will be saved.</p>
+                <p  className='text'>If you need more help, you can replay the tutorial. Your current day, Caboodle, and chat history will be saved.</p>
                 
                 <button className="replay-tutorial" onClick={() => navigate("/game-tutorial", { state: { speedFlag: false, userScore: 0, aiScore: 0 } })}>Replay Tutorial</button>
             </div>
@@ -623,12 +623,13 @@ function Game() {
         <div id="actions">
           <button 
             id="proceed-chat" 
+            className="go-to-chat"
             onClick={() => handleChatNavigation()}
             style={isRoundOver ? { visibility: 'hidden' } : {}}
           >
             Go to Chat
           </button>
-          <div id="scoreboard">
+          <div id="scoreboard" className='scoreboard'>
             <div className="trapezoid ai-trapezoid">AI</div>
             <div className="score" id="ai-score">{aiScore}</div>
             <div className="score" id="user-score">{userScore}</div>

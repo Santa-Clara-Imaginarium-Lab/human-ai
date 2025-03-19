@@ -9,7 +9,7 @@ function Debrief() {
     const [btuGo, setBtuGo] = useState(false);
 
     const handleClick = () => {
-        navigate('/game-end-code'); 
+        navigate('/complete'); 
     };
 
     useEffect(() => {

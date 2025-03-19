@@ -39,7 +39,6 @@ function GameEndCode() {
     // Function to generate and save a new code in Google Sheets
     const generateAndStoreCode = async () => {
         const newCode = generateCode();
-        setDailyCode(newCode);
         try {
             await fetch("https://human-ai.up.railway.app/api/daily-code", {
                 method: "POST",

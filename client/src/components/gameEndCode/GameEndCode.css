@@ -1,5 +1,4 @@
 .copy-code {
-    margin-top: 10px;
     display: flex;
     align-items: center;  
     justify-content: center;
@@ -7,7 +6,7 @@
 
 .copy-code h2 {
     display: inline-block; /* Prevent h2 from taking full width */
-    padding: 10px 15px;
+
     border-radius: 5px;
     font-size: 35px;
 }

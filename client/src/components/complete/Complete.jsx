@@ -62,6 +62,7 @@ const Complete = ({changeTheme, changePersonality}) => {
         } catch (error) {
             console.error("Error saving daily code:", error);
         }
+        setDailyCode(newCode);
     };
 
     useEffect(() => {
@@ -148,19 +149,13 @@ const Complete = ({changeTheme, changePersonality}) => {
             </div>
             {sessionStorage.getItem("isResearchMode") === "true" && 
                 <div className="announce-text">
-                    <p className="instruction">Copy the code below and paste it in Qualtrix</p>
+                    <p className="instruction"><i>You have completed the game. Thank you for playing!</i><br/>Copy the code below and paste it in your Qualtrics survey to proceed.</p>
                     <div className="copy-code">
                         <h2>{dailyCode}</h2>
                         <button className="copy-button" onClick={copyToClipboard}>
                             <FontAwesomeIcon icon={faCopy} />
                         </button>
                     </div>
-                    <p>
-                        Thank you for playing our game and participating in our study!
-                    </p>
-                    <p>
-                        You are done. You may now close this window.
-                    </p>
                 </div>
             }
         </div>

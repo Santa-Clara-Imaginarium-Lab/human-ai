@@ -8,7 +8,7 @@
     display: inline-block; /* Prevent h2 from taking full width */
 
     border-radius: 5px;
-    font-size: 35px;
+    font-size: 60px;
 }
 
 .copy-button {
@@ -30,6 +30,7 @@
 }
 
 .instruction {
-    font-size: 25px;
+    font-size: 30px;
     font-family: var(--secondary-font);
+    font-weight: 1000;
 }

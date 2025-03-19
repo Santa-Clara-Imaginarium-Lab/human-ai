@@ -11,7 +11,6 @@ const Complete = ({changeTheme, changePersonality}) => {
 
     const arrowRef = useRef(null); // Reference for the ">" arrow
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
-    const [settingsHidden, setSettingsHidden] = useState(true);
 
     // Handlers for navigation
     const handlePlayClick = () => navigate('/'); // NOTE: now skips login! TODO: turn data collecting off.
@@ -69,10 +68,6 @@ const Complete = ({changeTheme, changePersonality}) => {
         fetchDailyCode();
     }, []);
     
-    const [menuOpen, setMenuOpen] = useState(false);
-    const toggleMenu = () => {
-      setMenuOpen(!menuOpen);
-    };
 
     // Updates the ">" on hover
     const updateArrowPosition = (event) => {
@@ -154,6 +149,7 @@ const Complete = ({changeTheme, changePersonality}) => {
                         <h2>{dailyCode}</h2>
                         <button className="copy-button" onClick={copyToClipboard}>
                             <FontAwesomeIcon icon={faCopy} />
+                            {copied ? " Copied!" : ""}
                         </button>
                     </div>
                     <p className="instruction">Do not close this page until you have completed the Qualtrics survey.</p>

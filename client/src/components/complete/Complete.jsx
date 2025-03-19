@@ -156,6 +156,8 @@ const Complete = ({changeTheme, changePersonality}) => {
                             <FontAwesomeIcon icon={faCopy} />
                         </button>
                     </div>
+                    <p className="instruction">Do not close this page until you have completed the Qualtrics survey.</p>
+
                 </div>
             }
         </div>

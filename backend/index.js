@@ -660,6 +660,61 @@ app.post("/api/postarchetypefreeresponse", async (req, res) => {
   }
 });
 
+app.post('/api/daily-code', async (req, res) => {
+  const { generatedCode } = req.body;
+
+  try {
+    const sheet = await getGoogleSheet("Daily Codes", ["Date", "Generated Code"]);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const formattedDate = today.toISOString().split("T")[0]; 
+
+    const rowData = {
+      "Date": `${formattedDate}`, 
+      "Generated Code": generatedCode,
+    };
+
+    await sheet.addRow(rowData);
+
+    console.log("Successfully stored Daily Code:", rowData);
+    res.status(200).send('Daily Code recorded successfully');
+  } catch (error) {
+    console.error('Error writing to Google Sheets:', error);
+    res.status(500).send('Error recording Daily Code');
+  }
+});
+
+
+
+app.get('/api/daily-code', async (req, res) => {
+  try {
+    const sheet = await getGoogleSheet("Daily Codes", ["Date", "Generated Code"]);
+    const rows = await sheet.getRows();
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'No Daily Code found' });
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayString = today.toISOString().split("T")[0]; 
+
+    const todayRow = rows.find(row => row["Date"] === todayString);
+
+    if (!todayRow) {
+      return res.status(404).json({ error: 'No code found for today' });
+    }
+
+    res.status(200).json({ code: todayRow["Generated Code"] });
+
+  } catch (error) {
+    console.error('Error reading from Google Sheets:', error);
+    res.status(500).json({ error: 'Error retrieving Daily Code' });
+  }
+});
+
+
 app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(401).send('Unauthenticated!')

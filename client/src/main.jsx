@@ -54,6 +54,8 @@ import PreHumanAI2 from './components/priorExperienceAI/PreHumanAI2.jsx';
 import PostGameFreeResponse from './components/freeResponse/PostGameFreeResponse.jsx';
 import PostArchetypeFreeResponse from './components/freeResponse/PostArchetypeFreeResponse.jsx';
 
+import GameEndCode from './components/gameEndCode/GameEndCode.jsx';
+
 function MainApp() {
   const [theme, setTheme] = useState(sessionStorage.getItem('theme') || 'black-white-theme-4-2');
   const [personality, setPersonality] = useState(sessionStorage.getItem('forcedPersonality') || 'random');
@@ -231,6 +233,10 @@ function MainApp() {
         {
           path: "/game",
           element: <Game />,
+        },
+        {
+          path: "/game-end-code",
+          element: <GameEndCode />,
         },
         {
           path: "/end-screen",

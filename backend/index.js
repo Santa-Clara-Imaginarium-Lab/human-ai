@@ -666,9 +666,9 @@ app.post('/api/daily-code', async (req, res) => {
   try {
     const sheet = await getGoogleSheet("Daily Codes", ["Date", "Generated Code"]);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const formattedDate = today.toISOString().split("T")[0]; 
+    const todayPDT = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+    const [month, day, year] = todayPDT.split(",")[0].split("/");
+    const formattedDate = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`; // Convert MM/DD/YYYY to YYYY-MM-DD
 
     const rowData = {
       "Date": `${formattedDate}`, 
@@ -696,9 +696,9 @@ app.get('/api/daily-code', async (req, res) => {
       return res.status(404).json({ error: 'No Daily Code found' });
     }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayString = today.toISOString().split("T")[0]; 
+    const todayPDT = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+    const [month, day, year] = todayPDT.split(",")[0].split("/");
+    const todayString = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 
     const todayRow = rows.find(row => row["Date"] === todayString);
 

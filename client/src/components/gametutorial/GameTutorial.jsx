@@ -47,6 +47,8 @@ function GameTutorial() {
     const speedFlag = location.state.speedFlag;
     const userScoreArchived = location.state.userScore;
     const aiScoreArchived = location.state.aiScore;
+
+    const TYPEWRITER_SPEED = 0;
     
     const determineShow = (componentName) => {
       // TURN CYCLES (vertically aligns with numbers in arrays)
@@ -504,9 +506,9 @@ function GameTutorial() {
 
         <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')}`}>
         <p className="tutorialText1">
-          <Typewriter text={focusTutorialTextA} speed={30} delay={0}/>
+          { focusTutorialTextA /* <Typewriter text={focusTutorialTextA} speed={TYPEWRITER_SPEED} delay={0}/> */}
         </p>
-        {(focusTutorialTextB === null ) ? null : (<p className="tutorialText2"><br/><Typewriter text={focusTutorialTextB} speed={30} delay={focusTutorialTextA.length * 40}/></p>)}
+        {(focusTutorialTextB === null ) ? null : (<p className="tutorialText2"><br/>{focusTutorialTextB /*<Typewriter text={focusTutorialTextB} speed={TYPEWRITER_SPEED} delay={focusTutorialTextA.length * 40}/> */}</p>)}
       </div>
 
       <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hidden')}`}>

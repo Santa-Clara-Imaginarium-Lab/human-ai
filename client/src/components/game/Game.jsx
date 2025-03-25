@@ -500,7 +500,7 @@ function Game() {
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
             <p>AI chose: <span>{aiDecision}</span></p> */}
-            <button className="proceed-button" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+            <button className="proceed-button cooperate" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
               SHARE
               <div>(cooperate)</div>
             </button>
@@ -614,7 +614,7 @@ function Game() {
             </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p> */}
-            <button className="proceed-button" ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+            <button className="proceed-button defect" ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
               WITHHOLD
               <div>(defect)</div>
             </button>

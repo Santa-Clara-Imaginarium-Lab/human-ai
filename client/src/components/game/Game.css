@@ -183,9 +183,10 @@ font-weight: bold; */
     left: 10px;
     bottom: 10px; */
     transform-origin: top right;
+    transition: all 0.05s ease-in-out;
   }
 
-  .next-buttons:active {
+  .next-buttons:not(.lockin-disabled):active {
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
@@ -206,7 +207,7 @@ font-weight: bold; */
     font-family: var(--universal-font);
   }
   
-  #help-button:active, #proceed-chat:active {
+  #help-button:active, #proceed-chat:active:not(lockin-disabled) {
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
@@ -226,6 +227,7 @@ font-weight: bold; */
     right: 10px;
     bottom: 10px; */
     transform-origin: top right;
+    transition: transform 0.05s ease-in-out;
 }
 
 .selected {

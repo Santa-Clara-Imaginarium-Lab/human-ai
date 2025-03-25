@@ -102,7 +102,7 @@ function Survey() {
         </div>
       <div className="survey-shadow-container">
       <h2 className="survey-subtitle">
-        <Typewriter text={"Please reflect on the chatbot you just finished interacting with."} speed={30} delay={2000}/>
+        Please reflect on the chatbot you just finished interacting with.{ /* <Typewriter text={"Please reflect on the chatbot you just finished interacting with."} speed={30} delay={2000}/> */}
       </h2>
       </div>
       <button className="survey-button" onClick={handleSurveyClick}>Proceed</button>

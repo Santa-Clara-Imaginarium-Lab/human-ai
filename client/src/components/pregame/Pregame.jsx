@@ -49,7 +49,7 @@ function Pregame() {
           </div>
           <div className='survey-shadow-container'>
           <h2 className="brief-subtitle">
-            <Typewriter key={termsIndex} className="brief-subtitle" text={terms[termsIndex]} speed={30} delay={termsIndex === 0 ? 2000 : 0}/>
+            { terms[termsIndex] /* <Typewriter key={termsIndex} className="brief-subtitle" text={terms[termsIndex]} speed={30} delay={termsIndex === 0 ? 2000 : 0}/> */}
           </h2>
           <div className="brief-options">
             <button className="no-button" onClick={handleClick}>Proceed</button>

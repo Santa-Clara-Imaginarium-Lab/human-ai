@@ -279,7 +279,8 @@ function GameTutorial() {
           setTutorialText1b(TEXT_TRANSITIONb);
           break;
         case (17):       
-          setDecisionMade('');       
+          setDecisionMade('');
+          handleUserDecision('default');       
           setFocusTutorialTextA(TEXT_FREEPLAY_INTROa);
           setFocusTutorialTextB(TEXT_FREEPLAY_INTROb);
           setTutorialText1a(TEXT_FREEPLAY_INTROa);
@@ -366,10 +367,10 @@ function GameTutorial() {
   const handleUserDecision = (decision) => {
     // Update user's decision    
     setUserDecision(decision);
-    setDecisionMade('True');
 
     switch (decision) {
       case 'Cooperate':
+        setDecisionMade('True');
         coopButtonRef.current.classList.add('selected');
         defectButtonRef.current.classList.remove('selected');
         setSelectedDecisionTriangles(['t1', 't3', 't2', 't5']); 
@@ -377,12 +378,19 @@ function GameTutorial() {
         setHighlightedDesc("user-cooperate-desc");  
         break;
       case 'Defect':
+        setDecisionMade('True');
         coopButtonRef.current.classList.remove('selected');
         defectButtonRef.current.classList.add('selected');
         setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
         setHighlightedDesc("");
         setHighlightedDesc("user-defect-desc");  
         break;
+      default:
+        setDecisionMade('False');
+        coopButtonRef.current.classList.remove('selected');
+        defectButtonRef.current.classList.remove('selected');
+        setSelectedDecisionTriangles([]); 
+        setHighlightedDesc("");
     }
   }
 

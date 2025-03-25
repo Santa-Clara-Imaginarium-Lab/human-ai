@@ -621,10 +621,11 @@ font-weight: bold; */
   right: 10px;
   bottom: 10px; */
   transform-origin: top right;
+  transition: all 0.05s ease-in-out;
 }
 
 
-.chat-tutorial-proceed:active {
+.chat-tutorial-proceed:not(.chat-tutorial-proceed-disabled):active {
   transform: translate(0.3em, 0.3em); /* Move the button down */
   box-shadow: 0em 0em 0 0; /* Reduce shadow size */
 }
@@ -644,6 +645,7 @@ font-weight: bold; */
   transform-origin: center center;
   margin-left: 10px;
   margin-right: 10px;
+  transition: all 0.05s ease-in-out;
 }
 
 .end-tutorial:active {
@@ -666,6 +668,8 @@ font-weight: bold; */
   transform-origin: center center;
   margin-left: 10px;
   margin-right: 10px;
+  transition: all 0.05s ease-in-out;
+  
 }
 
 .reset-tutorial:active {

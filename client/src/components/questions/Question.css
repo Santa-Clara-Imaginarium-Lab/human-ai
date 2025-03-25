@@ -110,6 +110,7 @@
     cursor: pointer;
     font-family: var(--universal-font);
     box-shadow: 0.3em 0.3em 0 0 black;
+    transition: all 0.05s ease-in-out;
   }
   
   .submit-button:active {

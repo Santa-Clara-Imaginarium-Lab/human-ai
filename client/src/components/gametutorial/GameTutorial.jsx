@@ -207,12 +207,12 @@ function GameTutorial() {
         // Your callback function here
         // States should be up to date at this point
       // all other keys except SPACE and "B" are bad
-      if (!(event.key === ' ') && !(event.key === 'b')) return;
+      if (!(event.key === ' ') && !(event.key === 'b') && !(event.key === 'B')) return;
 
       console.log(tooltipIndex);
       console.log(canClick);
       if (canClick) {
-        if (event.key === 'b') { // "B" for "back"
+        if (event.key === 'b' || event.key === 'B') { // "B" for "back"
           if (!(tooltipIndex <= 17)) {
             console.warn("can't go back");
             return;
@@ -224,9 +224,7 @@ function GameTutorial() {
       }
       else
         console.warn("can't click");
-
       });
-    
     };
 
     useEffect(() => { // navigate to dashboard after last tooltip

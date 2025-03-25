@@ -79,9 +79,9 @@ function MainApp() {
   // SO YOU CAN ACCESS ELEMENTS IN INSPECT //
   // ===================================== //
 
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-  });  
+  // document.addEventListener('contextmenu', function(e) {
+  //   e.preventDefault();
+  // });  
 
   // ===================================== //
   // SECURITY MEASURE                      //
@@ -91,11 +91,11 @@ function MainApp() {
   // SO YOU CAN ACCESS CONSOLE             //
   // ===================================== //
 
-  document.onkeydown = (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key == 'I') {
-        e.preventDefault();
-    }
-  }
+  // document.onkeydown = (e) => {
+  //   if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+  //       e.preventDefault();
+  //   }
+  // }
 
   const router = createBrowserRouter([
     {

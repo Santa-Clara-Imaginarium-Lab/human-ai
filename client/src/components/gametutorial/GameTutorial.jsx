@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import './GameTutorial.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Typewriter from '../Typewriter/typewriter';
@@ -35,6 +35,7 @@ import {
 
 function GameTutorial() {
     const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
+    const [tooltipPause, setTooltipPause] = useState(false);
     const [canClick, setCanClick] = useState(true);
     const [canPlay, setCanPlay] = useState(false);
     const [focusTutorialTextA, setFocusTutorialTextA] = useState(TEXT_INITIAL_1a);
@@ -145,19 +146,19 @@ function GameTutorial() {
         case 'game-tutorial-content':
           return GAME_TUTORIAL_CONTENT[tooltipIndex] === 1;
         case 'tutorial-horizontal-layout':
-          return TUTORIAL_HORIZONTAL_LAYOUT[tooltipIndex] === 1;
+          return TUTORIAL_HORIZONTAL_LAYOUT[tooltipIndex] === 1 && !tooltipPause;
         case 'ai-defect-desc':
-          return AI_DEFECT_DESC[tooltipIndex] === 1;
+          return AI_DEFECT_DESC[tooltipIndex] === 1 && !tooltipPause;
         case 'user-defect-desc':
-          return USER_DEFECT_DESC[tooltipIndex] === 1;
+          return USER_DEFECT_DESC[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-ai-score':
-          return TUTORIAL_AI_SCORE[tooltipIndex] === 1;
+          return TUTORIAL_AI_SCORE[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-user-score':
-          return TUTORIAL_USER_SCORE[tooltipIndex] === 1;
+          return TUTORIAL_USER_SCORE[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-button-cooperate':
-          return TUTORIAL_BUTTON_COOPERATE[tooltipIndex] === 1;
+          return TUTORIAL_BUTTON_COOPERATE[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-button-defect':
-          return TUTORIAL_BUTTON_DEFECT[tooltipIndex] === 1;
+          return TUTORIAL_BUTTON_DEFECT[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-action':
           return TUTORIAL_ACTION[tooltipIndex] === 1;
         case 'tutorial-proceed':
@@ -214,15 +215,21 @@ function GameTutorial() {
       console.log(tooltipIndex);
       console.log(canClick);
       if (canClick) {
+        console.log("SETTING TOOLTIP PAUSE");
         if (event.key === 'b' || event.key === 'B') { // "B" for "back"
-          if (!(tooltipIndex <= 17)) {
+          if (!(tooltipIndex <= 18)) {
             console.warn("can't go back");
             return;
           }
           setTooltipIndex((prevIndex) => prevIndex - 1);
         }
-        else 
+        else {
           setTooltipIndex((prevIndex) => prevIndex + 1);
+        }
+        setTooltipPause(true);
+        setTimeout(() => {
+          setTooltipPause(false);
+        }, 50)
       }
       else
         console.warn("can't click");
@@ -504,7 +511,7 @@ function GameTutorial() {
       </div>}
 
 
-        <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')}`}>
+        <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')} ${!tooltipPause ? 'anim-play' : ''}`}>
         <p className="tutorialText1">
           { focusTutorialTextA /* <Typewriter text={focusTutorialTextA} speed={TYPEWRITER_SPEED} delay={0}/> */}
         </p>
@@ -714,7 +721,7 @@ function GameTutorial() {
 
         
       </div>
-      <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game or click "Finish Tutorial"' : (tooltipIndex != 18 ? 'Press SPACEBAR to continue, or "B" to step back' : 'Press SPACEBAR to continue' )}</h1>
+      <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game or click "Finish Tutorial"' : (tooltipIndex != 19 ? 'Press SPACEBAR to continue, or "B" to step back' : 'Press SPACEBAR to continue' )}</h1>
     </div>
   );
 }

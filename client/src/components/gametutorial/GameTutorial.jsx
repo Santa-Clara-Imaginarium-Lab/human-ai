@@ -551,7 +551,7 @@ function GameTutorial() {
               <div>(cooperate)</div>
             </button>
           </div> */}
-          {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate defect ${(determineShow("tutorial-button-cooperate") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+          {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate cooperate ${(determineShow("tutorial-button-cooperate") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
                 SHARE
                 <div>(cooperate)</div>
               </button>}
@@ -655,7 +655,7 @@ function GameTutorial() {
               {selectedDecisionTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
             </div>
           </div>
-          <div className="column-5">
+          <div className="tutorial-column-5">
             <div className="triangle-left-fake"></div> {/* Fake triangle for spacing */}
           </div>
 

@@ -326,12 +326,67 @@
     cursor: pointer;
     box-shadow: 0.3em 0.3em 0 0 var(--button-two);
     font-family: var(--universal-font);
+    transition: all 0.1s ease-in-out;
   }
 
-  .tutorial-button.defect.selected, .tutorial-button.cooperate.selected {
+  .tutorial-button.defect.selected {
+    margin: 60px;
     background-color: var(--med-accent);
     box-shadow: 0.3em 0.3em 0 0 black;
+    animation: selected-1 10s ease-in-out infinite both;
   }
+
+  .tutorial-button.cooperate.selected {
+    margin: 60px;
+    background-color: var(--med-accent);
+    box-shadow: 0.3em 0.3em 0 0 black;
+    animation: selected-2 10s ease-in-out infinite both;
+  }
+
+  @keyframes selected-1 {
+    0% {
+      transform: scale(1.1) translate(0);
+    }
+    20% {
+      transform: scale(1.1) perspective(1000px) rotateX(1deg) rotateY(-2deg) rotateZ(3deg);
+    }
+    40% {
+      transform: scale(1.1) perspective(1000px) rotateX(-3deg) rotateY(2deg) rotateZ(-1deg);
+    }
+    60% {
+      transform: scale(1.1) perspective(1000px) rotateX(2deg) rotateY(-1deg) rotateZ(3deg);
+    }
+    80% {
+      transform: scale(1.1) perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(-2deg);
+    }
+    100% {
+      transform: scale(1.1) translate(0);
+    }
+  }
+
+  @keyframes selected-2 {
+    0% {
+      transform: scale(1.1) translate(0);
+    }
+    20% {
+      transform: scale(1.1) perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(-2deg);
+    }
+    40% {
+
+      transform: scale(1.1) perspective(1000px) rotateX(2deg) rotateY(-1deg) rotateZ(3deg);
+    }
+    60% {
+      transform: scale(1.1) perspective(1000px) rotateX(-3deg) rotateY(2deg) rotateZ(-1deg);
+    }
+    80% {
+      transform: scale(1.1) perspective(1000px) rotateX(1deg) rotateY(-2deg) rotateZ(3deg);
+    }
+    100% {
+      transform: scale(1.1) translate(0);
+    }
+  }
+
+  
 
   .tutorial-button.defect:active, .tutorial-button.cooperate:active {
     transform: translate(0.3em, 0.3em); /* Move the button down */
@@ -379,6 +434,12 @@
 
   .tutorial-column-1, .tutorial-column-2, .tutorial-column-3, .tutorial-column-4 {
     width: 105px;
+    display: inline-block
+  }
+
+  .tutorial-column-5 {
+    width: 95px;
+    display: inline-block
   }
 
   .triangle-number {
@@ -546,7 +607,7 @@ font-weight: bold; */
 
 
 .chat-tutorial-proceed {
-  margin: 0px 100px 20px 0px;
+  margin: 0px 75px 20px 0px;
   background-color: var(--accent-three);
   color: white;
   border: none;

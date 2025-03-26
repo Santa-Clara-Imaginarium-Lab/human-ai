@@ -366,9 +366,10 @@ function GameTutorial() {
     const defectButtonRef = useRef(null);
 
   const handleUserDecision = (decision) => {
+    if (isComplete) return;
+    
     // Update user's decision    
     setUserDecision(decision);
-    if (isComplete) return;
 
     switch (decision) {
       case 'Cooperate':

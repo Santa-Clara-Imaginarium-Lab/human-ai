@@ -240,6 +240,10 @@ function Game() {
     if (userDecision == decision)
       return;
 
+    // Do nothing if clicked on round over
+    if (isRoundOver)
+      return;
+
     // Update user's decision    
     setUserDecision(decision);
     console.log(decision);
@@ -284,6 +288,8 @@ function Game() {
       }, 3000);
       return;
     }
+
+    setIsRoundOver(true);
 
     const aiChoice = await getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
@@ -392,9 +398,7 @@ function Game() {
     setHighlightedTriangles(highlightTriangles);
     setTriangleNumbers(numbers);
     setHighlightedDesc(newDescHighlight);
-
-    setIsRoundOver(true);
-
+    
     // Move to the next round or end the game
     if (sessionStorage.getItem('currentRound') > MAX_ROUNDS) {
       setIsGameOver(true); // Mark the game as over
@@ -500,7 +504,7 @@ function Game() {
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
             <p>AI chose: <span>{aiDecision}</span></p> */}
-            <button className="proceed-button cooperate" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+            <button className={`proceed-button cooperate ${(isRoundOver && userDecision === "Defect") ? 'hidden' : ''}`} ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
               SHARE
               <div>(cooperate)</div>
             </button>
@@ -614,7 +618,7 @@ function Game() {
             </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p> */}
-            <button className="proceed-button defect" ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+            <button className={`proceed-button defect ${(isRoundOver && userDecision === "Cooperate") ? 'hidden' : ''}`} ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
               WITHHOLD
               <div>(defect)</div>
             </button>

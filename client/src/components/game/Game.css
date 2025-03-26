@@ -192,17 +192,21 @@ font-weight: bold; */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
+  .day-counter {
+    font-size: 3em;
+  }
+
   #help-button {
-    position: absolute;
-    margin: 100px;
-    top: 10px;
-    left: 10px;
+    position: relative;
+    margin: 0px;
+    top: 0px;
+    left: 0px;
     background-color: var(--accent-three);
     color: white;
     border: none;
     border-radius: 20px;
     padding: 0.5em 1.5em;
-    font-size: 2.2em;
+    font-size: 1.4em;
     cursor: pointer;
     box-shadow: 0.3em 0.3em 0 0 var(--button-two);
     font-family: var(--universal-font);
@@ -371,7 +375,7 @@ font-weight: bold; */
   margin: auto;
   padding: 100px;
   border: 1px solid #888;
-  max-width: 50vw;
+  max-width: 60vw;
   width: 90%;
   max-height: 95vh;
   overflow-y: auto;

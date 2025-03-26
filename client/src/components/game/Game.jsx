@@ -14,18 +14,18 @@ function Game() {
   const [errorMessage, setErrorMessage] = useState('');
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
-  const [helpText, setHelpText] = useState('<i>Click a scenario to learn more about it.</i>');
+  const [helpText, setHelpText] = useState('<i>Click a scenario to learn more about it. This text will be replaced.</i>');
   const [helpTextActive, setHelpTextActive] = useState("XX");
 
   const textWallOptions = {
     
-    "SS": "If you <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>both share</strong></mark> data, investments are optimized, and profits increase steadily. You both earn <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>+3</strong></mark> Caboodle.<br/><br/>",
+    "SS": "If you <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>both share</strong></mark> data, investments are optimized, and profits increase steadily. You both earn <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>+3</strong></mark> Caboodle.<br/>",
   
-    "SW": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you share data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI withholds data</strong></mark>, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while you earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/><br/>',
+    "SW": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you share data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI withholds data</strong></mark>, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while you earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/>',
 
-    "WS": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you withhold data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI shares data</strong></mark>, you will gain a boost in profit. You will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while the AI will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/><br/>',
+    "WS": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you withhold data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI shares data</strong></mark>, you will gain a boost in profit. You will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while the AI will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/>',
 
-    "WW": 'If you <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>both withhold</strong></mark> data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+1</strong></mark> Caboodle.'
+    "WW": 'If you <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>both withhold</strong></mark> data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+1</strong></mark> Caboodle.<br/>'
   };
 
 
@@ -467,10 +467,14 @@ function Game() {
             <div className={`round-transitioner-underline ${rtuGo ? 'round-underline-go' : ''}`}/>
           </div>
         }
-    
+
+        <div>
+          <h1 className="day-counter">Day {currentRound}</h1>
+        </div>
+
         <div>
           <button id="help-button" className="help-button" onClick={getHelp}>
-            ?
+            Need Help?
           </button>
         </div>
 
@@ -488,9 +492,12 @@ function Game() {
                 <br/>
                 <p id="helpText" className='text' dangerouslySetInnerHTML={{ __html: helpText }}></p>
                 <br/>
+                <hr style={{ borderTop: '10px solid #000000', width: '100%', margin: '20px auto' }}/>
                 <p  className='text'>If you need more help, you can replay the tutorial. Your current day, Caboodle, and chat history will be saved.</p>
                 
                 <button className="replay-tutorial" onClick={() => navigate("/game-tutorial", { state: { speedFlag: false, userScore: 0, aiScore: 0 } })}>Replay Tutorial</button>
+
+                <p className='text'>If you require further assistance, please email <mark style={{backgroundColor: "#bdb9c2", color: "black"}}>imaginarium.hai@gmail.com</mark> <br/>The research team actively monitors this email during business hours.</p>
             </div>
           </div>
         }

@@ -162,7 +162,7 @@ font-weight: bold; */
   .proceed-button:active {
     /* Simulate the button being pressed */
     transform: translate(0.3em, 0.3em); /* Move the button down */
-    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+    box-shadow: 0em 0em 0 0 !important; /* Reduce shadow size */
   }
 
   .next-buttons-container {
@@ -236,14 +236,14 @@ font-weight: bold; */
 }
 
 .proceed-button.defect.selected {
-  margin: 60px;
+  margin: 55px;
   background-color: var(--med-accent);
   box-shadow: 0.3em 0.3em 0 0 black;
   animation: selected-1 10s ease-in-out infinite both;
 }
 
 .proceed-button.cooperate.selected {
-  margin: 60px;
+  margin: 55px;
   background-color: var(--med-accent);
   box-shadow: 0.3em 0.3em 0 0 black;
   animation: selected-2 10s ease-in-out infinite both;

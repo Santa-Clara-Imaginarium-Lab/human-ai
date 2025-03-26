@@ -409,10 +409,6 @@ function Game() {
     }
   };
 
-  const reset = () => {
-    print("reset round");
-  };
-
   const handleNavigation = () => {
     const moveToSurvey = isGameOver; // Go to survey if game over
 

@@ -107,7 +107,7 @@ function GameTutorial() {
       // CONTROLS BUTTONS
       const TUTORIAL_ACTION =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1, 
-            1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const TUTORIAL_BUTTON_TOOLTIP =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
@@ -279,8 +279,8 @@ function GameTutorial() {
           setTutorialText1b(TEXT_TRANSITIONb);
           break;
         case (17):       
-          setDecisionMade('');
-          handleUserDecision('default');       
+          handleUserDecision('default');    
+          setIsComplete(false);   
           setFocusTutorialTextA(TEXT_FREEPLAY_INTROa);
           setFocusTutorialTextB(TEXT_FREEPLAY_INTROb);
           setTutorialText1a(TEXT_FREEPLAY_INTROa);
@@ -289,6 +289,7 @@ function GameTutorial() {
         case (18):
           reEnableClick = false;
           setCanPlay(true);
+          setIsComplete(false);
           break;
         case (20):
           reEnableClick = false;
@@ -367,6 +368,7 @@ function GameTutorial() {
   const handleUserDecision = (decision) => {
     // Update user's decision    
     setUserDecision(decision);
+    if (isComplete) return;
 
     switch (decision) {
       case 'Cooperate':
@@ -396,40 +398,6 @@ function GameTutorial() {
 
   let highlightTriangles = [];
   
-  const handleShareClick = () => {
-    return;
-    setDecisionMade('True');
-    if (round === 1) {
-      setSelectedDecisionTriangles(['t1', 't3']); 
-      setHighlightedDesc("");
-      setHighlightedDesc("user-cooperate-desc ai-defect-desc");
-      setAiDecision("Defect");
-    }
-    else {
-      setSelectedDecisionTriangles(['t2', 't5']); 
-      setHighlightedDesc("");
-      setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); 
-      setAiDecision("Cooperate");
-    }
-  };
-
-  const handleWithholdClick = () => {
-    return;
-    setDecisionMade('True');
-    if (round === 1) {
-      setSelectedDecisionTriangles(['t4', 't7']); 
-      setHighlightedDesc("");
-      setHighlightedDesc("user-defect-desc ai-defect-desc");
-      setAiDecision("Defect");
-    }
-    else {
-      setSelectedDecisionTriangles(['t6', 't8']); 
-      setHighlightedDesc("");
-      setAiDecision("Cooperate");
-      setHighlightedDesc("user-defect-desc ai-cooperate-desc"); 
-    }
-  };
-
   const handleLockIn = () => {
     // Progression control
     if (decisionMade === '') {
@@ -443,6 +411,7 @@ function GameTutorial() {
     setSelectedDecisionTriangles([]);
     setCanPlay(false);
     setCanClick(true);
+    setIsComplete(true);
 
     setTooltipIndex((prevIndex) => prevIndex + 1);
     console.log("progression! tooltipIndex:", tooltipIndex)
@@ -559,7 +528,7 @@ function GameTutorial() {
               <div>(cooperate)</div>
             </button>
           </div> */}
-          {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate cooperate ${(determineShow("tutorial-button-cooperate") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+          {determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate cooperate ${(determineShow("tutorial-button-cooperate") ? ' show' : '')} ${(isComplete && userDecision === "Defect") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
                 SHARE
                 <div>(cooperate)</div>
               </button>}
@@ -674,7 +643,7 @@ function GameTutorial() {
             <h2>Your Score: <span className="tutorial-score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p>
           </div> */}
-              {!isComplete && determineShow("tutorial-action") && <button ref={defectButtonRef} className={`tutorial-button tutorial-button-defect defect ${(determineShow("tutorial-button-defect") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-defect") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+              {determineShow("tutorial-action") && <button ref={defectButtonRef} className={`tutorial-button tutorial-button-defect defect ${(determineShow("tutorial-button-defect") ? ' show' : '')} ${(isComplete && userDecision === "Cooperate") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-defect") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
                 WITHHOLD
                 <div>(defect)</div>
               </button>}
@@ -716,11 +685,7 @@ function GameTutorial() {
                 Lock In
               </button>)}             
             </div>
-          ) : (
-            <button className="next-buttons" id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
-              Proceed
-            </button>
-          )}
+          ) : null }
 
 
         {/* </div> */}

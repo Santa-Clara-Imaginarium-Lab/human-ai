@@ -330,14 +330,14 @@
   }
 
   .tutorial-button.defect.selected {
-    margin: 60px;
+    margin: 55px;
     background-color: var(--med-accent);
     box-shadow: 0.3em 0.3em 0 0 black;
     animation: selected-1 10s ease-in-out infinite both;
   }
 
   .tutorial-button.cooperate.selected {
-    margin: 60px;
+    margin: 55px;
     background-color: var(--med-accent);
     box-shadow: 0.3em 0.3em 0 0 black;
     animation: selected-2 10s ease-in-out infinite both;
@@ -438,7 +438,7 @@
   }
 
   .tutorial-column-5 {
-    width: 95px;
+    width: 100px;
     display: inline-block
   }
 
@@ -859,8 +859,7 @@ font-weight: bold; */
 /* POP UP POSITIONS */
 
 .tutorial-horizontal-layout[data-tooltip]::before {
-  top: calc(-30% + 3.25em);
-  left: 49.75%;
+  display: none /* so we don't have to deal with mis-centering */
 }
 
 .tutorial-horizontal-layout[data-tooltip]::after {

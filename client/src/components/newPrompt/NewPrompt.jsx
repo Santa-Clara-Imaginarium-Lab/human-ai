@@ -214,7 +214,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         hasRun.current = true;
 
         if (speedFlag) { 
-          transitionRef.current.children[0].textContent = "Chatbot is thinking...";
+          transitionRef.current.children[0].textContent = "Chatbot is preparing for the day...";
         }
         else {
           transitionRef.current.children[0].textContent = "Entering Chat...";

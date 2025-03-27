@@ -78,13 +78,19 @@ const EndScreen = () => {
 
             <div className="results-container">
                 <div className="top-half">
-                    <div className="chatbot-results">
+                    <div className="chatbot-results end-score">
                         <h2>Chatbot</h2>
-                        <p>{totalChatbotScore}</p>
+                        <div className={`end-score-wrap`}>{
+                        totalChatbotScore && totalChatbotScore.toString().split('').map((digit, index) => (
+                            <span key={index}>{digit}</span>
+                        ))}</div>
                     </div>
-                    <div className="user-results">
+                    <div className="user-results end-score">
                         <h2>You</h2>
-                        <p>{totalUserScore}</p>
+                        <div className={`end-score-wrap`}>{
+                        totalUserScore && totalUserScore.toString().split('').map((digit, index) => (
+                            <span key={index}>{digit}</span>
+                        ))}</div>
                     </div>
                     <div className="win-banner">
                         {userScoreInt > chatbotScoreInt && <div className="win-text">YOU WIN</div>}

@@ -249,6 +249,7 @@ function Game() {
     console.log(decision);
     switch (decision) {
       case 'Cooperate':
+        setSelectedDecisionTriangles(['t1', 't2', 't3', 't5']); 
         coopButtonRef.current.classList.add('selected');
         defectButtonRef.current.classList.remove('selected');
         if (!isFirstDecision) { 
@@ -258,6 +259,7 @@ function Game() {
         setisFirstDecision(false);
         break;
       case 'Defect':
+        setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
         coopButtonRef.current.classList.remove('selected');
         defectButtonRef.current.classList.add('selected');
         if (!isFirstDecision) { 
@@ -268,14 +270,6 @@ function Game() {
         break;
     }
   };  
-
-  const handleShareClick = () => {
-    setSelectedDecisionTriangles(['t1', 't2', 't3', 't5']); 
-  };
-
-  const handleWithholdClick = () => {
-    setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
-  };
 
   const handleLockIn = async () => {
     setSelectedDecisionTriangles([]);
@@ -289,10 +283,10 @@ function Game() {
       return;
     }
 
-    setIsRoundOver(true);
-
     const aiChoice = await getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
+
+    setIsRoundOver(true);
 
     addChoices(aiChoice, userDecision);
 
@@ -507,7 +501,7 @@ function Game() {
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
             <p>AI chose: <span>{aiDecision}</span></p> */}
-            <button className={`proceed-button cooperate ${(isRoundOver && userDecision === "Defect") ? 'hidden' : ''}`} ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+            <button className={`proceed-button cooperate ${(isRoundOver && userDecision === "Defect") ? 'hidden' : ''}`} ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate');}}>
               SHARE
               <div>(cooperate)</div>
             </button>
@@ -621,7 +615,7 @@ function Game() {
             </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p> */}
-            <button className={`proceed-button defect ${(isRoundOver && userDecision === "Cooperate") ? 'hidden' : ''}`} ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+            <button className={`proceed-button defect ${(isRoundOver && userDecision === "Cooperate") ? 'hidden' : ''}`} ref={defectButtonRef} onClick={() => {handleUserDecision('Defect');}}>
               WITHHOLD
               <div>(defect)</div>
             </button>
@@ -638,8 +632,16 @@ function Game() {
           </button>
           <div id="scoreboard" className='scoreboard'>
             <div className="trapezoid ai-trapezoid">AI</div>
-            <div className="score" id="ai-score">{aiScore}</div>
-            <div className="score" id="user-score">{userScore}</div>
+            <div className="score" id="ai-score"><div className={isRoundOver ? `score-wrap-shake` : ''}>{
+              aiScore && aiScore.toString().split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}</div>
+            </div>
+            <div className="score" id="user-score"><div className={isRoundOver ? `score-wrap-shake` : ''}>{
+              userScore && userScore.toString().split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}</div>
+            </div>
             <div className="trapezoid user-trapezoid">You</div>
           </div>
           {!isRoundOver ? (

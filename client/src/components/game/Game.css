@@ -635,7 +635,48 @@ font-weight: bold; */
   font-weight: bold;
   border: 2px solid black;
   text-align: center;
+  display: inline-block;
 }
+
+.score-wrap-shake span {
+  display: inline-block; 
+  animation: wave 2s ease-in-out infinite;
+}
+
+.score span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.score span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.score span:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.1em);
+  }
+}
+
+.score-wrap-shake {
+  animation: b-shake .3s ease-in-out;
+}
+
+@keyframes b-shake {
+  0% { transform: scale(1.0) rotate(0deg); }
+  20% { transform: scale(1.75) rotate(-18deg); }
+  40% { transform: scale(0.7) rotate(18deg); }
+  60% { transform: scale(1.5) rotate(-9deg); }
+  80% { transform: scale(0.85) rotate(9deg); }
+  100% { transform: scale(1.0) rotate(0deg); }
+}
+/* HELP JIMBO FROM BALATRO IS INFILTRATING THE INNER GAME DEV INSIDE ME */
 
 #ai-score {
   border-right: 2px solid black;
@@ -702,10 +743,10 @@ font-weight: bold; */
 
 }
 
-.container.game {
+/* .container.game {
 
   background-image: url('../../public/pd-diamonds/pd-diamond-down.svg');
-  background-color: red; /* red with 50% opacity */
+  background-color: red;
   background-blend-mode: lighten;
 
   background-size: 5%;
@@ -719,4 +760,4 @@ font-weight: bold; */
   to {
     background-position: bottom right;
   }
-}
+} */

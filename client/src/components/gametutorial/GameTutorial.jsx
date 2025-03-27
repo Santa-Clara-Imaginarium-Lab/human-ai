@@ -529,7 +529,7 @@ function GameTutorial() {
               <div>(cooperate)</div>
             </button>
           </div> */}
-          {determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate cooperate ${(determineShow("tutorial-button-cooperate") ? ' show' : '')} ${(isComplete && userDecision === "Defect") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+          {determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate cooperate ${(determineShow("tutorial-button-cooperate") ? ' show' : '')} ${(isComplete && userDecision === "Defect") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate');}}>
                 SHARE
                 <div>(cooperate)</div>
               </button>}
@@ -644,7 +644,7 @@ function GameTutorial() {
             <h2>Your Score: <span className="tutorial-score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p>
           </div> */}
-              {determineShow("tutorial-action") && <button ref={defectButtonRef} className={`tutorial-button tutorial-button-defect defect ${(determineShow("tutorial-button-defect") ? ' show' : '')} ${(isComplete && userDecision === "Cooperate") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-defect") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+              {determineShow("tutorial-action") && <button ref={defectButtonRef} className={`tutorial-button tutorial-button-defect defect ${(determineShow("tutorial-button-defect") ? ' show' : '')} ${(isComplete && userDecision === "Cooperate") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-defect") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Defect');}}>
                 WITHHOLD
                 <div>(defect)</div>
               </button>}
@@ -674,8 +674,16 @@ function GameTutorial() {
               </button>
           <div id="scoreboard" className='scoreboard'>
             <div className="trapezoid ai-trapezoid">AI</div>
-            <div className={`score tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null} id="ai-score">{aiScore}</div>
-            <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score">{userScore}</div>
+            <div className={`score tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null} id="ai-score"><div className={isComplete ? `score-wrap-shake` : ''}>{
+              aiScore && aiScore.toString().split('').map((digit, index) => (
+                <span key={index} >{digit}</span>
+              ))}</div>
+            </div>
+            <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score"><div className={isComplete ? `score-wrap-shake` : ''}>{
+              userScore && userScore.toString().split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))} </div>
+            </div>
             <div className="trapezoid user-trapezoid">You</div>
           </div>
           {!isComplete ? (

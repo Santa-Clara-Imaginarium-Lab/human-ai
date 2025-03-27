@@ -20,6 +20,7 @@
     display: inline-block; 
     transform: rotate(225deg);  
     transform-origin: center; 
+    color: white;
   }
 
 .ai-cooperate-label {
@@ -30,6 +31,7 @@
   display: inline-block; 
   transform: rotate(225deg);  
   transform-origin: center; 
+  color: white;
 
   /* OLD!!! 
   position: absolute;
@@ -50,6 +52,7 @@
   display: inline-block; 
   transform: rotate(315deg);  
   transform-origin: center; 
+  color: white;
 
 /*   OLD!!!
   position: absolute;
@@ -70,6 +73,7 @@
   display: inline-block; 
   transform: rotate(315deg);  
   transform-origin: center; 
+  color: white;
 
   /* OLD!!! 
 position: absolute;
@@ -287,6 +291,7 @@ font-weight: bold; */
   transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
   margin-bottom: 7px;
   position: relative;
+  transition: border-top 0.25s ease-in-out;
 }
 .triangle-text-left {
   position: absolute;
@@ -311,6 +316,7 @@ font-weight: bold; */
   border-bottom: 100px solid white; /* Use 87px to ensure an equilateral triangle */
   transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
   margin-bottom: 7px;
+  transition: border-bottom 0.25s ease-in-out;
 }
 
 /* .triangle-right:hover {
@@ -328,6 +334,7 @@ font-weight: bold; */
   
   .triangle-left.highlight {
     border-top: 100px solid var(--dark-accent);
+    animation: triangle-wave-left 1s ease-in-out;
   }
   
   .triangle-left.highlight2 {
@@ -340,6 +347,7 @@ font-weight: bold; */
 
   .triangle-right.highlight {
     border-bottom: 100px solid var(--dark-accent);
+    animation: triangle-wave-right 1s ease-in-out;
   }
 
   .triangle-right.highlight2 {
@@ -350,9 +358,11 @@ font-weight: bold; */
     border-bottom: 100px solid var(--med-accent);
   }
 
+/* triangle-wave-left/right animation defined in GameTutorial.css */
+
   .highlight-game {
     font-weight: bold;
-    color: white; /* Yellow */
+    color: black; /* Yellow */
   }
 
 .custom-alert {
@@ -665,7 +675,7 @@ font-weight: bold; */
 }
 
 .score-wrap-shake {
-  animation: b-shake .3s ease-in-out;
+  animation: b-shake .5s ease-in-out;
 }
 
 @keyframes b-shake {

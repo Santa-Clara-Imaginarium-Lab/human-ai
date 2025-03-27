@@ -404,6 +404,7 @@
     border-top: 100px solid white; /* Use 87px to ensure an equilateral triangle */
     transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
     margin-bottom: 7px;
+    transition: border-top 0.25s ease-in-out;
   }
 
   .top {
@@ -423,6 +424,7 @@
     border-bottom: 100px solid white; /* Use 87px to ensure an equilateral triangle */
     transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
     margin-bottom: 7px;
+    transition: border-bottom 0.25s ease-in-out;
   }
 
   .bottom {
@@ -510,6 +512,7 @@
 
   .tutorial-triangle-left.highlight1 {
     border-top: 100px solid var(--dark-accent);
+    animation: triangle-wave-left 2s ease-in-out;
   }
   
   .tutorial-triangle-left.highlight2 {
@@ -522,6 +525,7 @@
 
   .tutorial-triangle-right.highlight1 {
     border-bottom: 100px solid var(--dark-accent);
+    animation: triangle-wave-right 2s ease-in-out;
   }
 
   .tutorial-triangle-right.highlight2 {
@@ -532,6 +536,36 @@
     border-bottom: 100px solid var(--med-accent);
   }
 
+  @keyframes triangle-wave-left {
+    0% {
+      transform: translateX(0em) rotate(90deg);
+    }
+    30% {
+      transform: translateX(-0.2em) rotate(90deg);
+    }
+    70% {
+      transform: translateX(0.2em) rotate(90deg);
+    }
+    100% {
+      transform: translateX(0em) rotate(90deg);
+    }
+  }
+
+  @keyframes triangle-wave-right {
+    0% {
+      transform: translateX(0em) rotate(90deg);
+    }
+    30% {
+      transform: translateX(0.2em) rotate(90deg);
+    }
+    70% {
+      transform: translateX(-0.2em) rotate(90deg);
+    }
+    100% {
+      transform: translateX(0em) rotate(90deg);
+    }
+  }
+
   .ai-defect-desc {
     position: relative;
     left: -120px; 
@@ -540,6 +574,7 @@
     display: inline-block; 
     transform: rotate(225deg);  
     transform-origin: center; 
+    color: white;
   }
 
 .ai-cooperate-desc {
@@ -550,6 +585,7 @@
   display: inline-block; 
   transform: rotate(225deg);  
   transform-origin: center; 
+  color: white;
 
   /* OLD!!! 
   position: absolute;
@@ -563,7 +599,7 @@
 }
 
 .ai-defect-desc.highlight, .ai-cooperate-desc.highlight, .user-defect-desc.highlight, .user-cooperate-desc.highlight{
-  color: white;
+  color: black;
 }
 
 .user-defect-desc {
@@ -574,6 +610,7 @@
   display: inline-block; 
   transform: rotate(315deg);  
   transform-origin: center; 
+  color: white;
 
 /*   OLD!!!
   position: absolute;
@@ -594,6 +631,7 @@
   display: inline-block; 
   transform: rotate(315deg);  
   transform-origin: center; 
+  color: white;
 
   /* OLD!!! 
 position: absolute;

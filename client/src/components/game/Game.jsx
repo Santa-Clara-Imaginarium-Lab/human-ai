@@ -247,26 +247,39 @@ function Game() {
     // Update user's decision    
     setUserDecision(decision);
     console.log(decision);
+
+    // Prepare description highlighting dictionary
+    let newDescHighlight = {
+      userCooperate: false,
+      userDefect: false,
+      aiCooperate: false,
+      aiDefect: false,
+    };
+
     switch (decision) {
       case 'Cooperate':
         setSelectedDecisionTriangles(['t1', 't2', 't3', 't5']); 
         coopButtonRef.current.classList.add('selected');
         defectButtonRef.current.classList.remove('selected');
+        newDescHighlight.userCooperate = true;
         if (!isFirstDecision) { 
           const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
           sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
         }
         setisFirstDecision(false);
+        setHighlightedDesc(newDescHighlight);
         break;
       case 'Defect':
         setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
         coopButtonRef.current.classList.remove('selected');
         defectButtonRef.current.classList.add('selected');
+        newDescHighlight.userDefect = true;
         if (!isFirstDecision) { 
           const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
           sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
         }
         setisFirstDecision(false);
+        setHighlightedDesc(newDescHighlight);
         break;
     }
   };  

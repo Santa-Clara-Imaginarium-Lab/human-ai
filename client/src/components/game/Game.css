@@ -704,9 +704,9 @@ font-weight: bold; */
 
 .container.game {
 
-  background-image: url('../../public/pd-diamond-black.svg');
+  background-image: url('../../public/pd-diamonds/pd-diamond-down.svg');
   background-color: red; /* red with 50% opacity */
-  background-blend-mode: hue;
+  background-blend-mode: lighten;
 
   background-size: 5%;
   animation: moveIt 60s linear infinite;

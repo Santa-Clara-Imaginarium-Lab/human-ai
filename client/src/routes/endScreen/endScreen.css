@@ -226,7 +226,7 @@
     justify-content: center;
     align-items: center;
     background-color: var(--accent-four);
-    color: var(--c2);
+    color: var(--black);
     font-size: 24px;
     border-radius: 15px;
 }
@@ -257,6 +257,11 @@
     top: 8px; /* Moves down to align with grid gap */
 
     /* left is set inline */
+}
+
+.legend {
+    width: 35%;
+    font-weight: bold;
 }
 
 .yes-button, .no-button {

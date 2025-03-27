@@ -115,7 +115,7 @@ const EndScreen = () => {
                             <div className="grid-container">
                                 {allChoices.map((choice, index) => (
                                     <div className={`cell ${choice === 'X' ? 'unplayed' : ''}`} key={index}>
-                                        {choice === 'X' ? '✖' : choice}
+                                        {choice === 'Cooperate' ? "S" : choice === 'Defect' ? "W" : choice === 'X' ? '✖' : choice}
                                     </div>
                                 ))}
                                 {/* Vertical dividers */}
@@ -126,6 +126,9 @@ const EndScreen = () => {
                                 {/* Horizontal divider */}
                                 <div className="horizontal-divider"></div>
                             </div>
+                        </div>
+                        <div className="legend">
+                        <p>S = Shared<br/>W = Withheld<br/>X = Not Played</p>
                         </div>
                     </div>
                 </div>

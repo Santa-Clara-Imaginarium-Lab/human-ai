@@ -471,7 +471,7 @@ function GameTutorial() {
   };
 
   return (
-    <div className="container game-tutorial">
+    <div className={`container game-tutorial ${sessionStorage.getItem('LDM') === "on" ? 'ldm' : null}`}>
       <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
         <p>FREE PLAY Active. Your data is not being recorded.</p>
       </div>

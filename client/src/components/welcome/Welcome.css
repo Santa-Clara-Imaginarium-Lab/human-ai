@@ -423,7 +423,7 @@ main {
   left: 25%;
   background-color: var(--button-one);
   color: white;
-  transition: all 0.05s ease-in-out;
+  transition: all 0.1s ease-in-out;
   z-index: 1;
 }
 
@@ -440,7 +440,7 @@ main {
   left: -25%;
   background-color: var(--accent-three);
   color: white;
-  transition: all 0.05s ease-in-out;
+  transition: all 0.1s ease-in-out;
   z-index: 1;
 }
 

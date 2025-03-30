@@ -457,7 +457,7 @@ function Game() {
   }, [chatId]);
 
   return (
-    <div className="container game">
+    <div className={`container game ${sessionStorage.getItem('LDM') === "on" ? 'ldm' : null}`}>
       <div className="game-content">
 
       <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 

@@ -238,7 +238,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
       }
 
     return (
-        <div className="container welcome">
+        <div className={`container welcome`}>
             <div className="polygon"></div>
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Co-op</h1>
@@ -297,7 +297,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
                 </div>
                 <br/>
                 <div className="ldm-description">
-                    <p>Low Detail Mode removes all animations and transitions from the experience.</p>
+                    <p>Low Detail Mode removes all animations and transitions from the game pages.</p>
                 </div>
                     
 

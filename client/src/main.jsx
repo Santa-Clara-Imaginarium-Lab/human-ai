@@ -216,7 +216,7 @@ function MainApp() {
         },   
         {
           path: "/tutorial",
-          element: <Tutorial />,
+          element: <Tutorial className={`${sessionStorage.getItem('LDM') === "on" ? "ldm" : null}`}  />,
         },
         {
           path: "/game-tutorial",

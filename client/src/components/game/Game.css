@@ -666,11 +666,14 @@ font-weight: bold; */
 }
 
 @keyframes wave {
-  0%, 100% {
+  0% {
     transform: translateY(0);
   }
   50% {
     transform: translateY(-0.1em);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 
@@ -680,13 +683,85 @@ font-weight: bold; */
 
 @keyframes b-shake {
   0% { transform: scale(1.0) rotate(0deg); }
-  20% { transform: scale(1.75) rotate(-18deg); }
-  40% { transform: scale(0.7) rotate(18deg); }
+  20% { transform: scale(1.75) rotate(-15deg); }
+  40% { transform: scale(0.7) rotate(15deg); }
   60% { transform: scale(1.5) rotate(-9deg); }
   80% { transform: scale(0.85) rotate(9deg); }
   100% { transform: scale(1.0) rotate(0deg); }
 }
 /* HELP JIMBO FROM BALATRO IS INFILTRATING THE INNER GAME DEV INSIDE ME */
+
+
+.ai-temp-decision {
+  text-align: left;
+  position: fixed;
+  left: 0%;
+  top: -75%;
+  font-size: 36px;
+}
+
+.user-temp-decision {
+  text-align: right;
+  position: fixed;
+  right: 0%;
+  top: -75%;
+  font-size: 36px;
+}
+
+.ai-final-decision {
+  text-align: left;
+  position: fixed;
+  left: 0%;
+  top: -75%;
+  animation: b-shake .5s ease-in-out;
+}
+
+.user-final-decision {
+  text-align: right;
+  position: fixed;
+  right: 0%;
+  top: -75%;
+  animation: b-shake .5s ease-in-out;
+}
+
+.ai-final-decision span, .user-final-decision span {
+  font-size: 36px;
+  font-weight: bold;
+  display: inline-block; 
+  animation: wave 2s ease-in-out infinite;
+}
+
+.ai-final-decision span:nth-child(1), .user-final-decision span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.ai-final-decision span:nth-child(2), .user-final-decision span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.ai-final-decision span:nth-child(3), .user-final-decision span:nth-child(3) {
+  animation-delay: 0.5s;
+} 
+
+.ai-final-decision span:nth-child(4), .user-final-decision span:nth-child(4) {
+  animation-delay: 0.75s;
+} 
+
+.ai-final-decision span:nth-child(5), .user-final-decision span:nth-child(5) {
+  animation-delay: 1s;
+} 
+
+.ai-final-decision span:nth-child(6), .user-final-decision span:nth-child(6) {
+  animation-delay: 1.25s;
+} 
+
+.ai-final-decision span:nth-child(7), .user-final-decision span:nth-child(7) {
+  animation-delay: 1.5s;
+} 
+
+.ai-final-decision span:nth-child(8), .user-final-decision span:nth-child(8) {
+  animation-delay: 1.75s;
+} 
 
 #ai-score {
   border-right: 2px solid black;

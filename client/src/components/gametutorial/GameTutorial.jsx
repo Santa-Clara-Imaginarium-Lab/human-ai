@@ -295,6 +295,7 @@ function GameTutorial() {
           reEnableClick = false;
           setCanPlay(true);
           setDecisionMade('');
+          setUserDecision('');
           setHighlightedTriangles([]);
           setSelectedDecisionTriangles([]);
           setTooltipIndex(18);
@@ -672,6 +673,20 @@ function GameTutorial() {
                 <span key={index} >{digit}</span>
               ))}</div>
             </div>
+            {isComplete ? <div className="ai-final-decision">
+              {aiDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="ai-temp-decision">Deciding...</div>}
+            {isComplete ? <div className="user-final-decision">
+              {userDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="user-temp-decision">{userDecision === "Defect" ? "Withhold?" : userDecision === "Cooperate" ? "Share?" : "Deciding..."}</div>}
             <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score"><div className={isComplete ? `score-wrap-shake` : ''}>{
               userScore && userScore.toString().split('').map((digit, index) => (
                 <span key={index}>{digit}</span>

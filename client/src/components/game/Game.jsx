@@ -219,6 +219,8 @@ function Game() {
   }); // Manage description highlighting
   const MAX_ROUNDS = parseInt(sessionStorage.getItem('maxRounds')); // Total number of rounds
   const [isRoundOver, setIsRoundOver] = useState(false); // Track if the game is over
+  const [isUserLocked, setIsUserLocked] = useState(false);
+  const [isScoresLocked, setIsScoresLocked] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);  
   const coopButtonRef = useRef(null);
   const defectButtonRef = useRef(null);
@@ -295,6 +297,8 @@ function Game() {
       }, 3000);
       return;
     }
+
+    setIsUserLocked(true);
 
     const aiChoice = await getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
@@ -414,6 +418,10 @@ function Game() {
 
       console.log(JSON.parse(sessionStorage.getItem(`gameLog${botNum}`)));
     }
+
+    setTimeout(() => {
+      setIsScoresLocked(true);
+    }, 1000);
   };
 
   const handleNavigation = () => {
@@ -645,12 +653,26 @@ function Game() {
           </button>
           <div id="scoreboard" className='scoreboard'>
             <div className="trapezoid ai-trapezoid">AI</div>
-            <div className="score" id="ai-score"><div className={isRoundOver ? `score-wrap-shake` : ''}>{
+            <div className="score" id="ai-score"><div className={isScoresLocked ? `score-wrap-shake` : ''}>{
               aiScore && aiScore.toString().split('').map((digit, index) => (
                 <span key={index}>{digit}</span>
               ))}</div>
             </div>
-            <div className="score" id="user-score"><div className={isRoundOver ? `score-wrap-shake` : ''}>{
+            {isRoundOver ? <div className="ai-final-decision">
+              {aiDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="ai-temp-decision">Deciding...</div>}
+            {isUserLocked ? <div className="user-final-decision">
+              {userDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="user-temp-decision">{userDecision === "Defect" ? "Withhold?" : userDecision === "Cooperate" ? "Share?" : "Deciding..."}</div>}
+            <div className="score" id="user-score"><div className={isScoresLocked ? `score-wrap-shake` : ''}>{
               userScore && userScore.toString().split('').map((digit, index) => (
                 <span key={index}>{digit}</span>
               ))}</div>

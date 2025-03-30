@@ -254,7 +254,7 @@ function GameTutorial() {
           break;
         case (1):
           setTutorialText1a(null);
-          setTutorialText1b(TEXT_INITIAL_1b);
+          setTutorialText1b(TEXT_INITIAL_1c);
           setFocusTutorialTextA(TEXT_INITIAL_CCa);
           setFocusTutorialTextB(TEXT_INITIAL_CCb);
           break;

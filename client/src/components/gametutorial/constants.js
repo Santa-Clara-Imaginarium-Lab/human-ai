@@ -1,6 +1,6 @@
 // Initial Texts
 export const TEXT_INITIAL_1a = `
-  Each day at Caboodle, you and the AI Agent choose to SHARE data or WITHHOLD data.
+  Each day at Caboodle, you and the AI Agent choose to SHARE data or WITHHOLD investment data.
 `;
 export const TEXT_INITIAL_1b = `There are four possibilities per day.
 `;
@@ -9,25 +9,25 @@ export const TEXT_INITIAL_1c = `Here are the possible scenarios at Caboodle.
 // export const TEXT_INITIAL_1c = `The diagram will update with Caboodle currency based on what you and the AI Agent do.
 // `;
 
-export const TEXT_INITIAL_CCa = `If you BOTH SHARE data, investments are optimized, and profits increase steadily. 
+export const TEXT_INITIAL_CCa = `1. If you BOTH SHARE data, investments are optimized, and profits increase steadily. 
 `;
 
 export const TEXT_INITIAL_CCb = `You both earn +3 Caboodle.
 `;
 
-export const TEXT_INITIAL_WCa = `If YOU WITHOLD data and the AI SHARES data, you will gain a personal boost in profit. 
+export const TEXT_INITIAL_WCa = `2. If YOU WITHOLD data and the AI SHARES data, you will gain a personal boost in profit. 
 `;
 
 export const TEXT_INITIAL_WCb = `You earn +5 Caboodle, while the AI earns +0 Caboodle.
 `;
 
-export const TEXT_INITIAL_CWa = `If YOU SHARE data and the AI WITHHOLDS data, the AI will gain a personal boost in profit. 
+export const TEXT_INITIAL_CWa = `3. If YOU SHARE data and the AI WITHHOLDS data, the AI will gain a personal boost in profit. 
 `;
 
 export const TEXT_INITIAL_CWb = `You earn +0 Caboodle, while the AI earns +5 Caboodle.
 `;
 
-export const TEXT_INITIAL_WWa = `If you BOTH WITHHOLD data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. 
+export const TEXT_INITIAL_WWa = `4. If you BOTH WITHHOLD data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. 
 `;
 
 export const TEXT_INITIAL_WWb = `You both earn +1 Caboodle.

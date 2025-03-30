@@ -13,9 +13,9 @@ function Pregame() {
     const [btuGo, setBtuGo] = useState(false);
 
     const terms =[
-        "We have finished the tutorial.",
-        "You will now experience up to 5 days at Caboodle with the AI.",
-        "You have the option to chat with the AI Agent if you would like to understand their strategy, but it is not required.",
+        "You are now prepared for your job at Caboodle.",
+        "Now, you will experience up to 5 days at Caboodle with the AI.",
+        "Each day, you have the option to chat with the AI Agent to understand their strategy, but it is not required.",
         "Please go through your job with intent. We are excited to see your results!"
     ];
 

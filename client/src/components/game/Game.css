@@ -200,6 +200,10 @@ font-weight: bold; */
     font-size: 3em;
   }
 
+  .break-text {
+    font-size: 1.2em;
+  }
+
   #help-button {
     position: relative;
     margin: 0px;

@@ -480,14 +480,15 @@ function Game() {
         }
 
         <div>
-          <h1 className="day-counter">Day {currentRound}</h1>
+          <h1 className="day-counter">{isGameOver ? "End of the Week!" : isRoundOver ? (`Day ${currentRound - 1} Results`) : (`Day ${currentRound}`)}</h1>
+          {isGameOver && MAX_ROUNDS < 5 && <p className="break-text">Congratulations! You have been given an early break at Caboodle!<br/>Your work week finished {5 - MAX_ROUNDS} {5 - MAX_ROUNDS === 1 ? "day" : "days"} early.</p>}
         </div>
 
-        <div>
+        {!isRoundOver && <div>
           <button id="help-button" className="help-button" onClick={getHelp}>
             Need Help?
           </button>
-        </div>
+        </div>}
 
         {showCustomAlert && <div className="custom-alert">
             <div className="custom-alert-content">

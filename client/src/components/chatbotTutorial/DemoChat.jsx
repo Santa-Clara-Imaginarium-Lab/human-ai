@@ -17,7 +17,7 @@ function DemoChat() {
     "This is one of the AI's responses", 
     "This is one of your messages", 
     "Send message (or press ENTER)", 
-    "Start the decision phase"
+    "Go back to making your decision",
   ];
 
   useEffect(() => { // Navigate to dashboard after last tooltip
@@ -135,7 +135,7 @@ function DemoChat() {
             className="chat-input"
           />
           <button className={`send-button ${(tooltipIndex === 2 ? ' show' : '')}`} demo-data-tooltip={tooltipIndex === 2 ? tooltips[2] : null} disabled>Send</button>
-          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} demo-data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Go to Game</button>
+          <button className={`send-button ${(tooltipIndex === 3 ? ' show' : '')}`} demo-data-tooltip={tooltipIndex === 3 ? tooltips[3] : null} disabled>Exit Chat</button>
         </div>
       </div>
     </div>

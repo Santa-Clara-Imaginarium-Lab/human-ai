@@ -86,7 +86,7 @@
 
 .send-button[demo-data-tooltip]::after {
   top: -2.95em;
-  left: 10px;
+  left: -40px;
 }
 
 .chat-tutorial-page-container {

@@ -21,9 +21,9 @@ function Game() {
     
     "SS": "If you <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>both share</strong></mark> data, investments are optimized, and profits increase steadily. You both earn <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>+3</strong></mark> Caboodle.<br/>",
   
-    "SW": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you share data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI withholds data</strong></mark>, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while you earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/>',
+    "SW": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you share data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI withholds data</strong></mark>, the AI will gain a personal boost in profit. You earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle, while the AI earns <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle.<br/>',
 
-    "WS": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you withhold data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI shares data</strong></mark>, you will gain a boost in profit. You will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while the AI will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/>',
+    "WS": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you withhold data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI shares data</strong></mark>, you will gain a personal boost in profit. You earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while the AI earns <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/>',
 
     "WW": 'If you <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>both withhold</strong></mark> data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+1</strong></mark> Caboodle.<br/>'
   };
@@ -505,11 +505,14 @@ function Game() {
                 <p id="helpText" className='text' dangerouslySetInnerHTML={{ __html: helpText }}></p>
                 <br/>
                 <hr style={{ borderTop: '10px solid #000000', width: '100%', margin: '20px auto' }}/>
+
                 <p  className='text'>If you need more help, you can replay the tutorial. Your current day, Caboodle, and chat history will be saved.</p>
                 
                 <button className="replay-tutorial" onClick={() => navigate("/game-tutorial", { state: { speedFlag: false, userScore: 0, aiScore: 0 } })}>Replay Tutorial</button>
 
-                <p className='text'>If you require further assistance, please email <mark style={{backgroundColor: "#bdb9c2", color: "black"}}>imaginarium.hai@gmail.com</mark> <br/>The research team actively monitors this email during business hours.</p>
+                <hr style={{ borderTop: '10px solid #000000', width: '100%', margin: '20px auto' }}/>
+
+                <p className='text'>Need further assistance? Send an email to this address: <br/> <mark style={{backgroundColor: "#bdb9c2", color: "black"}}>imaginarium.hai@gmail.com</mark> <br/>The research team actively monitors this email during business hours.</p>
             </div>
           </div>
         }

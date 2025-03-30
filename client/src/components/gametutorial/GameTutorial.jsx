@@ -679,14 +679,14 @@ function GameTutorial() {
               )) : "SHARED".split('').map((digit, index) => (
                 <span key={index}>{digit}</span>
               ))}
-            </div> : <div className="ai-temp-decision">Deciding...</div>}
+            </div> : <div className="ai-temp-decision">{tooltipIndex <= 17 ? null : "Deciding..."}</div>}
             {isComplete ? <div className="user-final-decision">
               {userDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
                 <span key={index}>{digit}</span>
               )) : "SHARED".split('').map((digit, index) => (
                 <span key={index}>{digit}</span>
               ))}
-            </div> : <div className="user-temp-decision">{userDecision === "Defect" ? "Withhold?" : userDecision === "Cooperate" ? "Share?" : "Deciding..."}</div>}
+            </div> : <div className="user-temp-decision">{tooltipIndex <= 17 ? null : userDecision === "Defect" ? "Withhold?" : userDecision === "Cooperate" ? "Share?" : "Deciding..."}</div>}
             <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score"><div className={isComplete ? `score-wrap-shake` : ''}>{
               userScore && userScore.toString().split('').map((digit, index) => (
                 <span key={index}>{digit}</span>

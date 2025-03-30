@@ -315,7 +315,7 @@ main {
 }
 
 .admin-password-input {
-  width: 80%;
+  width: 75%;
   padding: 0.5em;
   border-radius: 20px;
   /* border: 1px solid #ccc; */
@@ -324,12 +324,13 @@ main {
   font-family: var(--universal-font);
   outline: none;
   background-color: white; /* override disabled input background */
+  left: 100px;
 }
 
 .admin-show-password {
-  position: relative;
+  position: fixed;
   width: 50px;
-  transform: translate(-50px, 0%);
+  transform: translate(-50px, 75%);
   cursor: pointer;
   background-color: transparent;
   border: none;
@@ -390,4 +391,63 @@ main {
   font-style: italic;
   opacity: 0.5;
   font-size: 0.8em;
+}
+
+.ldm-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  justify-content: space-between;
+}
+
+.ldm-background {
+  background-color: var(--button-two);
+  width: 25%;
+  border-radius: 20px;
+  /* border: 1px solid #ccc; */
+  border: 0px;
+  z-index: 0;
+  align-items: left;
+}
+
+.ldm-button-on {
+  position: relative;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.2em;
+  font-family: var(--universal-font);
+  cursor: pointer;
+  width: 50%;
+  height: 100%;
+  left: 25%;
+  background-color: var(--button-one);
+  color: white;
+  transition: all 0.05s ease-in-out;
+  z-index: 1;
+}
+
+.ldm-button-off {
+  position: relative;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.2em;
+  font-family: var(--universal-font);
+  cursor: pointer;
+  width: 50%;
+  height: 100%;
+  left: -25%;
+  background-color: var(--accent-three);
+  color: white;
+  transition: all 0.05s ease-in-out;
+  z-index: 1;
+}
+
+.ldm-description {
+  width: 75%;
+  font-size: 1.2em;
+  font-family: var(--universal-font);
+  text-align: left;
+  font-style: italic;
 }

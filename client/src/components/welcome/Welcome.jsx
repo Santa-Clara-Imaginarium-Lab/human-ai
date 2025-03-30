@@ -18,6 +18,11 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const [password, setPassword] = useState('');
     const [isAdmin, setAdmin] = useState(false); 
     const [isCheckingGuest, setIsCheckingGuest] = useState(false);
+    const [ldmState, setLdmState] = useState('off');
+
+    useEffect(() => {
+        sessionStorage.setItem('LDM', 'off');        
+    }, [])
 
     const pwShowRef = useRef(null);
 
@@ -273,8 +278,34 @@ const Welcome = ({changeTheme, changePersonality}) => {
                 <div className='settings-container'>
                     <h2 className="settings-title">Settings</h2>
                     <button className="x-button" onClick={handleSettingsClose}>X</button>
+
+                <div className="ldm-wrapper">
+                    <h2>Low Detail Mode</h2>
+                    <div class="ldm-background">
+                        <button
+                            className={`${ldmState === "on" ? "ldm-button-on" : "ldm-button-off"}`}
+                            onClick={() => {
+                                const currentLDM = sessionStorage.getItem("LDM");
+                                const newLDM = currentLDM === "off" ? "on" : "off";
+                                sessionStorage.setItem("LDM", newLDM);
+                                setLdmState(newLDM);
+                            }}
+                        >
+                            {ldmState}
+                        </button>
+                    </div>
+                </div>
+                <br/>
+                <div className="ldm-description">
+                    <p>Low Detail Mode removes all animations and transitions from the experience.</p>
+                </div>
+                    
+
+
+
+                <p className="admin-header">Admin Panel</p>
+
                     <div className="admin-controls-wrapper" hidden={!isAdmin}>
-                        <p className="admin-header">Admin Panel</p>
                         <div className="admin-controls">
                         <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="color combo" />
                         <p>{`Current Color Theme: ${themeState}`}</p>

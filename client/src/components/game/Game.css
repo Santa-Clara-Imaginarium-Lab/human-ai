@@ -606,6 +606,7 @@ font-weight: bold; */
   align-items: center;
   justify-content: center;
   margin: 20px 0;
+  transform: scale(0.95);
 }
 
 .trapezoid {
@@ -806,10 +807,6 @@ font-weight: bold; */
 
   .proceed-button:active, #help-button.help-button:active, #proceed-chat.go-to-chat:active {
     transform: scale(0.9) translate(calc(0.3em * 0.9), calc(0.3em * 0.9));
-}
-
-.scoreboard {
-  transform: scale(0.95);
 }
 }
 

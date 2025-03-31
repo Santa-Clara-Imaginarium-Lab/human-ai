@@ -14,18 +14,18 @@ function Game() {
   const [errorMessage, setErrorMessage] = useState('');
   const [showCustomAlert, setShowCustomAlert] = useState(false);
 
-  const [helpText, setHelpText] = useState('<i>Click a scenario to learn more about it.</i>');
+  const [helpText, setHelpText] = useState('<i>Click a scenario to learn more about it. This text will be replaced.</i>');
   const [helpTextActive, setHelpTextActive] = useState("XX");
 
   const textWallOptions = {
     
-    "SS": "If you <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>both share</strong></mark> data, investments are optimized, and profits increase steadily. You both earn <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>+3</strong></mark> Caboodle.<br/><br/>",
+    "SS": "If you <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>both share</strong></mark> data, investments are optimized, and profits increase steadily. You both earn <mark style='background-color: white; color: rgb(178, 225, 244);'><strong>+3</strong></mark> Caboodle.<br/>",
   
-    "SW": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you share data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI withholds data</strong></mark>, the AI will gain a boost in profit. The AI will gain <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while you earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/><br/>',
+    "SW": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you share data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI withholds data</strong></mark>, the AI will gain a personal boost in profit. You earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle, while the AI earns <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle.<br/>',
 
-    "WS": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you withhold data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI shares data</strong></mark>, you will gain a boost in profit. You will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while the AI will earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/><br/>',
+    "WS": 'If <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>you withhold data</strong></mark> and the <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>AI shares data</strong></mark>, you will gain a personal boost in profit. You earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+5</strong></mark> Caboodle, while the AI earns <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+0</strong></mark> Caboodle.<br/>',
 
-    "WW": 'If you <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>both withhold</strong></mark> data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+1</strong></mark> Caboodle.'
+    "WW": 'If you <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>both withhold</strong></mark> data, market predictions become unreliable, leading to suboptimal investments and lower gains for everyone. You will both earn <mark style="background-color: white; color: rgb(178, 225, 244);"><strong>+1</strong></mark> Caboodle.<br/>'
   };
 
 
@@ -219,6 +219,8 @@ function Game() {
   }); // Manage description highlighting
   const MAX_ROUNDS = parseInt(sessionStorage.getItem('maxRounds')); // Total number of rounds
   const [isRoundOver, setIsRoundOver] = useState(false); // Track if the game is over
+  const [isUserLocked, setIsUserLocked] = useState(false);
+  const [isScoresLocked, setIsScoresLocked] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);  
   const coopButtonRef = useRef(null);
   const defectButtonRef = useRef(null);
@@ -240,38 +242,49 @@ function Game() {
     if (userDecision == decision)
       return;
 
+    // Do nothing if clicked on round over
+    if (isRoundOver)
+      return;
+
     // Update user's decision    
     setUserDecision(decision);
     console.log(decision);
+
+    // Prepare description highlighting dictionary
+    let newDescHighlight = {
+      userCooperate: false,
+      userDefect: false,
+      aiCooperate: false,
+      aiDefect: false,
+    };
+
     switch (decision) {
       case 'Cooperate':
+        setSelectedDecisionTriangles(['t1', 't2', 't3', 't5']); 
         coopButtonRef.current.classList.add('selected');
         defectButtonRef.current.classList.remove('selected');
+        newDescHighlight.userCooperate = true;
         if (!isFirstDecision) { 
           const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
           sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
         }
         setisFirstDecision(false);
+        setHighlightedDesc(newDescHighlight);
         break;
       case 'Defect':
+        setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
         coopButtonRef.current.classList.remove('selected');
         defectButtonRef.current.classList.add('selected');
+        newDescHighlight.userDefect = true;
         if (!isFirstDecision) { 
           const changeDecision = parseInt(sessionStorage.getItem('numChangeDescisions'));
           sessionStorage.setItem('numChangeDescisions', changeDecision + 1);
         }
         setisFirstDecision(false);
+        setHighlightedDesc(newDescHighlight);
         break;
     }
   };  
-
-  const handleShareClick = () => {
-    setSelectedDecisionTriangles(['t1', 't2', 't3', 't5']); 
-  };
-
-  const handleWithholdClick = () => {
-    setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
-  };
 
   const handleLockIn = async () => {
     setSelectedDecisionTriangles([]);
@@ -285,8 +298,12 @@ function Game() {
       return;
     }
 
+    setIsUserLocked(true);
+
     const aiChoice = await getAiResponse(); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
+
+    setIsRoundOver(true);
 
     addChoices(aiChoice, userDecision);
 
@@ -392,9 +409,7 @@ function Game() {
     setHighlightedTriangles(highlightTriangles);
     setTriangleNumbers(numbers);
     setHighlightedDesc(newDescHighlight);
-
-    setIsRoundOver(true);
-
+    
     // Move to the next round or end the game
     if (sessionStorage.getItem('currentRound') > MAX_ROUNDS) {
       setIsGameOver(true); // Mark the game as over
@@ -403,10 +418,10 @@ function Game() {
 
       console.log(JSON.parse(sessionStorage.getItem(`gameLog${botNum}`)));
     }
-  };
 
-  const reset = () => {
-    print("reset round");
+    setTimeout(() => {
+      setIsScoresLocked(true);
+    }, 1000);
   };
 
   const handleNavigation = () => {
@@ -450,7 +465,7 @@ function Game() {
   }, [chatId]);
 
   return (
-    <div className="container game">
+    <div className={`container game ${sessionStorage.getItem('LDM') === "on" ? 'ldm' : null}`}>
       <div className="game-content">
 
       <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
@@ -463,12 +478,17 @@ function Game() {
             <div className={`round-transitioner-underline ${rtuGo ? 'round-underline-go' : ''}`}/>
           </div>
         }
-    
+
         <div>
-          <button id="help-button" className="help-button" onClick={getHelp}>
-            ?
-          </button>
+          <h1 className="day-counter">{isGameOver ? "End of the Week!" : isRoundOver ? (`Day ${currentRound - 1} Results`) : (`Day ${currentRound}`)}</h1>
+          {isGameOver && MAX_ROUNDS < 5 && <p className="break-text">Congratulations! You have been given an early break at Caboodle!<br/>Your work week finished {5 - MAX_ROUNDS} {5 - MAX_ROUNDS === 1 ? "day" : "days"} early.</p>}
         </div>
+
+        {!isRoundOver && <div>
+          <button id="help-button" className="help-button" onClick={getHelp}>
+            Need Help?
+          </button>
+        </div>}
 
         {showCustomAlert && <div className="custom-alert">
             <div className="custom-alert-content">
@@ -484,9 +504,15 @@ function Game() {
                 <br/>
                 <p id="helpText" className='text' dangerouslySetInnerHTML={{ __html: helpText }}></p>
                 <br/>
+                <hr style={{ borderTop: '10px solid #000000', width: '100%', margin: '20px auto' }}/>
+
                 <p  className='text'>If you need more help, you can replay the tutorial. Your current day, Caboodle, and chat history will be saved.</p>
                 
                 <button className="replay-tutorial" onClick={() => navigate("/game-tutorial", { state: { speedFlag: false, userScore: 0, aiScore: 0 } })}>Replay Tutorial</button>
+
+                <hr style={{ borderTop: '10px solid #000000', width: '100%', margin: '20px auto' }}/>
+
+                <p className='text'>Need further assistance? Send an email to this address: <br/> <mark style={{backgroundColor: "#bdb9c2", color: "black"}}>imaginarium.hai@gmail.com</mark> <br/>The research team actively monitors this email during business hours.</p>
             </div>
           </div>
         }
@@ -500,7 +526,7 @@ function Game() {
             <p className="score-change ai-change"></p>
             <h2>AI's Score: <span className="score-value">{aiScore}</span></h2>
             <p>AI chose: <span>{aiDecision}</span></p> */}
-            <button className="proceed-button" ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+            <button className={`proceed-button cooperate ${(isRoundOver && userDecision === "Defect") ? 'hidden' : ''}`} ref={coopButtonRef} onClick={() => {handleUserDecision('Cooperate');}}>
               SHARE
               <div>(cooperate)</div>
             </button>
@@ -614,7 +640,7 @@ function Game() {
             </div>
             <h2>Your Score: <span className="score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p> */}
-            <button className="proceed-button" ref={defectButtonRef} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+            <button className={`proceed-button defect ${(isRoundOver && userDecision === "Cooperate") ? 'hidden' : ''}`} ref={defectButtonRef} onClick={() => {handleUserDecision('Defect');}}>
               WITHHOLD
               <div>(defect)</div>
             </button>
@@ -631,8 +657,30 @@ function Game() {
           </button>
           <div id="scoreboard" className='scoreboard'>
             <div className="trapezoid ai-trapezoid">AI</div>
-            <div className="score" id="ai-score">{aiScore}</div>
-            <div className="score" id="user-score">{userScore}</div>
+            <div className="score" id="ai-score"><div className={isScoresLocked ? `score-wrap-shake` : ''}>{
+              aiScore && aiScore.toString().split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}</div>
+            </div>
+            {isRoundOver ? <div className="ai-final-decision">
+              {aiDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="ai-temp-decision">Deciding...</div>}
+            {isUserLocked ? <div className="user-final-decision">
+              {userDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="user-temp-decision">{userDecision === "Defect" ? "Withhold?" : userDecision === "Cooperate" ? "Share?" : "Deciding..."}</div>}
+            <div className="score" id="user-score"><div className={isScoresLocked ? `score-wrap-shake` : ''}>{
+              userScore && userScore.toString().split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}</div>
+            </div>
             <div className="trapezoid user-trapezoid">You</div>
           </div>
           {!isRoundOver ? (

@@ -191,7 +191,7 @@ main {
   display: none;
 }
 
-button.hidden {
+button.hide {
   display: none;
 }
 
@@ -290,44 +290,6 @@ button.hidden {
   border: 0px;
   background-color: transparent;
   z-index: 1001;
-}
-
-.admin-controls-wrapper {
-  height: 25%; 
-  width: 100%;
-}
-
-.admin-controls {
-  padding-top: 10%;
-  height: 50%; 
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.admin-header {
-  color: var(--accent-three);
-  font-size: 60px;
-  font-family: var(--universal-font);
-}
-
-.admin-password-wrapper {
-  height: 25%; 
-  width: 100%;
-}
-
-.admin-password-input {
-  width: 80%;
-  padding: 0.5em;
-  border-radius: 20px;
-  /* border: 1px solid #ccc; */
-  border: 0px;
-  font-size: 1.2em;
-  font-family: var(--universal-font);
-  outline: none;
-  background-color: white; /* override disabled input background */
 }
 
 .announce-text {

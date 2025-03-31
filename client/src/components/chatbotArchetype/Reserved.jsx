@@ -67,9 +67,9 @@ const Reserved = () => {
                         <div className="bottom-half">
                             <div className="choices">
                                 <div className="choice-header">
-                                    <p>Cooperate</p>
+                                    <p>Share</p>
                                     <div className="vertical-divider1" style={{ left: "18.5%" }}></div>
-                                    <p>Defect</p>
+                                    <p>Withhold</p>
                                 </div>
                                 <div className="rounds">
                                     {aiChoices.map((choice, index) => (

@@ -18,6 +18,11 @@ const Welcome = ({changeTheme, changePersonality}) => {
     const [password, setPassword] = useState('');
     const [isAdmin, setAdmin] = useState(false); 
     const [isCheckingGuest, setIsCheckingGuest] = useState(false);
+    const [ldmState, setLdmState] = useState('off');
+
+    useEffect(() => {
+        sessionStorage.setItem('LDM', 'off');        
+    }, [])
 
     const pwShowRef = useRef(null);
 
@@ -233,7 +238,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
       }
 
     return (
-        <div className="container welcome">
+        <div className={`container welcome`}>
             <div className="polygon"></div>
             <h1 className="welcome-title top-text"><span>Chatbot</span></h1>
             <h1 className="welcome-title bottom-text">Co-op</h1>
@@ -273,8 +278,34 @@ const Welcome = ({changeTheme, changePersonality}) => {
                 <div className='settings-container'>
                     <h2 className="settings-title">Settings</h2>
                     <button className="x-button" onClick={handleSettingsClose}>X</button>
+
+                <div className="ldm-wrapper">
+                    <h2>Low Detail Mode</h2>
+                    <div class="ldm-background">
+                        <button
+                            className={`${ldmState === "on" ? "ldm-button-on" : "ldm-button-off"}`}
+                            onClick={() => {
+                                const currentLDM = sessionStorage.getItem("LDM");
+                                const newLDM = currentLDM === "off" ? "on" : "off";
+                                sessionStorage.setItem("LDM", newLDM);
+                                setLdmState(newLDM);
+                            }}
+                        >
+                            {ldmState}
+                        </button>
+                    </div>
+                </div>
+                <br/>
+                <div className="ldm-description">
+                    <p>Low Detail Mode removes all animations and transitions from the game pages.</p>
+                </div>
+                    
+
+
+
+                <p className="admin-header">Admin Panel</p>
+
                     <div className="admin-controls-wrapper" hidden={!isAdmin}>
-                        <p className="admin-header">Admin Panel</p>
                         <div className="admin-controls">
                         <input type="text" className="theme-input" onKeyDown={handleEnter} placeholder="color combo" />
                         <p>{`Current Color Theme: ${themeState}`}</p>
@@ -300,7 +331,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
             <h1 className={isCheckingGuest ? 'welcome-info-can' : 'welcome-info-hide'}>{isCheckingGuest ? 'Server is booting up... Please Wait!' : ' '}</h1>
             <div className="version-display">
                 <p>
-                v1.0.0 Open Beta
+                v1.1.0 official
                 </p>
             </div>
         </div>

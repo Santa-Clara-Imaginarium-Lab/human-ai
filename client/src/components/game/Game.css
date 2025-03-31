@@ -20,6 +20,7 @@
     display: inline-block; 
     transform: rotate(225deg);  
     transform-origin: center; 
+    color: white;
   }
 
 .ai-cooperate-label {
@@ -30,6 +31,7 @@
   display: inline-block; 
   transform: rotate(225deg);  
   transform-origin: center; 
+  color: white;
 
   /* OLD!!! 
   position: absolute;
@@ -50,6 +52,7 @@
   display: inline-block; 
   transform: rotate(315deg);  
   transform-origin: center; 
+  color: white;
 
 /*   OLD!!!
   position: absolute;
@@ -70,6 +73,7 @@
   display: inline-block; 
   transform: rotate(315deg);  
   transform-origin: center; 
+  color: white;
 
   /* OLD!!! 
 position: absolute;
@@ -156,12 +160,13 @@ font-weight: bold; */
     cursor: pointer;
     box-shadow: 0.3em 0.3em 0 0 var(--button-two);
     font-family: var(--universal-font);
+    transition: all 0.05s ease-in-out;
   }
 
   .proceed-button:active {
     /* Simulate the button being pressed */
     transform: translate(0.3em, 0.3em); /* Move the button down */
-    box-shadow: 0em 0em 0 0; /* Reduce shadow size */
+    box-shadow: 0em 0em 0 0 !important; /* Reduce shadow size */
   }
 
   .next-buttons-container {
@@ -183,36 +188,45 @@ font-weight: bold; */
     left: 10px;
     bottom: 10px; */
     transform-origin: top right;
+    transition: all 0.05s ease-in-out;
   }
 
-  .next-buttons:active {
+  .next-buttons:not(.lockin-disabled):active {
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
+  .day-counter {
+    font-size: 3em;
+  }
+
+  .break-text {
+    font-size: 1.2em;
+  }
+
   #help-button {
-    position: absolute;
-    margin: 100px;
-    top: 10px;
-    left: 10px;
+    position: relative;
+    margin: 0px;
+    top: 0px;
+    left: 0px;
     background-color: var(--accent-three);
     color: white;
     border: none;
     border-radius: 20px;
     padding: 0.5em 1.5em;
-    font-size: 2.2em;
+    font-size: 1.4em;
     cursor: pointer;
     box-shadow: 0.3em 0.3em 0 0 var(--button-two);
     font-family: var(--universal-font);
   }
   
-  #help-button:active, #proceed-chat:active {
+  #help-button:active, #proceed-chat:active:not(lockin-disabled) {
     transform: translate(0.3em, 0.3em); /* Move the button down */
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
   #proceed-chat {
-    margin: 0px 100px 20px 0px;
+    margin: 0px 75px 20px 0px;
     background-color: var(--accent-three);
     color: white;
     border: none;
@@ -226,13 +240,24 @@ font-weight: bold; */
     right: 10px;
     bottom: 10px; */
     transform-origin: top right;
+    transition: transform 0.05s ease-in-out;
 }
 
-.selected {
+.proceed-button.defect.selected {
+  margin: 55px;
   background-color: var(--med-accent);
   box-shadow: 0.3em 0.3em 0 0 black;
+  animation: selected-1 10s ease-in-out infinite both;
 }
 
+.proceed-button.cooperate.selected {
+  margin: 55px;
+  background-color: var(--med-accent);
+  box-shadow: 0.3em 0.3em 0 0 black;
+  animation: selected-2 10s ease-in-out infinite both;
+}
+
+/* animation in GameTutorial.css */
 
 .next-round-button {
   margin: 100px;
@@ -252,6 +277,7 @@ font-weight: bold; */
     cursor: pointer;
     box-shadow: 0.3em 0.3em 0 0 var(--button-two);
     font-family: var(--universal-font);
+    transition: all 0.05s ease-in-out;
   }
 
   .help-button:active {
@@ -269,6 +295,7 @@ font-weight: bold; */
   transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
   margin-bottom: 7px;
   position: relative;
+  transition: border-top 0.25s ease-in-out;
 }
 .triangle-text-left {
   position: absolute;
@@ -293,19 +320,15 @@ font-weight: bold; */
   border-bottom: 100px solid white; /* Use 87px to ensure an equilateral triangle */
   transform: rotate(90deg); /* Rotate to make hypotenuse vertical */
   margin-bottom: 7px;
+  transition: border-bottom 0.25s ease-in-out;
 }
 
 /* .triangle-right:hover {
   border-bottom: 100px solid var(--button-one);
 } */
 
-.column-1, .column-2, .column-3, .column-4 {
+.column-1, .column-2, .column-3, .column-4, .column-5 {
   width: 105px;
-  display: inline-block;
-}
-
-.column-5 {
-  width: 100px;
   display: inline-block;
 }
 
@@ -315,6 +338,7 @@ font-weight: bold; */
   
   .triangle-left.highlight {
     border-top: 100px solid var(--dark-accent);
+    animation: triangle-wave-left 1s ease-in-out;
   }
   
   .triangle-left.highlight2 {
@@ -327,6 +351,7 @@ font-weight: bold; */
 
   .triangle-right.highlight {
     border-bottom: 100px solid var(--dark-accent);
+    animation: triangle-wave-right 1s ease-in-out;
   }
 
   .triangle-right.highlight2 {
@@ -337,9 +362,11 @@ font-weight: bold; */
     border-bottom: 100px solid var(--med-accent);
   }
 
+/* triangle-wave-left/right animation defined in GameTutorial.css */
+
   .highlight-game {
     font-weight: bold;
-    color: white; /* Yellow */
+    color: black; /* Yellow */
   }
 
 .custom-alert {
@@ -362,7 +389,7 @@ font-weight: bold; */
   margin: auto;
   padding: 100px;
   border: 1px solid #888;
-  max-width: 50vw;
+  max-width: 60vw;
   width: 90%;
   max-height: 95vh;
   overflow-y: auto;
@@ -529,7 +556,9 @@ font-weight: bold; */
   cursor: pointer;
   box-shadow: 0.3em 0.3em 0 0 black;
   font-family: var(--universal-font);
+  transition: all 0.05s ease-in-out;
 }
+
 .help-case:active {
   /* Simulate the button being pressed */
   transform: translate(0.3em, 0.3em); /* Move the button down */
@@ -555,6 +584,7 @@ font-weight: bold; */
   cursor: pointer;
   box-shadow: 0.3em 0.3em 0 0 black;
   font-family: var(--universal-font);
+  transition: all 0.05s ease-in-out;
 }
 
 .replay-tutorial:active {
@@ -619,7 +649,123 @@ font-weight: bold; */
   font-weight: bold;
   border: 2px solid black;
   text-align: center;
+  display: inline-block;
 }
+
+.score-wrap-shake span {
+  display: inline-block; 
+  animation: wave 2s ease-in-out infinite;
+}
+
+.score span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.score span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.score span:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.1em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.score-wrap-shake {
+  animation: b-shake .5s ease-in-out;
+}
+
+@keyframes b-shake {
+  0% { transform: scale(1.0) rotate(0deg); }
+  20% { transform: scale(1.75) rotate(-15deg); }
+  40% { transform: scale(0.7) rotate(15deg); }
+  60% { transform: scale(1.5) rotate(-9deg); }
+  80% { transform: scale(0.85) rotate(9deg); }
+  100% { transform: scale(1.0) rotate(0deg); }
+}
+/* HELP JIMBO FROM BALATRO IS INFILTRATING THE INNER GAME DEV INSIDE ME */
+
+
+.ai-temp-decision {
+  text-align: left;
+  position: fixed;
+  left: 0%;
+  top: -75%;
+  font-size: 36px;
+}
+
+.user-temp-decision {
+  text-align: right;
+  position: fixed;
+  right: 0%;
+  top: -75%;
+  font-size: 36px;
+}
+
+.ai-final-decision {
+  text-align: left;
+  position: fixed;
+  left: 0%;
+  top: -75%;
+  animation: b-shake .5s ease-in-out;
+}
+
+.user-final-decision {
+  text-align: right;
+  position: fixed;
+  right: 0%;
+  top: -75%;
+  animation: b-shake .5s ease-in-out;
+}
+
+.ai-final-decision span, .user-final-decision span {
+  font-size: 36px;
+  font-weight: bold;
+  display: inline-block; 
+  animation: wave 2s ease-in-out infinite;
+}
+
+.ai-final-decision span:nth-child(1), .user-final-decision span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.ai-final-decision span:nth-child(2), .user-final-decision span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.ai-final-decision span:nth-child(3), .user-final-decision span:nth-child(3) {
+  animation-delay: 0.5s;
+} 
+
+.ai-final-decision span:nth-child(4), .user-final-decision span:nth-child(4) {
+  animation-delay: 0.75s;
+} 
+
+.ai-final-decision span:nth-child(5), .user-final-decision span:nth-child(5) {
+  animation-delay: 1s;
+} 
+
+.ai-final-decision span:nth-child(6), .user-final-decision span:nth-child(6) {
+  animation-delay: 1.25s;
+} 
+
+.ai-final-decision span:nth-child(7), .user-final-decision span:nth-child(7) {
+  animation-delay: 1.5s;
+} 
+
+.ai-final-decision span:nth-child(8), .user-final-decision span:nth-child(8) {
+  animation-delay: 1.75s;
+} 
 
 #ai-score {
   border-right: 2px solid black;
@@ -685,3 +831,22 @@ font-weight: bold; */
 }
 
 }
+
+/* .container.game {
+
+  background-image: url('../../public/pd-diamonds/pd-diamond-down.svg');
+  background-color: red;
+  background-blend-mode: lighten;
+
+  background-size: 5%;
+  animation: moveIt 60s linear infinite;
+}
+
+@keyframes moveIt {
+  from {
+    background-position: top left;
+  }
+  to {
+    background-position: bottom right;
+  }
+} */

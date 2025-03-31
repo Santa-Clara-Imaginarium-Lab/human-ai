@@ -331,7 +331,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
             <h1 className={isCheckingGuest ? 'welcome-info-can' : 'welcome-info-hide'}>{isCheckingGuest ? 'Server is booting up... Please Wait!' : ' '}</h1>
             <div className="version-display">
                 <p>
-                v1.0.0 Open Beta
+                v1.1.0 official
                 </p>
             </div>
         </div>

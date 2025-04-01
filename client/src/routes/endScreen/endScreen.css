@@ -226,7 +226,7 @@
     justify-content: center;
     align-items: center;
     background-color: var(--accent-four);
-    color: var(--c2);
+    color: var(--black);
     font-size: 24px;
     border-radius: 15px;
 }
@@ -259,6 +259,11 @@
     /* left is set inline */
 }
 
+.legend {
+    width: 35%;
+    font-weight: bold;
+}
+
 .yes-button, .no-button {
     margin-top: 1em; 
     padding: 0.5em 1.5em;
@@ -270,6 +275,7 @@
     cursor: pointer;
     font-family: var(--universal-font);
     box-shadow: 0.3em 0.3em 0 0 black;
+    transition: all 0.05s ease-in-out;
   }
 
   .no-button:active {
@@ -278,6 +284,43 @@
     box-shadow: 0em 0em 0 0; /* Reduce shadow size */
   }
 
+
+  /* .end-score {
+    background: white;
+    color: black;
+    width: 80px;
+    padding: 10px;
+    font-size: 2.2em;
+    font-weight: bold;
+    border: 2px solid black;
+    text-align: center;
+    display: inline-block;
+  } */
+  
+  .end-score span {
+    display: inline-block; 
+    font-size: 125px;
+    animation: wave 2s ease-in-out infinite;
+  }
+  
+  .end-score span:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .end-score span:nth-child(2) {
+    animation-delay: 0.25s;
+  }
+  
+  .end-score span:nth-child(3) {
+    animation-delay: 0.5s;
+  }
+
+  .end-score-wrap {
+    animation: b-shake .5s 2s ease-in-out;
+  }
+
+/* wave and b-shake animation is in Game.css */
+  
   @media (max-height: 950px) {
     .results-container {
         transform: scale(0.9); /* Scale down the results container */

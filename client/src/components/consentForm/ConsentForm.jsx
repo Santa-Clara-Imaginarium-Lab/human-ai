@@ -14,7 +14,7 @@ function ConsentForm() {
     const [briefGo, setBriefGo] = useState(false);
     const [btuGo, setBtuGo] = useState(false);
 
-    const [confirnNo, setConfirnNo] = useState(false);
+    const [confirmNo, setConfirmNo] = useState(false);
     const noRef = useRef(null);
 
     const terms = [
@@ -40,9 +40,9 @@ function ConsentForm() {
     };
 
     const handleClickNo = () => {
-        if (!confirnNo) {
-            setConfirnNo(true);
-            noRef.current.textContent = "Are you sure?";
+        if (!confirmNo) {
+            setConfirmNo(true);
+            noRef.current.textContent = "Are you sure? (Click again to terminate study)";
         } else
             navigate('/bad-ending'); 
     };
@@ -67,7 +67,7 @@ function ConsentForm() {
                 <div className='con-shadow-container'>
                 <h2><p>{terms}</p></h2>
                 <div className="brief-options">
-                <button id="no-button" onClick={handleClickNo} disabled={isDisabled}>
+                <button id="no-button" onClick={handleClickNo} disabled={isDisabled} className={`${confirmNo ? 'confirm-no' : ''}`}>
                     {isDisabled && <span>Wait</span>}
                     {!isDisabled && <span ref={noRef}>I do not consent</span>}
                 </button>

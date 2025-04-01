@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import './GameTutorial.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Typewriter from '../Typewriter/typewriter';
@@ -35,6 +35,7 @@ import {
 
 function GameTutorial() {
     const [tooltipIndex, setTooltipIndex] = useState(0); // Index of tooltip array
+    const [tooltipPause, setTooltipPause] = useState(false);
     const [canClick, setCanClick] = useState(true);
     const [canPlay, setCanPlay] = useState(false);
     const [focusTutorialTextA, setFocusTutorialTextA] = useState(TEXT_INITIAL_1a);
@@ -47,6 +48,8 @@ function GameTutorial() {
     const speedFlag = location.state.speedFlag;
     const userScoreArchived = location.state.userScore;
     const aiScoreArchived = location.state.aiScore;
+
+    const TYPEWRITER_SPEED = 0;
     
     const determineShow = (componentName) => {
       // TURN CYCLES (vertically aligns with numbers in arrays)
@@ -104,7 +107,7 @@ function GameTutorial() {
       // CONTROLS BUTTONS
       const TUTORIAL_ACTION =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1, 
-            1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         ];
       const TUTORIAL_BUTTON_TOOLTIP =
         [   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
@@ -143,19 +146,19 @@ function GameTutorial() {
         case 'game-tutorial-content':
           return GAME_TUTORIAL_CONTENT[tooltipIndex] === 1;
         case 'tutorial-horizontal-layout':
-          return TUTORIAL_HORIZONTAL_LAYOUT[tooltipIndex] === 1;
+          return TUTORIAL_HORIZONTAL_LAYOUT[tooltipIndex] === 1 && !tooltipPause;
         case 'ai-defect-desc':
-          return AI_DEFECT_DESC[tooltipIndex] === 1;
+          return AI_DEFECT_DESC[tooltipIndex] === 1 && !tooltipPause;
         case 'user-defect-desc':
-          return USER_DEFECT_DESC[tooltipIndex] === 1;
+          return USER_DEFECT_DESC[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-ai-score':
-          return TUTORIAL_AI_SCORE[tooltipIndex] === 1;
+          return TUTORIAL_AI_SCORE[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-user-score':
-          return TUTORIAL_USER_SCORE[tooltipIndex] === 1;
+          return TUTORIAL_USER_SCORE[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-button-cooperate':
-          return TUTORIAL_BUTTON_COOPERATE[tooltipIndex] === 1;
+          return TUTORIAL_BUTTON_COOPERATE[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-button-defect':
-          return TUTORIAL_BUTTON_DEFECT[tooltipIndex] === 1;
+          return TUTORIAL_BUTTON_DEFECT[tooltipIndex] === 1 && !tooltipPause;
         case 'tutorial-action':
           return TUTORIAL_ACTION[tooltipIndex] === 1;
         case 'tutorial-proceed':
@@ -207,26 +210,30 @@ function GameTutorial() {
         // Your callback function here
         // States should be up to date at this point
       // all other keys except SPACE and "B" are bad
-      if (!(event.key === ' ') && !(event.key === 'b')) return;
+      if (!(event.key === ' ') && !(event.key === 'b') && !(event.key === 'B')) return;
 
       console.log(tooltipIndex);
       console.log(canClick);
       if (canClick) {
-        if (event.key === 'b') { // "B" for "back"
-          if (!(tooltipIndex <= 17)) {
+        console.log("SETTING TOOLTIP PAUSE");
+        if (event.key === 'b' || event.key === 'B') { // "B" for "back"
+          if (!(tooltipIndex <= 18)) {
             console.warn("can't go back");
             return;
           }
           setTooltipIndex((prevIndex) => prevIndex - 1);
         }
-        else 
+        else {
           setTooltipIndex((prevIndex) => prevIndex + 1);
+        }
+        setTooltipPause(true);
+        setTimeout(() => {
+          setTooltipPause(false);
+        }, 50)
       }
       else
         console.warn("can't click");
-
       });
-    
     };
 
     useEffect(() => { // navigate to dashboard after last tooltip
@@ -247,7 +254,7 @@ function GameTutorial() {
           break;
         case (1):
           setTutorialText1a(null);
-          setTutorialText1b(TEXT_INITIAL_1b);
+          setTutorialText1b(TEXT_INITIAL_1c);
           setFocusTutorialTextA(TEXT_INITIAL_CCa);
           setFocusTutorialTextB(TEXT_INITIAL_CCb);
           break;
@@ -272,7 +279,8 @@ function GameTutorial() {
           setTutorialText1b(TEXT_TRANSITIONb);
           break;
         case (17):       
-          setDecisionMade('');       
+          handleUserDecision('default');    
+          setIsComplete(false);   
           setFocusTutorialTextA(TEXT_FREEPLAY_INTROa);
           setFocusTutorialTextB(TEXT_FREEPLAY_INTROb);
           setTutorialText1a(TEXT_FREEPLAY_INTROa);
@@ -281,11 +289,15 @@ function GameTutorial() {
         case (18):
           reEnableClick = false;
           setCanPlay(true);
+          setIsComplete(false);
           break;
         case (20):
           reEnableClick = false;
           setCanPlay(true);
           setDecisionMade('');
+          setUserDecision('');
+          setHighlightedTriangles([]);
+          setSelectedDecisionTriangles([]);
           setTooltipIndex(18);
           break;
       }
@@ -325,16 +337,7 @@ function GameTutorial() {
     // [!] DO NOT PUT A DEPENDENCY ARRAY IN THIS USEEFFECT [!]
     // [!] IT WILL BREAK THE FUNCTION! [!]  
   
-  const [highlightedTriangles, setHighlightedTriangles] = useState({
-    t4: { highlight: false, number: null },
-    t6: { highlight: false, number: null },
-    t7: { highlight: false, number: null },
-    t8: { highlight: false, number: null },
-    t1: { highlight: false, number: null },
-    t2: { highlight: false, number: null },
-    t3: { highlight: false, number: null },
-    t5: { highlight: false, number: null },
-  }); // Track highlighted triangles
+  const [highlightedTriangles, setHighlightedTriangles] = useState([]); // Track highlighted triangles
 
   const [round, setRound] = useState(1);
   const [hoveredTriangles, setHoveredTriangles] = useState([]); 
@@ -357,12 +360,14 @@ function GameTutorial() {
     const defectButtonRef = useRef(null);
 
   const handleUserDecision = (decision) => {
+    if (isComplete) return;
+    
     // Update user's decision    
     setUserDecision(decision);
-    setDecisionMade('True');
 
     switch (decision) {
       case 'Cooperate':
+        setDecisionMade('True');
         coopButtonRef.current.classList.add('selected');
         defectButtonRef.current.classList.remove('selected');
         setSelectedDecisionTriangles(['t1', 't3', 't2', 't5']); 
@@ -370,51 +375,24 @@ function GameTutorial() {
         setHighlightedDesc("user-cooperate-desc");  
         break;
       case 'Defect':
+        setDecisionMade('True');
         coopButtonRef.current.classList.remove('selected');
         defectButtonRef.current.classList.add('selected');
         setSelectedDecisionTriangles(['t4', 't6', 't7', 't8']); 
         setHighlightedDesc("");
         setHighlightedDesc("user-defect-desc");  
         break;
+      default:
+        setDecisionMade('False');
+        coopButtonRef.current.classList.remove('selected');
+        defectButtonRef.current.classList.remove('selected');
+        setSelectedDecisionTriangles([]); 
+        setHighlightedDesc("");
     }
   }
 
   let highlightTriangles = [];
   
-  const handleShareClick = () => {
-    return;
-    setDecisionMade('True');
-    if (round === 1) {
-      setSelectedDecisionTriangles(['t1', 't3']); 
-      setHighlightedDesc("");
-      setHighlightedDesc("user-cooperate-desc ai-defect-desc");
-      setAiDecision("Defect");
-    }
-    else {
-      setSelectedDecisionTriangles(['t2', 't5']); 
-      setHighlightedDesc("");
-      setHighlightedDesc("user-cooperate-desc ai-cooperate-desc"); 
-      setAiDecision("Cooperate");
-    }
-  };
-
-  const handleWithholdClick = () => {
-    return;
-    setDecisionMade('True');
-    if (round === 1) {
-      setSelectedDecisionTriangles(['t4', 't7']); 
-      setHighlightedDesc("");
-      setHighlightedDesc("user-defect-desc ai-defect-desc");
-      setAiDecision("Defect");
-    }
-    else {
-      setSelectedDecisionTriangles(['t6', 't8']); 
-      setHighlightedDesc("");
-      setAiDecision("Cooperate");
-      setHighlightedDesc("user-defect-desc ai-cooperate-desc"); 
-    }
-  };
-
   const handleLockIn = () => {
     // Progression control
     if (decisionMade === '') {
@@ -428,6 +406,7 @@ function GameTutorial() {
     setSelectedDecisionTriangles([]);
     setCanPlay(false);
     setCanClick(true);
+    setIsComplete(true);
 
     setTooltipIndex((prevIndex) => prevIndex + 1);
     console.log("progression! tooltipIndex:", tooltipIndex)
@@ -493,7 +472,7 @@ function GameTutorial() {
   };
 
   return (
-    <div className="container game-tutorial">
+    <div className={`container game-tutorial ${sessionStorage.getItem('LDM') === "on" ? 'ldm' : null}`}>
       <div className={`free-play-disclaimer ${sessionStorage.getItem('isResearchMode') === "true" ? 'hide' : 'show'}`}> 
         <p>FREE PLAY Active. Your data is not being recorded.</p>
       </div>
@@ -504,11 +483,11 @@ function GameTutorial() {
       </div>}
 
 
-        <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')}`}>
+        <div className={` ${(determineShow("focus-container") ? 'focus-container' : 'hidden')} ${!tooltipPause ? 'anim-play' : ''}`}>
         <p className="tutorialText1">
-          <Typewriter text={focusTutorialTextA} speed={30} delay={0}/>
+          { focusTutorialTextA /* <Typewriter text={focusTutorialTextA} speed={TYPEWRITER_SPEED} delay={0}/> */}
         </p>
-        {(focusTutorialTextB === null ) ? null : (<p className="tutorialText2"><br/><Typewriter text={focusTutorialTextB} speed={30} delay={focusTutorialTextA.length * 40}/></p>)}
+        {(focusTutorialTextB === null ) ? null : (<p className="tutorialText2"><br/>{focusTutorialTextB /*<Typewriter text={focusTutorialTextB} speed={TYPEWRITER_SPEED} delay={focusTutorialTextA.length * 40}/> */}</p>)}
       </div>
 
       <div className={` ${(determineShow("decision-tutorial-box1") ? 'decision-tutorial-box1' : 'hidden')}`}>
@@ -544,7 +523,7 @@ function GameTutorial() {
               <div>(cooperate)</div>
             </button>
           </div> */}
-          {!isComplete && determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate defect ${(determineShow("tutorial-button-cooperate") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate'); handleShareClick();}}>
+          {determineShow("tutorial-action") && <button ref={coopButtonRef} className={`tutorial-button tutorial-button-cooperate cooperate ${(determineShow("tutorial-button-cooperate") ? ' show' : '')} ${(isComplete && userDecision === "Defect") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-cooperate") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Cooperate');}}>
                 SHARE
                 <div>(cooperate)</div>
               </button>}
@@ -558,97 +537,97 @@ function GameTutorial() {
             <p>AI chose: <span>{aiDecision}</span></p>
           </div> */}
           <div className="tutorial-column-1">
-            <div className={`tutorial-triangle-left ${highlightTriangles.includes('t1') ? 'highlight1' :
+            <div className={`tutorial-triangle-left ${highlightedTriangles.includes('t1') ? 'highlight1' :
             hoveredTriangles.includes('t1') ? 'highlight2' : 
             selectedDecisionTriangles.includes('t1') ? 'highlight3': ''}`}
             onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} // Set hovered triangles on mouse enter
             onMouseLeave={() => setHoveredTriangles([])}
             >
             <span className={`ai-defect-desc ${highlightedDesc.includes("ai-defect-desc") ? 'highlight' : ''} ${(determineShow("ai-defect-desc") ? ' show' : '')}`} data-tooltip={determineShow("ai-defect-desc") ? tooltips[tooltipIndex] : null}>AI WITHHOLD</span>
-              {highlightTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
+              {highlightedTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
               {hoveredTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
               {selectedDecisionTriangles.includes('t1') && <span className="triangle-number-left-bottom">+5</span>}
             </div>
           </div>
           <div className="tutorial-column-2">
-            <div className={`tutorial-triangle-left ${highlightTriangles.includes('t2') ? 'highlight1' :
+            <div className={`tutorial-triangle-left ${highlightedTriangles.includes('t2') ? 'highlight1' :
               hoveredTriangles.includes('t2') ? 'highlight2' : 
               selectedDecisionTriangles.includes('t2') ? 'highlight3' : ''}`}
             onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} // Set hovered triangles on mouse enter
             onMouseLeave={() => setHoveredTriangles([])}
             >
             <span className={`ai-cooperate-desc ${highlightedDesc.includes("ai-cooperate-desc") ? 'highlight' : ''}`}>AI SHARE</span>
-              {highlightTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
+              {highlightedTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
               {hoveredTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
               {selectedDecisionTriangles.includes('t2') && <span className="triangle-number-left-up">+3</span>}
             </div>
-            <div className={`tutorial-triangle-right ${highlightTriangles.includes('t3') ? 'highlight1' :
+            <div className={`tutorial-triangle-right ${highlightedTriangles.includes('t3') ? 'highlight1' :
               hoveredTriangles.includes('t3') ? 'highlight2' : 
               selectedDecisionTriangles.includes('t3') ? 'highlight3' : ''}`}
             onMouseEnter={() => setHoveredTriangles(['t1', 't3'])} // Set hovered triangles on mouse enter
             onMouseLeave={() => setHoveredTriangles([])}
             >
-              {highlightTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
+              {highlightedTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
               {hoveredTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
               {selectedDecisionTriangles.includes('t3') && <span className="triangle-number-right-bottom">+0</span>}
             </div>
-            <div className={`tutorial-triangle-left ${highlightTriangles.includes('t4') ? 'highlight1' :
+            <div className={`tutorial-triangle-left ${highlightedTriangles.includes('t4') ? 'highlight1' :
               hoveredTriangles.includes('t4') ? 'highlight2' : 
               selectedDecisionTriangles.includes('t4') ? 'highlight3' : ''}`}
                         onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} // Set hovered triangles on mouse enter
                         onMouseLeave={() => setHoveredTriangles([])}
                         >
-              {highlightTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
+              {highlightedTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
               {hoveredTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
               {selectedDecisionTriangles.includes('t4') && <span className="triangle-number-left-bottom">+1</span>}
             </div>
           </div>
           <div className="tutorial-column-3">
-            <div className={`tutorial-triangle-right ${highlightTriangles.includes('t5') ? 'highlight1' :
+            <div className={`tutorial-triangle-right ${highlightedTriangles.includes('t5') ? 'highlight1' :
               hoveredTriangles.includes('t5') ? 'highlight2' : 
               selectedDecisionTriangles.includes('t5') ? 'highlight3' : ''}`}
                         onMouseEnter={() => setHoveredTriangles(['t2', 't5'])} // Set hovered triangles on mouse enter
                         onMouseLeave={() => setHoveredTriangles([])}
                         >
             <span className={`user-cooperate-desc ${highlightedDesc.includes("user-cooperate-desc") ? 'highlight' : ''}`}>YOU SHARE</span>
-              {highlightTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
+              {highlightedTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
               {hoveredTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
               {selectedDecisionTriangles.includes('t5') && <span className="triangle-number-right-up">+3</span>}
             </div>
-            <div className={`tutorial-triangle-left ${highlightTriangles.includes('t6') ? 'highlight1' :
+            <div className={`tutorial-triangle-left ${highlightedTriangles.includes('t6') ? 'highlight1' :
               hoveredTriangles.includes('t6') ? 'highlight2' : 
               selectedDecisionTriangles.includes('t6') ? 'highlight3' : ''}`}
             onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} // Set hovered triangles on mouse enter
             onMouseLeave={() => setHoveredTriangles([])}
             >
-              {highlightTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
+              {highlightedTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
               {hoveredTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
               {selectedDecisionTriangles.includes('t6') && <span className="triangle-number-left-up">+0</span>}
             </div>
-            <div className={`tutorial-triangle-right ${highlightTriangles.includes('t7') ? 'highlight1' :
+            <div className={`tutorial-triangle-right ${highlightedTriangles.includes('t7') ? 'highlight1' :
               hoveredTriangles.includes('t7') ? 'highlight2' : 
             selectedDecisionTriangles.includes('t7') ? 'highlight3' : ''}`}
             onMouseEnter={() => setHoveredTriangles(['t4', 't7'])} // Set hovered triangles on mouse enter
             onMouseLeave={() => setHoveredTriangles([])}
             >
-              {highlightTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
+              {highlightedTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
               {hoveredTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
               {selectedDecisionTriangles.includes('t7') && <span className="triangle-number-right-bottom">+1</span>}
             </div>
           </div>
           <div className="tutorial-column-4">
-            <div className={`tutorial-triangle-right ${highlightTriangles.includes('t8') ? 'highlight1' :
+            <div className={`tutorial-triangle-right ${highlightedTriangles.includes('t8') ? 'highlight1' :
               hoveredTriangles.includes('t8') ? 'highlight2' : 
               selectedDecisionTriangles.includes('t8') ? 'highlight3' : ''}`}
             onMouseEnter={() => setHoveredTriangles(['t6', 't8'])} // Set hovered triangles on mouse enter
             onMouseLeave={() => setHoveredTriangles([])}>
             <span className={`user-defect-desc ${highlightedDesc.includes("user-defect-desc") ? 'highlight' : ''} ${(determineShow("user-defect-desc") ? ' show' : '')}`} data-tooltip={determineShow("user-defect-desc") ? tooltips[tooltipIndex] : null}>YOU WITHHOLD</span>
-              {highlightTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
+              {highlightedTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
               {hoveredTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
               {selectedDecisionTriangles.includes('t8') && <span className="triangle-number-right-up">+5</span>}
             </div>
           </div>
-          <div className="column-5">
+          <div className="tutorial-column-5">
             <div className="triangle-left-fake"></div> {/* Fake triangle for spacing */}
           </div>
 
@@ -659,7 +638,7 @@ function GameTutorial() {
             <h2>Your Score: <span className="tutorial-score-value">{userScore}</span></h2>
             <p className="ai-decision">You chose: {userDecision}</p>
           </div> */}
-              {!isComplete && determineShow("tutorial-action") && <button ref={defectButtonRef} className={`tutorial-button tutorial-button-defect defect ${(determineShow("tutorial-button-defect") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-button-defect") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Defect'); handleWithholdClick();}}>
+              {determineShow("tutorial-action") && <button ref={defectButtonRef} className={`tutorial-button tutorial-button-defect defect ${(determineShow("tutorial-button-defect") ? ' show' : '')} ${(isComplete && userDecision === "Cooperate") ? 'hidden' : ''}`} data-tooltip={determineShow("tutorial-button-defect") ? tooltips[tooltipIndex] : null} onClick={() => {handleUserDecision('Defect');}}>
                 WITHHOLD
                 <div>(defect)</div>
               </button>}
@@ -689,8 +668,30 @@ function GameTutorial() {
               </button>
           <div id="scoreboard" className='scoreboard'>
             <div className="trapezoid ai-trapezoid">AI</div>
-            <div className={`score tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null} id="ai-score">{aiScore}</div>
-            <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score">{userScore}</div>
+            <div className={`score tutorial-ai-score ${(determineShow("tutorial-ai-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-ai-score") ? tooltips[tooltipIndex] : null} id="ai-score"><div className={isComplete ? `score-wrap-shake` : ''}>{
+              aiScore && aiScore.toString().split('').map((digit, index) => (
+                <span key={index} >{digit}</span>
+              ))}</div>
+            </div>
+            {isComplete ? <div className="ai-final-decision">
+              {aiDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="ai-temp-decision">{tooltipIndex <= 17 ? null : "Deciding..."}</div>}
+            {isComplete ? <div className="user-final-decision">
+              {userDecision === "Defect" ? "WITHHELD".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              )) : "SHARED".split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))}
+            </div> : <div className="user-temp-decision">{tooltipIndex <= 17 ? null : userDecision === "Defect" ? "Withhold?" : userDecision === "Cooperate" ? "Share?" : "Deciding..."}</div>}
+            <div className={`score tutorial-user-score ${(determineShow("tutorial-user-score") ? ' show' : '')}`} data-tooltip={determineShow("tutorial-user-score") ? tooltips[tooltipIndex] : null} id="user-score"><div className={isComplete ? `score-wrap-shake` : ''}>{
+              userScore && userScore.toString().split('').map((digit, index) => (
+                <span key={index}>{digit}</span>
+              ))} </div>
+            </div>
             <div className="trapezoid user-trapezoid">You</div>
           </div>
           {!isComplete ? (
@@ -701,11 +702,7 @@ function GameTutorial() {
                 Lock In
               </button>)}             
             </div>
-          ) : (
-            <button className="next-buttons" id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
-              Proceed
-            </button>
-          )}
+          ) : null }
 
 
         {/* </div> */}
@@ -714,7 +711,7 @@ function GameTutorial() {
 
         
       </div>
-      <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game or click "Finish Tutorial"' : (tooltipIndex != 18 ? 'Press SPACEBAR to continue, or "B" to step back' : 'Press SPACEBAR to continue' )}</h1>
+      <h1 className={!canClick && !canPlay ? 'bottom-info-wait' : 'bottom-info-can'}>{!canClick && !canPlay ? '. . .' : canPlay ? 'Interact with the game or click "Finish Tutorial"' : (tooltipIndex != 19 ? 'Press SPACEBAR to continue, or "B" to step back' : 'Press SPACEBAR to continue' )}</h1>
     </div>
   );
 }

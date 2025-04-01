@@ -603,3 +603,8 @@ a {
 button {
   outline-color: var(--c1);
 }
+
+.ldm * :not(.round-underline-go), .ldm ::before {
+  transition: none !important;
+  animation: 0s !important;
+}

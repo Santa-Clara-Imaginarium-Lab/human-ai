@@ -101,7 +101,6 @@
 
 .focus-container {
   position: fixed;
-  
   z-index: 1000;
   background-color: white;
   box-shadow: 10px 10px 0 0 var(--accent-one);
@@ -113,12 +112,11 @@
   font-family: var(--secondary-font);
   font-weight: bold;
 
-
   /* STYLES TO ANIMATE */
   top: 30%;
   width: 75%;
   height: 40%;
-  font-size: 2em;
+  font-size: 1.6em;
   border-radius: 3em;
 }
 
@@ -127,6 +125,7 @@
   place-items: center;
 
   position: relative;
+  margin-top: 20px;
   margin-bottom: 30px;
   padding: 15px; /* Add padding for better readability */
   z-index: 1; /* Ensure it is above the shadow */
@@ -144,7 +143,7 @@
   top: -10%;
   width: 75%;
   height: fit-content; 
-  font-size: 1.5em;
+  font-size: 1.6em;
   border-radius: 20px;
 
     /* APPLY ANIMATION */
@@ -153,7 +152,7 @@
   /* transition: height 5s ease-in-out; */
 }
 
-.tutorialText1 {
+.tutorialText1, .tutorialText2 {
   line-height: 1; 
 }
 
@@ -878,21 +877,68 @@ font-weight: bold; */
   font-size: 20px;
 }
 
+@media (max-height: 940px) {
+  .tutorial-action {
+    margin-top: 50px;
+  }
+}
 
+@media (max-height: 920px) {
+  .tutorial-action {
+    margin-top: 40px;
+  }
+}
 
+@media (max-height: 900px) {
+  .tutorial-action {
+    margin-top: 30px;
+  }
 
-@media (max-height: 829px) {
+  .tutorial-button {
+    transform: scale(0.95);
+  }
+
+  .tutorial-button.defect:active, .tutorial-button.cooperate:active {
+    transform: scale(0.95) translate(calc(0.3em * 0.95), calc(0.3em * 0.95));
+  }
+
+  .chat-tutorial-proceed {
+    transform: scale(0.95);
+  }
+
+  .next-buttons {
+    transform: scale(0.95);
+  }
+
+  .chat-tutorial-proceed:active, #lockin-button.next-buttons:active {
+    transform: scale(0.95) translate(calc(0.3em * 0.95), calc(0.3em * 0.95));
+  }
+}
+
+@media (max-height: 880px) {
+  .decision-tutorial-box1 {
+    width: 90%;
+    margin-top: 30px;
+    transform: scale(0.9);
+  }
+
+  .bottom-info-can {
+    font-size: 1.7em;
+  }
+}
+
+@media (max-height: 864px) {
   .game-tutorial-content {
     transform: scale(0.95);
   }
 
   .tutorial-button {
-    transform: scale(0.85);
+    transform: scale(0.9);
   }
 
   .tutorial-button.defect:active, .tutorial-button.cooperate:active {
-    transform: scale(0.85) translate(calc(0.3em * 0.85), calc(0.3em * 0.85));
-}
+    transform: scale(0.9) translate(calc(0.3em * 0.9), calc(0.3em * 0.9));
+  }
 
   .chat-tutorial-proceed {
     transform: scale(0.9);
@@ -900,41 +946,47 @@ font-weight: bold; */
 
   .next-buttons {
     transform: scale(0.9);
-
   }
 
   .chat-tutorial-proceed:active, #lockin-button.next-buttons:active {
     transform: scale(0.9) translate(calc(0.3em * 0.9), calc(0.3em * 0.9));
-}
-
-  .scoreboard {
-    transform: scale(0.85);
-
   }
 
-  .bottom-info-can {
-    font-size: 1.6em;
+  .scoreboard.scoreboard {
+    transform: scale(0.9);
   }
 
   .tutorial-action {
-    margin-top: 40px;
+    margin-top: 35px;
   }
 
   .decision-tutorial-box1 {
-    margin-top: 35px;
-    margin-bottom: 20px;
-    transform: scale(0.9);
+    margin-top: 30px;
+    margin-bottom: 25px;
+    transform: scale(0.86);
   }
 }
 
-@media (max-height: 800px) {
+@media (max-height: 845px) {
+  .decision-tutorial-box1 {
+    margin-top: 45px;
+  }
+
   .game-tutorial-content {
     transform: scale(0.92);
   }
-  
+}
+
+@media (max-height: 825px) {
+  .decision-tutorial-box1 {
+    margin-top: 55px;
+  }
+}
+
+@media (max-height: 815px) {
   .decision-tutorial-box1 {
     margin-bottom: 15px;
-    transform: scale(0.8);
+    transform: scale(0.84);
   }
 
   .bottom-info-can {
@@ -942,13 +994,12 @@ font-weight: bold; */
   }
 
   .tutorial-button {
-    transform: scale(0.8);
+    transform: scale(0.85);
   }
 
   .tutorial-button.defect:active, .tutorial-button.cooperate:active {
-    transform: scale(0.8) translate(calc(0.3em * 0.8), calc(0.3em * 0.8));
-}
-
+    transform: scale(0.85) translate(calc(0.3em * 0.85), calc(0.3em * 0.85));
+  }
 
   .chat-tutorial-proceed {
     transform: scale(0.85);
@@ -956,10 +1007,88 @@ font-weight: bold; */
 
   .next-buttons {
     transform: scale(0.85);
-
   }
 
   .chat-tutorial-proceed:active, #lockin-button.next-buttons:active {
     transform: scale(0.85) translate(calc(0.3em * 0.85), calc(0.3em * 0.85));
+  }
+
+  .scoreboard.scoreboard {
+    transform: scale(0.85);
+  }
 }
+
+@media (max-height: 800px) {
+  .decision-tutorial-box1 {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-height: 780px) {
+  .game-tutorial-content {
+    transform: scale(0.9);
+  }
+
+  .decision-tutorial-box1 {
+    margin-top: 55px;
+    margin-bottom: 10px;
+    transform: scale(0.75);
+  }
+
+  .tutorial-action {
+    margin-top: 20px;
+  }
+
+  .scoreboard.scoreboard {
+    transform: scale(0.8);
+  }
+
+  .chat-tutorial-proceed {
+    transform: scale(0.8);
+  }
+
+  .next-buttons {
+    transform: scale(0.8);
+  }
+
+  .chat-tutorial-proceed:active, #lockin-button.next-buttons:active {
+    transform: scale(0.8) translate(calc(0.3em * 0.8), calc(0.3em * 0.8));
+  }
+}
+
+@media (max-height: 765px) {
+  .decision-tutorial-box1 {
+    margin-top: 80px;
+  }
+
+  .focus-container {
+    transform: scale(0.85);
+  }
+
+  .game-tutorial-content {
+    transform: scale(0.85);
+  }
+
+  .tutorial-action {
+    margin-bottom: 20px;
+  }
+
+  .bottom-info-can {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-height: 740px) {
+  .decision-tutorial-box1 {
+    transform: scale(0.7);
+    margin-top: 90px;
+  }
+
+  .game-tutorial-content {
+    transform: scale(0.8);
+  }
+
+  .tutorial-action {
+    margin-bottom: 30px;
+  }
 }

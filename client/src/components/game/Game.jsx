@@ -121,7 +121,7 @@ function Game() {
   const builtPrompt = location.state.builtPrompt;
 
   // Function to simulate AI's random response (Cooperate or Defect)
-  const getAiResponse = async () => {
+  const getAiResponse = async (which) => {
     let arr = [
       {
         role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
@@ -156,8 +156,16 @@ function Game() {
 
     // MUTATION IS OK HERE, BECAUSE THERE IS AN ACTION REQUIRED BY USER: CONTINUE ON
     // WILL GIVE THE FUNCTION THE ~100MS NECESSARY TO DO ITS WORK
-    const decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false, chat)
+    let decision;
+    if (which == "decision") 
+      decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false, chat)
+    else
+      decision = await add(`[DAY ${currentRound}] - User: ${userDecision === 'Cooperate' ? 'SHARED' : 'WITHHELD'}, AI: ${aiDecision === 'Cooperate' ? 'SHARED' : 'WITHHELD'}`, false, chat);
+
     console.log("<<BOT'S DECISION STATEMENT>> ", decision);
+
+    if (which == "inform")
+      return;
 
     const choices = ['Cooperate', 'Defect'];
     const rng = () => choices[Math.floor(Math.random() * choices.length)];
@@ -300,7 +308,11 @@ function Game() {
 
     setIsUserLocked(true);
 
-    const aiChoice = await getAiResponse(); // Get AI's random response
+    setTimeout(() => {
+      getAiResponse("inform");
+    }, 1000)
+
+    const aiChoice = await getAiResponse("decision"); // Get AI's random response
     setAiDecision(aiChoice); // Set AI's decision for display
 
     setIsRoundOver(true);
@@ -692,7 +704,7 @@ function Game() {
               </button>
             </div>
           ) : (
-            <button className="next-buttons" id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
+            <button className={`next-buttons ${isScoresLocked ? '' : 'hidden'}`} id="lockin-button" onClick={() => handleNavigation()}> {/* round up */ }
               Proceed
             </button>
           )}

@@ -121,79 +121,85 @@ function Game() {
   const builtPrompt = location.state.builtPrompt;
 
   // Function to simulate AI's random response (Cooperate or Defect)
-  const getAiResponse = async (which) => {
-    let arr = [
-      {
-        role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
-        parts: [{ text: builtPrompt}],
-      },
-      // {
-      //   role: "model",
-      //   parts: [{ text: "Great to meet you. What would you like to know?" }],
-      // },
-    ]
+  const getAiResponse = (which, info) => { // TODO: RETURN PROMISE <!!!> <!!!>
+    return new Promise((resolve, reject) => {
+      const getResp = async () => {
+        let arr = [
+          {
+            role: "user", // TURN "ONE ROUND" INTO "FIVE ROUNDS" LATER
+            parts: [{ text: builtPrompt}],
+          },
+          // {
+          //   role: "model",
+          //   parts: [{ text: "Great to meet you. What would you like to know?" }],
+          // },
+        ]
+    
+    
+        data.history.map((item) => {
+          let dupedItem = JSON.parse(JSON.stringify(item));
+          // console.log(dupedItem);
+          delete dupedItem._id; 
+    
+          dupedItem.parts.map((item) => {
+            delete item._id;
+          });
+          arr.push(dupedItem)}
+      );
+    
+        console.log("data for chat: ", arr)
+    
+        const chat = model.startChat({
+          history: arr,
+            generationConfig:{
+    
+            },
+          });
+    
+        // MUTATION IS OK HERE, BECAUSE THERE IS AN ACTION REQUIRED BY USER: CONTINUE ON
+        // WILL GIVE THE FUNCTION THE ~100MS NECESSARY TO DO ITS WORK
+        let decision;
+        if (which == "decision") 
+          decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false, chat)
+        else
+          decision = await add(`Caboodle Daily Report: On Day ${currentRound}, the User ${userDecision === 'Cooperate' ? 'SHARED' : 'WITHHELD'} and the AI ${info === 'Cooperate' ? 'SHARED' : 'WITHHELD'}.`, false, chat);
+    
+        console.log("<<BOT'S DECISION STATEMENT>> ", decision);
+    
+        if (which == "inform") {
+          resolve("done");
+          setIsScoresLocked(true);
+        }
 
-
-    data.history.map((item) => {
-      let dupedItem = JSON.parse(JSON.stringify(item));
-      // console.log(dupedItem);
-      delete dupedItem._id; 
-
-      dupedItem.parts.map((item) => {
-        delete item._id;
-      });
-      arr.push(dupedItem)}
-  );
-
-    console.log("data for chat: ", arr)
-
-    const chat = model.startChat({
-      history: arr,
-        generationConfig:{
-
-        },
-      });
-
-    // MUTATION IS OK HERE, BECAUSE THERE IS AN ACTION REQUIRED BY USER: CONTINUE ON
-    // WILL GIVE THE FUNCTION THE ~100MS NECESSARY TO DO ITS WORK
-    let decision;
-    if (which == "decision") 
-      decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false, chat)
-    else
-      decision = await add(`[DAY ${currentRound}] - User: ${userDecision === 'Cooperate' ? 'SHARED' : 'WITHHELD'}, AI: ${aiDecision === 'Cooperate' ? 'SHARED' : 'WITHHELD'}`, false, chat);
-
-    console.log("<<BOT'S DECISION STATEMENT>> ", decision);
-
-    if (which == "inform")
-      return;
-
-    const choices = ['Cooperate', 'Defect'];
-    const rng = () => choices[Math.floor(Math.random() * choices.length)];
-
-    let text = "";
-
-    // failsafe in case google API doesn't respond
-    try {
-      text = decision.toLowerCase();
-    }
-    catch (err) {
-      console.error("ERROR! " + err + " -- Randomizing!");
-      return rng();
-
-    }
-
-    // had to change to string indexOf, === was bugging
-    console.log(text);
-    if (text.indexOf("cooperate") > -1) {
-      return choices[0];
-    }
-    else if (text.indexOf("defect") > -1) {
-      return choices[1];
-    }
-    else {
-      console.warn("Warning! Could not determine AI's response -- Randomizing!");
-      return rng();
-    }
+        const choices = ['Cooperate', 'Defect'];
+        const rng = () => choices[Math.floor(Math.random() * choices.length)];
+    
+        let text = "";
+    
+        // failsafe in case google API doesn't respond
+        try {
+          text = decision.toLowerCase();
+        }
+        catch (err) {
+          console.error("ERROR! " + err + " -- Randomizing!");
+          resolve(rng());
+        }
+    
+        // had to change to string indexOf, === was bugging
+        console.log(text);
+        if (text.indexOf("cooperate") > -1) {
+          resolve(choices[0]);
+        }
+        else if (text.indexOf("defect") > -1) {
+          resolve(choices[1]);
+        }
+        else {
+          console.warn("Warning! Could not determine AI's response -- Randomizing!");
+          resolve(rng());
+        }  
+      }
+      getResp();
+    })
   };
 
   const [userScore, setUserScore] = useState(parseInt(sessionStorage.getItem('userScore'))); // Track user score
@@ -308,12 +314,15 @@ function Game() {
 
     setIsUserLocked(true);
 
-    setTimeout(() => {
-      getAiResponse("inform");
-    }, 1000)
-
     const aiChoice = await getAiResponse("decision"); // Get AI's random response
+
     setAiDecision(aiChoice); // Set AI's decision for display
+    // NOT using this for second getAiResponse call, doesn't seem to update in time    
+
+    setTimeout(() => {
+      getAiResponse("inform", aiChoice);
+      // there is a setIsScoresLocked(true); at the end of this call
+    }, 1000)
 
     setIsRoundOver(true);
 
@@ -430,10 +439,6 @@ function Game() {
 
       console.log(JSON.parse(sessionStorage.getItem(`gameLog${botNum}`)));
     }
-
-    setTimeout(() => {
-      setIsScoresLocked(true);
-    }, 1000);
   };
 
   const handleNavigation = () => {

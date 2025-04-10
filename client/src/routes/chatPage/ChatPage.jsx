@@ -70,9 +70,10 @@ const ChatPage = () => {
                 >
                   <Markdown>{message.parts[0].text}</Markdown>
                 </div>
-                {/* You bubble */}
+                {/* You or Info bubble */}
                 <div className={"avatar" + (message.role === "user" ? "" : " hide")}>
-                  You
+                  {message.parts[0].text.toLowerCase().includes("caboodle daily report:") ? "Info" :
+                  "You"}
                 </div>
               </div>
             </Fragment>

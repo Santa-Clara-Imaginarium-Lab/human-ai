@@ -35,7 +35,7 @@ function PreTPA() {
       userId,
       responses: Object.entries(responses).map(([questionNumber, selectedOption]) => ({
         questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
-        selectedOption,
+        selectedOption: optionValueMap[selectedOption],
       })),
     };
 

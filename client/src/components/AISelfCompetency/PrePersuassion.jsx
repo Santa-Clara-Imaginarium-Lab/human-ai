@@ -39,7 +39,7 @@ function PrePersuassion() {
       .filter(([index]) => statements[index] !== "") // Only include responses for non-empty statements
       .map(([questionNumber, selectedOption]) => ({
         questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
-        selectedOption,
+        selectedOption: optionValueMap[selectedOption],
       })),
     };  
 

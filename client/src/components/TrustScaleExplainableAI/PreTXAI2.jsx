@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { options, optionValueMap } from '../../constants/surveyOptions';
 
 const statements = [
   "AI is efficient in that it works very quickly.",
@@ -7,15 +8,6 @@ const statements = [
   "I like using AI for decision making.",
   "",
   ""
-];
-
-const options = [
-  "I agree strongly",
-  "I agree somewhat",
-  "I'm neutral about it",
-  "I disagree somewhat",
-  "I disagree strongly",
-  "I do not use AI",
 ];
 
 function PreTXAI2() {

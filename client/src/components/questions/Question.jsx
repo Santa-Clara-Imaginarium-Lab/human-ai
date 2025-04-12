@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Question.css';
 import questions from './constants'; // Import the questions from the constants file
 import { useNavigate } from 'react-router-dom';
+import { postGameOptionValueMap } from '../../constants/surveyOptions';
 
 function Question() {
   const [responses, setResponses] = useState([]);
@@ -25,7 +26,7 @@ function Question() {
     // Add current response to responses array
     const newResponse = {
       questionNumber: currentQuestionIndex + 1,
-      selectedOption
+      selectedOption: postGameOptionValueMap[selectedOption]
     };
     const updatedResponses = [...responses, newResponse];
     setResponses(updatedResponses);

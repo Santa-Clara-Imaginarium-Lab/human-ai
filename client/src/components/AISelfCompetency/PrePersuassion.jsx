@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { options, optionValueMap } from '../../constants/surveyOptions';
 
 const statements = [
   "I don't let AI influence me in my everyday decisions.",
@@ -7,15 +8,6 @@ const statements = [
   "I realize if an AI is influencing me in my everyday decisions.",
   "",
   ""
-];
-
-const options = [
-  "I agree strongly",
-  "I agree somewhat",
-  "I'm neutral about it",
-  "I disagree somewhat",
-  "I disagree strongly",
-  "I do not use AI",
 ];
 
 function PrePersuassion() {

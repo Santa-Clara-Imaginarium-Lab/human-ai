@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './AiLiteracy.css';
 import { useNavigate } from 'react-router-dom';
+import { options, optionValueMap } from '../../constants/surveyOptions';
 
 const statements = [
     "I know the most important concepts of the topic \"artificial intelligence.\"",
@@ -8,15 +9,6 @@ const statements = [
     "I can assess what advantages and disadvantages of using AI entails.",
     "I can imagine possible future uses of AI.",
     ""
-];
-
-const options = [
-  "I agree strongly",
-  "I agree somewhat",
-  "I'm neutral about it",
-  "I disagree somewhat",
-  "I disagree strongly",
-  "I do not use AI",
 ];
 
 function PreUnderstanding() {
@@ -48,7 +40,7 @@ function PreUnderstanding() {
         .filter(([index]) => statements[index] !== "")
         .map(([statementIndex, selectedOption]) => ({
             questionNumber: parseInt(statementIndex) + 5, // Convert to 1-based index
-            selectedOption, // This should be a string
+            selectedOption: optionValueMap[selectedOption], // This should be a string
         })),
     };
 

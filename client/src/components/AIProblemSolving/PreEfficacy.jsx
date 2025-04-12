@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { options, optionValueMap } from '../../constants/surveyOptions';
 
 const statements = [
   "I can rely on my skills in difficult situations when using AI.",
@@ -7,15 +8,6 @@ const statements = [
   "I can usually solve strenuous and complicated tasks when working with AI well.",
   "",
   ""
-];
-
-const options = [
-  "I agree strongly",
-  "I agree somewhat",
-  "I'm neutral about it",
-  "I disagree somewhat",
-  "I disagree strongly",
-  "I do not use AI",
 ];
 
 function PreEfficacy() {
@@ -48,7 +40,7 @@ function PreEfficacy() {
         .filter(([index]) => statements[index] !== "") // Only include responses for non-empty statements
         .map(([questionNumber, selectedOption]) => ({
           questionNumber: parseInt(questionNumber) + 1,
-          selectedOption,
+          selectedOption: optionValueMap[selectedOption],
         })),
     };    
 

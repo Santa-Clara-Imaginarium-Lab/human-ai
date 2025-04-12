@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { options, optionValueMap } from '../../constants/surveyOptions';
 
 const statements = [
   "I am confident in AI. I feel that it works well",
@@ -7,15 +8,6 @@ const statements = [
   "AI is very reliable. I can count on it to be correct all the time.",
   "I feel safe that when I rely on AI I will get the right answers.",
   ""
-];
-
-const options = [
-  "I agree strongly",
-  "I agree somewhat",
-  "I'm neutral about it",
-  "I disagree somewhat",
-  "I disagree strongly",
-  "I do not use AI",
 ];
 
 function PreTXAI() {
@@ -47,7 +39,7 @@ function PreTXAI() {
       .filter(([index]) => statements[index] !== "")
       .map(([questionNumber, selectedOption]) => ({
         questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
-        selectedOption,
+        selectedOption: optionValueMap[selectedOption],
       })),
     };
 

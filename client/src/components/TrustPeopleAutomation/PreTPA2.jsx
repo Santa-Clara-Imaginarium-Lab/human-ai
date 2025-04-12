@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { options, optionValueMap } from '../../constants/surveyOptions';
 
 const statements = [
   "I am confident in AI systems",
@@ -7,15 +8,6 @@ const statements = [
   "AI systems are dependable",
   "AI systems are reliable",
   "I can trust AI systems"
-];
-
-const options = [
-  "I agree strongly",
-  "I agree somewhat",
-  "I'm neutral about it",
-  "I disagree somewhat",
-  "I disagree strongly",
-  "I do not use AI",
 ];
 
 function PreTPA2() {
@@ -43,7 +35,7 @@ function PreTPA2() {
         userId,
         responses: Object.entries(responses).map(([statementIndex, selectedOption]) => ({
             questionNumber: parseInt(statementIndex) + 6, // Convert to 1-based index
-            selectedOption, // This should be a string
+            selectedOption: optionValueMap[selectedOption], // This should be a string
         })),
     };
 

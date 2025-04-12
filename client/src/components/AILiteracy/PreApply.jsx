@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './AiLiteracy.css';
 import { useNavigate } from 'react-router-dom';
+import { options, optionValueMap } from '../../constants/surveyOptions';
 
 const statements = [
   "I can operate AI applications in everyday life.",
@@ -8,15 +9,6 @@ const statements = [
   "I can use artificial intelligence meaningfully to achieve my everyday goals.",
   "In everyday life, I can interact with AI in a way that makes my tasks easier.",
   ""
-];
-
-const options = [
-  "I agree strongly",
-  "I agree somewhat",
-  "I'm neutral about it",
-  "I disagree somewhat",
-  "I disagree strongly",
-  "I do not use AI",
 ];
 
 function PreApply() {
@@ -48,7 +40,7 @@ function PreApply() {
       .filter(([index]) => statements[index] !== "")
       .map(([questionNumber, selectedOption]) => ({
         questionNumber: parseInt(questionNumber) + 1, // Convert to 1-based index
-        selectedOption,
+        selectedOption: optionValueMap[selectedOption],
       })),
     };
 

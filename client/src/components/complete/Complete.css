@@ -264,17 +264,6 @@ button.hide {
   z-index: 1000;
 } 
 
-.settings-title {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 20px;
-  margin-bottom: 1em;
-  color: var(--accent-three);
-  font-size: 60px;
-  font-family: var(--universal-font);
-}
 
 .x-button {
   position: absolute;

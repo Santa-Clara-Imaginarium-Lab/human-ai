@@ -53,7 +53,7 @@ import PreHumanAI1 from './components/priorExperienceAI/PreHumanAI1.jsx';
 import PreHumanAI2 from './components/priorExperienceAI/PreHumanAI2.jsx';
 import PostGameFreeResponse from './components/freeResponse/PostGameFreeResponse.jsx';
 import PostArchetypeFreeResponse from './components/freeResponse/PostArchetypeFreeResponse.jsx';
-
+import ChatHistory from './components/chatHistory/ChatHistory.jsx';
 import GameEndCode from './components/gameEndCode/GameEndCode.jsx';
 
 function MainApp() {
@@ -221,6 +221,10 @@ function MainApp() {
         {
           path: "/game-tutorial",
           element: <GameTutorial />,
+        },
+        {
+          path: "/chat-history",
+          element: <ChatHistory />,
         },
         {
           path: "/chatbot-tutorial",

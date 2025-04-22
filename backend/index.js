@@ -116,11 +116,18 @@ app.post("/api/gamescores", async (req, res) => {
 
   
 app.post("/api/chats", async (req,res) =>{
-    const {text, userId} = req.body
+    const {text, userId} = req.body;
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
     try {
         const newChat = new Chat({
             userId: userId,
-            history:[{role:"user", parts:[{text}]}],
+            history:[{
+                role:"user",
+                parts:[{
+                    text,
+                    messageTimestamp: currentTime
+                }]
+            }],
         });
 
         const savedChat = await newChat.save();
@@ -181,10 +188,24 @@ app.get("/api/chats/:id", async (req, res) => {
 
 app.put("/api/chats/:id", async (req, res) => {
     const { question, answer, img } = req.body;
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
 
     const newItems = [
-        ...(question ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }] : []),
-        { role: "model", parts: [{ text: answer }] },
+        ...(question ? [{
+            role: "user",
+            parts: [{
+                text: question,
+                messageTimestamp: currentTime
+            }],
+            ...(img && { img })
+        }] : []),
+        {
+            role: "model",
+            parts: [{
+                text: answer,
+                messageTimestamp: currentTime
+            }]
+        },
     ];
 
     try {

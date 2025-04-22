@@ -191,6 +191,9 @@ main {
   display: none;
 }
 
+button.hide {
+  display: none;
+}
 
 /* Diagonal background*/
 .polygon
@@ -264,10 +267,11 @@ main {
 .settings-title {
   position: absolute;
   top: 10px;
-  left: 50%;
+  left: 48%;
+  font-weight:500;
   transform: translateX(-50%);
   margin: 20px;
-  margin-bottom: 1em;
+  margin-bottom: 30px;
   color: var(--accent-three);
   font-size: 60px;
   font-family: var(--universal-font);
@@ -304,6 +308,8 @@ main {
 }
 
 .admin-header {
+  margin-top: 30px;
+  font-weight:500;
   color: var(--accent-three);
   font-size: 60px;
   font-family: var(--universal-font);
@@ -450,4 +456,24 @@ main {
   font-family: var(--universal-font);
   text-align: left;
   font-style: italic;
+}
+
+.view-button {
+  margin: 30px;
+  background-color: var(--accent-three);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5em 1.5em;
+  font-size: 1.5em;
+  cursor: pointer;
+  box-shadow: 0.3em 0.3em 0 0 var(--button-two);
+  font-family: var(--universal-font);
+  transition: all 0.05s ease-in-out;
+}
+
+.view-button:active {
+  /* Simulate the button being pressed */
+  transform: translate(0.3em, 0.3em); /* Move the button down */
+  box-shadow: 0em 0em 0 0 !important; /* Reduce shadow size */
 }

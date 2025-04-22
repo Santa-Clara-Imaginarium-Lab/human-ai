@@ -44,8 +44,9 @@ const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
       // console.log(dupedItem);
       delete dupedItem._id; 
 
-      dupedItem.parts.map((item) => {
-        delete item._id;
+      dupedItem.parts.map((part) => {
+        delete part._id;
+        delete part.messageTimestamp;
       });
       arr.push(dupedItem)}
   );

@@ -19,6 +19,10 @@ const chatSchema = new mongoose.Schema(
               type: String,
               required: true,
             },
+            messageTimestamp: {
+              type: String,
+              required: false,
+            }
           },
         ],
         img: {
@@ -27,10 +31,6 @@ const chatSchema = new mongoose.Schema(
         },
       },
     ],
-    timestamp: {
-      type: Date,
-      default: Date.now
-    }
   }, {versionKey: false}
 );
 

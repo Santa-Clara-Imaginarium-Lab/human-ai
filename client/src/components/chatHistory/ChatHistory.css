@@ -1,0 +1,88 @@
+/* ChatHistory.css */
+
+.chat-history-container {
+    display: flex;
+    height: 100vh;
+    background-color: var(--c2);
+    font-family: var(--universal-font);
+  }
+  
+  .user-panel {
+    width: 20%;
+    background-color: var(--dark-accent);
+    padding: 8px;
+    overflow-y: auto;
+    border: none;
+  }
+  
+  .user-item {
+    padding: 10px;
+    font-size: large;
+    margin-bottom: 8px;
+    cursor: pointer;
+    background-color: var(--dark-accent); /* Uniform background */
+    border-radius: 6px;
+    text-align: left;
+    transition: background-color 0.3s ease;
+    color: white;
+  }
+  
+  .user-item:hover, .user-item.active {
+    background-color: var(--med-accent);
+
+  }
+  
+  .search-box {
+    width: 100%;
+  }
+
+  .search-item {
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: large;
+    margin-bottom: 8px;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 6px;
+    text-align: left;
+    color: black;
+    font-family: var(--universal-font);
+  }
+
+  .chat-panel {
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    width: 100%;
+  }  
+  
+  .dwnd-button {
+    font-weight: bold;
+    padding: 12px;
+    background-color: var(--button-one);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: large;
+    cursor: pointer;
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 black;
+    transition: all 0.05s ease-in-out;
+  }
+  
+  .dwnd-button:active {
+    transform: translate(0.3em, 0.3em); 
+    box-shadow: 0em 0em 0 0;
+  }

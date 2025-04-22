@@ -280,8 +280,8 @@ const Welcome = ({changeTheme, changePersonality}) => {
                     <button className="x-button" onClick={handleSettingsClose}>X</button>
 
                 <div className="ldm-wrapper">
-                    <h2>Low Detail Mode</h2>
-                    <div class="ldm-background">
+                    <h2 hidden={isAdmin}>Low Detail Mode</h2>
+                    <div class="ldm-background" hidden={isAdmin}>
                         <button
                             className={`${ldmState === "on" ? "ldm-button-on" : "ldm-button-off"}`}
                             onClick={() => {
@@ -296,14 +296,14 @@ const Welcome = ({changeTheme, changePersonality}) => {
                     </div>
                 </div>
                 <br/>
-                <div className="ldm-description">
-                    <p>Low Detail Mode removes all animations and transitions from the game pages.</p>
+                <div className="ldm-description" hidden={isAdmin}>
+                    <p hidden={isAdmin}>Low Detail Mode removes all animations and transitions from the game pages.</p>
                 </div>
                     
 
 
 
-                <p className="admin-header">Admin Panel</p>
+                <p className="admin-header" hidden={isAdmin}>Admin Panel</p>
 
                     <div className="admin-controls-wrapper" hidden={!isAdmin}>
                         <div className="admin-controls">
@@ -314,6 +314,8 @@ const Welcome = ({changeTheme, changePersonality}) => {
                         </div>
                     </div>
 
+                    <p className="admin-header" hidden={!isAdmin}>Chat History</p>
+                    <button className="view-button" hidden={!isAdmin} onClick={() => navigate('/chat-history')}>View Chats</button>
                     <div className="admin-password-wrapper" hidden={isAdmin}>
                     <input
                         type="password" 

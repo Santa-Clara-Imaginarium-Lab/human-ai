@@ -116,11 +116,18 @@ app.post("/api/gamescores", async (req, res) => {
 
   
 app.post("/api/chats", async (req,res) =>{
-    const {text, userId} = req.body
+    const {text, userId} = req.body;
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
     try {
         const newChat = new Chat({
             userId: userId,
-            history:[{role:"user", parts:[{text}]}],
+            history:[{
+                role:"user",
+                parts:[{
+                    text,
+                    messageTimestamp: currentTime
+                }]
+            }],
         });
 
         const savedChat = await newChat.save();
@@ -179,12 +186,42 @@ app.get("/api/chats/:id", async (req, res) => {
     }
 });
 
+app.get("/api/chats", async (req, res) => {
+  const { userId } = req.query;
+
+  try {
+    const chats = userId
+      ? await Chat.find({ userId })
+      : await Chat.find(); // this returns all chats
+
+    res.status(200).json(chats);
+  } catch (error) {
+    console.error("Error fetching chats:", error);
+    res.status(500).json({ error: "Failed to fetch chats." });
+  }
+});
+
+
 app.put("/api/chats/:id", async (req, res) => {
     const { question, answer, img } = req.body;
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
 
     const newItems = [
-        ...(question ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }] : []),
-        { role: "model", parts: [{ text: answer }] },
+        ...(question ? [{
+            role: "user",
+            parts: [{
+                text: question,
+                messageTimestamp: currentTime
+            }],
+            ...(img && { img })
+        }] : []),
+        {
+            role: "model",
+            parts: [{
+                text: answer,
+                messageTimestamp: currentTime
+            }]
+        },
     ];
 
     try {
@@ -204,6 +241,22 @@ app.put("/api/chats/:id", async (req, res) => {
         res.status(500).send("Error adding conversation!");
     }
 });
+
+app.get("/api/chathistory", async (req, res) => {
+  const { userId } = req.query;
+
+  try {
+      const chats = userId
+          ? await Chat.find({ userId })
+          : await Chat.find(); // return all chats if no userId
+
+      res.status(200).json(chats);
+  } catch (error) {
+      console.error("Error fetching chats:", error);
+      res.status(500).json({ error: "Failed to fetch chats." });
+  }
+});
+
 
 app.post("/api/surveyresponses", async (req, res) => {
     try {

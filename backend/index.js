@@ -205,6 +205,22 @@ app.put("/api/chats/:id", async (req, res) => {
     }
 });
 
+app.get("/api/chathistory", async (req, res) => {
+  const { userId } = req.query;
+
+  try {
+      const chats = userId
+          ? await Chat.find({ userId })
+          : await Chat.find(); // return all chats if no userId
+
+      res.status(200).json(chats);
+  } catch (error) {
+      console.error("Error fetching chats:", error);
+      res.status(500).json({ error: "Failed to fetch chats." });
+  }
+});
+
+
 app.post("/api/surveyresponses", async (req, res) => {
     try {
       const { userId, responses } = req.body;

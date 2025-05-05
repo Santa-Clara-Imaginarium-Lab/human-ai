@@ -85,6 +85,45 @@ async function getGoogleSheet(sheetTitle, headerValues) {
   return sheet;
 }
 
+app.post("/api/chat-responses", async (req, res) => {
+  let { answers, answerColumnIndex } = req.body;
+
+  if (!answers || !Array.isArray(answers) || !answerColumnIndex) {
+    return res.status(400).send("Missing 'answers' array or 'answerColumnIndex'");
+  }
+
+  try {
+    const sheet = await getGoogleSheet(
+      "Average",
+      ["Questions", ...Array.from({ length: 30 }, (_, i) => `Answer${i + 1}`)]
+    );
+
+    const colLetter = String.fromCharCode(65 + answerColumnIndex); // A=0, B=1...
+    const columnRange = `${colLetter}1:${colLetter}${answers.length}`;
+
+    // Ensure sheet has enough rows
+    while (sheet.rowCount < answers.length) {
+      await sheet.addRow({}); // Empty row
+    }
+
+    await sheet.loadCells(columnRange); // Only load column cells
+
+    for (let i = 0; i < answers.length; i++) {
+      const cell = sheet.getCell(i, answerColumnIndex); // row i, column (AnswerX)
+      cell.value = answers[i];
+    }
+
+    await sheet.saveUpdatedCells(); // ✅ One write request
+    res.status(200).send(`✅ Stored ${answers.length} responses in Answer${answerColumnIndex}`);
+  } catch (error) {
+    console.error("❌ Error writing answers:", error);
+    res.status(500).send("Error saving chat responses");
+  }
+});
+
+
+
+
 app.post("/api/gamescores", async (req, res) => {
     const { user_id, personality, rounds } = req.body;
     const round1 = rounds.find(round => round.round_number === 1);
@@ -158,6 +197,48 @@ app.post("/api/chats", async (req,res) =>{
     } catch (err) {
         console.log(err)
         res.status(500).send("Error creating chat!")
+    }
+});
+
+
+app.put("/api/chats/ques/:id", async (req, res) => {
+    const { question, img } = req.body;
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+
+    try {
+        const chatDoc = await Chat.findOne({ _id: req.params.id });
+        if (!chatDoc) return res.status(404).send("Chat not found");
+
+        // Push user question to history
+        chatDoc.history.push({
+            role: "user",
+            parts: [{ text: question, messageTimestamp: currentTime }],
+            ...(img && { img }),
+        });
+
+        // === Generate AI reply here ===
+        const historyText = chatDoc.history
+            .filter(h => h.role === "user" || h.role === "model")
+            .map(h => `${h.role === "user" ? "User" : "AI"}: ${h.parts[0].text}`)
+            .join("\n");
+
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // or use OpenAI
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+        const result = await model.generateContent([historyText, `User: ${question}`]);
+        const aiResponse = result.response.text();
+
+        // Save AI reply
+        chatDoc.history.push({
+            role: "model",
+            parts: [{ text: aiResponse, messageTimestamp: currentTime }],
+        });
+
+        await chatDoc.save();
+        res.status(200).send("Message appended and AI replied");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error handling message");
     }
 });
 

@@ -56,6 +56,7 @@ import PostArchetypeFreeResponse from './components/freeResponse/PostArchetypeFr
 import ChatHistory from './components/chatHistory/ChatHistory.jsx';
 import GameEndCode from './components/gameEndCode/GameEndCode.jsx';
 
+import ChatScript from './script/ChatScript.jsx';
 function MainApp() {
   const [theme, setTheme] = useState(sessionStorage.getItem('theme') || 'black-white-theme-4-2');
   const [personality, setPersonality] = useState(sessionStorage.getItem('forcedPersonality') || 'random');
@@ -197,6 +198,10 @@ function MainApp() {
         {
           path: "/pregame",
           element: <Pregame />,
+        },
+        {
+          path: "/script",
+          element: <ChatScript />,
         },
         {
           path: "/survey",

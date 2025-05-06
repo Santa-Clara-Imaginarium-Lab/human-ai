@@ -143,6 +143,8 @@ function Game() {
     
           dupedItem.parts.map((item) => {
             delete item._id;
+            // Remove messageTimestamp field that's causing the API error
+            delete item.messageTimestamp;
           });
           arr.push(dupedItem)}
       );
@@ -178,11 +180,19 @@ function Game() {
     
         // failsafe in case google API doesn't respond
         try {
-          text = decision.toLowerCase();
+          // Check if decision exists before calling toLowerCase()
+          if (decision && typeof decision === 'string') {
+            text = decision.toLowerCase();
+          } else {
+            console.error("ERROR! decision is undefined or not a string -- Randomizing!");
+            resolve(rng());
+            return; // Exit early to avoid further processing
+          }
         }
         catch (err) {
           console.error("ERROR! " + err + " -- Randomizing!");
           resolve(rng());
+          return; // Exit early to avoid further processing
         }
     
         // had to change to string indexOf, === was bugging

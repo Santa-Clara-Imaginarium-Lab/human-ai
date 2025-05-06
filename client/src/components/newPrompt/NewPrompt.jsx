@@ -214,31 +214,38 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
         }
         hasRun.current = true;
 
-        if (speedFlag) { 
-          transitionRef.current.children[0].textContent = "Chatbot is preparing for the day...";
-        }
-        else {
-          transitionRef.current.children[0].textContent = "Entering Chat...";
-        }
-
-        setTimeout(() => {
-          console.log("data after in INITIAL ADD", data);
-          transitionRef.current.classList.add('col');
-
-          if (!speedFlag){
-            setTimeout(() => {
-              transitionRef.current.classList.add('fade');
-              setTimeout(() => {
-                transitionRef.current.classList.remove('go');
-              }, 1000)
-            }, 1000)
+        if (transitionRef.current) {
+          if (speedFlag) { 
+            transitionRef.current.children[0].textContent = "Chatbot is preparing for the day...";
           }
           else {
-            setTimeout(() => {
-              handleExit()
-            }, 1000)
+            transitionRef.current.children[0].textContent = "Entering Chat...";
           }
+
+          setTimeout(() => {
+            console.log("data after in INITIAL ADD", data);
+            if (transitionRef.current) {
+              transitionRef.current.classList.add('col');
+
+              if (!speedFlag){
+                setTimeout(() => {
+                  if (transitionRef.current) {
+                    transitionRef.current.classList.add('fade');
+                    setTimeout(() => {
+                      if (transitionRef.current) {
+                        transitionRef.current.classList.remove('go');
+                      }
+                    }, 1000);
+                  }
+                }, 1000);
+              } else {
+                setTimeout(() => {
+                  handleExit();
+                }, 1000);
+              }
+            }
           }, 1000);
+        }
     
 
       }, [speedFlag, data]); // adding speedFlag dependency should no longer get 429 Too Many Requests

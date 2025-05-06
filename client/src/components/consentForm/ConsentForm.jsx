@@ -153,7 +153,6 @@ const ConsentForm = () => {
         // Build the prompt with the selected personality
         if (selectedPersonality) {
             const builtPrompt = buildPrompt(selectedPersonality, researchMode);
-            console.log('Built Prompt:', builtPrompt);
             
             // Store the built prompt in sessionStorage for use in the chat
             sessionStorage.setItem('builtPrompt', builtPrompt);

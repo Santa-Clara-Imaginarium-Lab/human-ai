@@ -121,15 +121,13 @@ export const QUESTIONS = [
   "Rush into things"
 ];
 
-export const QUESTIONNAIRE_PROMPT = `Before we begin, please answer the following questions. 
-This is an important part of the game setup.
-You will be presented with a series of statements describing different behaviors. 
+export const QUESTIONNAIRE_PROMPT = `Before we begin, you will be presented with a series of statements describing different behaviors. 
 Rate how accurately each statement describes you as you generally are now, not how you wish to be.
-Be very honest and answer based on your current self.
+Be very honest.
 Important: Respond using strictly numbers, based on the following scale:
 1 = Very Inaccurate  
 2 = Moderately Inaccurate  
 3 = Neither Accurate nor Inaccurate  
 4 = Moderately Accurate  
 5 = Very Accurate
-Do not include any words or explanations—strictly respond with numbers only.`;
+Do not include any words or explanations`;

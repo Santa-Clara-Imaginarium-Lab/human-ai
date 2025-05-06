@@ -4,6 +4,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import mongoose from "mongoose";
 import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
+import { QUESTIONS } from '../client/src/script/constants.js';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -86,42 +87,65 @@ async function getGoogleSheet(sheetTitle, headerValues) {
 }
 
 app.post("/api/chat-responses", async (req, res) => {
-  let { answers, answerColumnIndex } = req.body;
+  let { userId, personality, answers } = req.body;
 
-  if (!answers || !Array.isArray(answers) || !answerColumnIndex) {
-    return res.status(400).send("Missing 'answers' array or 'answerColumnIndex'");
+  console.log("Received request with:");
+  console.log("- userId:", userId);
+  console.log("- personality:", personality);
+  console.log("- answers.length:", answers?.length);
+  console.log("- QUESTIONS.length:", QUESTIONS.length);
+
+  if (!userId || !personality || !answers || !Array.isArray(answers)) {
+    return res.status(400).send("Missing 'userId', 'personality', or 'answers' array");
   }
 
   try {
-    const sheet = await getGoogleSheet(
-      "Average",
-      ["Questions", ...Array.from({ length: 30 }, (_, i) => `Answer${i + 1}`)]
-    );
-
-    const colLetter = String.fromCharCode(65 + answerColumnIndex); // A=0, B=1...
-    const columnRange = `${colLetter}1:${colLetter}${answers.length}`;
-
-    // Ensure sheet has enough rows
-    while (sheet.rowCount < answers.length) {
-      await sheet.addRow({}); // Empty row
+    // Get the sheet with headers for User ID, Personality, and all questions
+    const headers = ["User ID", "Personality", ...QUESTIONS];
+    const sheet = await getGoogleSheet("AI Personality Ques", headers);
+    
+    // Load all rows to check if user already exists
+    const rows = await sheet.getRows();
+    
+    // Find if this user already has a row
+    let userRow = rows.find(row => row["User ID"] === userId);
+    
+    if (userRow) {
+      console.log(`Found existing user ${userId}, updating row`);
+      // Update personality and answers
+      userRow.Personality = personality;
+      
+      // Update answers for each question
+      for (let i = 0; i < Math.min(answers.length, QUESTIONS.length); i++) {
+        const question = QUESTIONS[i];
+        userRow[question] = answers[i];
+      }
+      
+      // Save the updated row
+      await userRow.save();
+      console.log(`Updated row for user ${userId}`);
+    } else {
+      console.log(`Creating new row for user ${userId}`);
+      // Create a new row with userId, personality and answers
+      const rowData = { "User ID": userId, "Personality": personality };
+      
+      // Add answers for each question
+      for (let i = 0; i < Math.min(answers.length, QUESTIONS.length); i++) {
+        const question = QUESTIONS[i];
+        rowData[question] = answers[i];
+      }
+      
+      // Add the new row
+      await sheet.addRow(rowData);
+      console.log(`Added new row for user ${userId}`);
     }
-
-    await sheet.loadCells(columnRange); // Only load column cells
-
-    for (let i = 0; i < answers.length; i++) {
-      const cell = sheet.getCell(i, answerColumnIndex); // row i, column (AnswerX)
-      cell.value = answers[i];
-    }
-
-    await sheet.saveUpdatedCells(); // ✅ One write request
-    res.status(200).send(`✅ Stored ${answers.length} responses in Answer${answerColumnIndex}`);
+    
+    res.status(200).send(`✅ Stored responses for user ${userId}`);
   } catch (error) {
     console.error("❌ Error writing answers:", error);
-    res.status(500).send("Error saving chat responses");
+    res.status(500).send(`Error saving chat responses: ${error.message}`);
   }
 });
-
-
 
 
 app.post("/api/gamescores", async (req, res) => {

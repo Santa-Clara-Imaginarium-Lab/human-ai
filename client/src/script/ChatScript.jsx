@@ -18,7 +18,7 @@ export async function runChatSequence() {
   
   try {
     // Fetch the chat history
-    const res = await fetch(`http://localhost:3000/api/chats/${chatId}`);
+    const res = await fetch(`https://human-ai.up.railway.app/api/chats/${chatId}`);
     const data = await res.json();
 
     let history = [
@@ -42,7 +42,8 @@ export async function runChatSequence() {
     
     // Send the personality prompt once before starting the questions
     console.log('Sending personality prompt before questions');
-    const setupResult = await chatInstance.sendMessage(QUESTIONNAIRE_PROMPT);
+    let QUESTIONNAIRE_PROMPT_ONELINE = QUESTIONNAIRE_PROMPT.replace(/\n/g, '');
+    const setupResult = await chatInstance.sendMessage(QUESTIONNAIRE_PROMPT_ONELINE);
     console.log('Personality setup complete');
     console.log('AI Response to personality prompt:', setupResult.response.text());
     
@@ -66,7 +67,7 @@ export async function runChatSequence() {
           }
           
           allResponses.push({ question: rawStatement, answer: fullAnswer.trim() });
-          await new Promise(resolve => setTimeout(resolve, 100)); // wait to avoid overload
+          await new Promise(resolve => setTimeout(resolve, 500)); // wait to avoid overload
         } catch (err) {
           console.error(`❌ Error for question: ${rawStatement}`, err);
           allResponses.push({ question: rawStatement, answer: "Error" });
@@ -79,33 +80,38 @@ export async function runChatSequence() {
         responses: allResponses
       });
       
-      // 🔁 Extract only the answers to send to backend
+      // Extract only the answers to send to backend
       const onlyAnswers = allResponses.map(r => r.answer);
       
-      // ✅ Send answers only to backend API
+      // Get userId and personality from sessionStorage
+      const userId = sessionStorage.getItem("userId");
+      const personality = sessionStorage.getItem("personality");
+      
+      // ✅ Send userId, personality, and answers to backend API
       try {
-        console.log("▶️ Sending to API", { answers: onlyAnswers, answerColumnIndex });
+        console.log("▶Sending to API", { userId, personality, answers: onlyAnswers });
         
-        const res = await fetch("http://localhost:3000/api/chat-responses", {
+        const res = await fetch("https://human-ai.up.railway.app/api/chat-responses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            answers: onlyAnswers,
-            answerColumnIndex: answerColumnIndex
+            userId,
+            personality,
+            answers: onlyAnswers
           })
         });
         
         const text = await res.text();
-        console.log(`✅ Run ${run + 1}: Saved to Answer${answerColumnIndex}`, text);
+        console.log(`✅ Run ${run + 1}: Saved responses for user ${userId}`, text);
       } catch (err) {
-        console.error(`❌ Run ${run + 1}: Failed to save to Answer${answerColumnIndex}`, err);
+        console.error(`❌ Run ${run + 1}: Failed to save responses for user ${userId}`, err);
       }
       
       // Optional delay between full runs
       await new Promise(resolve => setTimeout(resolve, 30000));
     }
     
-    console.log("🎉 All runs completed and saved to sheet!");
+    console.log("All runs completed and saved to sheet!");
   } catch (err) {
     console.error("Error running chat sequence:", err);
   }
@@ -131,7 +137,7 @@ const ChatScript = () => {
 
     const fetchChat = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/chats/${chatId}`);
+        const res = await fetch(`https://human-ai.up.railway.app/api/chats/${chatId}`);
         const data = await res.json();
 
         let history = [
@@ -167,7 +173,7 @@ const ChatScript = () => {
     // Send the personality prompt once before starting the questions
       try {
         console.log('Sending personality prompt before questions');
-        const setupResult = await chat.sendMessage(QUESTIONNAIRE_PROMPT);
+        const setupResult = await chat.sendMessage(QUESTIONNAIRE_PROMPT_ONELINE);
         console.log('Personality setup complete');
         console.log('AI Response to personality prompt:', setupResult.response.text());
       } catch (err) {
@@ -191,7 +197,7 @@ const ChatScript = () => {
           }
   
           allResponses.push({ question: rawStatement, answer: fullAnswer.trim() });
-          await new Promise(resolve => setTimeout(resolve, 100)); // wait to avoid overload
+          await new Promise(resolve => setTimeout(resolve, 400)); // wait to avoid overload
         } catch (err) {
           console.error(`❌ Error for question: ${rawStatement}`, err);
           allResponses.push({ question: rawStatement, answer: "Error" });
@@ -207,33 +213,38 @@ const ChatScript = () => {
       // Update UI
       setResults([...allRunResults]);
   
-      // 🔁 Extract only the answers to send to backend
+      // Extract only the answers to send to backend
       const onlyAnswers = allResponses.map(r => r.answer);
+      
+      // Get userId and personality from sessionStorage
+      const userId = sessionStorage.getItem("userId") || `user_${Date.now()}`;
+      const personality = sessionStorage.getItem("personality") || "reserved";
   
-      // ✅ Send answers only to backend API
+      // ✅ Send userId, personality, and answers to backend API
       try {
-        console.log("▶️ Sending to API", { answers: onlyAnswers, answerColumnIndex });
+        console.log("▶Sending to API", { userId, personality, answers: onlyAnswers });
   
-        const res = await fetch("http://localhost:3000/api/chat-responses", {
+        const res = await fetch("https://human-ai.up.railway.app/api/chat-responses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            answers: onlyAnswers,
-            answerColumnIndex: answerColumnIndex
+            userId,
+            personality,
+            answers: onlyAnswers
           })
         });
   
         const text = await res.text();
-        console.log(`✅ Run ${run + 1}: Saved to Answer${answerColumnIndex}`, text);
+        console.log(`✅ Run ${run + 1}: Saved responses for user ${userId}`, text);
       } catch (err) {
-        console.error(`❌ Run ${run + 1}: Failed to save to Answer${answerColumnIndex}`, err);
+        console.error(`❌ Run ${run + 1}: Failed to save responses for user ${userId}`, err);
       }
   
       // Optional delay between full runs
       await new Promise(resolve => setTimeout(resolve, 30000));
     }
   
-    console.log("🎉 All runs completed and saved to sheet!");
+    console.log("All runs completed and saved to sheet!");
   };
   
   

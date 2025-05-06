@@ -8,7 +8,7 @@ const ChatScript = () => {
   const TOTAL_RUNS = 1;
   const START_COLUMN_INDEX = 1; 
 
-  const [chatId, setChatId] = useState("6809e8c40f2d64310973453b");
+  const chatId = sessionStorage.getItem("chatId");
   const [chat, setChat] = useState(null);
   const [results, setResults] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -74,7 +74,7 @@ const ChatScript = () => {
           }
   
           allResponses.push({ question: rawStatement, answer: fullAnswer.trim() });
-          await new Promise(resolve => setTimeout(resolve, 500)); // wait to avoid overload
+          await new Promise(resolve => setTimeout(resolve, 100)); // wait to avoid overload
         } catch (err) {
           console.error(`❌ Error for question: ${rawStatement}`, err);
           allResponses.push({ question: rawStatement, answer: "Error" });

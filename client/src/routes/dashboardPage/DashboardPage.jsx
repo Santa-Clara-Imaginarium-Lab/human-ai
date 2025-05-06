@@ -11,8 +11,13 @@ function pickRandomPersonality() {
   // Check if research mode is enabled
   const isResearchMode = sessionStorage.getItem("isResearchMode") === "true";
   
-  // In research mode, don't assign any personality (it will be assigned in the survey page)
+  // In research mode, use the personality that was assigned in the ConsentForm
   if (isResearchMode) {
+    // Check if a personality has already been assigned in ConsentForm
+    const existingPersonality = sessionStorage.getItem("personality");
+    if (existingPersonality) {
+      return existingPersonality;
+    }
     return null;
   }
   
@@ -90,13 +95,22 @@ const DashboardPage = () => {
 
   useEffect(() => {
     if (debounce && userChats) {
+      const isResearchMode = sessionStorage.getItem("isResearchMode") === "true";
+      const existingChatId = sessionStorage.getItem("chatId");
+      
       if (userChats.length > 0) {
         // User has existing chats, navigate to most recent one
         const mostRecentChat = userChats[userChats.length - 1];
-        const botPersonality = pickRandomPersonality();
+          const botPersonality = pickRandomPersonality();
         const builtPrompt = buildPrompt(botPersonality);
         const speedFlag = true;
         navigate(`/dashboard/chats/${mostRecentChat._id}`, { state: { builtPrompt, none: null, speedFlag } });
+      } else if (isResearchMode && existingChatId) {
+        // In research mode with an existing chat ID from ConsentForm
+        console.log('Using existing chat created in ConsentForm:', existingChatId);
+        const builtPrompt = sessionStorage.getItem("builtPrompt");
+        const speedFlag = true;
+        navigate(`/dashboard/chats/${existingChatId}`, { state: { builtPrompt, none: null, speedFlag } });
       } else {
         // No existing chats, create new one
         mutation.mutate("begin");
@@ -130,6 +144,20 @@ const DashboardPage = () => {
     onSuccess: (id) => {
       queryClient.invalidateQueries({ queryKey: ["userChats", userId] });
       
+      const isResearchMode = sessionStorage.getItem("isResearchMode") === "true";
+      const existingChatId = sessionStorage.getItem("chatId");
+      
+      // If in research mode and there's an existing chat ID, use that instead
+      if (isResearchMode && existingChatId) {
+        console.log('Using existing chat created in ConsentForm:', existingChatId);
+        const builtPrompt = sessionStorage.getItem("builtPrompt");
+        const none = null;
+        const speedFlag = true;
+        navigate(`/dashboard/chats/${existingChatId}`, { state: { builtPrompt, none, speedFlag } });
+        return;
+      }
+      
+      // Otherwise proceed with normal flow
       const botPersonality = pickRandomPersonality();
       console.log('Bot Personality: ', botPersonality);
       

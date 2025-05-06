@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from "../../context/UserContext";
 import personalities from '../../constants/personalities';
 import { buildPrompt } from '../../constants/personalityConstants';
+// Import the runChatSequence function directly from ChatScript
+import { runChatSequence } from '../../script/ChatScript';
 
 function pickRandomPersonality() {
     // For non-research mode, check if a personality has already been assigned
@@ -95,14 +97,15 @@ const ConsentForm = () => {
         }
         
         try {
-            // First create a new chat
+            // Create a new chat with "begin" as the first message
+            // This keeps the chat history clean
             const chatResponse = await fetch(`https://human-ai.up.railway.app/api/chats`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ 
-                    text: "begin",
+                    text: "begin", // Use "begin" instead of the personality prompt
                     userId 
                 }),
             });
@@ -114,27 +117,13 @@ const ConsentForm = () => {
             const chatId = await chatResponse.json();
             console.log('Created chat with ID:', chatId);
             
-            // Store the chat ID in sessionStorage
+            // Store the chat ID and builtPrompt in sessionStorage
+            // This way the builtPrompt is available to the chatbot but not stored in the DB
             sessionStorage.setItem('chatId', chatId);
-            
-            // Now send the prompt to the API
-            // Note: This is a simplified example. You may need to adjust this based on your actual API
-            // This part depends on how your backend is set up to receive the prompt
-            const promptResponse = await fetch(`https://human-ai.up.railway.app/api/chats/${chatId}/prompt`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ 
-                    prompt: builtPrompt
-                }),
-            });
-            
-            if (!promptResponse.ok) {
-                throw new Error('Failed to send prompt');
-            }
-            
-            console.log('Successfully sent prompt to chatbot');
+            sessionStorage.setItem('builtPrompt', builtPrompt);
+            console.log('Successfully created chat and stored prompt in sessionStorage');
+
+            runChatSequence();
             
         } catch (error) {
             console.error('Error sending prompt to API:', error);
@@ -156,14 +145,14 @@ const ConsentForm = () => {
         sessionStorage.setItem('numChangeDescisions', 0);
         sessionStorage.setItem('aiChoices', JSON.stringify([]));
         sessionStorage.setItem('userChoices', JSON.stringify([]));
-        
+        const researchMode = sessionStorage.getItem('isResearchMode');
         // Select a personality for the chatbot
         const selectedPersonality = pickRandomPersonality();
         console.log('Selected Personality:', selectedPersonality);
         
         // Build the prompt with the selected personality
         if (selectedPersonality) {
-            const builtPrompt = buildPrompt(selectedPersonality);
+            const builtPrompt = buildPrompt(selectedPersonality, researchMode);
             console.log('Built Prompt:', builtPrompt);
             
             // Store the built prompt in sessionStorage for use in the chat
@@ -215,6 +204,7 @@ const ConsentForm = () => {
                 </button>
                 </div>
             </div>
+
         </div>
       );
 }

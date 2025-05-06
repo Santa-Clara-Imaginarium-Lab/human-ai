@@ -8,70 +8,44 @@ import personalities from '../../constants/personalities';
 import { buildPrompt } from '../../constants/personalityConstants';
 
 function pickRandomPersonality() {
-  // Check if research mode is enabled
-  const isResearchMode = sessionStorage.getItem("isResearchMode") === "true";
-  
-  // In research mode, use the personality that was assigned in the ConsentForm
-  if (isResearchMode) {
-    // Check if a personality has already been assigned in ConsentForm
-    const existingPersonality = sessionStorage.getItem("personality");
-    if (existingPersonality) {
-      return existingPersonality;
-    }
-    return null;
-  }
-  
-  // For non-research mode, check if a personality has already been assigned
   const existingPersonality = sessionStorage.getItem("personality");
-  
   if (existingPersonality) {
-    // If a personality already exists, return it - this ensures the personality remains the same until user logs out
     return existingPersonality;
   }
-  
-  // Handle forced scenarios
+  // handle forced scenarios
   const forcedPersonality = sessionStorage.getItem("forcedPersonality");
   if (forcedPersonality && forcedPersonality !== "random") {
-    sessionStorage.setItem("personality", forcedPersonality);
     return forcedPersonality;
   } 
   
-  // Keep track of remaining personalities for future use
-  let remainingPersonalities = JSON.parse(sessionStorage.getItem("remainingPersonalities"));
-  let personalitiesArr = JSON.parse(sessionStorage.getItem("personalitiesArr")) || [];
+  // standard scenarios
+  const remainingPersonalities = JSON.parse(sessionStorage.getItem("remainingPersonalities"));
+  const personalitiesArr = JSON.parse(sessionStorage.getItem("personalitiesArr"));
   
   if (!remainingPersonalities) { // if we don't have a list of personalities, make one
-    remainingPersonalities = [...personalities];
-    sessionStorage.setItem("remainingPersonalities", JSON.stringify(remainingPersonalities));
+    sessionStorage.setItem("remainingPersonalities", JSON.stringify(personalities));
     sessionStorage.setItem("personalitiesArr", JSON.stringify([]));
+    return pickRandomPersonality();
   }
 
-  // Pick a random personality from the personalities array
-  const randomIndex = Math.floor(Math.random() * personalities.length);
-  const selectedPersonality = personalities[randomIndex];
+  const randomIndex = Math.floor(Math.random() * remainingPersonalities.length);
+  const nextPersonality = remainingPersonalities[randomIndex];
   
-  // Update tracking arrays for future use (but we're not using them for selection now)
-  // This is just to maintain the arrays for potential future features
-  if (remainingPersonalities.includes(selectedPersonality)) {
-    const indexToRemove = remainingPersonalities.indexOf(selectedPersonality);
-    remainingPersonalities.splice(indexToRemove, 1);
-    sessionStorage.setItem("remainingPersonalities", JSON.stringify(remainingPersonalities));
-  }
+  // Remove personality from list of remaining personalities
+  remainingPersonalities.splice(randomIndex, 1);
+  sessionStorage.setItem("remainingPersonalities", JSON.stringify(remainingPersonalities));
   
-  if (!personalitiesArr.includes(selectedPersonality)) {
-    personalitiesArr.push(selectedPersonality);
-    sessionStorage.setItem("personalitiesArr", JSON.stringify(personalitiesArr));
-  }
-  
-  // Store the selected personality - this will be used until user logs out
-  sessionStorage.setItem("personality", selectedPersonality);
+  // Add personality to list of personalities the user has seen
+  personalitiesArr.push(nextPersonality);
+  sessionStorage.setItem("personalitiesArr", JSON.stringify(personalitiesArr));
 
-  return selectedPersonality;
+  return nextPersonality;
 }
 
 const DashboardPage = () => {
 
     const [debounce,setDebounce] = useState(true);
+
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { userId } = useUser();
@@ -94,30 +68,40 @@ const DashboardPage = () => {
   });
 
   useEffect(() => {
-    if (debounce && userChats) {
-      const isResearchMode = sessionStorage.getItem("isResearchMode") === "true";
-      const existingChatId = sessionStorage.getItem("chatId");
+    if (debounce) {
+      // Check if we have a chatId from ConsentForm
+      const existingChatId = sessionStorage.getItem('chatId');
+      console.log('Checking for existing chatId:', existingChatId);
       
-      if (userChats.length > 0) {
-        // User has existing chats, navigate to most recent one
-        const mostRecentChat = userChats[userChats.length - 1];
-          const botPersonality = pickRandomPersonality();
-        const builtPrompt = buildPrompt(botPersonality);
-        const speedFlag = true;
-        navigate(`/dashboard/chats/${mostRecentChat._id}`, { state: { builtPrompt, none: null, speedFlag } });
-      } else if (isResearchMode && existingChatId) {
-        // In research mode with an existing chat ID from ConsentForm
-        console.log('Using existing chat created in ConsentForm:', existingChatId);
-        const builtPrompt = sessionStorage.getItem("builtPrompt");
+      if (existingChatId) {
+        console.log('Found existing chatId from ConsentForm:', existingChatId);
+        // We have a chatId from ConsentForm, use that
+        const builtPrompt = sessionStorage.getItem('builtPrompt');
+        console.log('Using built prompt from ConsentForm:', builtPrompt);
         const speedFlag = true;
         navigate(`/dashboard/chats/${existingChatId}`, { state: { builtPrompt, none: null, speedFlag } });
-      } else {
-        // No existing chats, create new one
-        mutation.mutate("begin");
+        setDebounce(false);
+      } else if (userChats) {
+        // No chatId from ConsentForm, proceed with normal flow
+        if (userChats.length > 0) {
+          console.log('Using existing chats:', userChats.length);
+          const researchMode = sessionStorage.getItem('isResearchMode');
+          // User has existing chats, navigate to most recent one
+          const mostRecentChat = userChats[userChats.length - 1];
+          const botPersonality = pickRandomPersonality();
+          sessionStorage.setItem("personality", botPersonality);
+          const builtPrompt = buildPrompt(botPersonality, researchMode);
+          const speedFlag = true;
+          navigate(`/dashboard/chats/${mostRecentChat._id}`, { state: { builtPrompt, none: null, speedFlag } });
+        } else {
+          console.log('No existing chats, creating new one');
+          // No existing chats, create new one
+          mutation.mutate("begin");
+        }
+        setDebounce(false);
       }
-      setDebounce(false);
     }
-  }, [userChats, debounce]);
+  }, [userChats, debounce, navigate]);
 
   const mutation = useMutation({
     mutationFn: (text) => {
@@ -144,28 +128,16 @@ const DashboardPage = () => {
     onSuccess: (id) => {
       queryClient.invalidateQueries({ queryKey: ["userChats", userId] });
       
-      const isResearchMode = sessionStorage.getItem("isResearchMode") === "true";
-      const existingChatId = sessionStorage.getItem("chatId");
-      
-      // If in research mode and there's an existing chat ID, use that instead
-      if (isResearchMode && existingChatId) {
-        console.log('Using existing chat created in ConsentForm:', existingChatId);
-        const builtPrompt = sessionStorage.getItem("builtPrompt");
-        const none = null;
-        const speedFlag = true;
-        navigate(`/dashboard/chats/${existingChatId}`, { state: { builtPrompt, none, speedFlag } });
-        return;
-      }
-      
-      // Otherwise proceed with normal flow
       const botPersonality = pickRandomPersonality();
+      sessionStorage.setItem("personality", botPersonality);
       console.log('Bot Personality: ', botPersonality);
-      
-      const builtPrompt = buildPrompt(botPersonality); // TODO: MAKE DYNAMIC SO WE DO ALL 5
-      console.log(builtPrompt);
-      const none = null;
-      const speedFlag = true;
-      navigate(`/dashboard/chats/${id}`, { state: { builtPrompt, none, speedFlag } });
+
+            const researchMode = sessionStorage.getItem('isResearchMode');
+            const builtPrompt = buildPrompt(botPersonality, researchMode); // Include researchMode parameter
+            console.log(builtPrompt);
+            const none = null;
+            const speedFlag = true;
+            navigate(`/dashboard/chats/${id}`, { state: { builtPrompt, none, speedFlag } });
         },
         onError: (error) => {
             console.error("Mutation error:", error);

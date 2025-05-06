@@ -250,13 +250,6 @@ export function buildPrompt(thisBotType, isResearchMode = false) {
     `;
   
     let STARTING_PROMPT_ONELINE = STARTING_PROMPT.replace(/\n/g, '');
-    
-    // Include QUESTIONNAIRE_PROMPT only if in research mode
-    if (isResearchMode) {
-      // Remove newlines from questionnaire prompt just like with the starting prompt
-      const QUESTIONNAIRE_PROMPT_ONELINE = QUESTIONNAIRE_PROMPT.replace(/\n/g, ' ');
-      STARTING_PROMPT_ONELINE = `${STARTING_PROMPT_ONELINE} ${QUESTIONNAIRE_PROMPT_ONELINE}`;
-    }
   
     console.log(STARTING_PROMPT_ONELINE)
     return STARTING_PROMPT_ONELINE;
@@ -266,15 +259,3 @@ export function buildPrompt(thisBotType, isResearchMode = false) {
     // =================== //
 }
 
-export const QUESTIONNAIRE_PROMPT = `Before we begin, please answer the following questions. 
-This is an important part of the game setup.
-You will be presented with a series of statements describing different behaviors. 
-Rate how accurately each statement describes you as you generally are now, not how you wish to be.
-Be very honest and answer based on your current self.
-Important: Respond using strictly numbers, based on the following scale:
-1 = Very Inaccurate  
-2 = Moderately Inaccurate  
-3 = Neither Accurate nor Inaccurate  
-4 = Moderately Accurate  
-5 = Very Accurate
-Do not include any words or explanations—strictly respond with numbers only.`;

@@ -68,11 +68,11 @@ const ChatPage = () => {
                 }
                 key={i}
                 >
-                  <Markdown>{message.parts[0].text}</Markdown>
+                  <Markdown>{message.parts[0].text.toLowerCase().includes("caboodle daily report") ? "*" + message.parts[0].text.split(" || ")[0] + "*" : message.parts[0].text}</Markdown>
                 </div>
                 {/* You or Info bubble */}
                 <div className={"avatar" + (message.role === "user" ? "" : " hide")}>
-                  {message.parts[0].text.toLowerCase().includes("caboodle daily report:") ? "Info" :
+                  {message.parts[0].text.toLowerCase().includes("caboodle daily report") ? "INFO" :
                   "You"}
                 </div>
               </div>

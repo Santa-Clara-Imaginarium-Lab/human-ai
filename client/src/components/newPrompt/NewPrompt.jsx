@@ -165,6 +165,7 @@ You are about to play five rounds of the Prisoner's Dilemma with the current use
           return accumulatedText;
         } catch (err) {
           console.log(err);
+          alert("The AI encountered an error. Your message was not recorded. Please try again.");
         }
       }; 
     

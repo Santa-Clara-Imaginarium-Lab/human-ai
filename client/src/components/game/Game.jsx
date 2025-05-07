@@ -109,6 +109,7 @@ function Game() {
         return accumulatedText;
       } catch (err) {
         console.log(err);
+        alert("The AI encountered an error its decision could not be processed. Please try again.");
       }
     }; 
 
@@ -162,15 +163,16 @@ function Game() {
         // WILL GIVE THE FUNCTION THE ~100MS NECESSARY TO DO ITS WORK
         let decision;
         if (which == "decision") 
-          decision = await add("[SYSTEM] Decide, COOPERATE or DEFECT? Respond this one time in this format: [SYSTEM] <response>", false, chat)
+          decision = await add("[SYSTEM] DECIDE, COOPERATE or DEFECT? FOR THE NEXT MESSAGE ONLY, RESPOND IN THIS FORMAT: [SYSTEM] <response>", false, chat)
         else
-          decision = await add(`Caboodle Daily Report: On Day ${currentRound}, the User ${userDecision === 'Cooperate' ? 'SHARED' : 'WITHHELD'} and the AI ${info === 'Cooperate' ? 'SHARED' : 'WITHHELD'}.`, false, chat);
+          decision = await add(`[Caboodle Daily Report] On Day ${currentRound}, the AI ${info === 'Cooperate' ? 'SHARED' : 'WITHHELD'} and the user ${userDecision === 'Cooperate' ? 'SHARED' : 'WITHHELD'}. || What are your thoughts?`, false, chat);
     
         console.log("<<BOT'S DECISION STATEMENT>> ", decision);
     
         if (which == "inform") {
           resolve("done");
           setIsScoresLocked(true);
+          return;
         }
 
         const choices = ['Cooperate', 'Defect'];
@@ -197,10 +199,10 @@ function Game() {
     
         // had to change to string indexOf, === was bugging
         console.log(text);
-        if (text.indexOf("cooperate") > -1) {
+        if (text.indexOf("cooperate") > -1 || text.indexOf("share") > -1) {
           resolve(choices[0]);
         }
-        else if (text.indexOf("defect") > -1) {
+        else if (text.indexOf("defect") > -1 || text.indexOf("withhold") > -1) {
           resolve(choices[1]);
         }
         else {

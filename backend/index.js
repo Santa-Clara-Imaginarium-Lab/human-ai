@@ -27,23 +27,24 @@ const doc = new GoogleSpreadsheet(SHEET_ID);
 const port = 3000;
 const app = express();
 
+// Allow all origins in development, or use specific origins in production
 const allowedOrigins = [
-  "http://localhost:5173", // Allow local development
-  "https://human-ai.netlify.app", // Allow Netlify production site
-  "https://human-ai.up.railway.app" // Allow Railway deployment
+  "http://localhost:5173", // Local development
+  "https://human-ai.netlify.app", // Netlify production
+  "https://human-ai-git-main-nehasawants-projects.netlify.app", // Netlify preview
+  "https://human-ai-staging.netlify.app", // Netlify staging
+  "https://human-ai.up.railway.app" // Railway deployment
 ];
 
+// Simplified CORS configuration
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS policy does not allow this origin!"));
-    }
-  },
+  origin: '*', // Allow all origins for now to troubleshoot the issue
   credentials: true,
   methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Access-Control-Allow-Origin"],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
 
 app.use(express.json());

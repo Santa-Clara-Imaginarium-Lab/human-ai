@@ -36,9 +36,20 @@ const allowedOrigins = [
   "https://human-ai.up.railway.app" // Railway deployment
 ];
 
-// Simplified CORS configuration
+// CORS configuration that handles credentials properly
 app.use(cors({
-  origin: '*', // Allow all origins for now to troubleshoot the issue
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if the origin is in our allowlist
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(null, false);
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],

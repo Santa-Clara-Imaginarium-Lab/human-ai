@@ -73,25 +73,11 @@ async function getGoogleSheet(sheetTitle, headerValues) {
       headerValues: headerValues,
     });
     console.log(`Created new sheet: ${sheetTitle}`);
-  } else {
-    // If sheet exists, check if the required headers exist
-    // But don't modify existing headers beyond what's necessary
-    const existingHeaders = sheet.headerValues || [];
-    
-    // Only add headers that are in the required list but missing from existing headers
-    // This preserves any existing headers not in our required list
-    const missingHeaders = headerValues.filter(header => 
-      !existingHeaders.includes(header) && 
-      // Only consider the first few headers as required (User ID, Personality)
-      headerValues.indexOf(header) < 2
-    );
-
-    if (missingHeaders.length > 0) {
-      // Add missing headers without overwriting existing ones
-      const updatedHeaders = [...existingHeaders, ...missingHeaders];
-      await sheet.setHeaderRow(updatedHeaders);
-    }
   }
+  
+  // Important: Load the sheet with all columns accessible for writing
+  // This ensures we can write to any column, not just those specified in headerValues
+  await sheet.loadCells();
   
   return sheet;
 }

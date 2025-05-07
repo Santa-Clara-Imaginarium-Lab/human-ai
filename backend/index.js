@@ -30,7 +30,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173", // Allow local development
-  "https://human-ai.netlify.app" // Allow Netlify production site
+  "https://human-ai.netlify.app", // Allow Netlify production site
+  "https://human-ai.up.railway.app" // Allow Railway deployment
 ];
 
 app.use(cors({

@@ -4,7 +4,6 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import mongoose from "mongoose";
 import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
-import { QUESTIONS } from '../client/src/script/constants.js';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -94,16 +93,15 @@ app.post("/api/chat-responses", async (req, res) => {
   console.log("- userId:", userId);
   console.log("- personality:", personality);
   console.log("- answers.length:", answers?.length);
-  console.log("- QUESTIONS.length:", QUESTIONS.length);
 
   if (!userId || !personality || !answers || !Array.isArray(answers)) {
     return res.status(400).send("Missing 'userId', 'personality', or 'answers' array");
   }
 
   try {
-    // Get the sheet with headers for User ID, Personality, and all questions
-    const headers = ["User ID", "Personality", ...QUESTIONS];
-    const sheet = await getGoogleSheet("AI Personality Ques", headers);
+    // Get the sheet with fixed headers for User ID and Personality
+    // We don't need to specify all question headers - they'll be handled by column position
+    const sheet = await getGoogleSheet("AI Personality Ques", ["User ID", "Personality"]);
     
     // Load all rows to check if user already exists
     const rows = await sheet.getRows();
@@ -113,13 +111,16 @@ app.post("/api/chat-responses", async (req, res) => {
     
     if (userRow) {
       console.log(`Found existing user ${userId}, updating row`);
-      // Update personality and answers
+      // Update personality
       userRow.Personality = personality;
       
-      // Update answers for each question
-      for (let i = 0; i < Math.min(answers.length, QUESTIONS.length); i++) {
-        const question = QUESTIONS[i];
-        userRow[question] = answers[i];
+      // Update answers directly by index (C, D, E, etc.)
+      // The Google Sheets API allows accessing cells by their header name
+      // or by their raw column values (which start at 3 for column C)
+      for (let i = 0; i < answers.length; i++) {
+        // Column index 2 corresponds to column C (0=A, 1=B, 2=C, etc.)
+        const columnIndex = i + 2;
+        userRow._rawData[columnIndex] = answers[i];
       }
       
       // Save the updated row
@@ -127,14 +128,26 @@ app.post("/api/chat-responses", async (req, res) => {
       console.log(`Updated row for user ${userId}`);
     } else {
       console.log(`Creating new row for user ${userId}`);
-      // Create a new row with userId, personality and answers
-      const rowData = { "User ID": userId, "Personality": personality };
+      // Create a new row with userId and personality
+      const rowData = {
+        "User ID": userId,
+        Personality: personality,
+      };
       
-      // Add answers for each question
-      for (let i = 0; i < Math.min(answers.length, QUESTIONS.length); i++) {
-        const question = QUESTIONS[i];
-        rowData[question] = answers[i];
-      }
+      // Add answers directly to the row data
+      // The Google Sheets API will place these in columns C, D, E, etc.
+      answers.forEach((answer, index) => {
+        // We need to add answers to the rowData object
+        // Since we don't have the question text as keys, we'll use column indices
+        // The sheet.headerValues will contain the headers in order
+        if (sheet.headerValues && sheet.headerValues.length > index + 2) {
+          // If we have a header for this column, use it
+          rowData[sheet.headerValues[index + 2]] = answer;
+        } else {
+          // Otherwise, add it as a raw value that will be placed in the next available column
+          rowData[`_col${index + 3}`] = answer; // +3 because columns are 1-indexed in spreadsheets (A=1, B=2, C=3)
+        }
+      });
       
       // Add the new row
       await sheet.addRow(rowData);

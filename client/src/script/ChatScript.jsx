@@ -67,7 +67,7 @@ export async function runChatSequence() {
           }
           
           allResponses.push({ question: rawStatement, answer: fullAnswer.trim() });
-          await new Promise(resolve => setTimeout(resolve, 5000)); // wait to avoid overload
+          await new Promise(resolve => setTimeout(resolve, 4100)); // wait to avoid overload
         } catch (err) {
           console.error(`❌ Error for question: ${rawStatement}`, err);
           allResponses.push({ question: rawStatement, answer: "Error" });
@@ -197,7 +197,7 @@ const ChatScript = () => {
           }
   
           allResponses.push({ question: rawStatement, answer: fullAnswer.trim() });
-          await new Promise(resolve => setTimeout(resolve, 5000)); // wait to avoid overload
+          await new Promise(resolve => setTimeout(resolve, 4100)); // wait to avoid overload
         } catch (err) {
           console.error(`❌ Error for question: ${rawStatement}`, err);
           allResponses.push({ question: rawStatement, answer: "Error" });

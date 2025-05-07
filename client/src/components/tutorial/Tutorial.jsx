@@ -11,20 +11,29 @@ function Tutorial() {
   const [btuGo, setBtuGo] = useState(false);
 
   const handleNoClick = () => {
-    /* <!> Game variable resets occur here <!> */
-    sessionStorage.setItem('remainingPersonalities', JSON.stringify(personalities)); // Store the unmodified personalities array in sessionStorage
-    sessionStorage.setItem('personalitiesArr', JSON.stringify([])); // Store the first personality in sessionStorage
-    sessionStorage.removeItem('gameLog1'); // Reset game log to prevent half-game completion errors
-    sessionStorage.setItem('aiScore', 0);
-    sessionStorage.setItem('userScore', 0);
-    sessionStorage.setItem('currentRound', 1);
-    sessionStorage.setItem('maxRounds', Math.floor(Math.random() * 4) + 2) // 2-5 rounds
-    sessionStorage.setItem('chatbotApproachScore', 0);
-    sessionStorage.setItem('chatbotSkipScore', 0);
-    sessionStorage.setItem('numChangeDescisions', 0);
-    sessionStorage.setItem('aiChoices', JSON.stringify([]));
-    sessionStorage.setItem('userChoices', JSON.stringify([]));
-    navigate('/game-tutorial', { state: { speedFlag: false, userScore: 0, aiScore: 0 }}); // Navigate to the GameTutorial page
+    // Check if research mode is enabled
+    const isResearchMode = sessionStorage.getItem("isResearchMode") === "true";
+    
+    // Only proceed with game variable resets if not in research mode
+    if (!isResearchMode) {
+      /* <!> Game variable resets occur here <!> */
+      sessionStorage.setItem('remainingPersonalities', JSON.stringify(personalities)); // Store the unmodified personalities array in sessionStorage
+      sessionStorage.setItem('personalitiesArr', JSON.stringify([])); // Store the first personality in sessionStorage
+      sessionStorage.removeItem('gameLog1'); // Reset game log to prevent half-game completion errors
+      sessionStorage.setItem('aiScore', 0);
+      sessionStorage.setItem('userScore', 0);
+      sessionStorage.setItem('currentRound', 1);
+      sessionStorage.setItem('maxRounds', Math.floor(Math.random() * 4) + 2) // 2-5 rounds
+      sessionStorage.setItem('chatbotApproachScore', 0);
+      sessionStorage.setItem('chatbotSkipScore', 0);
+      sessionStorage.setItem('numChangeDescisions', 0);
+      sessionStorage.setItem('aiChoices', JSON.stringify([]));
+      sessionStorage.setItem('userChoices', JSON.stringify([]));
+      navigate('/game-tutorial', { state: { speedFlag: false, userScore: 0, aiScore: 0 }}); // Navigate to the GameTutorial page
+    } else {
+      // In research mode, just navigate without setting game variables
+      navigate('/game-tutorial', { state: { speedFlag: false, userScore: 0, aiScore: 0 }});
+    }
   };
 
       useEffect(() => {

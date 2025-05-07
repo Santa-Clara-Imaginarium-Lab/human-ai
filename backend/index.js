@@ -4,6 +4,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import mongoose from "mongoose";
 import UserChats from "./models/userChats.js"
 import Chat from "./models/chat.js";
+import { QUESTIONS } from '../client/src/script/constants.js';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -85,6 +86,68 @@ async function getGoogleSheet(sheetTitle, headerValues) {
   return sheet;
 }
 
+app.post("/api/chat-responses", async (req, res) => {
+  let { userId, personality, answers } = req.body;
+
+  console.log("Received request with:");
+  console.log("- userId:", userId);
+  console.log("- personality:", personality);
+  console.log("- answers.length:", answers?.length);
+  console.log("- QUESTIONS.length:", QUESTIONS.length);
+
+  if (!userId || !personality || !answers || !Array.isArray(answers)) {
+    return res.status(400).send("Missing 'userId', 'personality', or 'answers' array");
+  }
+
+  try {
+    // Get the sheet with headers for User ID, Personality, and all questions
+    const headers = ["User ID", "Personality", ...QUESTIONS];
+    const sheet = await getGoogleSheet("AI Personality Ques", headers);
+    
+    // Load all rows to check if user already exists
+    const rows = await sheet.getRows();
+    
+    // Find if this user already has a row
+    let userRow = rows.find(row => row["User ID"] === userId);
+    
+    if (userRow) {
+      console.log(`Found existing user ${userId}, updating row`);
+      // Update personality and answers
+      userRow.Personality = personality;
+      
+      // Update answers for each question
+      for (let i = 0; i < Math.min(answers.length, QUESTIONS.length); i++) {
+        const question = QUESTIONS[i];
+        userRow[question] = answers[i];
+      }
+      
+      // Save the updated row
+      await userRow.save();
+      console.log(`Updated row for user ${userId}`);
+    } else {
+      console.log(`Creating new row for user ${userId}`);
+      // Create a new row with userId, personality and answers
+      const rowData = { "User ID": userId, "Personality": personality };
+      
+      // Add answers for each question
+      for (let i = 0; i < Math.min(answers.length, QUESTIONS.length); i++) {
+        const question = QUESTIONS[i];
+        rowData[question] = answers[i];
+      }
+      
+      // Add the new row
+      await sheet.addRow(rowData);
+      console.log(`Added new row for user ${userId}`);
+    }
+    
+    res.status(200).send(`✅ Stored responses for user ${userId}`);
+  } catch (error) {
+    console.error("❌ Error writing answers:", error);
+    res.status(500).send(`Error saving chat responses: ${error.message}`);
+  }
+});
+
+
 app.post("/api/gamescores", async (req, res) => {
     const { user_id, personality, rounds } = req.body;
     const round1 = rounds.find(round => round.round_number === 1);
@@ -158,6 +221,48 @@ app.post("/api/chats", async (req,res) =>{
     } catch (err) {
         console.log(err)
         res.status(500).send("Error creating chat!")
+    }
+});
+
+
+app.put("/api/chats/ques/:id", async (req, res) => {
+    const { question, img } = req.body;
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+
+    try {
+        const chatDoc = await Chat.findOne({ _id: req.params.id });
+        if (!chatDoc) return res.status(404).send("Chat not found");
+
+        // Push user question to history
+        chatDoc.history.push({
+            role: "user",
+            parts: [{ text: question, messageTimestamp: currentTime }],
+            ...(img && { img }),
+        });
+
+        // === Generate AI reply here ===
+        const historyText = chatDoc.history
+            .filter(h => h.role === "user" || h.role === "model")
+            .map(h => `${h.role === "user" ? "User" : "AI"}: ${h.parts[0].text}`)
+            .join("\n");
+
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // or use OpenAI
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+        const result = await model.generateContent([historyText, `User: ${question}`]);
+        const aiResponse = result.response.text();
+
+        // Save AI reply
+        chatDoc.history.push({
+            role: "model",
+            parts: [{ text: aiResponse, messageTimestamp: currentTime }],
+        });
+
+        await chatDoc.save();
+        res.status(200).send("Message appended and AI replied");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error handling message");
     }
 });
 

@@ -2,11 +2,65 @@ import React from 'react';
 import './ConsentForm.css';
 import { useState, useEffect, useRef } from 'react'; 
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "../../context/UserContext";
+import personalities from '../../constants/personalities';
+import { buildPrompt } from '../../constants/personalityConstants';
+// Import the runChatSequence function directly from ChatScript
+import { runChatSequence } from '../../script/ChatScript';
 
+function pickRandomPersonality() {
+    // For non-research mode, check if a personality has already been assigned
+    const existingPersonality = sessionStorage.getItem("personality");
+    
+    if (existingPersonality) {
+      // If a personality already exists, return it - this ensures the personality remains the same until user logs out
+      return existingPersonality;
+    }
+    
+    // Handle forced scenarios
+    const forcedPersonality = sessionStorage.getItem("forcedPersonality");
+    if (forcedPersonality && forcedPersonality !== "random") {
+      sessionStorage.setItem("personality", forcedPersonality);
+      return forcedPersonality;
+    } 
+    
+    // Keep track of remaining personalities for future use
+    let remainingPersonalities = JSON.parse(sessionStorage.getItem("remainingPersonalities"));
+    let personalitiesArr = JSON.parse(sessionStorage.getItem("personalitiesArr")) || [];
+    
+    if (!remainingPersonalities) { // if we don't have a list of personalities, make one
+      remainingPersonalities = [...personalities];
+      sessionStorage.setItem("remainingPersonalities", JSON.stringify(remainingPersonalities));
+      sessionStorage.setItem("personalitiesArr", JSON.stringify([]));
+    }
+  
+    // Pick a random personality from the personalities array
+    const randomIndex = Math.floor(Math.random() * personalities.length);
+    const selectedPersonality = personalities[randomIndex];
+    
+    // Update tracking arrays for future use (but we're not using them for selection now)
+    // This is just to maintain the arrays for potential future features
+    if (remainingPersonalities.includes(selectedPersonality)) {
+      const indexToRemove = remainingPersonalities.indexOf(selectedPersonality);
+      remainingPersonalities.splice(indexToRemove, 1);
+      sessionStorage.setItem("remainingPersonalities", JSON.stringify(remainingPersonalities));
+    }
+    
+    if (!personalitiesArr.includes(selectedPersonality)) {
+      personalitiesArr.push(selectedPersonality);
+      sessionStorage.setItem("personalitiesArr", JSON.stringify(personalitiesArr));
+    }
+    
+    // Store the selected personality - this will be used until user logs out
+    sessionStorage.setItem("personality", selectedPersonality);
+  
+    return selectedPersonality;
+  }
 // todo: change font on these screens
 // request from professor!
-function ConsentForm() {
+const ConsentForm = () => {
     const navigate = useNavigate();
+    const { userId } = useUser();
 
     const [termsIndex, setTermsIndex] = useState(0);
     const [isDisabled, setIsDisabled] = useState(false);
@@ -35,7 +89,80 @@ function ConsentForm() {
         }, 3000)
     }, [termsIndex])
 
+    // Function to send the prompt to the chatbot API in the background
+    const sendPromptToAPI = async (builtPrompt) => {
+        if (!userId) {
+            console.error('No userId found');
+            return;
+        }
+        
+        try {
+            // Create a new chat with "begin" as the first message
+            // This keeps the chat history clean
+            const chatResponse = await fetch(`https://human-ai.up.railway.app/api/chats`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ 
+                    text: "begin", // Use "begin" instead of the personality prompt
+                    userId 
+                }),
+            });
+            
+            if (!chatResponse.ok) {
+                throw new Error('Failed to create chat');
+            }
+            
+            const chatId = await chatResponse.json();
+            console.log('Created chat with ID:', chatId);
+            
+            // Store the chat ID and builtPrompt in sessionStorage
+            // This way the builtPrompt is available to the chatbot but not stored in the DB
+            sessionStorage.setItem('chatId', chatId);
+            sessionStorage.setItem('builtPrompt', builtPrompt);
+            console.log('Successfully created chat and stored prompt in sessionStorage');
+
+            runChatSequence();
+            
+        } catch (error) {
+            console.error('Error sending prompt to API:', error);
+            // Continue to pre-surveys even if there's an error
+        }
+    };
+    
     const handleClickYes = () => {
+        // Initialize game-related session storage
+        sessionStorage.setItem('remainingPersonalities', JSON.stringify(personalities));
+        sessionStorage.setItem('personalitiesArr', JSON.stringify([]));
+        sessionStorage.removeItem('gameLog1');
+        sessionStorage.setItem('aiScore', 0);
+        sessionStorage.setItem('userScore', 0);
+        sessionStorage.setItem('currentRound', 1);
+        sessionStorage.setItem('maxRounds', Math.floor(Math.random() * 4) + 2); // 2-5 rounds
+        sessionStorage.setItem('chatbotApproachScore', 0);
+        sessionStorage.setItem('chatbotSkipScore', 0);
+        sessionStorage.setItem('numChangeDescisions', 0);
+        sessionStorage.setItem('aiChoices', JSON.stringify([]));
+        sessionStorage.setItem('userChoices', JSON.stringify([]));
+        const researchMode = sessionStorage.getItem('isResearchMode');
+        // Select a personality for the chatbot
+        const selectedPersonality = pickRandomPersonality();
+        console.log('Selected Personality:', selectedPersonality);
+        
+        // Build the prompt with the selected personality
+        if (selectedPersonality) {
+            const builtPrompt = buildPrompt(selectedPersonality, researchMode);
+            
+            // Store the built prompt in sessionStorage for use in the chat
+            sessionStorage.setItem('builtPrompt', builtPrompt);
+            
+            // Send the prompt to the API in the background
+            // This won't block navigation to pre-surveys
+            sendPromptToAPI(builtPrompt);
+        }
+        
+        // Navigate to pre-surveys regardless of API call status
         navigate('/pre-surveys'); 
     };
 
@@ -76,6 +203,7 @@ function ConsentForm() {
                 </button>
                 </div>
             </div>
+
         </div>
       );
 }

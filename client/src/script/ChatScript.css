@@ -1,0 +1,7 @@
+.chat-container {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}

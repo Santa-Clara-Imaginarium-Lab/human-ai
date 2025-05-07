@@ -10,7 +10,11 @@ const Welcome = ({changeTheme, changePersonality}) => {
     
     // Reset settings
     const { login } = useUser();
-    login("guest");
+    
+    // Use useEffect to call login instead of calling it during render
+    useEffect(() => {
+        login("guest");
+    }, []);
 
     const arrowRef = useRef(null); // Reference for the ">" arrow
     const [isArrowVisible, setArrowVisible] = useState(false); // State for arrow visibility
@@ -281,7 +285,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
 
                 <div className="ldm-wrapper">
                     <h2 hidden={isAdmin}>Low Detail Mode</h2>
-                    <div class="ldm-background" hidden={isAdmin}>
+                    <div className="ldm-background" hidden={isAdmin}>
                         <button
                             className={`${ldmState === "on" ? "ldm-button-on" : "ldm-button-off"}`}
                             onClick={() => {

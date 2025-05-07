@@ -142,20 +142,28 @@ app.post("/api/chat-responses", async (req, res) => {
       // Get all headers from the sheet to use the actual question text as keys
       const headers = sheet.headerValues || [];
       
-      // Add answers using the existing headers when available
-      answers.forEach((answer, index) => {
-        const columnIndex = index + 2; // Column index 2 corresponds to column C
+      // Memory optimization: Process in smaller batches
+      const BATCH_SIZE = 20; // Process 20 answers at a time to reduce memory usage
+      
+      // Process answers in batches to reduce memory usage
+      for (let batchStart = 0; batchStart < answers.length; batchStart += BATCH_SIZE) {
+        const batchEnd = Math.min(batchStart + BATCH_SIZE, answers.length);
+        console.log(`Processing batch ${batchStart} to ${batchEnd-1}`);
         
-        if (headers.length > columnIndex) {
-          // If we have a header for this column, use it (preserving the question text)
-          const headerName = headers[columnIndex];
-          rowData[headerName] = answer;
-        } else {
-          // Fallback to using a generic column name if no header is available
-          // This should rarely happen since we're preserving existing headers
-          rowData[`_col${index + 3}`] = answer; // +3 because columns are 1-indexed in spreadsheets (A=1, B=2, C=3)
+        // Process this batch of answers
+        for (let i = batchStart; i < batchEnd; i++) {
+          const columnIndex = i + 2; // Column index 2 corresponds to column C
+          
+          if (headers.length > columnIndex) {
+            // If we have a header for this column, use it
+            const headerName = headers[columnIndex];
+            rowData[headerName] = answers[i];
+          } else {
+            // Use a simple string key for columns without headers
+            rowData[`Question ${i+1}`] = answers[i];
+          }
         }
-      });
+      }
       
       // Add the new row
       await sheet.addRow(rowData);

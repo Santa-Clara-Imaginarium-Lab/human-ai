@@ -67,18 +67,28 @@ async function getGoogleSheet(sheetTitle, headerValues) {
   let sheet = doc.sheetsByTitle[sheetTitle];
 
   if (!sheet) {
+    // If sheet doesn't exist, create it with the provided headers
     sheet = await doc.addSheet({
       title: sheetTitle,
       headerValues: headerValues,
     });
     console.log(`Created new sheet: ${sheetTitle}`);
   } else {
+    // If sheet exists, check if the required headers exist
+    // But don't modify existing headers beyond what's necessary
     const existingHeaders = sheet.headerValues || [];
-    const missingHeaders = headerValues.filter(header => !existingHeaders.includes(header));
+    
+    // Only add headers that are in the required list but missing from existing headers
+    // This preserves any existing headers not in our required list
+    const missingHeaders = headerValues.filter(header => 
+      !existingHeaders.includes(header) && 
+      // Only consider the first few headers as required (User ID, Personality)
+      headerValues.indexOf(header) < 2
+    );
 
     if (missingHeaders.length > 0) {
+      // Add missing headers without overwriting existing ones
       const updatedHeaders = [...existingHeaders, ...missingHeaders];
-
       await sheet.setHeaderRow(updatedHeaders);
     }
   }
@@ -114,13 +124,22 @@ app.post("/api/chat-responses", async (req, res) => {
       // Update personality
       userRow.Personality = personality;
       
-      // Update answers directly by index (C, D, E, etc.)
-      // The Google Sheets API allows accessing cells by their header name
-      // or by their raw column values (which start at 3 for column C)
+      // Get all headers from the sheet to use the actual question text as keys
+      const headers = sheet.headerValues || [];
+      
+      // Update answers using the existing headers when available
       for (let i = 0; i < answers.length; i++) {
         // Column index 2 corresponds to column C (0=A, 1=B, 2=C, etc.)
         const columnIndex = i + 2;
-        userRow._rawData[columnIndex] = answers[i];
+        
+        if (headers.length > columnIndex) {
+          // If we have a header for this column, use it
+          const headerName = headers[columnIndex];
+          userRow[headerName] = answers[i];
+        } else {
+          // Fallback to updating the raw data if no header is available
+          userRow._rawData[columnIndex] = answers[i];
+        }
       }
       
       // Save the updated row
@@ -134,17 +153,20 @@ app.post("/api/chat-responses", async (req, res) => {
         Personality: personality,
       };
       
-      // Add answers directly to the row data
-      // The Google Sheets API will place these in columns C, D, E, etc.
+      // Get all headers from the sheet to use the actual question text as keys
+      const headers = sheet.headerValues || [];
+      
+      // Add answers using the existing headers when available
       answers.forEach((answer, index) => {
-        // We need to add answers to the rowData object
-        // Since we don't have the question text as keys, we'll use column indices
-        // The sheet.headerValues will contain the headers in order
-        if (sheet.headerValues && sheet.headerValues.length > index + 2) {
-          // If we have a header for this column, use it
-          rowData[sheet.headerValues[index + 2]] = answer;
+        const columnIndex = index + 2; // Column index 2 corresponds to column C
+        
+        if (headers.length > columnIndex) {
+          // If we have a header for this column, use it (preserving the question text)
+          const headerName = headers[columnIndex];
+          rowData[headerName] = answer;
         } else {
-          // Otherwise, add it as a raw value that will be placed in the next available column
+          // Fallback to using a generic column name if no header is available
+          // This should rarely happen since we're preserving existing headers
           rowData[`_col${index + 3}`] = answer; // +3 because columns are 1-indexed in spreadsheets (A=1, B=2, C=3)
         }
       });

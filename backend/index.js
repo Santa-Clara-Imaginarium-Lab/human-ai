@@ -125,23 +125,34 @@ app.post("/api/chat-responses", async (req, res) => {
       // Get all headers from the sheet to use the actual question text as keys
       const headers = sheet.headerValues || [];
       
-      // Update answers using the existing headers when available
-      for (let i = 0; i < answers.length; i++) {
-        // Column index 2 corresponds to column C (0=A, 1=B, 2=C, etc.)
-        const columnIndex = i + 2;
+      // Memory optimization: Process in smaller batches
+      const BATCH_SIZE = 20; // Process 20 answers at a time to reduce memory usage
+      
+      // Process answers in batches to reduce memory usage
+      for (let batchStart = 0; batchStart < answers.length; batchStart += BATCH_SIZE) {
+        const batchEnd = Math.min(batchStart + BATCH_SIZE, answers.length);
+        console.log(`Processing batch ${batchStart} to ${batchEnd-1} for existing user`);
         
-        if (headers.length > columnIndex) {
-          // If we have a header for this column, use it
-          const headerName = headers[columnIndex];
-          userRow[headerName] = answers[i];
-        } else {
-          // Fallback to updating the raw data if no header is available
-          userRow._rawData[columnIndex] = answers[i];
+        // Process this batch of answers
+        for (let i = batchStart; i < batchEnd; i++) {
+          // Column index 2 corresponds to column C (0=A, 1=B, 2=C, etc.)
+          const columnIndex = i + 2;
+          
+          if (headers.length > columnIndex) {
+            // If we have a header for this column, use it
+            const headerName = headers[columnIndex];
+            userRow[headerName] = answers[i];
+          } else {
+            // Fallback to updating the raw data if no header is available
+            userRow._rawData[columnIndex] = answers[i];
+          }
         }
+        
+        // Save after each batch to reduce memory pressure
+        await userRow.save();
+        console.log(`Saved batch ${batchStart} to ${batchEnd-1} for user ${userId}`);
       }
       
-      // Save the updated row
-      await userRow.save();
       console.log(`Updated row for user ${userId}`);
     } else {
       console.log(`Creating new row for user ${userId}`);
@@ -154,26 +165,17 @@ app.post("/api/chat-responses", async (req, res) => {
       // Get all headers from the sheet to use the actual question text as keys
       const headers = sheet.headerValues || [];
       
-      // Memory optimization: Process in smaller batches
-      const BATCH_SIZE = 20; // Process 20 answers at a time to reduce memory usage
-      
-      // Process answers in batches to reduce memory usage
-      for (let batchStart = 0; batchStart < answers.length; batchStart += BATCH_SIZE) {
-        const batchEnd = Math.min(batchStart + BATCH_SIZE, answers.length);
-        console.log(`Processing batch ${batchStart} to ${batchEnd-1}`);
+      // Add answers to the row data
+      for (let i = 0; i < answers.length; i++) {
+        const columnIndex = i + 2; // Column index 2 corresponds to column C
         
-        // Process this batch of answers
-        for (let i = batchStart; i < batchEnd; i++) {
-          const columnIndex = i + 2; // Column index 2 corresponds to column C
-          
-          if (headers.length > columnIndex) {
-            // If we have a header for this column, use it
-            const headerName = headers[columnIndex];
-            rowData[headerName] = answers[i];
-          } else {
-            // Use a simple string key for columns without headers
-            rowData[`Question ${i+1}`] = answers[i];
-          }
+        if (headers.length > columnIndex) {
+          // If we have a header for this column, use it
+          const headerName = headers[columnIndex];
+          rowData[headerName] = answers[i];
+        } else {
+          // Use a simple string key for columns without headers
+          rowData[`Question ${i+1}`] = answers[i];
         }
       }
       

@@ -36,27 +36,32 @@ const allowedOrigins = [
   "https://human-ai.up.railway.app" // Railway deployment
 ];
 
-// CORS configuration that handles credentials properly
-app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    // Check if the origin is in our allowlist
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log('CORS blocked origin:', origin);
-      callback(null, false);
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  exposedHeaders: ["Access-Control-Allow-Origin"],
-  preflightContinue: false,
-  optionsSuccessStatus: 204
-}));
+// CORS configuration for handling requests with credentials
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  
+  // Check if the origin is in our allowlist
+  if (origin && allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  } else {
+    // For non-allowed origins or no origin, use a more permissive approach
+    res.header('Access-Control-Allow-Origin', '*');
+    // Don't allow credentials for non-allowed origins
+    res.header('Access-Control-Allow-Credentials', 'false');
+  }
+  
+  // Common headers for all requests
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.status(204).send();
+  }
+  
+  next();
+});
 
 app.use(express.json());
 
@@ -70,126 +75,115 @@ const connect = async () => {
 }
 
 async function getGoogleSheet(sheetTitle, headerValues) {
-  await doc.useServiceAccountAuth({
-    client_email: creds.client_email,
-    private_key: creds.private_key,
-  });
-  await doc.loadInfo();
-
-  let sheet = doc.sheetsByTitle[sheetTitle];
-
-  if (!sheet) {
-    // If sheet doesn't exist, create it with the provided headers
-    sheet = await doc.addSheet({
-      title: sheetTitle,
-      headerValues: headerValues,
+  console.log(`Getting sheet: ${sheetTitle}`);
+  
+  try {
+    // Authenticate with Google Sheets
+    await doc.useServiceAccountAuth({
+      client_email: creds.client_email,
+      private_key: creds.private_key,
     });
-    console.log(`Created new sheet: ${sheetTitle}`);
+    
+    // Load document info (minimal memory usage)
+    await doc.loadInfo();
+    console.log('Document info loaded');
+
+    // Get or create the sheet
+    let sheet = doc.sheetsByTitle[sheetTitle];
+    if (!sheet) {
+      // If sheet doesn't exist, create it with the provided headers
+      sheet = await doc.addSheet({
+        title: sheetTitle,
+        headerValues: headerValues,
+      });
+      console.log(`Created new sheet: ${sheetTitle}`);
+    } else {
+      console.log(`Found existing sheet: ${sheetTitle}`);
+      
+      // Make sure we have the latest headers
+      await sheet.loadHeaderRow();
+      console.log(`Loaded ${sheet.headerValues?.length || 0} headers`);
+    }
+    
+    return sheet;
+  } catch (error) {
+    console.error(`Error in getGoogleSheet: ${error.message}`);
+    throw error;
   }
-  
-  // Important: Load the sheet with all columns accessible for writing
-  // This ensures we can write to any column, not just those specified in headerValues
-  await sheet.loadCells();
-  
-  return sheet;
 }
 
 app.post("/api/chat-responses", async (req, res) => {
-  let { userId, personality, answers } = req.body;
+  // Send an immediate response to prevent timeout
+  res.status(202).send(`Processing responses for user ${req.body.userId}`);
+  
+  // Process the request asynchronously
+  processResponses(req.body).catch(err => {
+    console.error("Error in async processing:", err);
+  });
+});
 
-  console.log("Received request with:");
+async function processResponses(reqBody) {
+  let { userId, personality, answers } = reqBody;
+
+  console.log("Processing responses with:");
   console.log("- userId:", userId);
   console.log("- personality:", personality);
   console.log("- answers.length:", answers?.length);
 
   if (!userId || !personality || !answers || !Array.isArray(answers)) {
-    return res.status(400).send("Missing 'userId', 'personality', or 'answers' array");
+    console.error("Missing required fields");
+    return;
   }
 
   try {
-    // Get the sheet with fixed headers for User ID and Personality
-    // We don't need to specify all question headers - they'll be handled by column position
+    // Get the sheet with minimal headers
     const sheet = await getGoogleSheet("AI Personality Ques", ["User ID", "Personality"]);
     
-    // Load all rows to check if user already exists
-    const rows = await sheet.getRows();
+    // Log the headers we found
+    const headers = sheet.headerValues || [];
+    console.log(`Found ${headers.length} headers in the sheet`);
     
-    // Find if this user already has a row
-    let userRow = rows.find(row => row["User ID"] === userId);
+    // Create a row with userId and personality
+    const rowData = {
+      "User ID": userId,
+      "Personality": personality
+    };
     
-    if (userRow) {
-      console.log(`Found existing user ${userId}, updating row`);
-      // Update personality
-      userRow.Personality = personality;
+    // Add answers to the row data
+    console.log(`Adding ${answers.length} answers to the row data`);
+    for (let i = 0; i < answers.length; i++) {
+      const columnIndex = i + 2; // Column index 2 corresponds to column C
       
-      // Get all headers from the sheet to use the actual question text as keys
-      const headers = sheet.headerValues || [];
-      
-      // Memory optimization: Process in smaller batches
-      const BATCH_SIZE = 20; // Process 20 answers at a time to reduce memory usage
-      
-      // Process answers in batches to reduce memory usage
-      for (let batchStart = 0; batchStart < answers.length; batchStart += BATCH_SIZE) {
-        const batchEnd = Math.min(batchStart + BATCH_SIZE, answers.length);
-        console.log(`Processing batch ${batchStart} to ${batchEnd-1} for existing user`);
+      if (headers.length > columnIndex) {
+        // If we have a header for this column, use it
+        const headerName = headers[columnIndex];
+        rowData[headerName] = answers[i];
         
-        // Process this batch of answers
-        for (let i = batchStart; i < batchEnd; i++) {
-          // Column index 2 corresponds to column C (0=A, 1=B, 2=C, etc.)
-          const columnIndex = i + 2;
-          
-          if (headers.length > columnIndex) {
-            // If we have a header for this column, use it
-            const headerName = headers[columnIndex];
-            userRow[headerName] = answers[i];
-          } else {
-            // Fallback to updating the raw data if no header is available
-            userRow._rawData[columnIndex] = answers[i];
-          }
+        // Log every 20th header to verify we're using the right ones
+        if (i % 20 === 0) {
+          console.log(`Using header '${headerName}' for answer ${i}`);
         }
+      } else {
+        // Use a simple string key for columns without headers
+        rowData[`Question ${i+1}`] = answers[i];
         
-        // Save after each batch to reduce memory pressure
-        await userRow.save();
-        console.log(`Saved batch ${batchStart} to ${batchEnd-1} for user ${userId}`);
-      }
-      
-      console.log(`Updated row for user ${userId}`);
-    } else {
-      console.log(`Creating new row for user ${userId}`);
-      // Create a new row with userId and personality
-      const rowData = {
-        "User ID": userId,
-        Personality: personality,
-      };
-      
-      // Get all headers from the sheet to use the actual question text as keys
-      const headers = sheet.headerValues || [];
-      
-      // Add answers to the row data
-      for (let i = 0; i < answers.length; i++) {
-        const columnIndex = i + 2; // Column index 2 corresponds to column C
-        
-        if (headers.length > columnIndex) {
-          // If we have a header for this column, use it
-          const headerName = headers[columnIndex];
-          rowData[headerName] = answers[i];
-        } else {
-          // Use a simple string key for columns without headers
-          rowData[`Question ${i+1}`] = answers[i];
+        // Log when we're using generic headers
+        if (i % 20 === 0) {
+          console.log(`Using generic header 'Question ${i+1}' for answer ${i}`);
         }
       }
-      
-      // Add the new row
-      await sheet.addRow(rowData);
-      console.log(`Added new row for user ${userId}`);
     }
     
-    res.status(200).send(`✅ Stored responses for user ${userId}`);
+    // Add the new row
+    console.log(`Adding new row for user ${userId}`);
+    await sheet.addRow(rowData);
+    console.log(`Successfully added row for user ${userId} with all answers`);
+    
   } catch (error) {
     console.error("❌ Error writing answers:", error);
-    res.status(500).send(`Error saving chat responses: ${error.message}`);
+    console.error(error.stack);
   }
-});
+}
 
 
 app.post("/api/gamescores", async (req, res) => {

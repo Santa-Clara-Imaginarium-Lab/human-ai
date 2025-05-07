@@ -39,17 +39,33 @@ const NewPrompt = ({data, builtPrompt, chatId, speedFlag} ) => {
     ]
 
 
-    data.history.map((item) => {
+    data.history.forEach((item) => {
+      // Skip items with empty parts or text
+      if (!item.parts || item.parts.length === 0) {
+        return;
+      }
+      
       let dupedItem = JSON.parse(JSON.stringify(item));
-      // console.log(dupedItem);
       delete dupedItem._id; 
 
-      dupedItem.parts.map((part) => {
+      // Filter out empty parts
+      dupedItem.parts = dupedItem.parts.filter(part => {
+        return part && part.text !== undefined && part.text !== "";
+      });
+      
+      // Skip if no valid parts remain
+      if (dupedItem.parts.length === 0) {
+        return;
+      }
+      
+      // Clean up each part
+      dupedItem.parts.forEach(part => {
         delete part._id;
         delete part.messageTimestamp;
       });
-      arr.push(dupedItem)}
-  );
+      
+      arr.push(dupedItem);
+    })
 
     console.log("data for chat: ", arr)
 

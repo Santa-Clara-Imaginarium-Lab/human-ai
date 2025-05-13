@@ -33,7 +33,7 @@ const Complete = ({changeTheme, changePersonality}) => {
     // Function to fetch today's code from Google Sheets
     const fetchDailyCode = async () => {
         try {
-            const response = await fetch("${import.meta.env.VITE_API_URL}/api/daily-code");
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/daily-code`);
             if (response.ok) {
                 const data = await response.json();
                 setDailyCode(data.code);
@@ -50,7 +50,7 @@ const Complete = ({changeTheme, changePersonality}) => {
     const generateAndStoreCode = async () => {
         const newCode = generateCode();
         try {
-            await fetch("${import.meta.env.VITE_API_URL}/api/daily-code", {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/daily-code`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

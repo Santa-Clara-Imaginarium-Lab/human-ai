@@ -91,7 +91,7 @@ export async function runChatSequence() {
       try {
         console.log("▶Sending to API", { userId, personality, answers: onlyAnswers });
         
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/chat-responses", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat-responses`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -173,6 +173,7 @@ const ChatScript = () => {
     // Send the personality prompt once before starting the questions
       try {
         console.log('Sending personality prompt before questions');
+        let QUESTIONNAIRE_PROMPT_ONELINE = QUESTIONNAIRE_PROMPT.replace(/\n/g, '');
         const setupResult = await chat.sendMessage(QUESTIONNAIRE_PROMPT_ONELINE);
         console.log('Personality setup complete');
         console.log('AI Response to personality prompt:', setupResult.response.text());
@@ -224,7 +225,7 @@ const ChatScript = () => {
       try {
         console.log("▶Sending to API", { userId, personality, answers: onlyAnswers });
   
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/chat-responses", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat-responses`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

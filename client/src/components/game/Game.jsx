@@ -267,6 +267,11 @@ function Game() {
   const defectButtonRef = useRef(null);
   const [isFirstDecision, setisFirstDecision] = useState(true);
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [popupErrorMessage, setPopupErrorMessage] = useState('');
+  const [otherInput, setOtherInput] = useState('');
+
   const addChoices = (aiChoice, userChoice) => {
     let aiChoices = JSON.parse(sessionStorage.getItem('aiChoices')) || [];
     let userChoices = JSON.parse(sessionStorage.getItem('userChoices')) || [];
@@ -339,6 +344,41 @@ function Game() {
       return;
     }
 
+    // Show popup instead of locking in immediately
+    setShowPopup(true);
+  };
+  
+  const handlePopupOptionChange = (event) => {
+    const value = event.target.value;
+    setSelectedOption(value);
+    setPopupErrorMessage('');
+
+    if (value !== "Other") {
+      setOtherInput('');
+    }
+  };
+  
+  const handlePopupSubmit = async () => {
+    if (!selectedOption) {
+      setPopupErrorMessage('Please select an option before proceeding.');
+      return;
+    }
+    
+    if (selectedOption === "Other" && !otherInput) {
+      setPopupErrorMessage('Please specify an answer before proceeding.');
+      return;
+    }
+    
+    // Store the selection in sessionStorage for potential later use
+    const selection = selectedOption === "Other" ? otherInput : selectedOption;
+    sessionStorage.setItem('genderIdentity', selection);
+    
+    // Close popup
+    setShowPopup(false);
+    setSelectedOption('');
+    setOtherInput('');
+    
+    // Continue with original lock-in logic
     setIsUserLocked(true);
 
     const aiChoice = await getAiResponse("decision"); // Get AI's random response
@@ -560,6 +600,69 @@ function Game() {
             </div>
           </div>
         }
+
+        {showPopup && (
+          <div className="custom-alert question-popup">
+            <div className="demographic-container">
+              <h2 className="demo-brief-subtitle">Why did you choose to {userDecision === 'Cooperate' ? 'share' : 'withhold'} your data in this round?</h2>
+              <div className="demographic-options">
+                {userDecision === 'Cooperate' ? (
+                  // Options for SHARE/Cooperate
+                  <>
+                    <label className="popup-option">
+                      <input
+                        type="radio"
+                        value="Mutual"
+                        checked={selectedOption === "Mutual"}
+                        onChange={handlePopupOptionChange}
+                      />
+                      <span className="demographic-circle"></span>
+                      <p>AI +3, Me +3</p>
+                    </label>
+
+                    <label className="popup-option">
+                      <input
+                        type="radio"
+                        value="Exploit"
+                        checked={selectedOption === "Exploit"}
+                        onChange={handlePopupOptionChange}
+                      />
+                      <span className="demographic-circle"></span>
+                      <p>AI +5, Me +0</p>
+                    </label>
+                  </>
+                ) : (
+                  // Options for WITHHOLD/Defect
+                  <>
+                    <label className="popup-option">
+                      <input
+                        type="radio"
+                        value="Exploit"
+                        checked={selectedOption === "Exploit"}
+                        onChange={handlePopupOptionChange}
+                      />
+                      <span className="demographic-circle"></span>
+                      <p>AI +0, Me +5</p>
+                    </label>
+
+                    <label className="popup-option">
+                      <input
+                        type="radio"
+                        value="Mutual"
+                        checked={selectedOption === "Mutual"}
+                        onChange={handlePopupOptionChange}
+                      />
+                      <span className="demographic-circle"></span>
+                      <p>AI +1, Me +1</p>
+                    </label>
+                  </>
+                )}
+              </div>
+              {popupErrorMessage && <p className="error-message">{popupErrorMessage}</p>}
+              <button className="submit-button" onClick={handlePopupSubmit}>Submit</button>
+            </div>
+          </div>
+        )}
 
         {/* Flex container to arrange AI score, triangle grid, and user score horizontally */}
         <div className="horizontal-layout">

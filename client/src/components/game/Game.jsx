@@ -371,7 +371,9 @@ function Game() {
     
     // Store the selection in sessionStorage for potential later use
     const selection = selectedOption === "Other" ? otherInput : selectedOption;
-    sessionStorage.setItem('genderIdentity', selection);
+    
+    // Store intent data for the current round
+    let roundsData = JSON.parse(sessionStorage.getItem('roundsData') || '[]');
     
     // Close popup
     setShowPopup(false);
@@ -445,6 +447,15 @@ function Game() {
       setAiMessage('+0');
       setUserMessage('+5');
     }
+
+    // Save the round data including intent
+    roundsData.push({
+      round_number: currentRound,
+      decision: userDecision === 'Cooperate' ? 'Share' : 'Withhold',
+      intent: selection
+    });
+    
+    sessionStorage.setItem('roundsData', JSON.stringify(roundsData));
 
     // Update the state
     setUserScore((prev) => { const newPts = prev + userPoints; sessionStorage.setItem('userScore', newPts); return newPts; });
@@ -612,8 +623,8 @@ function Game() {
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="Mutual"
-                        checked={selectedOption === "Mutual"}
+                        value="AI +3, Me +3"
+                        checked={selectedOption === "AI +3, Me +3"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>
@@ -623,8 +634,8 @@ function Game() {
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="Exploit"
-                        checked={selectedOption === "Exploit"}
+                        value="AI +5, Me +0"
+                        checked={selectedOption === "AI +5, Me +0"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>
@@ -637,8 +648,8 @@ function Game() {
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="Exploit"
-                        checked={selectedOption === "Exploit"}
+                        value="AI +0, Me +5"
+                        checked={selectedOption === "AI +0, Me +5"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>
@@ -648,8 +659,8 @@ function Game() {
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="Mutual"
-                        checked={selectedOption === "Mutual"}
+                        value="AI +1, Me +1"
+                        checked={selectedOption === "AI +1, Me +1"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>

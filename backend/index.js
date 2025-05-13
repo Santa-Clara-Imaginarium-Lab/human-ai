@@ -920,6 +920,47 @@ app.get('/api/daily-code', async (req, res) => {
   }
 });
 
+app.post("/api/intent", async (req, res) => {
+  try {
+    const { userId, personality, rounds } = req.body;
+    
+    if (!userId || !personality || !rounds || !Array.isArray(rounds)) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
+
+    const sheet = await getGoogleSheet("Intent", [
+      "User Id", "Timestamp", "Personality", 
+      "Round 1 Decision", "Round 1 Intent",
+      "Round 2 Decision", "Round 2 Intent",
+      "Round 3 Decision", "Round 3 Intent",
+      "Round 4 Decision", "Round 4 Intent",
+      "Round 5 Decision", "Round 5 Intent"
+    ]);
+
+    const rowData = {
+      "User Id": userId,
+      "Timestamp": new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Personality": personality,
+    };
+    
+    // Process each round's data
+    rounds.forEach(round => {
+      if (round.round_number >= 1 && round.round_number <= 5) {
+        rowData[`Round ${round.round_number} Decision`] = round.decision || "";
+        rowData[`Round ${round.round_number} Intent`] = round.intent || "";
+      }
+    });
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored Intent Data:", rowData);
+    res.status(200).json({ success: true, message: "Intent data submitted successfully!" });
+
+  } catch (error) {
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

@@ -7,21 +7,25 @@ import Typewriter from '../Typewriter/typewriter';
 function Survey() {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isIntentSubmitted, setIsIntentSubmitted] = useState(false);
   const userId = sessionStorage.getItem('userId');
   const submitAttempted = useRef(false);
+  const intentSubmitAttempted = useRef(false);
 
   const [briefGo, setBriefGo] = useState(false);
-    const [btuGo, setBtuGo] = useState(false);
+  const [btuGo, setBtuGo] = useState(false);
 
   useEffect(() => {
     const gameLog1Info = JSON.parse(sessionStorage.getItem('gameLog1'));
     const currentPersonality = sessionStorage.getItem('personality');
+    const roundsData = JSON.parse(sessionStorage.getItem('roundsData') || '[]');
 
     // Log retrieved data
     console.log('Retrieved from sessionStorage:', {
         gameLog1: gameLog1Info,
         personality: currentPersonality,
-        userId: userId
+        userId: userId,
+        roundsData: roundsData
     });
 
     // Send game logs to MongoDB
@@ -66,6 +70,41 @@ function Survey() {
         }
     };
 
+    // Send intent data to server
+    const saveIntentData = async () => {
+        if (intentSubmitAttempted.current || isIntentSubmitted || !roundsData.length) return;
+        intentSubmitAttempted.current = true;
+        
+        try {
+            const intentData = {
+                userId: userId,
+                personality: currentPersonality,
+                rounds: roundsData
+            };
+
+            console.log('Attempting to save intent data:', intentData);
+
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/intent`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(intentData)
+            });
+
+            if (!response.ok) {
+                intentSubmitAttempted.current = false;
+                throw new Error('Failed to save intent data');
+            }
+
+            console.log('Successfully saved intent data');
+            setIsIntentSubmitted(true);
+        } catch (error) {
+            console.error('Error saving intent data:', error);
+            intentSubmitAttempted.current = false;
+        }
+    };
+
     if (gameLog1Info && userId && !isSubmitted && !submitAttempted.current) {
         console.log('Conditions met, calling saveGameLogs()');
         saveGameLogs();
@@ -77,7 +116,19 @@ function Survey() {
             submitAttempted: submitAttempted.current
         });
     }
-  }, [userId, isSubmitted]);
+
+    if (roundsData.length && userId && !isIntentSubmitted && !intentSubmitAttempted.current) {
+        console.log('Conditions met for intent data, calling saveIntentData()');
+        saveIntentData();
+    } else {
+        console.log('Missing required intent data or already submitted:', {
+            hasRoundsData: !!roundsData.length,
+            hasUserId: !!userId,
+            isIntentSubmitted: isIntentSubmitted,
+            intentSubmitAttempted: intentSubmitAttempted.current
+        });
+    }
+  }, [userId, isSubmitted, isIntentSubmitted]);
 
   const handleSurveyClick = () => {
     navigate('/question'); 

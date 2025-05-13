@@ -29,7 +29,7 @@ function DemographicQuestion3() {
       }
 
       try {
-        const response = await fetch(`https://human-ai.up.railway.app/api/demographics`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/demographics`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

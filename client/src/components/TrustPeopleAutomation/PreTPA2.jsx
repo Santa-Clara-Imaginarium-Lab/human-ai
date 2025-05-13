@@ -42,7 +42,7 @@ function PreTPA2() {
     console.log("Data being sent:", data); // Log the data being sent
 
     try {
-        const response = await fetch(`https://human-ai.up.railway.app/api/trustpeopleautomation`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trustpeopleautomation`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

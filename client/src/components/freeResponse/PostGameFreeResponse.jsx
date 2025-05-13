@@ -33,7 +33,7 @@ function PostGameFreeResponse() {
       }
 
       try {
-        const res = await fetch(`https://human-ai.up.railway.app/api/postgamefreeresponse`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/postgamefreeresponse`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

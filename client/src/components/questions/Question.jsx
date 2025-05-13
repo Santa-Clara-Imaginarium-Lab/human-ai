@@ -33,7 +33,7 @@ function Question() {
 
     if (currentQuestionIndex === questions.length - 1) {
       try {
-        const response = await fetch(`https://human-ai.up.railway.app/api/surveyresponses`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/surveyresponses`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

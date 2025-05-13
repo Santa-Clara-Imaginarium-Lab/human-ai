@@ -44,7 +44,7 @@ function PrePersuassion() {
     };  
 
     try {
-      const response = await fetch(`https://human-ai.up.railway.app/api/aiselfcompetency`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/aiselfcompetency`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

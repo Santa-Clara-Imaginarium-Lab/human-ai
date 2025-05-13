@@ -99,7 +99,7 @@ const ConsentForm = () => {
         try {
             // Create a new chat with "begin" as the first message
             // This keeps the chat history clean
-            const chatResponse = await fetch(`https://human-ai.up.railway.app/api/chats`, {
+            const chatResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

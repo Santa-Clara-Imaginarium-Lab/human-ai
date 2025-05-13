@@ -45,7 +45,7 @@ function PreEfficacy() {
     };    
 
     try {
-      const response = await fetch(`https://human-ai.up.railway.app/api/aiproblemsolving`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/aiproblemsolving`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

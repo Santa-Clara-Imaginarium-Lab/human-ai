@@ -21,7 +21,7 @@ function PostArchetypeFreeResponse() {
         }
 
         try {
-            const res = await fetch(`https://human-ai.up.railway.app/api/postarchetypefreeresponse`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/postarchetypefreeresponse`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

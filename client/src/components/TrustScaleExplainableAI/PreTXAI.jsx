@@ -44,7 +44,7 @@ function PreTXAI() {
     };
 
     try {
-      const response = await fetch(`https://human-ai.up.railway.app/api/trustscaleexplainableai`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trustscaleexplainableai`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -46,7 +46,7 @@ const Welcome = ({changeTheme, changePersonality}) => {
         const guestID = "guest" + String(randomNumber);
 
         // Check if userId exists in the chats collection
-        const response = await fetch(`https://human-ai.up.railway.app/api/chats?userId=${guestID}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats?userId=${guestID}`);
         if (!response.ok) {
             alert('Critical error: Unable to check user ID. Please try again later.');
             return;

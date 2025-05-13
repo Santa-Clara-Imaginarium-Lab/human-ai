@@ -18,7 +18,7 @@ export async function runChatSequence() {
   
   try {
     // Fetch the chat history
-    const res = await fetch(`https://human-ai.up.railway.app/api/chats/${chatId}`);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`);
     const data = await res.json();
 
     let history = [
@@ -91,7 +91,7 @@ export async function runChatSequence() {
       try {
         console.log("▶Sending to API", { userId, personality, answers: onlyAnswers });
         
-        const res = await fetch("https://human-ai.up.railway.app/api/chat-responses", {
+        const res = await fetch("${import.meta.env.VITE_API_URL}/api/chat-responses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -137,7 +137,7 @@ const ChatScript = () => {
 
     const fetchChat = async () => {
       try {
-        const res = await fetch(`https://human-ai.up.railway.app/api/chats/${chatId}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`);
         const data = await res.json();
 
         let history = [
@@ -224,7 +224,7 @@ const ChatScript = () => {
       try {
         console.log("▶Sending to API", { userId, personality, answers: onlyAnswers });
   
-        const res = await fetch("https://human-ai.up.railway.app/api/chat-responses", {
+        const res = await fetch("${import.meta.env.VITE_API_URL}/api/chat-responses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

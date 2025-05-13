@@ -19,7 +19,7 @@ function PreHumanAI1() {
       }
       // Save the selected option to the database
       const userId = sessionStorage.getItem('userId'); // Get userId from sessionStorage
-      await fetch(`https://human-ai.up.railway.app/api/prior-experience-ai`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/prior-experience-ai`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

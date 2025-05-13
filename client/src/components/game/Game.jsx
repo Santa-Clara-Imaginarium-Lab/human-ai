@@ -53,7 +53,7 @@ function Game() {
   
   const mutation = useMutation({
       mutationFn: () => {
-        return fetch(`https://human-ai.up.railway.app/api/chats/${data._id}`, {
+        return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
           method: "PUT",
           credentials: "include",
           headers: {

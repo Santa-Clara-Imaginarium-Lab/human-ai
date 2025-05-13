@@ -10,7 +10,7 @@ function ChatHistory() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch('https://human-ai.up.railway.app/api/chathistory')
+    fetch('${import.meta.env.VITE_API_URL}/api/chathistory')
       .then(res => res.json())
       .then(data => {
         const uniqueUsers = [...new Set(data.map(chat => chat.userId))];
@@ -20,7 +20,7 @@ function ChatHistory() {
 
   useEffect(() => {
     if (selectedUser) {
-      fetch(`https://human-ai.up.railway.app/api/chats?userId=${selectedUser}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/chats?userId=${selectedUser}`)
         .then(res => res.json())
         .then(data => setMessages(data[0]?.history || []));
     }
@@ -63,7 +63,7 @@ function ChatHistory() {
 
   async function handleDownloadAllChats() {
     try {
-      const res = await fetch('https://human-ai.up.railway.app/api/chats');
+      const res = await fetch('${import.meta.env.VITE_API_URL}/api/chats');
       const allChats = await res.json();
   
       const rows = allChats.flatMap(chat =>

@@ -23,7 +23,7 @@ function GameEndCode() {
     // Function to fetch today's code from Google Sheets
     const fetchDailyCode = async () => {
         try {
-            const response = await fetch("https://human-ai.up.railway.app/api/daily-code");
+            const response = await fetch("${import.meta.env.VITE_API_URL}/api/daily-code");
             if (response.ok) {
                 const data = await response.json();
                 setDailyCode(data.code);
@@ -40,7 +40,7 @@ function GameEndCode() {
     const generateAndStoreCode = async () => {
         const newCode = generateCode();
         try {
-            await fetch("https://human-ai.up.railway.app/api/daily-code", {
+            await fetch("${import.meta.env.VITE_API_URL}/api/daily-code", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

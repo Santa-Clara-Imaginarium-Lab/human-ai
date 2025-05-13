@@ -195,19 +195,29 @@ app.post("/api/gamescores", async (req, res) => {
     const round5 = rounds.find(round => round.round_number === 5);
 
     try {
-      const sheet = await getGoogleSheet("Game Scores", ["User ID", "Timestamp", "Personality", "Round 1 [User Score, AI Score]", "Round 2 [User Score, AI Score]", "Round 3 [User Score, AI Score]", "Round 4 [User Score, AI Score]", "Round 5 [User Score, AI Score]"]);
-      const rowData = {
-        "User ID": user_id,
-        "Timestamp": new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
-        "Personality": personality,
-        "Round 1 [User Score, AI Score]": round1 ? `${round1.user_score},${round1.ai_score}` : "",
-        "Round 2 [User Score, AI Score]": round2 ? `${round2.user_score},${round2.ai_score}` : "",
-        "Round 3 [User Score, AI Score]": round3 ? `${round3.user_score},${round3.ai_score}` : "",
-        "Round 4 [User Score, AI Score]": round4 ? `${round4.user_score},${round4.ai_score}` : "",
-        "Round 5 [User Score, AI Score]": round5 ? `${round5.user_score},${round5.ai_score}` : "",
-      };
-      await sheet.addRow(rowData);
-      console.log("Successfully stored Game Scores Data:", rowData);
+      const sheet = await getGoogleSheet("Game Scores");
+      await sheet.loadCells(); // Load all cells in the sheet
+
+      // Find the first empty row starting after your data (assume starts at row 4)
+      let insertRowIndex = 4; // Start searching from row 4
+      while (true) {
+        const cell = sheet.getCell(insertRowIndex - 1, 0); // Column A (index 0)
+        if (!cell.value) break;
+        insertRowIndex++;
+      }
+      
+      // Fill cells manually
+      sheet.getCell(insertRowIndex - 1, 0).value = user_id;
+      sheet.getCell(insertRowIndex - 1, 1).value = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+      sheet.getCell(insertRowIndex - 1, 2).value = personality;
+      if (round1) sheet.getCell(insertRowIndex - 1, 3).value = round1 ? `${round1.user_score},${round1.ai_score}` : "";
+      if (round2) sheet.getCell(insertRowIndex - 1, 4).value = round2 ? `${round2.user_score},${round2.ai_score}` : "";
+      if (round3) sheet.getCell(insertRowIndex - 1, 5).value = round3 ? `${round3.user_score},${round3.ai_score}` : "";
+      if (round4) sheet.getCell(insertRowIndex - 1, 6).value = round4 ? `${round4.user_score},${round4.ai_score}` : "";
+      if (round5) sheet.getCell(insertRowIndex - 1, 7).value = round5 ? `${round5.user_score},${round5.ai_score}` : "";
+      
+      await sheet.saveUpdatedCells();
+      console.log("Game Scores recorded successfully");
       res.status(200).send(' Game Scores recorded successfully');
     } catch (error) {
       console.error('Error writing to Google Sheets:', error);
@@ -910,6 +920,47 @@ app.get('/api/daily-code', async (req, res) => {
   }
 });
 
+app.post("/api/intent", async (req, res) => {
+  try {
+    const { userId, personality, rounds } = req.body;
+    
+    if (!userId || !personality || !rounds || !Array.isArray(rounds)) {
+      console.error("Invalid request format. Received:", req.body);
+      return res.status(400).json({ success: false, error: "Invalid request format" });
+    }
+
+    const sheet = await getGoogleSheet("Intent", [
+      "User Id", "Timestamp", "Personality", 
+      "Round 1 Decision", "Round 1 Intent",
+      "Round 2 Decision", "Round 2 Intent",
+      "Round 3 Decision", "Round 3 Intent",
+      "Round 4 Decision", "Round 4 Intent",
+      "Round 5 Decision", "Round 5 Intent"
+    ]);
+
+    const rowData = {
+      "User Id": userId,
+      "Timestamp": new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+      "Personality": personality,
+    };
+    
+    // Process each round's data
+    rounds.forEach(round => {
+      if (round.round_number >= 1 && round.round_number <= 5) {
+        rowData[`Round ${round.round_number} Decision`] = round.decision || "";
+        rowData[`Round ${round.round_number} Intent`] = round.intent || "";
+      }
+    });
+
+    await sheet.addRow(rowData);
+    console.log("Successfully stored Intent Data:", rowData);
+    res.status(200).json({ success: true, message: "Intent data submitted successfully!" });
+
+  } catch (error) {
+    console.error("Internal Server Error:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack)

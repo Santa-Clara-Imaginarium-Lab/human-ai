@@ -6,7 +6,6 @@ Tutorial.css
   .demographic-container {
     background-color: white;
     border-radius: 3em;
-    box-shadow: 10px 10px 0 0 var(--accent-one);
     display: flex;
     flex-direction: column;
     align-items: center;  /* Center align content horizontally */
@@ -23,7 +22,7 @@ Tutorial.css
   }
   
   .demo-brief-subtitle {
-    margin: 20px;
+    margin: 30px;
     color: var(--accent-three);
     font-size: 40px;
     font-family: var(--secondary-font);
@@ -32,7 +31,8 @@ Tutorial.css
   .demographic-options {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 20px;
+    margin-bottom: 20px;
   }
 
   .demographic-option {
@@ -43,7 +43,7 @@ Tutorial.css
   .demographic-option p {
     margin: 0;
     margin-left: 20px;
-    font-size: large;
+    font-size: 20px;
     font-weight: bold;
     font-family: var(--secondary-font);
     color: var(--accent-three);

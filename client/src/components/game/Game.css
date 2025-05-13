@@ -847,3 +847,25 @@ font-weight: bold; */
     background-position: bottom right;
   }
 } */
+
+/* Popup styles for the question after lock-in */
+.question-popup {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
+.popup-option {
+  display: flex; 
+  align-items: center; 
+}
+
+.popup-option p {
+  margin: 0;
+  margin-left: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: var(--secondary-font);
+  color: var(--accent-three);
+}

@@ -931,11 +931,11 @@ app.post("/api/intent", async (req, res) => {
 
     const sheet = await getGoogleSheet("Intent", [
       "User ID", "Timestamp", "Personality", 
-      "Round 1 Decision", "Round 1 Intent",
-      "Round 2 Decision", "Round 2 Intent",
-      "Round 3 Decision", "Round 3 Intent",
-      "Round 4 Decision", "Round 4 Intent",
-      "Round 5 Decision", "Round 5 Intent"
+      "Round 1 Intent",
+      "Round 2 Intent",
+      "Round 3 Intent",
+      "Round 4 Intent",
+      "Round 5 Intent"
     ]);
 
     const rowData = {
@@ -944,10 +944,9 @@ app.post("/api/intent", async (req, res) => {
       "Personality": personality,
     };
     
-    // Process each round's data
+    // Process each round's data - only store intent
     rounds.forEach(round => {
       if (round.round_number >= 1 && round.round_number <= 5) {
-        rowData[`Round ${round.round_number} Decision`] = round.decision || "";
         rowData[`Round ${round.round_number} Intent`] = round.intent || "";
       }
     });

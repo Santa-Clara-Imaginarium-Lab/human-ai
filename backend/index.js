@@ -930,7 +930,7 @@ app.post("/api/intent", async (req, res) => {
     }
 
     const sheet = await getGoogleSheet("Intent", [
-      "User Id", "Timestamp", "Personality", 
+      "User ID", "Timestamp", "Personality", 
       "Round 1 Decision", "Round 1 Intent",
       "Round 2 Decision", "Round 2 Intent",
       "Round 3 Decision", "Round 3 Intent",
@@ -939,7 +939,7 @@ app.post("/api/intent", async (req, res) => {
     ]);
 
     const rowData = {
-      "User Id": userId,
+      "User ID": userId,
       "Timestamp": new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
       "Personality": personality,
     };

@@ -623,23 +623,23 @@ function Game() {
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="AI +3, Me +3"
-                        checked={selectedOption === "AI +3, Me +3"}
+                        value="S1"
+                        checked={selectedOption === "S1"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>
-                      <p>AI +3, Me +3</p>
+                      <p>To maximize mutual gain. (We both win more if we trust each other) [AI +3][Me +3]</p>
                     </label>
 
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="AI +5, Me +0"
-                        checked={selectedOption === "AI +5, Me +0"}
+                        value="S2"
+                        checked={selectedOption === "S2"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>
-                      <p>AI +5, Me +0</p>
+                      <p>To build trust, even if risky. (Hoping AI will notice and return the favor later) [AI +5][Me +0]</p>
                     </label>
                   </>
                 ) : (
@@ -648,23 +648,23 @@ function Game() {
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="AI +0, Me +5"
-                        checked={selectedOption === "AI +0, Me +5"}
+                        value="W1"
+                        checked={selectedOption === "W1"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>
-                      <p>AI +0, Me +5</p>
+                      <p>To maximize personal gain. (Better for me if I take the advantage) [AI +0][Me +5]</p>
                     </label>
 
                     <label className="popup-option">
                       <input
                         type="radio"
-                        value="AI +1, Me +1"
-                        checked={selectedOption === "AI +1, Me +1"}
+                        value="W2"
+                        checked={selectedOption === "W2"}
                         onChange={handlePopupOptionChange}
                       />
                       <span className="demographic-circle"></span>
-                      <p>AI +1, Me +1</p>
+                      <p>To minimize loss for both. (Safer to defect than be betrayed) [AI +1][Me +1]</p>
                     </label>
                   </>
                 )}

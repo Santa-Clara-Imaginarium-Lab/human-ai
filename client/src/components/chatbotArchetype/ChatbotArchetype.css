@@ -201,7 +201,8 @@
 }
 
 .choice-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     background-color: var(--accent-five);
     flex-direction:row;
     justify-content: space-evenly;
@@ -214,6 +215,7 @@
 }
 
 .choice-header p {
+    display: grid;
     color: var(--accent-four);
     font-size: 2em;
 }
@@ -225,7 +227,8 @@
 }
 
 .round {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-evenly;
     background-color: var(--c2);
     padding: 0.5em;

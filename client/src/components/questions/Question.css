@@ -92,10 +92,10 @@
   
   .option p {
     margin: 0;
-    font-size: 0.9em;
+    font-size: 1.3em;
     font-weight: bold;
     font-family: var(--secondary-font);
-    color: var(--accent-one);
+    color: var(--accent-three);
   }
 
   .submit-button {

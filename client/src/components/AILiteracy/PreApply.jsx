@@ -6,7 +6,7 @@ import { options, optionValueMap } from '../../constants/surveyOptions';
 const statements = [
   "I can operate AI applications in everyday life.",
   "I can use AI applications to make my everyday life easier.",
-  "I can use artificial intelligence meaningfully to achieve my everyday goals.",
+  "I can use AI meaningfully to achieve my everyday goals.",
   "In everyday life, I can interact with AI in a way that makes my tasks easier.",
   ""
 ];

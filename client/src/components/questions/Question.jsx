@@ -17,6 +17,15 @@ function Question() {
     setShowError(false); // Hide error message if an option is selected
   };
 
+  const handleBack = () => {
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+    setSelectedOption('');
+    setShowError(false);
+
+    const updatedResponses = responses.pop(); // Remove the last response
+    setResponses(updatedResponses);
+  };
+
   const handleSubmit = async () => {
     if (!selectedOption) {
       setShowError(true);
@@ -45,6 +54,7 @@ function Question() {
         });
 
         if (!response.ok) {
+          alert('Failed to save responses');
           throw new Error('Failed to save responses');
         }
 
@@ -77,7 +87,7 @@ function Question() {
         {currentQuestionIndex < 8 
           ? "Please indicate the extent to which you agree or disagree with the following statement."
           : <>
-              Consider the moments when you were strategizing with the AI, particularly when you were asking it questions. <br />
+              <b>Now,</b> consider the moments when you were strategizing with the AI, particularly when you were asking it questions. <br />
               Indicate the extent to which you agree or disagree with the following statement.
             </>
         }
@@ -143,6 +153,12 @@ function Question() {
 
       {showError && <p className="error-message">Please select an option before proceeding.</p>} {/* Show error if no option selected */}
       
+      {currentQuestionIndex > 0 && ( // Show "Back" button if not the first question
+        <button className="back-button" onClick={handleBack}>
+          Back
+        </button>
+      )}
+
       <button className="submit-button" onClick={handleSubmit}>
         Submit
       </button>

@@ -112,6 +112,23 @@
     box-shadow: 0.3em 0.3em 0 0 black;
     transition: all 0.05s ease-in-out;
   }
+
+    .back-button {
+    font-weight: bold;
+    margin-top: 1em;
+    padding: 0.5em 1.5em;
+    background-color: var(--button-one);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-family: var(--universal-font);
+    box-shadow: 0.3em 0.3em 0 0 black;
+    transition: all 0.05s ease-in-out;
+  }
+  
+
   
   .submit-button:active {
     /* Simulate the button being pressed */
